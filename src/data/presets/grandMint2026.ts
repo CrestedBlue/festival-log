@@ -100,7 +100,7 @@ const PINS: ReadonlyArray<Omit<Pin, 'id'>> = [
   { name: 'Radar · 체조경기장–수영장 사이 (대략)', kind: 'etc', ...anchor('radar') },
   { name: 'Hungry Zone · 체조경기장–수영장 사이 (대략)', kind: 'food', ...anchor('hungryZoneEast') },
   { name: 'Hungry Zone · 88잔디마당 안 (대략)', kind: 'food', ...anchor('hungryZoneLawn') },
-  { name: 'Art Zone · 한얼광장 (대략)', kind: 'etc', ...anchor('artZone') },
+  { name: 'Art Zone · 한얼광장', kind: 'etc', ...anchor('artZone') },
   { name: '티켓 부스 (대략)', kind: 'etc', ...anchor('ticketBooth') },
   { name: '올림픽공원역 3번 출구 (5·9호선)', kind: 'etc', ...anchor('olympicParkExit3') },
   { name: '몽촌토성역 1번 출구 (8호선)', kind: 'etc', ...anchor('mongchonExit1') },

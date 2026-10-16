@@ -21,7 +21,7 @@ interface Options {
 function setUpLayers(map: L.Map, { center, image, fitPoints }: Options): () => void {
   if (image) {
     const bounds = L.latLngBounds(image.bounds.map(([lat, lng]) => [lat, lng] as L.LatLngTuple))
-    L.imageOverlay(image.imageUrl, bounds, { attribution: image.attribution }).addTo(map)
+    L.imageOverlay(image.imageUrl, bounds).addTo(map)
     map.setMaxBounds(bounds)
     map.fitBounds(image.initialView.map(([lat, lng]) => [lat, lng] as L.LatLngTuple))
     // Open with the image filling the screen (no empty bands); zooming out further is still allowed.
@@ -53,9 +53,11 @@ export function useLeafletMap(options: Options) {
       maxZoom: MAX_ZOOM,
       zoomSnap: image ? IMAGE_ZOOM_SNAP : 1,
       maxBoundsViscosity: image ? 1 : 0,
+      // Illustrated maps show their credits behind an ⓘ button (MapCredits); tile maps keep Leaflet's line.
+      attributionControl: !image,
     })
     const onResize = setUpLayers(instance, initialOptions.current)
-    instance.attributionControl.setPrefix(false)
+    instance.attributionControl?.setPrefix(false)
     L.control.zoom({ position: 'bottomright' }).addTo(instance)
     // The bottom panel changes height (collapsed, list, form), so keep Leaflet's size in sync.
     const resizeObserver = new ResizeObserver(() => {

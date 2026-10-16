@@ -1,5 +1,5 @@
 {
-  "attribution": "그림: GMF 2026 공식 지도 · 지형: © OpenStreetMap",
+  "attribution": "지도 그림: GMF 2026 공식 지도 · 지형 데이터: © OpenStreetMap 기여자",
   "size": [
     2825,
     1354
@@ -34,7 +34,7 @@
       127.124302
     ],
     "lovingForestStage": [
-      37.521263,
+      37.521168,
       127.12544
     ],
     "clubMidnightStage": [
@@ -50,12 +50,12 @@
       127.127447
     ],
     "artZone": [
-      37.51768,
-      127.12492
+      37.51832,
+      127.12718
     ],
     "ticketBooth": [
-      37.51712,
-      127.1253
+      37.5177,
+      127.128
     ],
     "mongchonExit1": [
       37.517706,

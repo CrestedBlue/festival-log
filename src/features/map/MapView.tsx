@@ -9,6 +9,7 @@ import { useStoredFlag } from '../../hooks/useStoredFlag'
 import { distanceMeters, formatDistance, isInsideBounds, type LatLng } from '../../lib/geo'
 import { makeId } from '../../lib/id'
 import { festivalMapFor } from './festivalMaps'
+import { MapCredits } from './MapCredits'
 import { PinForm } from './PinForm'
 import { PIN_META } from './pinMeta'
 import { useLeafletMap } from './useLeafletMap'
@@ -146,6 +147,7 @@ export default function MapView({ festival }: { festival: Festival }) {
           </button>
         </div>
         {hint}
+        {festivalMap && <MapCredits text={festivalMap.attribution} />}
       </div>
 
       <div className={`map-panel${collapsed && !draft ? ' is-collapsed' : ''}`}>

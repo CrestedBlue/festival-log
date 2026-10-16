@@ -49,7 +49,7 @@ describe('createGrandMint2026', () => {
 
   test('marks the zones whose position is estimated', () => {
     const estimated = festival.pins.filter((pin) => pin.name.includes('(대략)')).map((pin) => pin.name.split(' ·')[0])
-    expect(estimated).toEqual(expect.arrayContaining(['Radar', 'Hungry Zone', 'Art Zone', '티켓 부스 (대략)']))
+    expect(estimated).toEqual(expect.arrayContaining(['Radar', 'Hungry Zone', '티켓 부스 (대략)']))
   })
 
   test('uses stable ids so re-adding replaces instead of duplicating', () => {

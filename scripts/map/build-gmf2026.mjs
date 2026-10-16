@@ -65,14 +65,16 @@ const GROUPS = [
   },
   {
     id: 'lovingForestGarden',
-    anchor: [597, 255],
+    // Anchor on the drawn stage, not the zone's middle: the real 수변무대 is a small stage on the lake's
+    // south shore, so the drawn seating must spread south onto land, not out over the water.
+    anchor: [597, 222],
     at: findFeatureCentroid(osm, '88호수 수변무대'),
     scale: 1,
     parts: [
       { crop: [528, 186, 666, 326], shapes: [{ ellipse: [597, 257, 68, 70] }] },
       { crop: [546, 136, 670, 190], shapes: [{ rect: [546, 136, 670, 190] }] },
     ],
-    pins: { lovingForestStage: [597, 238] },
+    pins: { lovingForestStage: [597, 222] },
   },
   {
     id: 'clubMidnightSunset',
@@ -106,10 +108,11 @@ const GROUPS = [
   },
   {
     id: 'artZone',
-    estimated: true,
     anchor: [268, 612],
-    at: [37.51768, 127.12492],
-    scale: 0.75,
+    // 한얼광장: the plaza right south of KSPO DOME, between the dome and the handball arena (read off a
+    // commercial map's 한얼광장 marker, 2026-10-16; OSM has no such feature). The gap is ~60m, so the art is small.
+    at: [37.51832, 127.12718],
+    scale: 0.6,
     parts: [
       { crop: [170, 515, 362, 708], shapes: [{ ellipse: [268, 612, 92, 94] }, { rect: [172, 546, 218, 580] }] },
       { crop: [80, 590, 175, 630], shapes: [{ rect: [80, 590, 175, 630] }] },
@@ -120,8 +123,9 @@ const GROUPS = [
     id: 'ticketBooth',
     estimated: true,
     anchor: [270, 738],
-    at: [37.51712, 127.12530],
-    scale: 0.75,
+    // Official map: below Art Zone, toward 올림픽공원역 3번 출구 → south-east of 한얼광장, east of the handball arena.
+    at: [37.5177, 127.128],
+    scale: 0.6,
     parts: [{ crop: [208, 692, 332, 784], shapes: [{ ellipse: [270, 738, 61, 45] }] }],
     pins: { ticketBooth: [270, 738] },
   },
@@ -192,7 +196,7 @@ async function main() {
   fs.mkdirSync(OUT, { recursive: true })
   await sharp(base).composite(composites).webp({ quality: WEBP_QUALITY }).toFile(path.join(OUT, 'gmf2026.webp'))
   const meta = {
-    attribution: '그림: GMF 2026 공식 지도 · 지형: © OpenStreetMap',
+    attribution: '지도 그림: GMF 2026 공식 지도 · 지형 데이터: © OpenStreetMap 기여자',
     size: [proj.width, proj.height],
     bounds: [
       [BOUNDS.south, BOUNDS.west],
