@@ -1,0 +1,67 @@
+:root {
+  color-scheme: light dark;
+
+  /* Daytime: warm poster paper + ink */
+  --color-paper: #f4eee3;
+  --color-paper-deep: #e9e0cf;
+  --color-surface: #fffaf0;
+  --color-ink: #1c1726;
+  --color-ink-soft: #5d5569;
+  --color-line: #d8ccb7;
+  --color-accent: #ff4d2e;
+  --color-accent-ink: #ffffff;
+  --color-now: #c6f432;
+  --color-now-ink: #1c1726;
+  --color-warn: #e11d48;
+  --color-info: #2f5bff;
+  --color-backdrop: rgb(28 23 38 / 0.45);
+
+  --font-display: 'Black Han Sans', 'Pretendard Variable', sans-serif;
+  --font-body: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+    'Noto Sans KR', sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.5rem;
+  --text-hero: clamp(1.6rem, 1.1rem + 2.4vw, 2.4rem);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 36px;
+
+  --radius-chip: 999px;
+  --radius-ticket: 6px;
+  --radius-card: 14px;
+  --radius-sheet: 22px;
+
+  --shadow-ticket: 0 1px 0 rgb(28 23 38 / 0.06), 0 8px 18px -12px rgb(28 23 38 / 0.45);
+  --shadow-float: 0 18px 40px -18px rgb(28 23 38 / 0.55);
+
+  --duration-fast: 150ms;
+  --duration-normal: 280ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --nav-height: 64px;
+  --tap-min: 44px;
+}
+
+/* Night: the mode you'll actually be in at the festival */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-paper: #13101b;
+    --color-paper-deep: #1b1726;
+    --color-surface: #221d31;
+    --color-ink: #f4eee3;
+    --color-ink-soft: #a89fb8;
+    --color-line: #352d47;
+    --color-accent: #ff6040;
+    --color-backdrop: rgb(0 0 0 / 0.6);
+    --shadow-ticket: 0 1px 0 rgb(255 255 255 / 0.04), 0 10px 22px -14px rgb(0 0 0 / 0.9);
+    --shadow-float: 0 18px 40px -18px rgb(0 0 0 / 0.9);
+  }
+}

@@ -1,0 +1,358 @@
+.timetable {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
+.timetable__controls {
+  display: grid;
+  gap: var(--space-2);
+  padding: 0 var(--space-4) var(--space-3);
+}
+
+.chip__today {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: var(--color-now);
+  vertical-align: middle;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 3px;
+  border-radius: var(--radius-chip);
+  background: var(--color-paper-deep);
+}
+
+.segmented button {
+  min-height: 36px;
+  border: none;
+  border-radius: var(--radius-chip);
+  background: transparent;
+  font-weight: 700;
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+  transition: background-color var(--duration-fast);
+}
+
+.segmented button[aria-pressed='true'] {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-ticket);
+}
+
+.segmented__count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  margin-left: 4px;
+  padding: 0 6px;
+  border-radius: var(--radius-chip);
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-size: var(--text-xs);
+}
+
+.timetable__empty {
+  margin: var(--space-5) var(--space-4);
+  color: var(--color-ink-soft);
+  text-align: center;
+}
+
+/* Grid */
+.tt-scroll {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border-top: 2px solid var(--color-line);
+}
+
+.tt-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px repeat(var(--stage-count), minmax(132px, 1fr));
+  grid-template-rows: auto var(--body-px);
+  min-width: 100%;
+  width: max-content;
+  padding-bottom: var(--space-5);
+}
+
+.tt-corner,
+.tt-stage-head {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: var(--color-paper);
+}
+
+.tt-corner {
+  left: 0;
+  z-index: 4;
+}
+
+.tt-stage-head {
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
+  border-bottom: 2px solid var(--color-line);
+  font-weight: 800;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tt-stage-head::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 3px;
+  background: var(--stage-color);
+}
+
+.tt-hours {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--color-paper);
+}
+
+.tt-hours span {
+  position: absolute;
+  right: 6px;
+  transform: translateY(-50%);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-soft);
+}
+
+.tt-hours span:first-child {
+  transform: none;
+}
+
+.tt-column {
+  position: relative;
+  border-left: 1px dashed var(--color-line);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--color-line) 0 1px,
+    transparent 1px var(--hour-px)
+  );
+}
+
+.tt-set {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px 6px 10px;
+  border: none;
+  border-left: 4px solid var(--stage-color);
+  border-radius: var(--radius-ticket);
+  background: color-mix(in oklab, var(--stage-color) 14%, var(--color-surface));
+  box-shadow: var(--shadow-ticket);
+  text-align: left;
+  overflow: hidden;
+  transition:
+    transform var(--duration-fast) var(--ease-out-expo),
+    background-color var(--duration-fast);
+}
+
+.tt-set:active {
+  transform: scale(0.97);
+}
+
+/* Ticket perforation on the right edge */
+.tt-set::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  right: 6px;
+  width: 0;
+  border-right: 2px dotted color-mix(in oklab, var(--stage-color) 35%, transparent);
+}
+
+.tt-set__artist {
+  font-weight: 800;
+  font-size: var(--text-sm);
+  line-height: 1.2;
+  padding-right: 10px;
+}
+
+.tt-set__time {
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+
+.tt-set--compact {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  padding-block: 2px;
+}
+
+.tt-set--compact .tt-set__time {
+  display: none;
+}
+
+.tt-set--fav {
+  background: var(--stage-color);
+  color: #fff;
+}
+
+.tt-set--fav::after {
+  border-right-color: rgb(255 255 255 / 0.45);
+}
+
+.tt-set--past {
+  opacity: 0.42;
+}
+
+.tt-set--live {
+  outline: 3px solid var(--color-now);
+  outline-offset: 1px;
+}
+
+.tt-set__warn {
+  align-self: flex-start;
+  padding: 1px 6px;
+  border-radius: var(--radius-chip);
+  background: var(--color-warn);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.tt-now {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  height: 0;
+  border-top: 2px solid var(--color-accent);
+  pointer-events: none;
+}
+
+.tt-now span {
+  position: sticky;
+  left: 4px;
+  display: inline-block;
+  transform: translateY(-50%);
+  padding: 1px 6px;
+  border-radius: var(--radius-chip);
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+/* My plan list */
+.plan-list {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-2) var(--space-4) var(--space-5);
+  list-style: none;
+  overflow: auto;
+}
+
+.plan-item {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  border-left: 6px solid var(--stage-color);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-ticket);
+}
+
+.plan-item--past {
+  opacity: 0.5;
+}
+
+.plan-item__time {
+  display: grid;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+}
+
+.plan-item__time strong {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-lg);
+}
+
+.plan-item__time span {
+  font-size: var(--text-xs);
+  color: var(--color-ink-soft);
+}
+
+.plan-item__body {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.plan-item__artist {
+  font-weight: 800;
+}
+
+.plan-item__stage {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  /* Pull toward the text color so dark stage colors stay readable on the night theme. */
+  color: color-mix(in oklab, var(--stage-color) 70%, var(--color-ink));
+}
+
+.plan-item__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.plan-item__badges:empty {
+  display: none;
+}
+
+.badge {
+  padding: 1px 8px;
+  border-radius: var(--radius-chip);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.badge--live {
+  background: var(--color-now);
+  color: var(--color-now-ink);
+}
+
+.badge--warn {
+  background: var(--color-warn);
+  color: #fff;
+}
+
+.plan-item__star {
+  width: var(--tap-min);
+  height: var(--tap-min);
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-accent);
+  font-size: 22px;
+}
