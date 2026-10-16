@@ -1,11 +1,20 @@
 /// <reference types="vitest/config" />
 import react from '@vitejs/plugin-react'
 import { defineConfig, type Plugin } from 'vite'
+import { minimal2023Preset } from '@vite-pwa/assets-generator/config'
 import { VitePWA } from 'vite-plugin-pwa'
 
 const OSM_TILES = 'https://tile.openstreetmap.org'
 const FONT_ORIGINS = ['https://cdn.jsdelivr.net', 'https://fonts.googleapis.com', 'https://fonts.gstatic.com']
 const DAY_SECONDS = 60 * 60 * 24
+const ICON_BACKGROUND = '#1c1726'
+
+// icon.svg is full-bleed with the mark inside the maskable safe zone, so skip the preset's white padding.
+const ICON_PRESET = {
+  ...minimal2023Preset,
+  maskable: { ...minimal2023Preset.maskable, padding: 0, resizeOptions: { background: ICON_BACKGROUND } },
+  apple: { ...minimal2023Preset.apple, padding: 0, resizeOptions: { background: ICON_BACKGROUND } },
+}
 // Workbox serializes matchers into sw.js, so they must be self-contained regexes (no closure variables).
 const OSM_TILE_PATTERN = /^https:\/\/tile\.openstreetmap\.org\//
 const FONT_PATTERN = /^https:\/\/(cdn\.jsdelivr\.net|fonts\.googleapis\.com|fonts\.gstatic\.com)\//
@@ -49,11 +58,11 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       // Generates PNG/maskable/apple-touch icons from the SVG and injects them into the manifest and <head>.
-      pwaAssets: { image: 'public/icon.svg', preset: 'minimal-2023', overrideManifestIcons: true },
+      pwaAssets: { image: 'public/icon.svg', preset: ICON_PRESET, overrideManifestIcons: true },
       manifest: {
-        name: '페스티벌 로그',
-        short_name: '페스티벌로그',
-        description: '페스티벌 타임테이블과 현장 지도를 기록하는 앱',
+        name: '두두페 — 두근두근 페스티벌',
+        short_name: '두두페',
+        description: '두근두근 페스티벌(HBFe) — 페스티벌 타임테이블과 현장 지도를 기록하는 앱',
         lang: 'ko',
         display: 'standalone',
         orientation: 'portrait',

@@ -6,10 +6,18 @@
 }
 
 .app-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   padding: var(--space-3) var(--space-4) var(--space-2);
 }
 
+.logo-mark {
+  flex: none;
+}
+
 .app-header__title {
+  min-width: 0;
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
