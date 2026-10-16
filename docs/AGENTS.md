@@ -1,0 +1,30 @@
+# festival — 작업 주의사항
+
+> 이 work 를 작업할 때 에이전트가 반드시 지킬 규칙. 객체의 보편 정보는 wiki 를 링크하고,
+> 여기에는 "이 작업에서의 역할·제약"만 적는다.
+
+## 절대 규칙 / 금지
+- **문서 정본은 이 `docs/` 한 곳**(저장소 `festival-log/docs`)이다. `~/workspace/ai/work/festival/` 에는 링크만 둔다 — `docs` 심볼릭 링크와 이 파일들을 가리키는 안내 파일. 복사본을 만들지 않는다.
+  - 링크 재생성: `ln -s ~/Documents/workspace/festival-log/docs ~/workspace/ai/work/festival/docs`
+  - 공개 저장소에 올라간다 — 개인 경로는 `~` 로 쓰고, 이메일·키·회사 정보는 적지 않는다.
+- **커밋 작성자는 저장소 로컬 설정 `CrestedBlue <294632025+CrestedBlue@users.noreply.github.com>` 만 쓴다.** 공개 저장소라 전역 설정(회사 메일)으로 커밋하면 회사 메일이 그대로 공개된다. 새로 clone 하면 `git config user.name/user.email` 부터 다시 건다.
+- **festival-log 폴더 안의 작업은 사용자에게 확인받지 않고 알아서 진행하고, 작업 끝에는 반드시 push 한다**(사용자 지시, 2026-10-16). 스스로 내린 판단은 HISTORY.md 에 남긴다.
+- **`main` push = 즉시 운영 배포**(GitHub Actions → Pages). 그래서 push 전 `npm test && npm run build` 를 통과시킨다. 깨지면 고쳐서 통과시킨 뒤 push 하고, 끝내 안 되는 부분은 그 부분만 되돌려서라도 push 한다.
+- 공개 저장소다 — 키·토큰·개인정보를 커밋하지 않는다.
+- OpenStreetMap 타일을 **일괄 선다운로드(prefetch)하지 않는다**(OSM 타일 이용 정책 위반). 오프라인 지도는 "본 타일만 서비스워커 캐시" 방식만 허용.
+- 프리셋 페스티벌 데이터는 **공식 출처만** 쓴다. 추정값(끝 시간 미정 공연, 대략 위치 핀)은 코드 주석·핀 이름에 "(대략)"으로 표시한다.
+- Workbox `runtimeCaching.urlPattern` 에 **설정 파일의 변수를 참조하는 함수를 쓰지 않는다** — sw.js 로 직렬화되며 변수가 사라진다. 자급식 정규식만 쓴다.
+
+## 대상 객체와 이 작업에서의 역할·제약
+- GitHub 저장소 `CrestedBlue/festival-log` — wiki: `~/workspace/ai/wiki/github-ssh-key-setup.md` / 이 작업에서: **코드 정본**이자 배포 소스. SSH(`git@github.com:`)로 push 하며 CrestedBlue 키로 인증된다.
+- GitHub Pages `https://crestedblue.github.io/festival-log/` — wiki: 없음 / 이 작업에서: 운영 사이트. 친구들이 이 주소로 PWA 를 설치한다. 하위 경로 배포라 빌드 시 `BASE_PATH=/festival-log/` 필요(워크플로가 자동 주입).
+- NOL 티켓 상품 페이지 — wiki: 없음 / 이 작업에서: 프리셋 데이터 출처(읽기만). 타임테이블은 상세 이미지에만 있다.
+
+## 핵심 경로 / 접속
+- 저장소: https://github.com/CrestedBlue/festival-log
+- 배포: https://crestedblue.github.io/festival-log/
+- 배포 워크플로: `.github/workflows/deploy.yml` (push to `main` → test → build → deploy-pages)
+- 로컬 작업 사본: `~/Documents/workspace/festival-log` (커밋 작성자 로컬 설정 완료). 다른 컴퓨터에서 새로 clone 하면 작성자 설정부터 다시 건다
+- 프리셋: `src/data/presets/` (GMF 2026 = `grandMint2026.ts`)
+- 지도 이미지 생성: `node scripts/map/build-gmf2026.mjs` — 입력 `map-src/gmf2026/`(공식 지도 크롭·OSM 추출), 출력 `src/assets/maps/gmf2026.{webp,json}`. **지도 그림은 이 스크립트로만 바꾼다**(webp 를 직접 고치지 않는다). 지형 출처 OSM 은 ODbL 이라 지도에 출처 표기를 유지한다
+- 화면 확인: Claude 앱 미리보기 서버는 `~/Documents` 를 못 읽는다 → 로컬 사본에서 `npm run build` 후 `dist/` 를 세션 폴더로 복사해 미리보기
