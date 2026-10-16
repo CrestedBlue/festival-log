@@ -2,6 +2,7 @@ import type { Festival } from '../../data/schema'
 import { updateData } from '../../data/store'
 import { toggleFavorite } from '../../data/actions'
 import { festivalMoment, formatDayLabel, listDays } from '../../lib/time'
+import { StarIcon } from '../../components/icons'
 import { MyPlanList } from './MyPlanList'
 import { TimetableGrid } from './TimetableGrid'
 import './timetable.css'
@@ -33,22 +34,31 @@ export function TimetableView({ festival, favorites, now, params, setParams }: P
   return (
     <section className="timetable" aria-label="타임테이블">
       <div className="timetable__controls">
-        <div className="chip-row" role="group" aria-label="날짜">
+        <div className="chip-row timetable__days" role="group" aria-label="날짜">
           {days.map((day) => (
-            <button key={day} type="button" className="chip" aria-pressed={day === selectedDay} onClick={() => select({ day })}>
+            <button
+              key={day}
+              type="button"
+              className="chip chip--compact"
+              aria-pressed={day === selectedDay}
+              onClick={() => select({ day })}
+            >
               {formatDayLabel(day)}
               {day === moment.day && <span className="chip__today" aria-label="오늘" />}
             </button>
           ))}
         </div>
-        <div className="segmented" role="group" aria-label="보기 방식">
-          <button type="button" aria-pressed={!showMine} onClick={() => select({ mine: false })}>
-            전체
-          </button>
-          <button type="button" aria-pressed={showMine} onClick={() => select({ mine: true })}>
-            ★ 내 일정 {favoriteCount > 0 && <span className="segmented__count">{favoriteCount}</span>}
-          </button>
-        </div>
+        <button
+          type="button"
+          className="mine-toggle"
+          aria-pressed={showMine}
+          aria-label={showMine ? '전체 타임테이블 보기' : `내 일정만 보기 (찜 ${favoriteCount}개)`}
+          title={showMine ? '전체 보기' : '내 일정만 보기'}
+          onClick={() => select({ mine: !showMine })}
+        >
+          <StarIcon filled={showMine} />
+          {favoriteCount > 0 && <span className="mine-toggle__count">{favoriteCount}</span>}
+        </button>
       </div>
 
       {festival.stages.length === 0 || dayPerformances.length === 0 ? (

@@ -5,57 +5,75 @@
 }
 
 .timetable__controls {
-  display: grid;
+  display: flex;
+  align-items: center;
   gap: var(--space-2);
-  padding: 0 var(--space-4) var(--space-3);
+  padding: 0 var(--space-4) var(--space-2);
+}
+
+.timetable__days {
+  flex: 1;
+  min-width: 0;
 }
 
 .chip__today {
   display: inline-block;
-  width: 7px;
-  height: 7px;
-  margin-left: 6px;
+  width: 6px;
+  height: 6px;
+  margin-left: 5px;
   border-radius: 50%;
   background: var(--color-now);
   vertical-align: middle;
 }
 
-.segmented {
+/* "My plan" filter: a small star switch beside the day chips */
+.mine-toggle {
+  position: relative;
+  flex: none;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 3px;
-  border-radius: var(--radius-chip);
-  background: var(--color-paper-deep);
-}
-
-.segmented button {
-  min-height: 36px;
-  border: none;
-  border-radius: var(--radius-chip);
-  background: transparent;
-  font-weight: 700;
-  font-size: var(--text-sm);
-  color: var(--color-ink-soft);
-  transition: background-color var(--duration-fast);
-}
-
-.segmented button[aria-pressed='true'] {
-  background: var(--color-surface);
-  color: var(--color-ink);
-  box-shadow: var(--shadow-ticket);
-}
-
-.segmented__count {
-  display: inline-grid;
   place-items: center;
-  min-width: 20px;
-  height: 20px;
-  margin-left: 4px;
-  padding: 0 6px;
-  border-radius: var(--radius-chip);
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--color-line);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-ink-soft);
+  transition:
+    transform var(--duration-fast) var(--ease-out-expo),
+    background-color var(--duration-fast),
+    color var(--duration-fast);
+}
+
+.mine-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.mine-toggle:active {
+  transform: scale(0.9);
+}
+
+.mine-toggle[aria-pressed='true'] {
+  border-color: var(--color-accent);
   background: var(--color-accent);
   color: var(--color-accent-ink);
-  font-size: var(--text-xs);
+}
+
+.mine-toggle__count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  display: grid;
+  place-items: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: var(--radius-chip);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
 }
 
 .timetable__empty {

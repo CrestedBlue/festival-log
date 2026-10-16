@@ -15,25 +15,8 @@ export function NowStrip({ festival, favorites, now }: Props) {
   const summary = summarizeNow(festival, favorites, festivalMoment(now))
   const stageName = (stageId: string) => festival.stages.find((s) => s.id === stageId)?.name ?? ''
 
-  if (summary.kind === 'before') {
-    return (
-      <section className="now-strip" aria-label="페스티벌까지 남은 날">
-        <span className="now-strip__tag now-strip__tag--next">D-{summary.daysLeft}</span>
-        <span>
-          <strong>{festival.name}</strong>까지 {summary.daysLeft}일 남았어요
-        </span>
-      </section>
-    )
-  }
-
-  if (summary.kind === 'after') {
-    return (
-      <section className="now-strip" aria-label="지난 페스티벌">
-        <span className="now-strip__tag">DONE</span>
-        <span>다녀온 페스티벌 · 찜한 공연 {favorites.length}개</span>
-      </section>
-    )
-  }
+  // Outside festival days the strip only costs vertical space, so it disappears.
+  if (summary.kind !== 'during') return null
 
   const [first, ...rest] = summary.playing
   return (

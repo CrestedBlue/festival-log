@@ -50,3 +50,9 @@ export const CloseIcon = () => (
     <path d="M6 6l12 12M18 6 6 18" />
   </svg>
 )
+
+export const StarIcon = ({ filled }: { filled: boolean }) => (
+  <svg {...base} fill={filled ? 'currentColor' : 'none'}>
+    <path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8Z" />
+  </svg>
+)

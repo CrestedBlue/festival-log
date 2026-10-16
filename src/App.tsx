@@ -44,7 +44,7 @@ export default function App() {
   return (
     <div className="app-shell">
       <AppHeader festival={festival} />
-      {festival ? <NowStrip festival={festival} favorites={data.favorites} now={now} /> : <div />}
+      {festival && <NowStrip festival={festival} favorites={data.favorites} now={now} />}
       <main className="app-main">
         {notice && <NoticeBanner key={notice.id} notice={notice} onDismiss={dismissNotice} />}
         {renderView()}
