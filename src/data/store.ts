@@ -1,7 +1,6 @@
 import { useSyncExternalStore } from 'react'
-import { makeId } from '../lib/id'
 import { addFestival } from './actions'
-import { createSampleFestival } from './sample'
+import { DEFAULT_PRESET } from './presets'
 import { EMPTY_DATA, type AppData, type Festival } from './schema'
 import { STORAGE_KEY, loadAppData, saveAppData } from './storage'
 
@@ -49,7 +48,7 @@ function initialState(): StoreState {
       notice: persistent ? null : makeNotice('error', '이 브라우저에서는 기록이 저장되지 않아요.'),
     }
   }
-  const seeded = addFestival(EMPTY_DATA, createSampleFestival(new Date(), makeId))
+  const seeded = addFestival(EMPTY_DATA, DEFAULT_PRESET())
   if (loaded.status === 'corrupted' && !loaded.backedUp) {
     // Couldn't copy the unreadable data aside, so don't overwrite it: run this session in memory only.
     storage = memoryStorage()
@@ -62,7 +61,7 @@ function initialState(): StoreState {
   const notice =
     loaded.status === 'corrupted'
       ? makeNotice('error', '저장된 기록을 읽지 못해서 따로 백업해 두고 샘플로 시작했어요.')
-      : makeNotice('info', '샘플 페스티벌을 넣어뒀어요. 관리 탭에서 내 페스티벌을 추가해 보세요.')
+      : makeNotice('info', '그랜드 민트 페스티벌 2026 타임테이블을 넣어뒀어요. 보고 싶은 공연을 눌러 찜해 보세요.')
   return { data: seeded, notice }
 }
 

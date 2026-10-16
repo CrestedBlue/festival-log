@@ -8,6 +8,7 @@ import { addDays, listDays, toIsoDate } from '../../lib/time'
 import { BulkAdd } from './BulkAdd'
 import { FestivalForm, type FestivalFormValues } from './FestivalForm'
 import { PerformanceList } from './PerformanceList'
+import { PresetSection } from './PresetSection'
 import { ShareSection } from './ShareSection'
 import { StageEditor } from './StageEditor'
 import './manage.css'
@@ -108,6 +109,10 @@ export function ManageView({ data, festival }: { data: AppData; festival: Festiv
             onCancel={festival ? () => setCreating(false) : undefined}
           />
         )}
+      </Panel>
+
+      <Panel id="manage-presets" title="페스티벌 불러오기">
+        <PresetSection data={data} />
       </Panel>
 
       {festival && !creating && (
