@@ -3,6 +3,8 @@ import { hasIdCollision } from '../actions'
 import { createSampleFestival } from '../sample'
 import { FestivalSchema } from '../schema'
 import { makeData } from '../testFixtures'
+import { festivalMapFor } from '../../features/map/festivalMaps'
+import { isInsideBounds } from '../../lib/geo'
 import { GRAND_MINT_2026_ID, createGrandMint2026 } from './grandMint2026'
 
 describe('createGrandMint2026', () => {
@@ -36,6 +38,18 @@ describe('createGrandMint2026', () => {
     const music = festival.performances.filter((p) => !p.stageId.endsWith('radar'))
     expect(music.filter((p) => p.day === '2026-10-17')).toHaveLength(24)
     expect(music.filter((p) => p.day === '2026-10-18')).toHaveLength(24)
+  })
+
+  test('puts every pin on the bundled map image, including both subway exits', () => {
+    const map = festivalMapFor(GRAND_MINT_2026_ID)
+    expect(map).not.toBeNull()
+    expect(festival.pins.every((pin) => map && isInsideBounds(pin, map.bounds))).toBe(true)
+    expect(festival.pins.filter((pin) => pin.name.includes('출구'))).toHaveLength(2)
+  })
+
+  test('marks the zones whose position is estimated', () => {
+    const estimated = festival.pins.filter((pin) => pin.name.includes('(대략)')).map((pin) => pin.name.split(' ·')[0])
+    expect(estimated).toEqual(expect.arrayContaining(['Radar', 'Hungry Zone', 'Art Zone', '티켓 부스 (대략)']))
   })
 
   test('uses stable ids so re-adding replaces instead of duplicating', () => {

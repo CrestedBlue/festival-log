@@ -5,20 +5,25 @@ import type { GeoState } from '../../hooks/useGeolocation'
 import type { LatLng } from '../../lib/geo'
 import { PIN_META } from './pinMeta'
 
-const PIN_SIZE = 38
 const ME_SIZE = 22
 
 /** Pin markers. Only enum-derived values go into the icon HTML; names use the title attribute. */
-export function usePinLayer(map: L.Map | null, pins: readonly Pin[], selectedId: string | null, onSelect: (id: string) => void) {
+export function usePinLayer(
+  map: L.Map | null,
+  pins: readonly Pin[],
+  selectedId: string | null,
+  onSelect: (id: string) => void,
+  pinSize: number,
+) {
   useEffect(() => {
     if (!map) return
     const layer = L.layerGroup().addTo(map)
     pins.forEach((pin) => {
       const icon = L.divIcon({
         className: '',
-        html: `<span class="map-pin map-pin--${pin.kind}${pin.id === selectedId ? ' is-selected' : ''}">${PIN_META[pin.kind].emoji}</span>`,
-        iconSize: [PIN_SIZE, PIN_SIZE],
-        iconAnchor: [PIN_SIZE / 2, PIN_SIZE / 2],
+        html: `<span class="map-pin map-pin--${pin.kind}${pin.id === selectedId ? ' is-selected' : ''}" style="font-size:${Math.round(pinSize * 0.47)}px">${PIN_META[pin.kind].emoji}</span>`,
+        iconSize: [pinSize, pinSize],
+        iconAnchor: [pinSize / 2, pinSize / 2],
       })
       L.marker([pin.lat, pin.lng], { icon, title: pin.name, alt: pin.name, riseOnHover: true })
         .on('click', () => onSelect(pin.id))
@@ -27,7 +32,7 @@ export function usePinLayer(map: L.Map | null, pins: readonly Pin[], selectedId:
     return () => {
       layer.remove()
     }
-  }, [map, pins, selectedId, onSelect])
+  }, [map, pins, selectedId, onSelect, pinSize])
 }
 
 /** Blue dot + accuracy ring for the device position. */

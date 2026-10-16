@@ -1,4 +1,4 @@
-import type { Festival } from '../schema'
+import type { AppData, Festival, Pin } from '../schema'
 import { GRAND_MINT_2026_ID, createGrandMint2026 } from './grandMint2026'
 
 export interface FestivalPreset {
@@ -13,3 +13,32 @@ export const PRESETS: readonly FestivalPreset[] = [
 ]
 
 export const DEFAULT_PRESET = createGrandMint2026
+
+const samePin = (a: Pin, b: Pin) => a.name === b.name && a.kind === b.kind && a.lat === b.lat && a.lng === b.lng
+
+/**
+ * When an app update moves a preset's pins (e.g. a new festival map), devices that already added the
+ * preset get the new positions. Pins the user added are kept; preset pins the user deleted stay deleted
+ * unless the preset itself changed.
+ */
+export function syncPresetPins(data: AppData): AppData {
+  let next = data
+  for (const preset of PRESETS) {
+    const festival = next.festivals.find((f) => f.id === preset.id)
+    if (!festival) continue
+    const fresh = preset.create().pins
+    const prefix = `${preset.id}-pin-`
+    const current = festival.pins.filter((p) => p.id.startsWith(prefix))
+    const outdated = current.some((pin) => {
+      const match = fresh.find((f) => f.id === pin.id)
+      return !match || !samePin(match, pin)
+    })
+    if (!outdated) continue
+    const userPins = festival.pins.filter((p) => !p.id.startsWith(prefix))
+    next = {
+      ...next,
+      festivals: next.festivals.map((f) => (f.id === preset.id ? { ...f, pins: [...fresh, ...userPins] } : f)),
+    }
+  }
+  return next
+}

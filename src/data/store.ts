@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react'
 import { addFestival } from './actions'
-import { DEFAULT_PRESET } from './presets'
+import { DEFAULT_PRESET, syncPresetPins } from './presets'
 import { EMPTY_DATA, type AppData, type Festival } from './schema'
 import { STORAGE_KEY, loadAppData, saveAppData } from './storage'
 
@@ -43,8 +43,10 @@ const makeNotice = (kind: Notice['kind'], message: string): Notice => ({ id: ++n
 function initialState(): StoreState {
   const loaded = loadAppData(storage)
   if (loaded.status === 'ok') {
+    const data = syncPresetPins(loaded.data)
+    if (data !== loaded.data) saveAppData(storage, data)
     return {
-      data: loaded.data,
+      data,
       notice: persistent ? null : makeNotice('error', '이 브라우저에서는 기록이 저장되지 않아요.'),
     }
   }

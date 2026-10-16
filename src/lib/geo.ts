@@ -20,3 +20,10 @@ export function formatDistance(meters: number): string {
   if (meters < 1000) return `${Math.round(meters / 10) * 10}m`
   return `${(meters / 1000).toFixed(1)}km`
 }
+
+/** [[south, west], [north, east]] — the same shape Leaflet uses. */
+export type LatLngBounds = readonly [readonly [number, number], readonly [number, number]]
+
+export function isInsideBounds(point: LatLng, [[south, west], [north, east]]: LatLngBounds): boolean {
+  return point.lat >= south && point.lat <= north && point.lng >= west && point.lng <= east
+}

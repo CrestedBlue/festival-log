@@ -1,3 +1,4 @@
+import { festivalMapFor } from '../../features/map/festivalMaps'
 import type { Festival, Pin } from '../schema'
 
 /**
@@ -84,16 +85,25 @@ const DAY2: readonly Row[] = [
   ['radar', '18:00', '18:50', '토크: 라쿠나 복귀 신고합니다'],
 ]
 
-// Stage coordinates come from OpenStreetMap; "(대략)" pins are estimated from the festival map illustration.
+// Pins sit on the bundled festival map (scripts/map/build-gmf2026.mjs): stage art is placed on surveyed
+// OpenStreetMap footprints, "(대략)" zones follow the official map's layout, exits are OSM subway entrances.
+const anchor = (key: string): { lat: number; lng: number } => {
+  const point = festivalMapFor(GRAND_MINT_2026_ID)?.anchors[key]
+  if (!point) throw new Error(`GMF 2026 map has no anchor "${key}"`)
+  return { lat: point[0], lng: point[1] }
+}
+
 const PINS: ReadonlyArray<Omit<Pin, 'id'>> = [
-  { name: 'Mint Breeze · 88잔디마당', kind: 'stage', lat: 37.518951, lng: 127.125205 },
-  { name: 'Club Midnight Sunset · KSPO DOME', kind: 'stage', lat: 37.519224, lng: 127.12747 },
-  { name: 'Loving Forest Garden · 88호수 수변무대', kind: 'stage', lat: 37.52117, lng: 127.125445 },
-  { name: 'Radar · 체조경기장–수영장 사이 (대략)', kind: 'etc', lat: 37.5204, lng: 127.1272 },
-  { name: 'Hungry Zone · 체조경기장–수영장 사이 (대략)', kind: 'food', lat: 37.5202, lng: 127.1267 },
-  { name: 'Art Zone · 한얼광장 (대략)', kind: 'etc', lat: 37.5181, lng: 127.1258 },
-  { name: '올림픽공원역 3번 출구 (5·9호선)', kind: 'etc', lat: 37.516258, lng: 127.130592 },
-  { name: '몽촌토성역 1번 출구 (8호선)', kind: 'etc', lat: 37.517288, lng: 127.114197 },
+  { name: 'Mint Breeze · 88잔디마당', kind: 'stage', ...anchor('mintBreezeStage') },
+  { name: 'Club Midnight Sunset · KSPO DOME', kind: 'stage', ...anchor('clubMidnightStage') },
+  { name: 'Loving Forest Garden · 88호수 수변무대', kind: 'stage', ...anchor('lovingForestStage') },
+  { name: 'Radar · 체조경기장–수영장 사이 (대략)', kind: 'etc', ...anchor('radar') },
+  { name: 'Hungry Zone · 체조경기장–수영장 사이 (대략)', kind: 'food', ...anchor('hungryZoneEast') },
+  { name: 'Hungry Zone · 88잔디마당 안 (대략)', kind: 'food', ...anchor('hungryZoneLawn') },
+  { name: 'Art Zone · 한얼광장 (대략)', kind: 'etc', ...anchor('artZone') },
+  { name: '티켓 부스 (대략)', kind: 'etc', ...anchor('ticketBooth') },
+  { name: '올림픽공원역 3번 출구 (5·9호선)', kind: 'etc', ...anchor('olympicParkExit3') },
+  { name: '몽촌토성역 1번 출구 (8호선)', kind: 'etc', ...anchor('mongchonExit1') },
 ]
 
 const toPerformances = (day: string, dayKey: string, rows: readonly Row[]) =>

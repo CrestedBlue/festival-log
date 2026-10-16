@@ -15,6 +15,11 @@
   background: var(--color-paper-deep);
 }
 
+/* Illustrated festival map: paper color of the art, so the area around the image blends in. */
+.map-canvas--image {
+  background: #e1dfc6;
+}
+
 .map-canvas.is-picking {
   cursor: crosshair;
 }
@@ -90,12 +95,12 @@
 .map-pin {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
   border: 3px solid var(--color-ink);
   border-radius: 50% 50% 50% 6px;
   background: var(--color-surface);
-  font-size: 18px;
   box-shadow: var(--shadow-ticket);
   transition: transform var(--duration-fast) var(--ease-out-expo);
 }
@@ -160,13 +165,35 @@
   box-shadow: 0 -10px 30px -20px rgb(0 0 0 / 0.5);
 }
 
-.map-panel__head {
+.map-panel.is-collapsed {
+  padding-bottom: var(--space-2);
+}
+
+.map-panel__toggle {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-2);
-  margin-bottom: var(--space-2);
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+
+.map-panel__chevron {
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-right: 2.5px solid currentColor;
+  border-bottom: 2.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--duration-fast) var(--ease-out-expo);
+}
+
+.map-panel__toggle[aria-expanded='false'] .map-panel__chevron {
+  transform: rotate(-135deg);
 }
 
 .map-panel__title {
@@ -174,11 +201,6 @@
   font-family: var(--font-display);
   font-weight: 400;
   font-size: var(--text-lg);
-}
-
-.map-panel__tools {
-  display: flex;
-  gap: var(--space-1);
 }
 
 .map-panel__empty {

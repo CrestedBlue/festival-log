@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { distanceMeters, formatDistance } from './geo'
+import { distanceMeters, formatDistance, isInsideBounds } from './geo'
 
 describe('distanceMeters', () => {
   test('is zero for the same point', () => {
@@ -21,5 +21,22 @@ describe('formatDistance', () => {
 
   test('shows kilometers with one decimal from 1km', () => {
     expect(formatDistance(1234)).toBe('1.2km')
+  })
+})
+
+describe('isInsideBounds', () => {
+  const bounds: [[number, number], [number, number]] = [
+    [37.5, 127.1],
+    [37.6, 127.2],
+  ]
+
+  test('is true inside and on the edge', () => {
+    expect(isInsideBounds({ lat: 37.55, lng: 127.15 }, bounds)).toBe(true)
+    expect(isInsideBounds({ lat: 37.5, lng: 127.2 }, bounds)).toBe(true)
+  })
+
+  test('is false outside on any side', () => {
+    expect(isInsideBounds({ lat: 37.49, lng: 127.15 }, bounds)).toBe(false)
+    expect(isInsideBounds({ lat: 37.55, lng: 127.21 }, bounds)).toBe(false)
   })
 })

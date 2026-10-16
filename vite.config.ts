@@ -70,7 +70,8 @@ export default defineConfig({
         theme_color: '#13101b',
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        // webp = bundled festival maps, so the map works with no signal at the venue.
+        globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2}'],
         runtimeCaching: [
           {
             // Festival grounds often have no signal: keep every map tile you've already looked at.

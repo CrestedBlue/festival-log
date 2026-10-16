@@ -124,7 +124,6 @@ export function ManageView({ data, festival }: { data: AppData; festival: Festiv
               submitLabel="저장"
               onSubmit={(values) => editFestival(festival, values)}
             />
-            <p className="hint">행사장 위치는 지도 탭에서 지도를 옮긴 뒤 ‘여기를 행사장으로 저장’을 누르세요.</p>
           </Panel>
           <Panel id="manage-stages" title="스테이지">
             <StageEditor festival={festival} />
