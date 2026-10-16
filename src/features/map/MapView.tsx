@@ -8,16 +8,18 @@ import { useGeolocation } from '../../hooks/useGeolocation'
 import { useStoredFlag } from '../../hooks/useStoredFlag'
 import { distanceMeters, formatDistance, isInsideBounds, type LatLng } from '../../lib/geo'
 import { makeId } from '../../lib/id'
+import { isMapLabelPin } from '../../data/presets'
 import { festivalMapFor } from './festivalMaps'
 import { MapCredits } from './MapCredits'
 import { PinForm } from './PinForm'
 import { PIN_META } from './pinMeta'
 import { useLeafletMap } from './useLeafletMap'
-import { useMapPick, useMyLocationLayer, usePinLayer } from './useMapLayers'
+import { pinSizeForZoom } from './pinSize'
+import { useMapPick, useMapZoom, useMyLocationLayer, usePinLayer } from './useMapLayers'
 import './map.css'
 
 const FOCUS_ZOOM = 17
-const PIN_SIZE = { image: 30, tiles: 38 } as const
+const TILE_MAP_PIN = { size: 38, showIcon: true }
 const PANEL_COLLAPSED_KEY = 'festival-log:pins-collapsed'
 
 async function isLocationAlreadyGranted(): Promise<boolean> {
@@ -50,7 +52,10 @@ export default function MapView({ festival }: { festival: Festival }) {
     setDraft(at)
   }, [])
 
-  usePinLayer(map, festival.pins, selectedId, setSelectedId, festivalMap ? PIN_SIZE.image : PIN_SIZE.tiles)
+  const zoom = useMapZoom(map)
+  // The illustrated map already labels stages, exits, … so only the other pins are drawn on it.
+  const mapPins = festivalMap ? festival.pins.filter((pin) => !isMapLabelPin(festival.id, pin)) : festival.pins
+  usePinLayer(map, mapPins, selectedId, setSelectedId, festivalMap ? pinSizeForZoom(zoom ?? 0) : TILE_MAP_PIN)
   useMyLocationLayer(map, geo)
   useMapPick(map, picking, onPick)
 
@@ -97,6 +102,8 @@ export default function MapView({ festival }: { festival: Festival }) {
     updateData((d) => removePin(d, festival.id, id))
     setSelectedId(null)
   }
+
+  const selected = festival.pins.find((pin) => pin.id === selectedId) ?? null
 
   const rows = festival.pins
     .map((pin) => ({ pin, distance: me ? distanceMeters(me, pin) : null }))
@@ -148,6 +155,18 @@ export default function MapView({ festival }: { festival: Festival }) {
         </div>
         {hint}
         {festivalMap && <MapCredits text={festivalMap.attribution} />}
+        {selected && collapsed && !draft && (
+          <div className="map-selected" role="status">
+            <span className={`map-selected__icon map-pin--${selected.kind}`} aria-hidden="true">
+              {PIN_META[selected.kind].emoji}
+            </span>
+            <span className="map-selected__name">{selected.name}</span>
+            {me && <span className="pin-list__dist">{formatDistance(distanceMeters(me, selected))}</span>}
+            <button type="button" className="map-selected__close" aria-label="선택 닫기" onClick={() => setSelectedId(null)}>
+              ✕
+            </button>
+          </div>
+        )}
       </div>
 
       <div className={`map-panel${collapsed && !draft ? ' is-collapsed' : ''}`}>

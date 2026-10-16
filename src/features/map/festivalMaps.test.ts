@@ -26,6 +26,16 @@ describe('parseMapMeta', () => {
     expect(() => parseMapMeta({ ...valid, bounds: [[37.6, 127.2], [37.5, 127.1]] })).toThrow()
   })
 
+  test('reads official marks', () => {
+    const meta = parseMapMeta({ ...valid, marks: [{ id: 1, kind: 'toilet', zone: 'Mint Breeze', lat: 37.55, lng: 127.15 }] })
+    expect(meta.marks).toEqual([{ id: 1, kind: 'toilet', zone: 'Mint Breeze', lat: 37.55, lng: 127.15 }])
+  })
+
+  test('rejects marks outside the image or without a kind', () => {
+    expect(() => parseMapMeta({ ...valid, marks: [{ id: 1, kind: 'toilet', zone: 'x', lat: 36, lng: 127 }] })).toThrow()
+    expect(() => parseMapMeta({ ...valid, marks: [{ id: 2, zone: 'x', lat: 37.55, lng: 127.15 }] })).toThrow()
+  })
+
   test('rejects anchors outside the image', () => {
     expect(() => parseMapMeta({ ...valid, anchors: { far: [36, 127] } })).toThrow()
   })

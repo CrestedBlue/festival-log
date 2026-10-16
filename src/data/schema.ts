@@ -20,7 +20,25 @@ export const PerformanceSchema = z
   .object({ id, stageId: id, day: isoDate, artist: name, start: clock, end: clock })
   .refine((p) => spanOf(p.start, p.end) !== null, '끝나는 시간이 시작보다 빠르거나 12시간을 넘어요')
 
-export const PIN_KINDS = ['stage', 'food', 'toilet', 'meet', 'etc'] as const
+// The first five can be picked when adding a pin; the rest mirror the official festival map legend.
+export const USER_PIN_KINDS = ['stage', 'food', 'toilet', 'meet', 'etc'] as const
+export const PIN_KINDS = [
+  ...USER_PIN_KINDS,
+  'info',
+  'firstaid',
+  'wristband',
+  'luggage',
+  'water',
+  'eating',
+  'shop',
+  'slogan',
+  'radar',
+  'photo',
+  'smoking',
+  'sponsor',
+  'artist',
+  'vinyl',
+] as const
 export const PinSchema = z.object({
   id,
   name,

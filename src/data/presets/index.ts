@@ -27,7 +27,8 @@ export function syncPresetPins(data: AppData): AppData {
     const festival = next.festivals.find((f) => f.id === preset.id)
     if (!festival) continue
     const fresh = preset.create().pins
-    const prefix = `${preset.id}-pin-`
+    // Every pin a preset owns has an id starting with its festival id (user pins have random ids).
+    const prefix = `${preset.id}-`
     const current = festival.pins.filter((p) => p.id.startsWith(prefix))
     const outdated = current.some((pin) => {
       const match = fresh.find((f) => f.id === pin.id)
@@ -42,3 +43,6 @@ export function syncPresetPins(data: AppData): AppData {
   }
   return next
 }
+
+/** Preset pins for places the illustrated map already labels (stages, exits, …): listed, but not drawn on it. */
+export const isMapLabelPin = (festivalId: string, pin: Pick<Pin, 'id'>): boolean => pin.id.startsWith(`${festivalId}-zone-`)

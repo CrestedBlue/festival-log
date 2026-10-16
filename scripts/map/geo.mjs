@@ -56,3 +56,40 @@ export const centroid = (pts) => [
 ]
 
 export const isClosed = (pts) => pts.length > 3 && samePoint(pts[0], pts.at(-1))
+
+const perpendicularDistance = ([x, y], [ax, ay], [bx, by]) => {
+  const dx = bx - ax, dy = by - ay
+  const len = Math.hypot(dx, dy)
+  return len === 0 ? Math.hypot(x - ax, y - ay) : Math.abs(dy * x - dx * y + bx * ay - by * ax) / len
+}
+
+/** Ramer–Douglas–Peucker: drops wiggles smaller than `epsilon` (same units as the points). */
+export function simplify(points, epsilon) {
+  if (points.length < 3) return points
+  let index = 0
+  let max = 0
+  for (let i = 1; i < points.length - 1; i++) {
+    const d = perpendicularDistance(points[i], points[0], points.at(-1))
+    if (d > max) {
+      max = d
+      index = i
+    }
+  }
+  if (max <= epsilon) return [points[0], points.at(-1)]
+  return [...simplify(points.slice(0, index + 1), epsilon).slice(0, -1), ...simplify(points.slice(index), epsilon)]
+}
+
+/** Chaikin corner cutting on a closed ring: each pass rounds every corner a little. */
+export function smoothRing(points, passes) {
+  let ring = points
+  for (let pass = 0; pass < passes; pass++) {
+    ring = ring.flatMap((p, i) => {
+      const q = ring[(i + 1) % ring.length]
+      return [
+        [0.75 * p[0] + 0.25 * q[0], 0.75 * p[1] + 0.25 * q[1]],
+        [0.25 * p[0] + 0.75 * q[0], 0.25 * p[1] + 0.75 * q[1]],
+      ]
+    })
+  }
+  return ring
+}

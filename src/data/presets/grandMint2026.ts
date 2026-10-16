@@ -85,26 +85,66 @@ const DAY2: readonly Row[] = [
   ['radar', '18:00', '18:50', '토크: 라쿠나 복귀 신고합니다'],
 ]
 
-// Pins sit on the bundled festival map (scripts/map/build-gmf2026.mjs): stage art is placed on surveyed
-// OpenStreetMap footprints, "(대략)" zones follow the official map's layout, exits are OSM subway entrances.
+// Pins sit on the bundled festival map (scripts/map/build-gmf2026.mjs). Zone pins mark places the map
+// already labels (listed, not drawn); mark pins are the official map's icons (toilets, info, …) moved onto
+// the redrawn zones. Exits are OSM subway entrances.
+const gmfMap = () => {
+  const map = festivalMapFor(GRAND_MINT_2026_ID)
+  if (!map) throw new Error('GMF 2026 map metadata is missing')
+  return map
+}
+
 const anchor = (key: string): { lat: number; lng: number } => {
-  const point = festivalMapFor(GRAND_MINT_2026_ID)?.anchors[key]
+  const point = gmfMap().anchors[key]
   if (!point) throw new Error(`GMF 2026 map has no anchor "${key}"`)
   return { lat: point[0], lng: point[1] }
 }
 
-const PINS: ReadonlyArray<Omit<Pin, 'id'>> = [
-  { name: 'Mint Breeze · 88잔디마당', kind: 'stage', ...anchor('mintBreezeStage') },
-  { name: 'Club Midnight Sunset · KSPO DOME', kind: 'stage', ...anchor('clubMidnightStage') },
-  { name: 'Loving Forest Garden · 88호수 수변무대', kind: 'stage', ...anchor('lovingForestStage') },
-  { name: 'Radar · 체조경기장–수영장 사이 (대략)', kind: 'etc', ...anchor('radar') },
-  { name: 'Hungry Zone · 체조경기장–수영장 사이 (대략)', kind: 'food', ...anchor('hungryZoneEast') },
-  { name: 'Hungry Zone · 88잔디마당 안 (대략)', kind: 'food', ...anchor('hungryZoneLawn') },
-  { name: 'Art Zone · 한얼광장', kind: 'etc', ...anchor('artZone') },
-  { name: '티켓 부스 (대략)', kind: 'etc', ...anchor('ticketBooth') },
-  { name: '올림픽공원역 3번 출구 (5·9호선)', kind: 'etc', ...anchor('olympicParkExit3') },
-  { name: '몽촌토성역 1번 출구 (8호선)', kind: 'etc', ...anchor('mongchonExit1') },
+const ZONE_PINS: ReadonlyArray<readonly [key: string, pin: Omit<Pin, 'id' | 'lat' | 'lng'>, anchorKey: string]> = [
+  ['mint-breeze', { name: 'Mint Breeze · 88잔디마당', kind: 'stage' }, 'mintBreezeStage'],
+  ['club-midnight', { name: 'Club Midnight Sunset · KSPO DOME', kind: 'stage' }, 'clubMidnightStage'],
+  ['loving-forest', { name: 'Loving Forest Garden · 88호수 수변무대', kind: 'stage' }, 'lovingForestStage'],
+  ['hungry-east', { name: 'Hungry Zone · 체조경기장–수영장 사이', kind: 'food' }, 'hungryZoneEast'],
+  ['hungry-lawn', { name: 'Hungry Zone · 88잔디마당 안', kind: 'food' }, 'hungryZoneLawn'],
+  ['art-zone', { name: 'Art Zone · 한얼광장', kind: 'etc' }, 'artZone'],
+  ['olympic-park-exit-3', { name: '올림픽공원역 3번 출구 (5·9호선)', kind: 'etc' }, 'olympicParkExit3'],
+  ['mongchon-exit-1', { name: '몽촌토성역 1번 출구 (8호선)', kind: 'etc' }, 'mongchonExit1'],
 ]
+
+// Official legend names; "fnb" (food & beverage stalls) is the app's "food" kind.
+const MARK_KINDS: Record<string, { kind: Pin['kind']; name: string }> = {
+  toilet: { kind: 'toilet', name: '화장실' },
+  info: { kind: 'info', name: '인포메이션' },
+  firstaid: { kind: 'firstaid', name: '의료부스' },
+  wristband: { kind: 'wristband', name: '손목밴드 교환' },
+  luggage: { kind: 'luggage', name: '물품보관소' },
+  water: { kind: 'water', name: '프리워터존' },
+  eating: { kind: 'eating', name: '취식존' },
+  fnb: { kind: 'food', name: '푸드존 (식음료 판매)' },
+  shop: { kind: 'shop', name: '민트샵 (공식 MD)' },
+  slogan: { kind: 'slogan', name: '슬로건 전시' },
+  radar: { kind: 'radar', name: 'RADAR (오픈 라디오)' },
+  photo: { kind: 'photo', name: '포토존' },
+  smoking: { kind: 'smoking', name: '흡연구역' },
+  sponsor: { kind: 'sponsor', name: '스폰서 존' },
+  artist: { kind: 'artist', name: 'Artist & Label' },
+  vinyl: { kind: 'vinyl', name: 'Vinyl & Accessory' },
+}
+// Places with no official position of their own beyond the official map's layout.
+const ESTIMATED_ZONES = new Set(['티켓 부스'])
+
+function markPins(): Pin[] {
+  return gmfMap().marks.map((mark) => {
+    const meta = MARK_KINDS[mark.kind]
+    if (!meta) throw new Error(`GMF 2026 map mark ${mark.id} has unknown kind "${mark.kind}"`)
+    const where = ESTIMATED_ZONES.has(mark.zone) ? `${mark.zone} (대략)` : mark.zone
+    return { id: `${GRAND_MINT_2026_ID}-mark-${mark.id}`, name: `${meta.name} · ${where}`, kind: meta.kind, lat: mark.lat, lng: mark.lng }
+  })
+}
+
+function zonePins(): Pin[] {
+  return ZONE_PINS.map(([key, pin, anchorKey]) => ({ id: `${GRAND_MINT_2026_ID}-zone-${key}`, ...pin, ...anchor(anchorKey) }))
+}
 
 const toPerformances = (day: string, dayKey: string, rows: readonly Row[]) =>
   rows.map(([stage, start, end, artist], index) => ({
@@ -125,6 +165,6 @@ export function createGrandMint2026(): Festival {
     venue: { name: '올림픽공원', lat: 37.5195, lng: 127.1265 },
     stages: (Object.keys(STAGES) as StageKey[]).map((key) => ({ id: `${GRAND_MINT_2026_ID}-${key}`, ...STAGES[key] })),
     performances: [...toPerformances('2026-10-17', 'd1', DAY1), ...toPerformances('2026-10-18', 'd2', DAY2)],
-    pins: PINS.map((pin, index) => ({ id: `${GRAND_MINT_2026_ID}-pin-${index}`, ...pin })),
+    pins: [...zonePins(), ...markPins()],
   }
 }

@@ -1,5 +1,5 @@
 import L from 'leaflet'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { Pin } from '../../data/schema'
 import type { GeoState } from '../../hooks/useGeolocation'
 import type { LatLng } from '../../lib/geo'
@@ -8,12 +8,18 @@ import { PIN_META } from './pinMeta'
 const ME_SIZE = 22
 
 /** Pin markers. Only enum-derived values go into the icon HTML; names use the title attribute. */
+export interface PinLook {
+  size: number
+  /** Without the icon a pin is a small dot (used when zoomed out over an illustrated map). */
+  showIcon: boolean
+}
+
 export function usePinLayer(
   map: L.Map | null,
   pins: readonly Pin[],
   selectedId: string | null,
   onSelect: (id: string) => void,
-  pinSize: number,
+  { size: pinSize, showIcon }: PinLook,
 ) {
   useEffect(() => {
     if (!map) return
@@ -21,7 +27,7 @@ export function usePinLayer(
     pins.forEach((pin) => {
       const icon = L.divIcon({
         className: '',
-        html: `<span class="map-pin map-pin--${pin.kind}${pin.id === selectedId ? ' is-selected' : ''}" style="font-size:${Math.round(pinSize * 0.47)}px">${PIN_META[pin.kind].emoji}</span>`,
+        html: `<span class="map-pin map-pin--${pin.kind}${showIcon ? '' : ' map-pin--dot'}${pin.id === selectedId ? ' is-selected' : ''}" style="font-size:${Math.round(pinSize * 0.5)}px">${showIcon ? PIN_META[pin.kind].emoji : ''}</span>`,
         iconSize: [pinSize, pinSize],
         iconAnchor: [pinSize / 2, pinSize / 2],
       })
@@ -32,7 +38,7 @@ export function usePinLayer(
     return () => {
       layer.remove()
     }
-  }, [map, pins, selectedId, onSelect, pinSize])
+  }, [map, pins, selectedId, onSelect, pinSize, showIcon])
 }
 
 /** Blue dot + accuracy ring for the device position. */
@@ -86,4 +92,19 @@ export function useMapPick(map: L.Map | null, active: boolean, onPick: (at: LatL
       map.off('click', handler)
     }
   }, [map, active, onPick])
+}
+
+/** Current zoom level, updated after every zoom. */
+export function useMapZoom(map: L.Map | null): number | null {
+  const [zoom, setZoom] = useState<number | null>(null)
+  useEffect(() => {
+    if (!map) return
+    const update = () => setZoom(map.getZoom())
+    update()
+    map.on('zoomend', update)
+    return () => {
+      map.off('zoomend', update)
+    }
+  }, [map])
+  return zoom
 }

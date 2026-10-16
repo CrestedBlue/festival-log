@@ -1,5 +1,5 @@
 {
-  "attribution": "지도 그림: GMF 2026 공식 지도 · 지형 데이터: © OpenStreetMap 기여자",
+  "attribution": "지도 디자인: GMF 2026 공식 지도 참고 · 지형 데이터: © OpenStreetMap 기여자",
   "size": [
     2825,
     1354
@@ -16,46 +16,46 @@
   ],
   "initialView": [
     [
-      37.5165,
-      127.1228
+      37.5178,
+      127.1232
     ],
     [
-      37.5223,
-      127.1296
+      37.5222,
+      127.1287
     ]
   ],
   "anchors": {
     "mintBreezeStage": [
-      37.519662,
-      127.125042
-    ],
-    "hungryZoneLawn": [
-      37.519502,
-      127.124302
+      37.51987,
+      127.125545
     ],
     "lovingForestStage": [
-      37.521168,
-      127.12544
+      37.521127,
+      127.125453
     ],
     "clubMidnightStage": [
-      37.51952,
-      127.127708
+      37.519477,
+      127.127492
     ],
     "radar": [
-      37.520122,
-      127.127124
+      37.520117,
+      127.128214
     ],
     "hungryZoneEast": [
-      37.520295,
-      127.127447
+      37.520117,
+      127.127138
+    ],
+    "hungryZoneLawn": [
+      37.518467,
+      127.124235
     ],
     "artZone": [
-      37.51832,
-      127.12718
+      37.518298,
+      127.127181
     ],
     "ticketBooth": [
-      37.5177,
-      127.128
+      37.517681,
+      127.128002
     ],
     "mongchonExit1": [
       37.517706,
@@ -65,5 +65,245 @@
       37.516172,
       127.130716
     ]
-  }
+  },
+  "marks": [
+    {
+      "id": 1,
+      "kind": "toilet",
+      "zone": "Mint Breeze",
+      "lat": 37.520234,
+      "lng": 127.12455
+    },
+    {
+      "id": 2,
+      "kind": "toilet",
+      "zone": "Mint Breeze",
+      "lat": 37.519814,
+      "lng": 127.124944
+    },
+    {
+      "id": 3,
+      "kind": "toilet",
+      "zone": "Mint Breeze",
+      "lat": 37.519712,
+      "lng": 127.124833
+    },
+    {
+      "id": 4,
+      "kind": "sponsor",
+      "zone": "Mint Breeze",
+      "lat": 37.519753,
+      "lng": 127.125967
+    },
+    {
+      "id": 5,
+      "kind": "fnb",
+      "zone": "Mint Breeze",
+      "lat": 37.519711,
+      "lng": 127.124906
+    },
+    {
+      "id": 6,
+      "kind": "eating",
+      "zone": "Mint Breeze",
+      "lat": 37.519518,
+      "lng": 127.124708
+    },
+    {
+      "id": 7,
+      "kind": "photo",
+      "zone": "Mint Breeze",
+      "lat": 37.519422,
+      "lng": 127.124806
+    },
+    {
+      "id": 8,
+      "kind": "photo",
+      "zone": "Mint Breeze",
+      "lat": 37.519538,
+      "lng": 127.126128
+    },
+    {
+      "id": 9,
+      "kind": "water",
+      "zone": "Mint Breeze",
+      "lat": 37.519235,
+      "lng": 127.124681
+    },
+    {
+      "id": 10,
+      "kind": "photo",
+      "zone": "Mint Breeze",
+      "lat": 37.519074,
+      "lng": 127.125336
+    },
+    {
+      "id": 11,
+      "kind": "firstaid",
+      "zone": "Mint Breeze",
+      "lat": 37.51862,
+      "lng": 127.125591
+    },
+    {
+      "id": 12,
+      "kind": "toilet",
+      "zone": "Loving Forest Garden",
+      "lat": 37.520754,
+      "lng": 127.125216
+    },
+    {
+      "id": 13,
+      "kind": "toilet",
+      "zone": "공원 길가",
+      "lat": 37.520013,
+      "lng": 127.125855
+    },
+    {
+      "id": 14,
+      "kind": "fnb",
+      "zone": "체조경기장–수영장 사이",
+      "lat": 37.520117,
+      "lng": 127.126897
+    },
+    {
+      "id": 15,
+      "kind": "smoking",
+      "zone": "공원 길가",
+      "lat": 37.520835,
+      "lng": 127.127775
+    },
+    {
+      "id": 16,
+      "kind": "photo",
+      "zone": "공원 길가",
+      "lat": 37.520013,
+      "lng": 127.126484
+    },
+    {
+      "id": 17,
+      "kind": "sponsor",
+      "zone": "공원 길가",
+      "lat": 37.520085,
+      "lng": 127.12654
+    },
+    {
+      "id": 18,
+      "kind": "water",
+      "zone": "체조경기장–수영장 사이",
+      "lat": 37.520117,
+      "lng": 127.127421
+    },
+    {
+      "id": 19,
+      "kind": "radar",
+      "zone": "체조경기장–수영장 사이",
+      "lat": 37.520117,
+      "lng": 127.128667
+    },
+    {
+      "id": 20,
+      "kind": "toilet",
+      "zone": "Club Midnight Sunset",
+      "lat": 37.519673,
+      "lng": 127.127151
+    },
+    {
+      "id": 21,
+      "kind": "toilet",
+      "zone": "Club Midnight Sunset",
+      "lat": 37.519661,
+      "lng": 127.127119
+    },
+    {
+      "id": 22,
+      "kind": "toilet",
+      "zone": "Club Midnight Sunset",
+      "lat": 37.519539,
+      "lng": 127.126987
+    },
+    {
+      "id": 23,
+      "kind": "firstaid",
+      "zone": "Club Midnight Sunset",
+      "lat": 37.519192,
+      "lng": 127.126813
+    },
+    {
+      "id": 24,
+      "kind": "toilet",
+      "zone": "Club Midnight Sunset",
+      "lat": 37.519048,
+      "lng": 127.126861
+    },
+    {
+      "id": 25,
+      "kind": "toilet",
+      "zone": "Club Midnight Sunset",
+      "lat": 37.518836,
+      "lng": 127.126894
+    },
+    {
+      "id": 26,
+      "kind": "luggage",
+      "zone": "Club Midnight Sunset",
+      "lat": 37.518773,
+      "lng": 127.127282
+    },
+    {
+      "id": 27,
+      "kind": "toilet",
+      "zone": "Club Midnight Sunset",
+      "lat": 37.518744,
+      "lng": 127.127489
+    },
+    {
+      "id": 28,
+      "kind": "photo",
+      "zone": "Art Zone",
+      "lat": 37.518467,
+      "lng": 127.127319
+    },
+    {
+      "id": 29,
+      "kind": "slogan",
+      "zone": "Art Zone",
+      "lat": 37.51845,
+      "lng": 127.127096
+    },
+    {
+      "id": 30,
+      "kind": "shop",
+      "zone": "Art Zone",
+      "lat": 37.518417,
+      "lng": 127.126965
+    },
+    {
+      "id": 31,
+      "kind": "artist",
+      "zone": "Art Zone",
+      "lat": 37.518336,
+      "lng": 127.127451
+    },
+    {
+      "id": 32,
+      "kind": "info",
+      "zone": "Art Zone",
+      "lat": 37.51829,
+      "lng": 127.127071
+    },
+    {
+      "id": 33,
+      "kind": "vinyl",
+      "zone": "Art Zone",
+      "lat": 37.518278,
+      "lng": 127.127247
+    },
+    {
+      "id": 34,
+      "kind": "wristband",
+      "zone": "티켓 부스",
+      "lat": 37.517906,
+      "lng": 127.128002
+    }
+  ]
 }

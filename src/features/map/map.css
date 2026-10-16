@@ -105,6 +105,14 @@
   transition: transform var(--duration-fast) var(--ease-out-expo);
 }
 
+/* Zoomed-out illustrated map: pins shrink to dots so zone labels stay readable. */
+.map-pin--dot {
+  border-width: 2px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border-color: #ffffff;
+}
+
 .map-pin.is-selected {
   transform: scale(1.25);
   border-color: var(--color-accent);
@@ -310,4 +318,48 @@
   color: var(--color-ink);
   font-size: 11px;
   box-shadow: var(--shadow-ticket);
+}
+
+/* Card for a tapped pin while the pin list is folded */
+.map-selected {
+  position: absolute;
+  left: var(--space-3);
+  right: 64px;
+  bottom: 48px;
+  z-index: 550;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-float);
+  font-size: var(--text-sm);
+}
+
+.map-selected__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: var(--color-paper);
+  color: #000;
+}
+
+.map-selected__name {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+}
+
+.map-selected__close {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-ink-soft);
 }

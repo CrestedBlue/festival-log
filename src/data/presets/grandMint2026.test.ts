@@ -47,9 +47,18 @@ describe('createGrandMint2026', () => {
     expect(festival.pins.filter((pin) => pin.name.includes('출구'))).toHaveLength(2)
   })
 
-  test('marks the zones whose position is estimated', () => {
-    const estimated = festival.pins.filter((pin) => pin.name.includes('(대략)')).map((pin) => pin.name.split(' ·')[0])
-    expect(estimated).toEqual(expect.arrayContaining(['Radar', 'Hungry Zone', '티켓 부스 (대략)']))
+  test('turns every official map marker into a pin of the matching kind', () => {
+    const marks = festival.pins.filter((pin) => pin.id.startsWith(`${GRAND_MINT_2026_ID}-mark-`))
+    expect(marks).toHaveLength(34)
+    expect(marks.filter((pin) => pin.kind === 'toilet').length).toBeGreaterThanOrEqual(10)
+    expect(marks.map((pin) => pin.kind)).toEqual(expect.arrayContaining(['info', 'firstaid', 'luggage', 'water', 'wristband', 'food', 'eating']))
+    expect(marks.find((pin) => pin.kind === 'wristband')?.name).toContain('(대략)')
+  })
+
+  test('keeps zone pins (stages, exits, …) separate from marker pins', () => {
+    const zones = festival.pins.filter((pin) => pin.id.startsWith(`${GRAND_MINT_2026_ID}-zone-`))
+    expect(zones.filter((pin) => pin.kind === 'stage')).toHaveLength(3)
+    expect(zones.length + 34).toBe(festival.pins.length)
   })
 
   test('uses stable ids so re-adding replaces instead of duplicating', () => {

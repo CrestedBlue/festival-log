@@ -5,6 +5,7 @@ export const PALETTE = {
   paper: '#e1dfc6',
   grid: '#d8d5ba',
   park: '#adcf85',
+  parkEdge: '#8fb466',
   water: '#9fd4e6',
   waterEdge: '#7fbfd6',
   building: '#f3efe0',
@@ -38,7 +39,9 @@ export function renderBaseSvg(osm, proj, { highlights, labels }) {
   layers.push(
     `<defs><pattern id="grid" width="${GRID_PX}" height="${GRID_PX}" patternUnits="userSpaceOnUse"><path d="M ${GRID_PX} 0 L 0 0 0 ${GRID_PX}" fill="none" stroke="${PALETTE.grid}" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#grid)"/>`,
   )
-  for (const ring of parkRings) layers.push(`<polygon points="${pts(ring)}" fill="${PALETTE.park}"/>`)
+  for (const ring of parkRings) {
+    layers.push(`<polygon points="${pts(ring)}" fill="${PALETTE.park}" stroke="${PALETTE.parkEdge}" stroke-width="7" stroke-linejoin="round"/>`)
+  }
   for (const w of osm.ways) {
     if (w.tags.leisure === 'park' && isClosed(w.pts)) layers.push(`<polygon points="${pts(w.pts)}" fill="${PALETTE.park}"/>`)
   }
@@ -52,12 +55,10 @@ export function renderBaseSvg(osm, proj, { highlights, labels }) {
     }
   }
 
+  // Like the official map: only the park's own landmarks are drawn; the city around it stays plain paper.
   for (const w of osm.ways) {
-    if (!w.tags.building || !isClosed(w.pts)) continue
-    const park = inPark(centroid(w.pts))
-    layers.push(
-      `<polygon points="${pts(w.pts)}" fill="${park ? PALETTE.building : PALETTE.cityBuilding}" ${park ? `stroke="${PALETTE.buildingEdge}" stroke-width="1.2"` : ''}/>`,
-    )
+    if (!w.tags.building || !isClosed(w.pts) || !inPark(centroid(w.pts))) continue
+    layers.push(`<polygon points="${pts(w.pts)}" fill="${PALETTE.building}" stroke="${PALETTE.buildingEdge}" stroke-width="1.2"/>`)
   }
 
   const line = (w, color, width) =>
@@ -65,8 +66,9 @@ export function renderBaseSvg(osm, proj, { highlights, labels }) {
   const roads = osm.ways.filter((w) => MAJOR_ROADS.has(w.tags.highway))
   for (const w of osm.ways) {
     const h = w.tags.highway
-    if (WALKWAYS.has(h)) layers.push(inPark(centroid(w.pts)) ? line(w, PALETTE.walkway, 5) : line(w, PALETTE.cityPath, 2))
-    if (STREETS.has(h)) layers.push(line(w, PALETTE.street, 7))
+    const park = inPark(centroid(w.pts))
+    if (park && (WALKWAYS.has(h) || STREETS.has(h))) layers.push(line(w, PALETTE.walkway, 9))
+    else if (STREETS.has(h)) layers.push(line(w, PALETTE.street, 7))
   }
   for (const w of roads) layers.push(line(w, PALETTE.roadCasing, 19))
   for (const w of roads) layers.push(line(w, PALETTE.road, 15))

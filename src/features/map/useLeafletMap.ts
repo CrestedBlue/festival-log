@@ -9,6 +9,8 @@ const DEFAULT_ZOOM = 16
 const MAX_ZOOM = 19
 const FIT_PADDING: L.PointTuple = [32, 32]
 const IMAGE_ZOOM_SNAP = 0.25
+// The map image is 1.6 px per metre; past this zoom it is only blown up and turns blurry.
+const IMAGE_MAX_ZOOM = 18.5
 
 interface Options {
   center: LatLng
@@ -50,7 +52,7 @@ export function useLeafletMap(options: Options) {
     const { image } = initialOptions.current
     const instance = L.map(el, {
       zoomControl: false,
-      maxZoom: MAX_ZOOM,
+      maxZoom: image ? IMAGE_MAX_ZOOM : MAX_ZOOM,
       zoomSnap: image ? IMAGE_ZOOM_SNAP : 1,
       maxBoundsViscosity: image ? 1 : 0,
       // Illustrated maps show their credits behind an ⓘ button (MapCredits); tile maps keep Leaflet's line.

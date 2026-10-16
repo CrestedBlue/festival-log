@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { makeData, makeFestival } from '../testFixtures'
 import { GRAND_MINT_2026_ID, createGrandMint2026 } from './grandMint2026'
-import { syncPresetPins } from './index'
+import { isMapLabelPin, syncPresetPins } from './index'
 
 describe('syncPresetPins', () => {
   const fresh = createGrandMint2026()
@@ -11,7 +11,7 @@ describe('syncPresetPins', () => {
     const stale = { ...fresh, pins: [{ ...fresh.pins[0]!, lat: 37.5, lng: 127.1 }, userPin] }
     const next = syncPresetPins(makeData({ festivals: [stale], activeFestivalId: GRAND_MINT_2026_ID }))
     const pins = next.festivals[0]?.pins ?? []
-    expect(pins.filter((p) => p.id.startsWith(`${GRAND_MINT_2026_ID}-pin-`))).toEqual(fresh.pins)
+    expect(pins.filter((p) => p.id.startsWith(`${GRAND_MINT_2026_ID}-`))).toEqual(fresh.pins)
     expect(pins).toContainEqual(userPin)
   })
 
@@ -23,5 +23,25 @@ describe('syncPresetPins', () => {
   test('leaves data without the preset festival untouched', () => {
     const data = makeData({ festivals: [makeFestival()] })
     expect(syncPresetPins(data)).toBe(data)
+  })
+})
+
+describe('syncPresetPins with pins from an older app version', () => {
+  test('swaps old-style preset pins for the current set', () => {
+    const fresh = createGrandMint2026()
+    const old = { id: `${GRAND_MINT_2026_ID}-pin-0`, name: 'Mint Breeze · 88잔디마당', kind: 'stage' as const, lat: 37.519, lng: 127.125 }
+    const next = syncPresetPins(makeData({ festivals: [{ ...fresh, pins: [old] }], activeFestivalId: GRAND_MINT_2026_ID }))
+    expect(next.festivals[0]?.pins).toEqual(fresh.pins)
+  })
+})
+
+describe('isMapLabelPin', () => {
+  test('is true only for preset zone pins, which the illustrated map already labels', () => {
+    const pins = createGrandMint2026().pins
+    const zone = pins.find((p) => p.id.startsWith(`${GRAND_MINT_2026_ID}-zone-`))
+    const mark = pins.find((p) => p.id.startsWith(`${GRAND_MINT_2026_ID}-mark-`))
+    expect(zone && isMapLabelPin(GRAND_MINT_2026_ID, zone)).toBe(true)
+    expect(mark && isMapLabelPin(GRAND_MINT_2026_ID, mark)).toBe(false)
+    expect(isMapLabelPin(GRAND_MINT_2026_ID, { id: 'mine' })).toBe(false)
   })
 })
