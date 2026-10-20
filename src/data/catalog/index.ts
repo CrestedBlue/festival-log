@@ -4,7 +4,18 @@ import type { LineupImage } from './lineup'
 import { SERIES } from './series'
 import { GRAND_MINT_2026_NOTICES, createGrandMint2026 } from './grandMint2026'
 import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICES, createHeroRock2026 } from './heroRock2026'
-import { GRAND_MINT_2026_ID, GRAND_MINT_2026_KEY, GRAND_MINT_SERIES, HERO_ROCK_2026_ID, HERO_ROCK_2026_KEY, HERO_ROCK_SERIES } from './ids'
+import { PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
+import {
+  GRAND_MINT_2026_ID,
+  GRAND_MINT_2026_KEY,
+  GRAND_MINT_SERIES,
+  HERO_ROCK_2026_ID,
+  HERO_ROCK_2026_KEY,
+  HERO_ROCK_SERIES,
+  PENTAPORT_2026_ID,
+  PENTAPORT_2026_KEY,
+  PENTAPORT_SERIES,
+} from './ids'
 
 /** A festival the admin maintains in the app (no admin UI: edit these files and push). */
 export interface CatalogEntry {
@@ -40,6 +51,15 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createHeroRock2026,
     notices: HERO_ROCK_2026_NOTICES,
     lineup: HERO_ROCK_2026_LINEUP,
+  },
+  {
+    id: PENTAPORT_2026_ID,
+    legacyIds: [],
+    series: PENTAPORT_SERIES,
+    key: PENTAPORT_2026_KEY,
+    create: createPentaport2026,
+    notices: PENTAPORT_2026_NOTICES,
+    lineup: [],
   },
 ]
 

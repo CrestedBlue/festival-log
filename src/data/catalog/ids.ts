@@ -10,3 +10,7 @@ export const GRAND_MINT_2026_KEY = `${GRAND_MINT_SERIES}2026`
 export const HERO_ROCK_SERIES = 'herorock'
 export const HERO_ROCK_2026_ID = 'c108bb49-35c1-4607-ab5f-c52869eb1dfa'
 export const HERO_ROCK_2026_KEY = `${HERO_ROCK_SERIES}2026`
+
+export const PENTAPORT_SERIES = 'pentaport'
+export const PENTAPORT_2026_ID = '8eeb7b87-f5c7-455c-b6de-a772fd37b671'
+export const PENTAPORT_2026_KEY = `${PENTAPORT_SERIES}2026`

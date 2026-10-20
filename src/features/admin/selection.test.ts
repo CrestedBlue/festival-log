@@ -15,7 +15,7 @@ describe('adminYears', () => {
 
 describe('festivalsOfYear', () => {
   test('lists one year in date order', () => {
-    expect(festivalsOfYear(rows, '2026').map((r) => r.key)).toEqual(['gmf2026', 'herorock2026'])
+    expect(festivalsOfYear(rows, '2026').map((r) => r.key)).toEqual(['pentaport2026', 'gmf2026', 'herorock2026'])
     expect(festivalsOfYear(rows, '2027')).toEqual([])
   })
 })

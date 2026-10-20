@@ -1,5 +1,6 @@
 import { GRAND_MINT } from './grandMint'
 import { HERO_ROCK } from './heroRock'
+import { PENTAPORT } from './pentaport'
 import type { FestivalSeries } from './types'
 
 export type { FestivalSeries }
@@ -8,4 +9,5 @@ export type { FestivalSeries }
 export const SERIES: Readonly<Record<string, FestivalSeries>> = {
   [GRAND_MINT.code]: GRAND_MINT,
   [HERO_ROCK.code]: HERO_ROCK,
+  [PENTAPORT.code]: PENTAPORT,
 }
