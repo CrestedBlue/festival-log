@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import type { Performance } from '../data/schema'
-import { findConflicts, nowPlaying, performanceSpan, spanOf, timelineRange, upNext } from './schedule'
+import { nowPlaying, performanceSpan, spanOf, timelineRange, upNext } from './schedule'
 
 const perf = (id: string, start: string, end: string, day = '2026-10-17', stageId = 's1'): Performance => ({
   id,
@@ -31,18 +31,6 @@ describe('spanOf', () => {
     expect(spanOf('20:00', '19:00')).toBeNull()
     expect(spanOf('18:00', '18:00')).toBeNull()
     expect(spanOf('25:99', '19:00')).toBeNull()
-  })
-})
-
-describe('findConflicts', () => {
-  test('flags overlapping performances on the same day', () => {
-    const list = [perf('a', '18:00', '19:00'), perf('b', '18:30', '19:30'), perf('c', '20:00', '21:00')]
-    expect([...findConflicts(list)].sort()).toEqual(['a', 'b'])
-  })
-
-  test('does not flag back-to-back sets or sets on different days', () => {
-    const list = [perf('a', '18:00', '19:00'), perf('b', '19:00', '20:00'), perf('c', '18:30', '19:30', '2026-10-18')]
-    expect(findConflicts(list).size).toBe(0)
   })
 })
 

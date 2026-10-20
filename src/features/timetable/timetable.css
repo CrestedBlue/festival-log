@@ -251,16 +251,6 @@
   outline-offset: 1px;
 }
 
-.tt-set__warn {
-  align-self: flex-start;
-  padding: 1px 6px;
-  border-radius: var(--radius-chip);
-  background: var(--color-warn);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 800;
-}
-
 .tt-now {
   position: absolute;
   left: 0;
@@ -368,11 +358,6 @@
 .badge--live {
   background: var(--color-now);
   color: var(--color-now-ink);
-}
-
-.badge--warn {
-  background: var(--color-warn);
-  color: #fff;
 }
 
 .plan-item__star {

@@ -1,6 +1,6 @@
 import { useEffect, useRef, type CSSProperties } from 'react'
 import type { Performance, Stage } from '../../data/schema'
-import { findConflicts, performanceSpan, timelineRange } from '../../lib/schedule'
+import { performanceSpan, timelineRange } from '../../lib/schedule'
 import { formatClock, type FestivalMoment } from '../../lib/time'
 import { stageColumnWeights } from './columns'
 
@@ -21,7 +21,6 @@ export function TimetableGrid({ stages, performances, favorites, moment, onToggl
   const scrollRef = useRef<HTMLDivElement>(null)
   const range = timelineRange(performances)
   const hours = Array.from({ length: (range.end - range.start) / 60 }, (_, i) => range.start + i * 60)
-  const conflicts = findConflicts(performances.filter((p) => favorites.has(p.id)))
   const nowInRange = moment !== null && moment.minutes >= range.start && moment.minutes <= range.end
   const nowTop = moment ? (moment.minutes - range.start) * PX_PER_MIN : 0
 
@@ -96,7 +95,6 @@ export function TimetableGrid({ stages, performances, favorites, moment, onToggl
                     <span className="tt-set__time">
                       {p.start}–{p.end}
                     </span>
-                    {conflicts.has(p.id) && <span className="tt-set__warn">겹침</span>}
                   </>
                 )
                 return (

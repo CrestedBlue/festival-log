@@ -36,21 +36,6 @@ export function sortByStart<T extends Pick<Performance, 'start' | 'day'>>(list: 
   )
 }
 
-const overlaps = (a: Span, b: Span) => a.start < b.end && b.start < a.end
-
-export function findConflicts(list: readonly Performance[]): Set<string> {
-  const conflicts = new Set<string>()
-  list.forEach((a, i) => {
-    list.slice(i + 1).forEach((b) => {
-      if (a.day === b.day && overlaps(performanceSpan(a), performanceSpan(b))) {
-        conflicts.add(a.id)
-        conflicts.add(b.id)
-      }
-    })
-  })
-  return conflicts
-}
-
 export function nowPlaying(list: readonly Performance[], moment: FestivalMoment): Performance[] {
   return sortByStart(
     list.filter((p) => {
