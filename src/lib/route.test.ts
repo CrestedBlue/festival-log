@@ -32,9 +32,10 @@ describe('home tab', () => {
     expect(parseHash('#/info', 'map').tab).toBe('info')
   })
 
-  test('is the map until the festival has a timetable, the timetable after that', () => {
-    expect(homeTab({ performances: [] })).toBe('map')
+  test('is the timetable tab when there is a timetable or a line-up, the map otherwise', () => {
     expect(homeTab(makeFestival())).toBe('timetable')
+    expect(homeTab({ performances: [] }, 1)).toBe('timetable')
+    expect(homeTab({ performances: [] })).toBe('map')
     expect(homeTab(null)).toBe('timetable')
   })
 })

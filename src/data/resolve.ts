@@ -1,4 +1,5 @@
 import { catalogEntry } from './catalog'
+import type { LineupImage } from './catalog/lineup'
 import type { Festival, UserData } from './schema'
 
 export interface ResolvedFestival {
@@ -6,6 +7,8 @@ export interface ResolvedFestival {
   /** Catalog festivals come with the user's own pins appended. */
   festival: Festival
   notices: readonly string[]
+  /** Line-up posters while there is no timetable (catalog only). */
+  lineup: readonly LineupImage[]
 }
 
 const built = new Map<string, Festival>()
@@ -25,10 +28,11 @@ export function resolveFestival(data: UserData, festivalId: string): ResolvedFes
       source: 'catalog',
       festival: own.length ? { ...fromCatalog, pins: [...fromCatalog.pins, ...own] } : fromCatalog,
       notices: catalogEntry(festivalId)?.notices ?? [],
+      lineup: catalogEntry(festivalId)?.lineup ?? [],
     }
   }
   const archived = data.archivedFestivals.find((f) => f.id === festivalId)
-  return archived ? { source: 'archived', festival: archived, notices: [] } : null
+  return archived ? { source: 'archived', festival: archived, notices: [], lineup: [] } : null
 }
 
 export function activeFestival(data: UserData): ResolvedFestival | null {

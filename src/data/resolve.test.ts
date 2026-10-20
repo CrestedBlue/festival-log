@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { GRAND_MINT_2026_ID } from './catalog/ids'
+import { GRAND_MINT_2026_ID, HERO_ROCK_2026_ID } from './catalog/ids'
 import { activeFestival, resolveFestival } from './resolve'
 import { makeFestival, makePin, makeUserData } from './testFixtures'
 
@@ -16,7 +16,12 @@ describe('resolveFestival', () => {
   test('serves archived festivals as they were saved', () => {
     const archived = makeFestival({ id: 'old' })
     const resolved = resolveFestival(makeUserData({ archivedFestivals: [archived] }), 'old')
-    expect(resolved).toEqual({ source: 'archived', festival: archived, notices: [] })
+    expect(resolved).toEqual({ source: 'archived', festival: archived, notices: [], lineup: [] })
+  })
+
+  test('carries the line-up images of a catalog festival', () => {
+    expect(resolveFestival(makeUserData(), HERO_ROCK_2026_ID)?.lineup.map((image) => image.label)).toEqual(['1차 라인업'])
+    expect(resolveFestival(makeUserData(), GRAND_MINT_2026_ID)?.lineup).toEqual([])
   })
 
   test('returns null for unknown ids', () => {

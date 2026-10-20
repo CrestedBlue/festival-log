@@ -22,8 +22,9 @@ export function adminYears(rows: readonly FestivalOverview[], today: string): st
 export const festivalsOfYear = (rows: readonly FestivalOverview[], year: string): FestivalOverview[] =>
   rows.filter((r) => r.year === year).sort((a, b) => a.startDate.localeCompare(b.startDate))
 
-/** Until a festival has a timetable its map is the useful view (same rule as the app). */
-const homeView = (row: FestivalOverview): AdminView => (row.performanceCount > 0 ? 'timetable' : 'map')
+/** Timetable (or, before it, the line-up) first, else the map — same rule as the app. */
+const homeView = (row: FestivalOverview): AdminView =>
+  row.performanceCount > 0 || row.lineup.length > 0 ? 'timetable' : 'map'
 
 /** The next festival that has not ended yet, else the year's last one. */
 const defaultFestival = (inYear: readonly FestivalOverview[], today: string) =>

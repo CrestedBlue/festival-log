@@ -36,7 +36,7 @@ function ViewBody({ row, view }: Pick<Props, 'row' | 'view'>) {
       </Suspense>
     )
   }
-  return <AdminTimetable key={festival.id} festival={festival} />
+  return <AdminTimetable key={festival.id} festival={festival} lineup={row.lineup} />
 }
 
 /** Right column: the selected festival, with its timetable, map and notices. */

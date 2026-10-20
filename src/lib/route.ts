@@ -16,9 +16,12 @@ export function parseHash(hash: string, home: Tab = 'timetable'): Route {
   return { tab: isTab(path) ? path : home, params: new URLSearchParams(query) }
 }
 
-/** Until a festival's timetable is out there is nothing to plan, so the app opens on its map. */
-export const homeTab = (festival: Pick<Festival, 'performances'> | null): Tab =>
-  festival && festival.performances.length === 0 ? 'map' : 'timetable'
+/**
+ * Where the app opens: the timetable tab while it has something to show (the timetable, or before that the
+ * line-up), otherwise the map.
+ */
+export const homeTab = (festival: Pick<Festival, 'performances'> | null, lineupCount = 0): Tab =>
+  festival && festival.performances.length === 0 && lineupCount === 0 ? 'map' : 'timetable'
 
 export function buildHash(tab: Tab, params: Record<string, string | undefined> = {}): string {
   const entries = Object.entries(params).filter((entry): entry is [string, string] => Boolean(entry[1]))

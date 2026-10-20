@@ -1,21 +1,25 @@
+import type { LineupImage } from '../../data/catalog/lineup'
 import type { Festival } from '../../data/schema'
 import { updateData } from '../../data/store'
 import { toggleFavorite } from '../../data/userData'
 import { festivalMoment, formatDayLabel, listDays } from '../../lib/time'
 import { StarIcon } from '../../components/icons'
+import { Lineup } from './Lineup'
 import { MyPlanList } from './MyPlanList'
 import { TimetableGrid } from './TimetableGrid'
 import './timetable.css'
 
 interface Props {
   festival: Festival
+  /** Shown instead while the festival has no timetable. */
+  lineup: readonly LineupImage[]
   favorites: readonly string[]
   now: Date
   params: URLSearchParams
   setParams: (params: Record<string, string | undefined>) => void
 }
 
-export function TimetableView({ festival, favorites, now, params, setParams }: Props) {
+export function TimetableView({ festival, lineup, favorites, now, params, setParams }: Props) {
   const days = listDays(festival.startDate, festival.endDate)
   const moment = festivalMoment(now)
   const requestedDay = params.get('day')
@@ -34,8 +38,8 @@ export function TimetableView({ festival, favorites, now, params, setParams }: P
   // Before the timetable is out there are no days or favorites to pick (the dates may not be set either).
   if (festival.performances.length === 0) {
     return (
-      <section className="timetable" aria-label="타임테이블">
-        <p className="timetable__empty">타임테이블이 아직 공개되지 않았어요.</p>
+      <section className="timetable" aria-label={lineup.length > 0 ? '라인업' : '타임테이블'}>
+        {lineup.length > 0 ? <Lineup images={lineup} /> : <p className="timetable__empty">타임테이블이 아직 공개되지 않았어요.</p>}
       </section>
     )
   }

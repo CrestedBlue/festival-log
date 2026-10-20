@@ -1,18 +1,20 @@
 import { useState } from 'react'
+import type { LineupImage } from '../../data/catalog/lineup'
 import type { Festival } from '../../data/schema'
 import { formatDayLabel, listDays } from '../../lib/time'
+import { Lineup } from '../timetable/Lineup'
 import { TimetableGrid } from '../timetable/TimetableGrid'
 import '../timetable/timetable.css'
 
 const NO_FAVORITES: ReadonlySet<string> = new Set()
 
-/** Read-only timetable: day chips and the stage grid, no favorites. */
-export function AdminTimetable({ festival }: { festival: Festival }) {
+/** Read-only timetable: day chips and the stage grid, no favorites. The line-up stands in until it is out. */
+export function AdminTimetable({ festival, lineup }: { festival: Festival; lineup: readonly LineupImage[] }) {
   const days = listDays(festival.startDate, festival.endDate)
   const [day, setDay] = useState(days[0] ?? '')
 
   if (festival.performances.length === 0) {
-    return <p className="admin-empty">타임테이블이 아직 공개되지 않았어요.</p>
+    return lineup.length > 0 ? <Lineup images={lineup} /> : <p className="admin-empty">타임테이블이 아직 공개되지 않았어요.</p>
   }
   const performances = festival.performances.filter((p) => p.day === day)
   return (

@@ -10,6 +10,7 @@ const entry = (overrides: Partial<CatalogEntry> & Pick<CatalogEntry, 'create'>):
   series: 'test',
   key: 'test2026',
   notices: ['공지'],
+  lineup: [],
   ...overrides,
 })
 

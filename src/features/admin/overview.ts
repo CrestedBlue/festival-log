@@ -1,4 +1,5 @@
 import type { CatalogEntry } from '../../data/catalog'
+import type { LineupImage } from '../../data/catalog/lineup'
 import { FestivalSchema, type Festival } from '../../data/schema'
 import { formatPeriod } from '../../lib/period'
 import { listDays } from '../../lib/time'
@@ -21,6 +22,7 @@ export interface FestivalOverview {
   performanceCount: number
   pinCount: number
   notices: readonly string[]
+  lineup: readonly LineupImage[]
   /** What users can't see yet: 날짜, 타임테이블, 주의사항. */
   missing: string[]
   /** Schema errors, or why the festival could not be built. */
@@ -57,6 +59,7 @@ function brokenOverview(entry: CatalogEntry, error: unknown): FestivalOverview {
     performanceCount: 0,
     pinCount: 0,
     notices: entry.notices,
+    lineup: entry.lineup,
     missing: [],
     problems: [`만들지 못했어요: ${message}`],
     festival: null,
@@ -86,6 +89,7 @@ function overviewOf(entry: CatalogEntry): FestivalOverview {
     performanceCount: festival.performances.length,
     pinCount: festival.pins.length,
     notices: entry.notices,
+    lineup: entry.lineup,
     missing: missingParts(festival, entry.notices),
     problems: parsed.success ? [] : parsed.error.issues.map((issue) => issue.message),
     festival,

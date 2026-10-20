@@ -20,7 +20,8 @@ export default function App() {
   const { data, notice } = useAppState()
   const resolved = selectActiveFestival(data)
   const festival = resolved?.festival ?? null
-  const route = useHashRoute(homeTab(festival))
+  const lineup = resolved?.lineup ?? []
+  const route = useHashRoute(homeTab(festival, lineup.length))
   const now = useNow()
 
   const renderView = () => {
@@ -31,7 +32,7 @@ export default function App() {
           params={route.params}
           setParams={(params) => route.setParams('manage', params)}
           today={festivalMoment(now).day}
-          onOpenActive={() => route.go(homeTab(festival))}
+          onOpenActive={() => route.go(homeTab(festival, lineup.length))}
         />
       )
     }
@@ -54,6 +55,7 @@ export default function App() {
       <TimetableView
         key={festival.id}
         festival={festival}
+        lineup={lineup}
         favorites={data.favorites}
         now={now}
         params={route.params}

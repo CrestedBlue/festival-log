@@ -21,8 +21,8 @@ describe('festivalsOfYear', () => {
 })
 
 describe('resolveSelection', () => {
-  test('opens this year on the next festival that has not ended, on the map until it has a timetable', () => {
-    expect(resolve('')).toEqual({ year: '2026', festivalKey: 'herorock2026', view: 'map' })
+  test('opens this year on the next festival that has not ended, on its timetable (or line-up)', () => {
+    expect(resolve('')).toEqual({ year: '2026', festivalKey: 'herorock2026', view: 'timetable' })
   })
 
   test('follows the festival in the address, opening its year and its timetable', () => {
@@ -31,7 +31,7 @@ describe('resolveSelection', () => {
   })
 
   test('falls back for unknown years, festivals and views', () => {
-    expect(resolve('?year=1999&festival=nope&view=nope')).toEqual({ year: '2026', festivalKey: 'herorock2026', view: 'map' })
+    expect(resolve('?year=1999&festival=nope&view=nope')).toEqual({ year: '2026', festivalKey: 'herorock2026', view: 'timetable' })
   })
 
   test('a year without festivals selects none', () => {
