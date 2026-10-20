@@ -5,12 +5,10 @@ import { activeFestival, resolveFestival } from '../../data/resolve'
 import type { Festival, UserData } from '../../data/schema'
 import { showNotice, updateData } from '../../data/store'
 import { addMyFestival, removeMyFestival, setActiveFestival } from '../../data/userData'
-import { formatDayLabel, listDays } from '../../lib/time'
+import { formatPeriod } from '../../lib/period'
+import { listDays } from '../../lib/time'
 import { groupByYear } from './years'
 import './manage.css'
-
-const period = (f: Festival) =>
-  f.startDate === f.endDate ? formatDayLabel(f.startDate) : `${formatDayLabel(f.startDate)} – ${formatDayLabel(f.endDate)}`
 
 function CurrentFestival({ festival }: { festival: Festival | null }) {
   if (!festival) {
@@ -28,13 +26,19 @@ function CurrentFestival({ festival }: { festival: Festival | null }) {
     <section className="panel current" aria-label="지금 보는 페스티벌">
       <h2 className="current__name">{festival.name}</h2>
       <p className="current__meta">
-        {period(festival)}
+        {formatPeriod(festival)}
         {festival.venue.name && ` · ${festival.venue.name}`}
       </p>
       <ul className="current__stats">
-        <li>{listDays(festival.startDate, festival.endDate).length}일</li>
-        <li>스테이지 {festival.stages.length}</li>
-        <li>공연 {festival.performances.length}</li>
+        {!festival.datesTbd && <li>{listDays(festival.startDate, festival.endDate).length}일</li>}
+        {festival.performances.length > 0 ? (
+          <>
+            <li>스테이지 {festival.stages.length}</li>
+            <li>공연 {festival.performances.length}</li>
+          </>
+        ) : (
+          <li>타임테이블 준비 중</li>
+        )}
       </ul>
       <button type="button" className="current__remove" onClick={remove}>
         목록에서 빼기
@@ -84,7 +88,7 @@ function FestivalBrowser({ data, onPicked }: { data: UserData; onPicked: () => v
                     {archived.has(festival.id) && <span className="browser__tag">직접 만든 것</span>}
                   </span>
                   <span className="browser__meta">
-                    {period(festival)}
+                    {formatPeriod(festival)}
                     {festival.venue.name && ` · ${festival.venue.name}`}
                   </span>
                 </span>
