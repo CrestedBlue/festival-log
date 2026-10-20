@@ -1,4 +1,5 @@
 /// <reference types="vitest/config" />
+import { fileURLToPath } from 'node:url'
 import react from '@vitejs/plugin-react'
 import { defineConfig, type Plugin } from 'vite'
 import { minimal2023Preset } from '@vite-pwa/assets-generator/config'
@@ -50,8 +51,14 @@ function contentSecurityPolicy(): Plugin {
   }
 }
 
+const page = (path: string) => fileURLToPath(new URL(path, import.meta.url))
+
 export default defineConfig({
   base,
+  build: {
+    // The app, plus the admin catalog page served at <base>manage/.
+    rollupOptions: { input: { main: page('./index.html'), manage: page('./manage/index.html') } },
+  },
   plugins: [
     react(),
     contentSecurityPolicy(),
@@ -72,6 +79,8 @@ export default defineConfig({
       workbox: {
         // webp = bundled festival maps, so the map works with no signal at the venue.
         globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2}'],
+        // Without this the app shell would answer /manage (no trailing slash) instead of the admin page.
+        navigateFallbackDenylist: [/\/manage\/?$/],
         runtimeCaching: [
           {
             // Festival grounds often have no signal: keep every map tile you've already looked at.

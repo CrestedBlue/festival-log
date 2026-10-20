@@ -1,0 +1,257 @@
+/* Admin catalog page: same paper-and-ink poster look as the app, laid out as a ledger of ticket stubs. */
+.admin {
+  --admin-width: 760px;
+  --tone-ready: var(--color-now);
+  --tone-ready-ink: var(--color-now-ink);
+  --tone-pending: var(--color-info);
+  --tone-error: var(--color-warn);
+
+  min-height: 100%;
+  padding: 0 var(--space-4) var(--space-6);
+}
+
+.admin__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  max-width: var(--admin-width);
+  margin: 0 auto;
+  padding: var(--space-5) 0 var(--space-4);
+  border-bottom: 3px solid var(--color-ink);
+}
+
+.admin__titles {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin__kicker {
+  margin: 0;
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+}
+
+.admin__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-title);
+  line-height: 1.1;
+}
+
+.admin__app-link {
+  flex: none;
+  padding: 6px 14px;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-chip);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  text-decoration: none;
+  transition:
+    background-color var(--duration-fast),
+    color var(--duration-fast);
+}
+
+.admin__app-link:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.admin__main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  max-width: var(--admin-width);
+  margin: 0 auto;
+  padding-top: var(--space-4);
+}
+
+.admin__note {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-left: 4px solid var(--color-accent);
+  border-radius: 0 var(--radius-ticket) var(--radius-ticket) 0;
+  background: var(--color-paper-deep);
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+}
+
+.admin__note code,
+.admin-card__ids code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.92em;
+  color: var(--color-ink);
+  overflow-wrap: anywhere;
+}
+
+.admin__summary {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+}
+
+.admin__summary strong {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-xl);
+  color: var(--color-ink);
+}
+
+.admin__list {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* A ticket stub: the coloured left edge carries the festival's status. */
+.admin-card {
+  --tone: var(--tone-ready);
+
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4) var(--space-4) calc(var(--space-4) + 10px);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-ticket);
+}
+
+.admin-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 10px;
+  border-radius: var(--radius-card) 0 0 var(--radius-card);
+  background: var(--tone);
+}
+
+.admin-card--pending {
+  --tone: var(--tone-pending);
+}
+
+.admin-card--error {
+  --tone: var(--tone-error);
+}
+
+.admin-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.admin-card__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-xl);
+  line-height: 1.15;
+}
+
+.admin-card__status {
+  flex: none;
+  padding: 3px 10px;
+  border-radius: var(--radius-chip);
+  background: var(--tone);
+  color: var(--color-accent-ink);
+  font-size: var(--text-xs);
+  font-weight: 800;
+}
+
+.admin-card--ready .admin-card__status {
+  color: var(--tone-ready-ink);
+}
+
+.admin-card__meta {
+  margin: calc(var(--space-2) * -1) 0 0;
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+}
+
+.admin-card__stats {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1px dashed var(--color-line);
+  border-bottom: 1px dashed var(--color-line);
+}
+
+.admin-stat {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  padding: var(--space-2) 0;
+}
+
+.admin-stat + .admin-stat {
+  border-left: 1px dashed var(--color-line);
+}
+
+.admin-stat dt {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-ink-soft);
+}
+
+.admin-stat dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1.1;
+}
+
+.admin-card__missing {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--tone-pending);
+}
+
+.admin-card__problems {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--tone-error);
+}
+
+.admin-card__notices summary {
+  width: fit-content;
+  font-size: var(--text-sm);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.admin-card__notices ol {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-2) 0 0;
+  padding-left: 1.4em;
+  font-size: var(--text-sm);
+}
+
+.admin-card__ids {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--color-ink-soft);
+}
+
+.admin-card__id b {
+  font-weight: 800;
+}
+
+@media (prefers-color-scheme: dark) {
+  .admin {
+    --tone-pending: #7d9bff;
+    --tone-error: #ff5c7c;
+  }
+}
