@@ -1,162 +1,100 @@
-import { useState, type ReactNode } from 'react'
-import { addFestival, removeFestival, setActiveFestival, updateFestival } from '../../data/actions'
-import { createSampleFestival } from '../../data/sample'
-import { FestivalSchema, type AppData, type Festival } from '../../data/schema'
-import { updateData } from '../../data/store'
-import { makeId } from '../../lib/id'
-import { addDays, listDays, toIsoDate } from '../../lib/time'
-import { BulkAdd } from './BulkAdd'
-import { FestivalForm, type FestivalFormValues } from './FestivalForm'
-import { PerformanceList } from './PerformanceList'
-import { PresetSection } from './PresetSection'
-import { ShareSection } from './ShareSection'
-import { StageEditor } from './StageEditor'
+import { CATALOG } from '../../data/catalog'
+import { resolveFestival } from '../../data/resolve'
+import type { Festival, UserData } from '../../data/schema'
+import { showNotice, updateData } from '../../data/store'
+import { addMyFestival, removeMyFestival, setActiveFestival } from '../../data/userData'
+import { formatDayLabel } from '../../lib/time'
 import './manage.css'
 
-/** Seoul City Hall: a sane default until the user sets the venue from the map tab. */
-const DEFAULT_VENUE = { lat: 37.5663, lng: 126.9779 }
+interface Props {
+  data: UserData
+  /** Called after a festival is opened, to move to the timetable. */
+  onOpen: () => void
+}
 
-const toFormValues = (f: Festival): FestivalFormValues => ({
-  name: f.name,
-  startDate: f.startDate,
-  endDate: f.endDate,
-  venueName: f.venue.name,
-})
+const period = (f: Festival) =>
+  f.startDate === f.endDate ? formatDayLabel(f.startDate) : `${formatDayLabel(f.startDate)} – ${formatDayLabel(f.endDate)}`
 
-function Panel({ id, title, children }: { id: string; title: string; children: ReactNode }) {
+function FestivalRow({ festival, active, mine, onOpen }: { festival: Festival; active: boolean; mine: boolean; onOpen: () => void }) {
+  const open = () => {
+    updateData((d) => (mine ? setActiveFestival(d, festival.id) : addMyFestival(d, festival.id)))
+    if (!mine) showNotice('info', `'${festival.name}'를 내 페스티벌에 추가했어요.`)
+    onOpen()
+  }
+  const remove = () => {
+    if (!window.confirm(`'${festival.name}'를 내 목록에서 뺄까요? 이 페스티벌에 남긴 핀과 티켓 링크도 지워져요.`)) return
+    updateData((d) => removeMyFestival(d, festival.id))
+  }
   return (
-    <section className="panel" aria-labelledby={id}>
-      <h2 id={id} className="panel__title">
-        {title}
-      </h2>
-      {children}
-    </section>
+    <li className={`festival-row${active ? ' is-active' : ''}`}>
+      <div className="festival-row__text">
+        <span className="festival-row__name">{festival.name}</span>
+        <span className="festival-row__meta">
+          {period(festival)}
+          {festival.venue.name && ` · ${festival.venue.name}`}
+        </span>
+      </div>
+      <div className="festival-row__actions">
+        {mine && (
+          <button type="button" className="btn btn--small btn--ghost" onClick={remove}>
+            빼기
+          </button>
+        )}
+        <button type="button" className={`btn btn--small${mine ? '' : ' btn--accent'}`} onClick={open}>
+          {mine ? (active ? '보는 중' : '보기') : '추가'}
+        </button>
+      </div>
+    </li>
   )
 }
 
-function createFestival(values: FestivalFormValues, venue: { lat: number; lng: number }): string | null {
-  const candidate = {
-    id: makeId(),
-    name: values.name,
-    startDate: values.startDate,
-    endDate: values.endDate,
-    venue: { name: values.venueName, ...venue },
-    stages: [],
-    performances: [],
-    pins: [],
-  }
-  const parsed = FestivalSchema.safeParse(candidate)
-  if (!parsed.success) return parsed.error.issues[0]?.message ?? '입력을 확인해 주세요.'
-  updateData((d) => addFestival(d, parsed.data))
-  return null
-}
-
-function editFestival(festival: Festival, values: FestivalFormValues): string | null {
-  const days = new Set(listDays(values.startDate, values.endDate))
-  const orphaned = festival.performances.filter((p) => !days.has(p.day)).length
-  if (orphaned > 0) return `바뀐 기간 밖에 공연 ${orphaned}개가 있어요. 먼저 그 공연들을 지워 주세요.`
-  const patch = {
-    name: values.name,
-    startDate: values.startDate,
-    endDate: values.endDate,
-    venue: { ...festival.venue, name: values.venueName },
-  }
-  const parsed = FestivalSchema.safeParse({ ...festival, ...patch })
-  if (!parsed.success) return parsed.error.issues[0]?.message ?? '입력을 확인해 주세요.'
-  updateData((d) => updateFestival(d, festival.id, patch))
-  return null
-}
-
-export function ManageView({ data, festival }: { data: AppData; festival: Festival | null }) {
-  const [creating, setCreating] = useState(festival === null)
-  const today = toIsoDate(new Date())
-
-  const remove = () => {
-    if (festival && window.confirm(`'${festival.name}'와 모든 공연·핀을 지울까요? 되돌릴 수 없어요.`)) {
-      updateData((d) => removeFestival(d, festival.id))
-    }
-  }
+/** Festivals come from the admin-maintained catalog; the user only picks which ones to follow. */
+export function ManageView({ data, onOpen }: Props) {
+  const mine = new Set(data.myFestivalIds)
+  const catalog = CATALOG.flatMap((entry) => {
+    const resolved = resolveFestival(data, entry.id)
+    return resolved ? [resolved.festival] : []
+  })
 
   return (
     <div className="manage">
-      <Panel id="manage-switch" title="내 페스티벌">
-        <div className="inline-form">
-          {data.festivals.length > 0 && (
-            <label className="field">
-              <span className="visually-hidden">페스티벌 선택</span>
-              <select value={festival?.id ?? ''} onChange={(e) => updateData((d) => setActiveFestival(d, e.target.value))}>
-                {data.festivals.map((f) => (
-                  <option key={f.id} value={f.id}>
-                    {f.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
-          <button type="button" className="btn btn--accent" onClick={() => setCreating(true)} disabled={creating}>
-            + 새로 만들기
-          </button>
-        </div>
-        {creating && (
-          <FestivalForm
-            initial={{ name: '', startDate: today, endDate: addDays(today, 1), venueName: '' }}
-            submitLabel="만들기"
-            onSubmit={(values) => {
-              const error = createFestival(values, festival?.venue ?? DEFAULT_VENUE)
-              if (!error) setCreating(false)
-              return error
-            }}
-            onCancel={festival ? () => setCreating(false) : undefined}
-          />
-        )}
-      </Panel>
-
-      <Panel id="manage-presets" title="페스티벌 불러오기">
-        <PresetSection data={data} />
-      </Panel>
-
-      {festival && !creating && (
-        <>
-          <Panel id="manage-info" title="기본 정보">
-            <FestivalForm
-              key={Object.values(toFormValues(festival)).join('|') + festival.id}
-              initial={toFormValues(festival)}
-              submitLabel="저장"
-              onSubmit={(values) => editFestival(festival, values)}
+      <section className="panel" aria-labelledby="manage-festivals">
+        <h2 id="manage-festivals" className="panel__title">
+          페스티벌 목록
+        </h2>
+        <p className="hint">가고 싶은 페스티벌을 추가하세요. 일정은 관리자가 등록하고 고쳐요.</p>
+        <ul className="festival-list">
+          {catalog.map((festival) => (
+            <FestivalRow
+              key={festival.id}
+              festival={festival}
+              mine={mine.has(festival.id)}
+              active={data.activeFestivalId === festival.id}
+              onOpen={onOpen}
             />
-          </Panel>
-          <Panel id="manage-stages" title="스테이지">
-            <StageEditor festival={festival} />
-          </Panel>
-          <Panel id="manage-bulk" title="타임테이블 입력">
-            <BulkAdd key={festival.id} festival={festival} />
-          </Panel>
-          <Panel id="manage-list" title={`등록된 공연 ${festival.performances.length}개`}>
-            <PerformanceList festival={festival} />
-          </Panel>
-        </>
+          ))}
+        </ul>
+      </section>
+
+      {data.archivedFestivals.length > 0 && (
+        <section className="panel" aria-labelledby="manage-archived">
+          <h2 id="manage-archived" className="panel__title">
+            예전에 직접 만든 페스티벌
+          </h2>
+          <p className="hint">이전 버전에서 직접 입력한 일정이에요. 보기만 할 수 있어요.</p>
+          <ul className="festival-list">
+            {data.archivedFestivals.map((festival) => (
+              <FestivalRow
+                key={festival.id}
+                festival={festival}
+                mine
+                active={data.activeFestivalId === festival.id}
+                onOpen={onOpen}
+              />
+            ))}
+          </ul>
+        </section>
       )}
-
-      <Panel id="manage-share" title="친구와 공유">
-        <ShareSection data={data} festival={creating ? null : festival} />
-      </Panel>
-
-      <Panel id="manage-etc" title="기타">
-        <div className="form-actions form-actions--start">
-          <button
-            type="button"
-            className="btn"
-            onClick={() => updateData((d) => addFestival(d, createSampleFestival(new Date(), makeId)))}
-          >
-            샘플 페스티벌 추가
-          </button>
-          {festival && (
-            <button type="button" className="btn btn--danger" onClick={remove}>
-              이 페스티벌 삭제
-            </button>
-          )}
-        </div>
-      </Panel>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import type { Festival } from '../../data/schema'
 import { updateData } from '../../data/store'
-import { toggleFavorite } from '../../data/actions'
+import { toggleFavorite } from '../../data/userData'
 import { festivalMoment, formatDayLabel, listDays } from '../../lib/time'
 import { StarIcon } from '../../components/icons'
 import { MyPlanList } from './MyPlanList'

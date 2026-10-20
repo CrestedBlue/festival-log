@@ -1,6 +1,6 @@
 import 'leaflet/dist/leaflet.css'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { addPin, removePin } from '../../data/actions'
+import { addUserPin, removeUserPin } from '../../data/userData'
 import { PinSchema, type Festival, type PinKind } from '../../data/schema'
 import { showNotice, updateData } from '../../data/store'
 import { LocateIcon, PlusIcon } from '../../components/icons'
@@ -8,7 +8,7 @@ import { useGeolocation } from '../../hooks/useGeolocation'
 import { useStoredFlag } from '../../hooks/useStoredFlag'
 import { distanceMeters, formatDistance, isInsideBounds, type LatLng } from '../../lib/geo'
 import { makeId } from '../../lib/id'
-import { isMapLabelPin } from '../../data/presets'
+import { isMapLabelPin } from '../../data/catalog'
 import { festivalMapFor } from './festivalMaps'
 import { MapCredits } from './MapCredits'
 import { PinForm } from './PinForm'
@@ -32,7 +32,13 @@ async function isLocationAlreadyGranted(): Promise<boolean> {
   }
 }
 
-export default function MapView({ festival }: { festival: Festival }) {
+interface Props {
+  festival: Festival
+  /** Pins the user added; only these can be deleted (the rest come from the festival catalog). */
+  userPinIds: ReadonlySet<string>
+}
+
+export default function MapView({ festival, userPinIds }: Props) {
   const festivalMap = festivalMapFor(festival.id)
   const { containerRef, map } = useLeafletMap({ center: festival.venue, image: festivalMap, fitPoints: festival.pins })
   const [tracking, setTracking] = useState(false)
@@ -54,7 +60,7 @@ export default function MapView({ festival }: { festival: Festival }) {
 
   const zoom = useMapZoom(map)
   // The illustrated map already labels stages, exits, … so only the other pins are drawn on it.
-  const mapPins = festivalMap ? festival.pins.filter((pin) => !isMapLabelPin(festival.id, pin)) : festival.pins
+  const mapPins = festivalMap ? festival.pins.filter((pin) => !isMapLabelPin(pin)) : festival.pins
   usePinLayer(map, mapPins, selectedId, setSelectedId, festivalMap ? pinSizeForZoom(zoom ?? 0) : TILE_MAP_PIN)
   useMyLocationLayer(map, geo)
   useMapPick(map, picking, onPick)
@@ -92,14 +98,14 @@ export default function MapView({ festival }: { festival: Festival }) {
       showNotice('error', '핀을 저장하지 못했어요. 이름을 확인해 주세요.')
       return
     }
-    updateData((d) => addPin(d, festival.id, parsed.data))
+    updateData((d) => addUserPin(d, festival.id, parsed.data))
     setDraft(null)
     setSelectedId(parsed.data.id)
   }
 
   const deletePin = (id: string, name: string) => {
     if (!window.confirm(`'${name}' 핀을 지울까요?`)) return
-    updateData((d) => removePin(d, festival.id, id))
+    updateData((d) => removeUserPin(d, festival.id, id))
     setSelectedId(null)
   }
 
@@ -199,7 +205,7 @@ export default function MapView({ festival }: { festival: Festival }) {
                           <span className="pin-list__name">{pin.name}</span>
                           {distance !== null && <span className="pin-list__dist">{formatDistance(distance)}</span>}
                         </button>
-                        {pin.id === selectedId && (
+                        {pin.id === selectedId && userPinIds.has(pin.id) && (
                           <button type="button" className="btn btn--small btn--danger" onClick={() => deletePin(pin.id, pin.name)}>
                             삭제
                           </button>

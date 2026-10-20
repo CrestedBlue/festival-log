@@ -78,11 +78,29 @@ export const FestivalSchema = z
     }
   })
 
-export const AppDataSchema = z.object({
+/** What the previous app version saved (every festival stored in full on the device). Read only for migration. */
+export const LegacyAppDataSchema = z.object({
   version: z.literal(1),
   activeFestivalId: id.nullable(),
   festivals: z.array(FestivalSchema),
   favorites: z.array(id),
+})
+
+const MAX_TICKET_LINK_LENGTH = 500
+
+/**
+ * What one device keeps. Festivals themselves come from the admin-maintained catalog in the app; the
+ * device stores only which ones the user picked (by id) plus the user's own records.
+ */
+export const UserDataSchema = z.object({
+  version: z.literal(2),
+  myFestivalIds: z.array(id).max(MAX_ITEMS),
+  activeFestivalId: id.nullable(),
+  favorites: z.array(id).max(MAX_ITEMS * 4),
+  userPins: z.record(id, z.array(PinSchema).max(MAX_ITEMS)),
+  ticketLinks: z.record(id, z.string().url().max(MAX_TICKET_LINK_LENGTH)),
+  // Festivals the user typed in with an older version: kept read-only so nothing is lost.
+  archivedFestivals: z.array(FestivalSchema).max(MAX_ITEMS),
 })
 
 export type Stage = z.infer<typeof StageSchema>
@@ -91,11 +109,15 @@ export type PinKind = (typeof PIN_KINDS)[number]
 export type Pin = z.infer<typeof PinSchema>
 export type Venue = z.infer<typeof VenueSchema>
 export type Festival = z.infer<typeof FestivalSchema>
-export type AppData = z.infer<typeof AppDataSchema>
+export type LegacyAppData = z.infer<typeof LegacyAppDataSchema>
+export type UserData = z.infer<typeof UserDataSchema>
 
-export const EMPTY_DATA: AppData = { version: 1, activeFestivalId: null, festivals: [], favorites: [] }
-
-export const STAGE_COLORS = ['#ff4d2e', '#3d5afe', '#16a34a', '#a855f7', '#f59e0b', '#0891b2', '#db2777'] as const
-
-export const nextStageColor = (festival: Pick<Festival, 'stages'>): string =>
-  STAGE_COLORS[festival.stages.length % STAGE_COLORS.length] ?? STAGE_COLORS[0]
+export const EMPTY_USER_DATA: UserData = {
+  version: 2,
+  myFestivalIds: [],
+  activeFestivalId: null,
+  favorites: [],
+  userPins: {},
+  ticketLinks: {},
+  archivedFestivals: [],
+}

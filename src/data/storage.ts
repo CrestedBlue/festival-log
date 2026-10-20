@@ -1,4 +1,5 @@
-import { AppDataSchema, EMPTY_DATA, type AppData } from './schema'
+import { migrateV1 } from './migrate'
+import { EMPTY_USER_DATA, LegacyAppDataSchema, UserDataSchema, type UserData } from './schema'
 
 export const STORAGE_KEY = 'festival-log:data'
 export const BACKUP_KEY_PREFIX = 'festival-log:backup-'
@@ -6,19 +7,10 @@ export const BACKUP_KEY_PREFIX = 'festival-log:backup-'
 type ReadableStorage = Pick<Storage, 'getItem' | 'setItem'>
 
 export type LoadResult =
-  | { status: 'ok'; data: AppData }
-  | { status: 'empty'; data: AppData }
-  | { status: 'corrupted'; data: AppData; error: string; backedUp: boolean }
-
-/** Validation must never take the app down, whatever is on disk. */
-function validate(raw: string): { ok: true; data: AppData } | { ok: false; error: string } {
-  try {
-    const parsed = AppDataSchema.safeParse(tryParseJson(raw))
-    return parsed.success ? { ok: true, data: parsed.data } : { ok: false, error: parsed.error.message }
-  } catch (error) {
-    return { ok: false, error: String(error) }
-  }
-}
+  | { status: 'ok'; data: UserData }
+  | { status: 'migrated'; data: UserData }
+  | { status: 'empty'; data: UserData }
+  | { status: 'corrupted'; data: UserData; error: string; backedUp: boolean }
 
 function tryParseJson(raw: string): unknown {
   try {
@@ -28,22 +20,36 @@ function tryParseJson(raw: string): unknown {
   }
 }
 
-/** Never silently drop what's on disk: unreadable data is copied to a backup key first. */
-export function loadAppData(storage: ReadableStorage, now: () => number = Date.now): LoadResult {
-  const raw = storage.getItem(STORAGE_KEY)
-  if (raw === null) return { status: 'empty', data: EMPTY_DATA }
-  const result = validate(raw)
-  if (result.ok) return { status: 'ok', data: result.data }
+/** Validation must never take the app down, whatever is on disk. Older formats are migrated. */
+function read(raw: string): { ok: true; data: UserData; migrated: boolean } | { ok: false; error: string } {
   try {
-    storage.setItem(`${BACKUP_KEY_PREFIX}${now()}`, raw)
-    return { status: 'corrupted', data: EMPTY_DATA, error: result.error, backedUp: true }
+    const json = tryParseJson(raw)
+    const current = UserDataSchema.safeParse(json)
+    if (current.success) return { ok: true, data: current.data, migrated: false }
+    const legacy = LegacyAppDataSchema.safeParse(json)
+    if (legacy.success) return { ok: true, data: migrateV1(legacy.data), migrated: true }
+    return { ok: false, error: current.error.message }
   } catch (error) {
-    console.error('[festival-log] failed to back up corrupted data', error)
-    return { status: 'corrupted', data: EMPTY_DATA, error: result.error, backedUp: false }
+    return { ok: false, error: String(error) }
   }
 }
 
-export function saveAppData(storage: ReadableStorage, data: AppData): { ok: true } | { ok: false; error: string } {
+/** Never silently drop what's on disk: unreadable data is copied to a backup key first. */
+export function loadUserData(storage: ReadableStorage, now: () => number = Date.now): LoadResult {
+  const raw = storage.getItem(STORAGE_KEY)
+  if (raw === null) return { status: 'empty', data: EMPTY_USER_DATA }
+  const result = read(raw)
+  if (result.ok) return { status: result.migrated ? 'migrated' : 'ok', data: result.data }
+  try {
+    storage.setItem(`${BACKUP_KEY_PREFIX}${now()}`, raw)
+    return { status: 'corrupted', data: EMPTY_USER_DATA, error: result.error, backedUp: true }
+  } catch (error) {
+    console.error('[festival-log] failed to back up corrupted data', error)
+    return { status: 'corrupted', data: EMPTY_USER_DATA, error: result.error, backedUp: false }
+  }
+}
+
+export function saveUserData(storage: ReadableStorage, data: UserData): { ok: true } | { ok: false; error: string } {
   try {
     storage.setItem(STORAGE_KEY, JSON.stringify(data))
     return { ok: true }

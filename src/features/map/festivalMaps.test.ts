@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest'
+import { GRAND_MINT_2026_ID } from '../../data/catalog/ids'
 import { festivalMapFor, parseMapMeta } from './festivalMaps'
 
 describe('parseMapMeta', () => {
@@ -43,7 +44,7 @@ describe('parseMapMeta', () => {
 
 describe('festivalMapFor', () => {
   test('returns the bundled Grand Mint 2026 map and nothing for other festivals', () => {
-    expect(festivalMapFor('gmf2026')?.imageUrl).toBeTruthy()
+    expect(festivalMapFor(GRAND_MINT_2026_ID)?.imageUrl).toBeTruthy()
     expect(festivalMapFor('someone-else')).toBeNull()
   })
 })

@@ -1,8 +1,9 @@
 import { useSyncExternalStore } from 'react'
-import { addFestival } from './actions'
-import { DEFAULT_PRESET, syncPresetPins } from './presets'
-import { EMPTY_DATA, type AppData, type Festival } from './schema'
-import { STORAGE_KEY, loadAppData, saveAppData } from './storage'
+import { DEFAULT_FESTIVAL_ID } from './catalog'
+import { activeFestival, type ResolvedFestival } from './resolve'
+import { EMPTY_USER_DATA, type UserData } from './schema'
+import { STORAGE_KEY, loadUserData, saveUserData } from './storage'
+import { addMyFestival } from './userData'
 
 export interface Notice {
   id: number
@@ -11,7 +12,7 @@ export interface Notice {
 }
 
 interface StoreState {
-  data: AppData
+  data: UserData
   notice: Notice | null
 }
 
@@ -41,16 +42,15 @@ let noticeSeq = 0
 const makeNotice = (kind: Notice['kind'], message: string): Notice => ({ id: ++noticeSeq, kind, message })
 
 function initialState(): StoreState {
-  const loaded = loadAppData(storage)
-  if (loaded.status === 'ok') {
-    const data = syncPresetPins(loaded.data)
-    if (data !== loaded.data) saveAppData(storage, data)
+  const loaded = loadUserData(storage)
+  if (loaded.status === 'ok' || loaded.status === 'migrated') {
+    if (loaded.status === 'migrated') saveUserData(storage, loaded.data)
     return {
-      data,
+      data: loaded.data,
       notice: persistent ? null : makeNotice('error', '이 브라우저에서는 기록이 저장되지 않아요.'),
     }
   }
-  const seeded = addFestival(EMPTY_DATA, DEFAULT_PRESET())
+  const seeded = addMyFestival(EMPTY_USER_DATA, DEFAULT_FESTIVAL_ID)
   if (loaded.status === 'corrupted' && !loaded.backedUp) {
     // Couldn't copy the unreadable data aside, so don't overwrite it: run this session in memory only.
     storage = memoryStorage()
@@ -59,11 +59,11 @@ function initialState(): StoreState {
       notice: makeNotice('error', '저장된 기록을 읽지 못했어요. 원래 데이터를 지키려고 이번에는 저장하지 않고 실행해요.'),
     }
   }
-  saveAppData(storage, seeded)
+  saveUserData(storage, seeded)
   const notice =
     loaded.status === 'corrupted'
-      ? makeNotice('error', '저장된 기록을 읽지 못해서 따로 백업해 두고 샘플로 시작했어요.')
-      : makeNotice('info', '그랜드 민트 페스티벌 2026 타임테이블을 넣어뒀어요. 보고 싶은 공연을 눌러 찜해 보세요.')
+      ? makeNotice('error', '저장된 기록을 읽지 못해서 따로 백업해 두고 새로 시작했어요.')
+      : makeNotice('info', '그랜드 민트 페스티벌 2026을 넣어뒀어요. 보고 싶은 공연을 눌러 찜해 보세요.')
   return { data: seeded, notice }
 }
 
@@ -75,8 +75,8 @@ const emit = () => listeners.forEach((listener) => listener())
 // The installed app and a browser tab share storage: pick up the other one's writes instead of clobbering them.
 window.addEventListener('storage', (event) => {
   if (event.key !== STORAGE_KEY || event.newValue === null) return
-  const loaded = loadAppData(storage)
-  if (loaded.status !== 'ok') return
+  const loaded = loadUserData(storage)
+  if (loaded.status !== 'ok' && loaded.status !== 'migrated') return
   state = { ...state, data: loaded.data }
   emit()
 })
@@ -86,10 +86,10 @@ const subscribe = (listener: () => void) => {
 }
 const getSnapshot = () => state
 
-export function updateData(recipe: (data: AppData) => AppData): void {
+export function updateData(recipe: (data: UserData) => UserData): void {
   const next = recipe(state.data)
   if (next === state.data) return
-  const saved = saveAppData(storage, next)
+  const saved = saveUserData(storage, next)
   state = { data: next, notice: saved.ok ? state.notice : makeNotice('error', saved.error) }
   emit()
 }
@@ -106,5 +106,4 @@ export function dismissNotice(): void {
 
 export const useAppState = () => useSyncExternalStore(subscribe, getSnapshot)
 
-export const selectActiveFestival = (data: AppData): Festival | null =>
-  data.festivals.find((f) => f.id === data.activeFestivalId) ?? data.festivals[0] ?? null
+export const selectActiveFestival = (data: UserData): ResolvedFestival | null => activeFestival(data)

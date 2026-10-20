@@ -1,13 +1,23 @@
 import { festivalMapFor } from '../../features/map/festivalMaps'
+import { GRAND_MINT_2026_ID, GRAND_MINT_2026_KEY as KEY } from './ids'
 import type { Festival, Pin } from '../schema'
 
 /**
  * Grand Mint Festival 2026 (2026-10-17/18, Olympic Park, Seoul).
  * Source: official timetable image on the NOL ticket page (nol.yanolja.com/ticket/products/26010721).
  * Headliner sets the timetable leaves open-ended ("20:40 -") use the end time the poster's block suggests.
- * Ids are fixed so adding the preset again replaces it and keeps everyone's favorites.
+ * Stage, performance and pin ids are fixed (prefixed with the festival key) so favorites survive updates.
  */
-export const GRAND_MINT_2026_ID = 'gmf2026'
+export { GRAND_MINT_2026_ID }
+
+/** Admin notices, summarised from the NOL ticket page's notices (2026). */
+export const GRAND_MINT_2026_NOTICES: readonly string[] = [
+  '모바일 티켓은 관람 전날 NOL 앱에서 발급돼요. 캡처본·사본은 안 되고, 예매자 본인 신분증 원본을 꼭 챙기세요.',
+  '티켓 부스는 우선입장 10:50, 일반 11:00에 열려요(이틀 모두).',
+  '손목밴드 돌려쓰기를 포함한 양도·재판매는 불법이에요. 적발되면 바로 퇴장돼요.',
+  '캠핑형이 아닌 도심형 페스티벌이라, 꼭 필요한 물건만 담은 작은 가방만 들고 들어갈 수 있어요.',
+  '우선입장권은 1인 1매이고 별도 부스에서 입장해요. 일행과 같이 들어갈 수 없어요.',
+]
 
 const STAGES = {
   mint: { name: 'Mint Breeze', color: '#1f9e89' },
@@ -138,18 +148,18 @@ function markPins(): Pin[] {
     const meta = MARK_KINDS[mark.kind]
     if (!meta) throw new Error(`GMF 2026 map mark ${mark.id} has unknown kind "${mark.kind}"`)
     const where = ESTIMATED_ZONES.has(mark.zone) ? `${mark.zone} (대략)` : mark.zone
-    return { id: `${GRAND_MINT_2026_ID}-mark-${mark.id}`, name: `${meta.name} · ${where}`, kind: meta.kind, lat: mark.lat, lng: mark.lng }
+    return { id: `${KEY}-mark-${mark.id}`, name: `${meta.name} · ${where}`, kind: meta.kind, lat: mark.lat, lng: mark.lng }
   })
 }
 
 function zonePins(): Pin[] {
-  return ZONE_PINS.map(([key, pin, anchorKey]) => ({ id: `${GRAND_MINT_2026_ID}-zone-${key}`, ...pin, ...anchor(anchorKey) }))
+  return ZONE_PINS.map(([key, pin, anchorKey]) => ({ id: `${KEY}-zone-${key}`, ...pin, ...anchor(anchorKey) }))
 }
 
 const toPerformances = (day: string, dayKey: string, rows: readonly Row[]) =>
   rows.map(([stage, start, end, artist], index) => ({
-    id: `${GRAND_MINT_2026_ID}-${dayKey}-${stage}-${String(index).padStart(2, '0')}`,
-    stageId: `${GRAND_MINT_2026_ID}-${stage}`,
+    id: `${KEY}-${dayKey}-${stage}-${String(index).padStart(2, '0')}`,
+    stageId: `${KEY}-${stage}`,
     day,
     artist,
     start,
@@ -163,7 +173,7 @@ export function createGrandMint2026(): Festival {
     startDate: '2026-10-17',
     endDate: '2026-10-18',
     venue: { name: '올림픽공원', lat: 37.5195, lng: 127.1265 },
-    stages: (Object.keys(STAGES) as StageKey[]).map((key) => ({ id: `${GRAND_MINT_2026_ID}-${key}`, ...STAGES[key] })),
+    stages: (Object.keys(STAGES) as StageKey[]).map((key) => ({ id: `${KEY}-${key}`, ...STAGES[key] })),
     performances: [...toPerformances('2026-10-17', 'd1', DAY1), ...toPerformances('2026-10-18', 'd2', DAY2)],
     pins: [...zonePins(), ...markPins()],
   }

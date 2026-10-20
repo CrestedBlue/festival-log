@@ -1,4 +1,4 @@
-import type { AppData, Festival } from './schema'
+import type { Festival, Pin, UserData } from './schema'
 
 export const makeFestival = (overrides: Partial<Festival> = {}): Festival => ({
   id: 'f1',
@@ -12,10 +12,22 @@ export const makeFestival = (overrides: Partial<Festival> = {}): Festival => ({
   ...overrides,
 })
 
-export const makeData = (overrides: Partial<AppData> = {}): AppData => ({
-  version: 1,
-  activeFestivalId: 'f1',
-  festivals: [makeFestival()],
+export const makePin = (overrides: Partial<Pin> = {}): Pin => ({
+  id: 'pin1',
+  name: '만남의 장소',
+  kind: 'meet',
+  lat: 37.519,
+  lng: 127.125,
+  ...overrides,
+})
+
+export const makeUserData = (overrides: Partial<UserData> = {}): UserData => ({
+  version: 2,
+  myFestivalIds: [],
+  activeFestivalId: null,
   favorites: [],
+  userPins: {},
+  ticketLinks: {},
+  archivedFestivals: [],
   ...overrides,
 })

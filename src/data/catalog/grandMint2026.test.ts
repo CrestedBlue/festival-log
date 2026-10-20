@@ -1,11 +1,9 @@
 import { describe, expect, test } from 'vitest'
-import { hasIdCollision } from '../actions'
-import { createSampleFestival } from '../sample'
 import { FestivalSchema } from '../schema'
-import { makeData } from '../testFixtures'
 import { festivalMapFor } from '../../features/map/festivalMaps'
 import { isInsideBounds } from '../../lib/geo'
 import { GRAND_MINT_2026_ID, createGrandMint2026 } from './grandMint2026'
+import { GRAND_MINT_2026_KEY } from './ids'
 
 describe('createGrandMint2026', () => {
   const festival = createGrandMint2026()
@@ -48,7 +46,7 @@ describe('createGrandMint2026', () => {
   })
 
   test('turns every official map marker into a pin of the matching kind', () => {
-    const marks = festival.pins.filter((pin) => pin.id.startsWith(`${GRAND_MINT_2026_ID}-mark-`))
+    const marks = festival.pins.filter((pin) => pin.id.startsWith(`${GRAND_MINT_2026_KEY}-mark-`))
     expect(marks).toHaveLength(34)
     expect(marks.filter((pin) => pin.kind === 'toilet').length).toBeGreaterThanOrEqual(10)
     expect(marks.map((pin) => pin.kind)).toEqual(expect.arrayContaining(['info', 'firstaid', 'luggage', 'water', 'wristband', 'food', 'eating']))
@@ -56,18 +54,12 @@ describe('createGrandMint2026', () => {
   })
 
   test('keeps zone pins (stages, exits, …) separate from marker pins', () => {
-    const zones = festival.pins.filter((pin) => pin.id.startsWith(`${GRAND_MINT_2026_ID}-zone-`))
+    const zones = festival.pins.filter((pin) => pin.id.startsWith(`${GRAND_MINT_2026_KEY}-zone-`))
     expect(zones.filter((pin) => pin.kind === 'stage')).toHaveLength(3)
     expect(zones.length + 34).toBe(festival.pins.length)
   })
 
   test('uses stable ids so re-adding replaces instead of duplicating', () => {
     expect(createGrandMint2026()).toEqual(festival)
-  })
-
-  test('does not collide with the sample festival', () => {
-    let n = 0
-    const sample = createSampleFestival(new Date(2026, 9, 16), () => `sample-${n++}`)
-    expect(hasIdCollision(makeData({ festivals: [sample] }), festival)).toBe(false)
   })
 })

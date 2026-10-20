@@ -15,17 +15,21 @@ const MapView = lazy(() => import('./features/map/MapView'))
 
 export default function App() {
   const { data, notice } = useAppState()
-  const festival = selectActiveFestival(data)
+  const festival = selectActiveFestival(data)?.festival ?? null
   const route = useHashRoute()
   const now = useNow()
 
   const renderView = () => {
-    if (route.tab === 'manage') return <ManageView data={data} festival={festival} />
-    if (!festival) return <EmptyState onCreate={() => route.go('manage')} />
+    if (route.tab === 'manage') return <ManageView data={data} onOpen={() => route.go('timetable')} />
+    if (!festival) return <EmptyState onOpenList={() => route.go('manage')} />
     if (route.tab === 'map') {
       return (
         <Suspense fallback={<p className="timetable__empty">지도 불러오는 중…</p>}>
-          <MapView key={festival.id} festival={festival} />
+          <MapView
+            key={festival.id}
+            festival={festival}
+            userPinIds={new Set((data.userPins[festival.id] ?? []).map((pin) => pin.id))}
+          />
         </Suspense>
       )
     }

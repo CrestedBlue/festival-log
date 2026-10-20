@@ -1,3 +1,4 @@
+import { GRAND_MINT_2026_ID } from '../../data/catalog/ids'
 import { isInsideBounds, type LatLngBounds } from '../../lib/geo'
 import gmf2026Image from '../../assets/maps/gmf2026.webp'
 import gmf2026Meta from '../../assets/maps/gmf2026.json'
@@ -76,7 +77,7 @@ export function parseMapMeta(raw: {
 }
 
 const MAPS: Record<string, FestivalMap> = {
-  gmf2026: { imageUrl: gmf2026Image, ...parseMapMeta(gmf2026Meta) },
+  [GRAND_MINT_2026_ID]: { imageUrl: gmf2026Image, ...parseMapMeta(gmf2026Meta) },
 }
 
 export const festivalMapFor = (festivalId: string): FestivalMap | null => MAPS[festivalId] ?? null
