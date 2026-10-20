@@ -93,10 +93,12 @@
 .tt-grid {
   position: relative;
   display: grid;
-  grid-template-columns: 48px repeat(var(--stage-count), minmax(132px, 1fr));
+  /* Three stage columns fit on a phone screen; more scroll sideways, fewer stretch to fill it.
+     The width is set explicitly so long stage names can't widen the columns. */
+  --stage-col: min(calc((100vw - 48px) / 3), 220px);
+  grid-template-columns: 48px repeat(var(--stage-count), minmax(0, 1fr));
   grid-template-rows: auto var(--body-px);
-  min-width: 100%;
-  width: max-content;
+  width: max(100%, calc(48px + var(--stage-count) * var(--stage-col)));
   padding-bottom: var(--space-5);
 }
 
@@ -118,12 +120,20 @@
   border-bottom: 2px solid var(--color-line);
   font-weight: 800;
   font-size: var(--text-sm);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.25;
 }
 
-.tt-stage-head::before {
+/* Long stage names wrap to at most two lines (clamped on the inner text so padding never shows a third). */
+.tt-stage-head__name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.tt-stage-head__name::before {
   content: '';
   display: inline-block;
   width: 10px;

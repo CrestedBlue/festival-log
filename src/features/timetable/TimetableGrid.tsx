@@ -49,7 +49,7 @@ export function TimetableGrid({ stages, performances, favorites, moment, onToggl
         <div className="tt-corner" aria-hidden="true" />
         {stages.map((stage) => (
           <div key={stage.id} className="tt-stage-head" style={{ '--stage-color': stage.color } as CSSProperties}>
-            {stage.name}
+            <span className="tt-stage-head__name">{stage.name}</span>
           </div>
         ))}
 
