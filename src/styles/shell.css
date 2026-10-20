@@ -142,16 +142,89 @@
   border-left: 6px solid var(--color-info);
   box-shadow: var(--shadow-float);
   font-size: var(--text-sm);
+  overflow: hidden;
+  /* Sideways drags belong to the notice (swipe it away); vertical ones still scroll the page. */
+  touch-action: pan-y;
+  user-select: none;
+  cursor: grab;
   animation: notice-in var(--duration-normal) var(--ease-out-expo);
+  transition:
+    transform var(--duration-normal) var(--ease-out-expo),
+    opacity var(--duration-normal);
 }
 
 .notice--error {
   border-left-color: var(--color-warn);
 }
 
+.notice.is-dragging {
+  cursor: grabbing;
+  transition: none;
+}
+
+.notice.is-away-left,
+.notice.is-away-right {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.notice.is-away-left {
+  transform: translateX(-110%);
+}
+
+.notice.is-away-right {
+  transform: translateX(110%);
+}
+
+/* Countdown to the auto-close: shrinks from full width to nothing, held while a finger is on it. */
+.notice__timer {
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: var(--color-info);
+  opacity: 0.6;
+  transform-origin: left center;
+  animation: notice-countdown var(--notice-ms, 6s) linear forwards;
+}
+
+.notice[data-held] .notice__timer {
+  animation-play-state: paused;
+}
+
+@keyframes notice-countdown {
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Animations are cut to an instant there, so the bar would only ever show empty. */
+  .notice__timer {
+    display: none;
+  }
+}
+
 .notice p {
   flex: 1;
   margin: 0;
+}
+
+.notice__close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin: -6px -10px -6px 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-ink-soft);
+}
+
+.notice__close svg {
+  width: 18px;
+  height: 18px;
 }
 
 @keyframes notice-in {
