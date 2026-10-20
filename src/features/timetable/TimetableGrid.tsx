@@ -2,6 +2,7 @@ import { useEffect, useRef, type CSSProperties } from 'react'
 import type { Performance, Stage } from '../../data/schema'
 import { findConflicts, performanceSpan, timelineRange } from '../../lib/schedule'
 import { formatClock, type FestivalMoment } from '../../lib/time'
+import { stageColumnWeights } from './columns'
 
 const PX_PER_MIN = 1.6
 const COMPACT_BELOW_PX = 44
@@ -37,8 +38,10 @@ export function TimetableGrid({ stages, performances, favorites, moment, onToggl
     // Only on mount (the grid is keyed by day).
   }, [])
 
+  const weights = stageColumnWeights(stages.length)
   const gridStyle = {
-    '--stage-count': stages.length,
+    '--stage-weight-sum': weights.reduce((sum, w) => sum + w, 0),
+    gridTemplateColumns: `48px ${weights.map((w) => `minmax(0, ${w}fr)`).join(' ')}`,
     '--hour-px': `${60 * PX_PER_MIN}px`,
     '--body-px': `${(range.end - range.start) * PX_PER_MIN}px`,
   } as CSSProperties
