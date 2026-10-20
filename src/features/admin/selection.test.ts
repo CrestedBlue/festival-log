@@ -1,47 +1,37 @@
 import { describe, expect, test } from 'vitest'
 import { CATALOG } from '../../data/catalog'
-import { catalogOverview } from './overview'
-import { adminYears, festivalsOfYear, resolveSelection, selectionQuery } from './selection'
+import { SERIES } from '../../data/catalog/series'
+import { seriesOverview } from './overview'
+import { resolveSelection, selectionQuery } from './selection'
 
-const rows = catalogOverview(CATALOG)
+const series = seriesOverview(CATALOG, SERIES)
 const TODAY = '2026-10-20'
-const resolve = (query: string) => resolveSelection(new URLSearchParams(query), rows, TODAY)
-
-describe('adminYears', () => {
-  test('offers every catalog year plus this year and next, newest first', () => {
-    expect(adminYears(rows, TODAY)).toEqual(['2027', '2026'])
-  })
-})
-
-describe('festivalsOfYear', () => {
-  test('lists one year in date order', () => {
-    expect(festivalsOfYear(rows, '2026').map((r) => r.key)).toEqual(['pentaport2026', 'gmf2026', 'herorock2026'])
-    expect(festivalsOfYear(rows, '2027')).toEqual([])
-  })
-})
+const resolve = (query: string) => resolveSelection(new URLSearchParams(query), series, TODAY)
 
 describe('resolveSelection', () => {
-  test('opens this year on the next festival that has not ended, on its timetable (or line-up)', () => {
-    expect(resolve('')).toEqual({ year: '2026', festivalKey: 'herorock2026', view: 'timetable' })
+  test('opens on the festival whose next edition has not ended, on its timetable (or line-up)', () => {
+    expect(resolve('')).toEqual({ section: 'festivals', series: 'herorock', year: '2026', view: 'timetable' })
   })
 
-  test('follows the festival in the address, opening its year and its timetable', () => {
-    expect(resolve('?festival=gmf2026')).toEqual({ year: '2026', festivalKey: 'gmf2026', view: 'timetable' })
-    expect(resolve('?year=2026&festival=gmf2026&view=notices')).toEqual({ year: '2026', festivalKey: 'gmf2026', view: 'notices' })
+  test('follows the festival, year and view in the address', () => {
+    expect(resolve('?festival=pentaport')).toEqual({ section: 'festivals', series: 'pentaport', year: '2026', view: 'timetable' })
+    expect(resolve('?festival=pentaport&year=2026&view=map')).toEqual({ section: 'festivals', series: 'pentaport', year: '2026', view: 'map' })
   })
 
-  test('falls back for unknown years, festivals and views', () => {
-    expect(resolve('?year=1999&festival=nope&view=nope')).toEqual({ year: '2026', festivalKey: 'herorock2026', view: 'timetable' })
+  test('falls back for unknown festivals, years and views', () => {
+    expect(resolve('?festival=nope&year=1999&view=nope')).toEqual({ section: 'festivals', series: 'herorock', year: '2026', view: 'timetable' })
+    expect(resolve('?festival=pentaport&year=1999')).toMatchObject({ series: 'pentaport', year: '2026' })
   })
 
-  test('a year without festivals selects none', () => {
-    expect(resolve('?year=2027')).toEqual({ year: '2027', festivalKey: null, view: 'timetable' })
+  test('opens the CS section and keeps the chosen festival for coming back', () => {
+    expect(resolve('?tab=cs').section).toBe('cs')
+    expect(resolve('?tab=cs&festival=pentaport&year=2026&view=map')).toEqual({ section: 'cs', series: 'pentaport', year: '2026', view: 'map' })
   })
 })
 
 describe('selectionQuery', () => {
-  test('writes the selection with readable codes', () => {
-    expect(selectionQuery({ year: '2026', festivalKey: 'gmf2026', view: 'map' })).toBe('?year=2026&festival=gmf2026&view=map')
-    expect(selectionQuery({ year: '2027', festivalKey: null, view: 'timetable' })).toBe('?year=2027')
+  test('writes the selection with the festival code and year', () => {
+    expect(selectionQuery({ section: 'festivals', series: 'pentaport', year: '2026', view: 'map' })).toBe('?festival=pentaport&year=2026&view=map')
+    expect(selectionQuery({ section: 'cs', series: 'pentaport', year: '2026', view: 'map' })).toBe('?tab=cs&festival=pentaport&year=2026&view=map')
   })
 })

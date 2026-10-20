@@ -1,42 +1,47 @@
 import { useState } from 'react'
 import { LogoMark } from '../../components/LogoMark'
 import { CATALOG } from '../../data/catalog'
+import { SERIES } from '../../data/catalog/series'
 import { festivalMoment } from '../../lib/time'
-import { FestivalDetail } from './FestivalDetail'
-import { FestivalList } from './FestivalList'
-import { catalogOverview } from './overview'
-import { adminYears, festivalsOfYear, resolveSelection, selectionQuery, type AdminSelection, type AdminView } from './selection'
+import { seriesOverview } from './overview'
+import { resolveSelection, selectionQuery, type AdminSection, type AdminSelection, type AdminView } from './selection'
+import { SeriesDetail } from './SeriesDetail'
+import { SeriesList } from './SeriesList'
 import './admin.css'
 
 // Catalog festivals are app data: build them once.
-const ROWS = catalogOverview(CATALOG)
+const SERIES_ROWS = seriesOverview(CATALOG, SERIES)
 
-/** The selection lives in the address (?year=…&festival=…&view=…), so a reload keeps it. */
+const SECTIONS: ReadonlyArray<readonly [AdminSection, string]> = [
+  ['festivals', '페스티벌'],
+  ['cs', 'CS'],
+]
+
+/** The selection lives in the address (?festival=…&year=…&view=…, or ?tab=cs), so a reload keeps it. */
 function useAdminSelection(today: string) {
   const [search, setSearch] = useState(() => window.location.search)
-  const selection = resolveSelection(new URLSearchParams(search), ROWS, today)
+  const selection = resolveSelection(new URLSearchParams(search), SERIES_ROWS, today)
   const select = (next: AdminSelection) => {
     const query = selectionQuery(next)
     window.history.replaceState(null, '', `${window.location.pathname}${query}`)
     setSearch(query)
   }
-  // Defaults (festival, view) for a year or festival come from the same rules as a fresh visit.
-  const pick = (params: Record<string, string>) => select(resolveSelection(new URLSearchParams(params), ROWS, today))
+  // Defaults (year, view) for a festival or year come from the same rules as a fresh visit.
+  const pick = (params: Record<string, string>) => select(resolveSelection(new URLSearchParams(params), SERIES_ROWS, today))
   return {
     selection,
-    selectYear: (year: string) => pick({ year }),
-    selectFestival: (festival: string) => pick({ year: selection.year, festival }),
+    selectSection: (section: AdminSection) => select({ ...selection, section }),
+    selectSeries: (festival: string) => pick({ festival }),
+    selectYear: (year: string) => pick({ festival: selection.series ?? '', year }),
     selectView: (view: AdminView) => select({ ...selection, view }),
   }
 }
 
-/** Admin-only catalog page: the year's festivals on the left, the chosen one's timetable, map and notices on the right. */
+/** Admin-only page: festivals by festival code on the left; the chosen one's timetable, map and notices on the right. */
 export function AdminPage() {
   const today = festivalMoment(new Date()).day
-  const { selection, selectYear, selectFestival, selectView } = useAdminSelection(today)
-  const years = adminYears(ROWS, today)
-  const rows = festivalsOfYear(ROWS, selection.year)
-  const selected = rows.find((row) => row.key === selection.festivalKey) ?? null
+  const { selection, selectSection, selectSeries, selectYear, selectView } = useAdminSelection(today)
+  const selected = SERIES_ROWS.find((s) => s.code === selection.series) ?? null
 
   return (
     <div className="admin">
@@ -44,28 +49,35 @@ export function AdminPage() {
       <header className="admin__bar">
         <LogoMark size={30} />
         <h1 className="admin__title">두두페 관리</h1>
-        <div className="admin__years" role="group" aria-label="관리할 연도">
-          {years.map((year) => (
+        <nav className="admin-nav" aria-label="관리 메뉴">
+          {SECTIONS.map(([section, label]) => (
             <button
-              key={year}
+              key={section}
               type="button"
-              className="admin__year"
-              aria-pressed={year === selection.year}
-              onClick={() => selectYear(year)}
+              className="admin-nav__item"
+              aria-current={selection.section === section ? 'page' : undefined}
+              onClick={() => selectSection(section)}
             >
-              {year}
+              {label}
             </button>
           ))}
-        </div>
+        </nav>
         <a className="admin__app-link" href={import.meta.env.BASE_URL}>
           앱 열기
         </a>
       </header>
-      <div className="admin__body">
-        <FestivalList year={selection.year} rows={rows} selectedKey={selection.festivalKey} onSelect={selectFestival} />
-        {/* A year with no festivals has nothing to show here (the list already says so). */}
-        {selected && <FestivalDetail key={selected.id} row={selected} view={selection.view} onView={selectView} />}
-      </div>
+      {selection.section === 'cs' ? (
+        <main className="admin-cs">
+          <p className="admin-empty">CS 화면은 아직 내용이 정해지지 않았어요.</p>
+        </main>
+      ) : (
+        <div className="admin__body">
+          <SeriesList series={SERIES_ROWS} selected={selection.series} onSelect={selectSeries} />
+          {selected && (
+            <SeriesDetail key={selected.code} series={selected} year={selection.year} view={selection.view} onYear={selectYear} onView={selectView} />
+          )}
+        </div>
+      )}
     </div>
   )
 }

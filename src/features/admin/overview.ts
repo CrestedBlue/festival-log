@@ -1,5 +1,6 @@
 import type { CatalogEntry } from '../../data/catalog'
 import type { LineupImage } from '../../data/catalog/lineup'
+import type { CollectionSource, FestivalSeries } from '../../data/catalog/series/types'
 import { FestivalSchema, type Festival } from '../../data/schema'
 import { formatPeriod } from '../../lib/period'
 import { listDays } from '../../lib/time'
@@ -98,3 +99,24 @@ function overviewOf(entry: CatalogEntry): FestivalOverview {
 
 /** Every catalog festival as the admin page shows it (catalog order). */
 export const catalogOverview = (entries: readonly CatalogEntry[]): FestivalOverview[] => entries.map(overviewOf)
+
+/** A festival as the admin page lists it: by festival code, the same every year. */
+export interface SeriesOverview {
+  code: string
+  name: string
+  sources: readonly CollectionSource[]
+  /** Its catalog editions, newest year first. */
+  editions: FestivalOverview[]
+}
+
+export function seriesOverview(entries: readonly CatalogEntry[], series: Readonly<Record<string, FestivalSeries>>): SeriesOverview[] {
+  const rows = catalogOverview(entries)
+  return Object.values(series)
+    .map((s) => ({
+      code: s.code,
+      name: s.name,
+      sources: s.sources,
+      editions: rows.filter((r) => r.series === s.code).sort((a, b) => b.startDate.localeCompare(a.startDate)),
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name, 'ko'))
+}
