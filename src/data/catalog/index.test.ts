@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest'
+import { FestivalSchema } from '../schema'
 import { CATALOG, catalogEntry, catalogEntryForLegacyId, isMapLabelPin } from './index'
-import { GRAND_MINT_2026_ID, GRAND_MINT_2026_KEY } from './ids'
+import { GRAND_MINT_2026_ID, GRAND_MINT_2026_KEY, HERO_ROCK_2026_ID } from './ids'
 
 describe('catalog', () => {
   test('every festival has a UUID id and builds a festival with that id', () => {
@@ -8,6 +9,17 @@ describe('catalog', () => {
       expect(entry.id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/)
       expect(entry.create().id).toBe(entry.id)
     }
+  })
+
+  test('every festival passes the festival schema and has its own id and key', () => {
+    for (const entry of CATALOG) expect(FestivalSchema.safeParse(entry.create()).success).toBe(true)
+    expect(new Set(CATALOG.map((e) => e.id)).size).toBe(CATALOG.length)
+    expect(new Set(CATALOG.map((e) => e.key)).size).toBe(CATALOG.length)
+  })
+
+  test('lists the 2026 Hero Rock Festival, which has no notices yet', () => {
+    expect(catalogEntry(HERO_ROCK_2026_ID)?.create().name).toBe('2026 히어로 락페스티벌')
+    expect(catalogEntry(HERO_ROCK_2026_ID)?.notices).toEqual([])
   })
 
   test('finds entries by id and by the id older versions used', () => {

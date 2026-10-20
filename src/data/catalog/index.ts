@@ -1,6 +1,7 @@
 import type { Festival, Pin } from '../schema'
 import { GRAND_MINT_2026_NOTICES, createGrandMint2026 } from './grandMint2026'
-import { GRAND_MINT_2026_ID, GRAND_MINT_2026_KEY } from './ids'
+import { createHeroRock2026 } from './heroRock2026'
+import { GRAND_MINT_2026_ID, GRAND_MINT_2026_KEY, HERO_ROCK_2026_ID, HERO_ROCK_2026_KEY } from './ids'
 
 /** A festival the admin maintains in the app (no admin UI: edit these files and push). */
 export interface CatalogEntry {
@@ -21,6 +22,13 @@ export const CATALOG: readonly CatalogEntry[] = [
     key: GRAND_MINT_2026_KEY,
     create: createGrandMint2026,
     notices: GRAND_MINT_2026_NOTICES,
+  },
+  {
+    id: HERO_ROCK_2026_ID,
+    legacyIds: [],
+    key: HERO_ROCK_2026_KEY,
+    create: createHeroRock2026,
+    notices: [],
   },
 ]
 

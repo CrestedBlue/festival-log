@@ -57,6 +57,8 @@ export const FestivalSchema = z
     name,
     startDate: isoDate,
     endDate: isoDate,
+    // Dates not announced yet: startDate/endDate are placeholders inside the right year and are not shown.
+    datesTbd: z.boolean().optional(),
     venue: VenueSchema,
     stages: z.array(StageSchema).max(MAX_ITEMS),
     performances: z.array(PerformanceSchema).max(MAX_ITEMS * 4),

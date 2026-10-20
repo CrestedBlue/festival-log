@@ -15,8 +15,8 @@ export function NowStrip({ festival, favorites, now }: Props) {
   const summary = summarizeNow(festival, favorites, festivalMoment(now))
   const stageName = (stageId: string) => festival.stages.find((s) => s.id === stageId)?.name ?? ''
 
-  // Outside festival days the strip only costs vertical space, so it disappears.
-  if (summary.kind !== 'during') return null
+  // Outside festival days, or before there is a timetable, the strip only costs vertical space.
+  if (summary.kind !== 'during' || festival.performances.length === 0) return null
 
   const [first, ...rest] = summary.playing
   return (
