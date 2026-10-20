@@ -79,8 +79,8 @@ export default defineConfig({
       workbox: {
         // webp = bundled festival maps, so the map works with no signal at the venue.
         globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2}'],
-        // Without this the app shell would answer /manage (no trailing slash) instead of the admin page.
-        navigateFallbackDenylist: [/\/manage\/?$/],
+        // The admin page (manage/, with or without a query) must never get the app shell.
+        navigateFallbackDenylist: [/\/manage(?:\/|$)/],
         runtimeCaching: [
           {
             // Festival grounds often have no signal: keep every map tile you've already looked at.

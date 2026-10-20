@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { makeFestival } from '../data/testFixtures'
-import { buildHash, homeTab, parseHash } from './route'
+import { buildHash, homeTab, isAdminPath, parseHash } from './route'
 
 describe('parseHash', () => {
   test('reads the tab and query params', () => {
@@ -43,5 +43,19 @@ describe('buildHash', () => {
   test('omits empty params', () => {
     expect(buildHash('map')).toBe('#/map')
     expect(buildHash('timetable', { day: '2026-10-17', mine: undefined })).toBe('#/timetable?day=2026-10-17')
+  })
+})
+
+describe('isAdminPath', () => {
+  test('is true for the admin page with or without the trailing slash', () => {
+    expect(isAdminPath('/festival-log/manage/', '/festival-log/')).toBe(true)
+    expect(isAdminPath('/festival-log/manage', '/festival-log/')).toBe(true)
+    expect(isAdminPath('/manage/', '/')).toBe(true)
+  })
+
+  test('is false for the app itself and for look-alike paths', () => {
+    expect(isAdminPath('/festival-log/', '/festival-log/')).toBe(false)
+    expect(isAdminPath('/festival-log/managers', '/festival-log/')).toBe(false)
+    expect(isAdminPath('/manage/', '/festival-log/')).toBe(false)
   })
 })

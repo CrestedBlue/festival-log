@@ -25,3 +25,7 @@ export function buildHash(tab: Tab, params: Record<string, string | undefined> =
   const query = new URLSearchParams(entries).toString()
   return `#/${tab}${query ? `?${query}` : ''}`
 }
+
+/** The admin catalog page lives at <base>manage/ (a separate page, not an app tab). */
+export const isAdminPath = (pathname: string, base: string): boolean =>
+  pathname === `${base}manage` || pathname.startsWith(`${base}manage/`)
