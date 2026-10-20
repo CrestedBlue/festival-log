@@ -26,5 +26,7 @@
 - 배포 워크플로: `.github/workflows/deploy.yml` (push to `main` → test → build → deploy-pages)
 - 로컬 작업 사본: `~/Documents/workspace/festival-log` (커밋 작성자 로컬 설정 완료). 다른 컴퓨터에서 새로 clone 하면 작성자 설정부터 다시 건다
 - 프리셋: `src/data/presets/` (GMF 2026 = `grandMint2026.ts`)
-- 지도 이미지 생성: `node scripts/map/build-gmf.mjs` — 입력 `map-src/gmf/`(공식 지도 크롭·OSM 추출), 출력 `src/assets/maps/gmf.{webp,json}`. 지도·장소·지도 핀은 연도가 아니라 페스티벌 코드(`gmf`) 단위다(`src/data/catalog/series/`). **지도 그림은 이 스크립트로만 바꾼다**(webp 를 직접 고치지 않는다). 지형 출처 OSM 은 ODbL 이라 지도에 출처 표기를 유지한다
+- 지도 이미지 생성: `node scripts/map/build-gmf.mjs` — 입력 `map-src/gmf/`(공식 지도 크롭·OSM 추출), 출력 `src/assets/maps/gmf.{webp,json}`. 지도·장소·지도 핀은 연도가 아니라 페스티벌 코드(`gmf`) 단위다(`src/data/catalog/series/`).
+- 펜타포트 지도: `node scripts/map/build-pentaport.mjs` — 공식 입장 동선 안내 그림(`map-src/pentaport/official-entrance-map.jpg`)을 그대로 쓰되, 실제 위치(OSM)와 맞는 기준점(역, 야구장, 푸르지오, 한라, KB 스테이지=대공연장)을 정확히 지나도록 thin-plate spline(`scripts/map/tps.mjs`)으로 펴서 `src/assets/maps/pentaport.{webp,json}` 을 만든다. 그림 위 장소(스테이지, 게이트, 티켓부스, 셔틀)는 같은 변환으로 좌표가 되어 핀이 된다. OSM 원본은 `node scripts/map/extract-osm.mjs <받은.osm> map-src/<코드>/osm.json` 으로 만든다
+- 공식 안내 이미지(체크리스트, 행사장 안내도)는 `src/assets/guides/guide-*.webp` 로 넣고 카탈로그의 `guides` 에 등록한다. 용량이 커서 설치 때 미리 받지 않고(서비스워커 globIgnores) 처음 볼 때 캐시한다 **지도 그림은 이 스크립트로만 바꾼다**(webp 를 직접 고치지 않는다). 지형 출처 OSM 은 ODbL 이라 지도에 출처 표기를 유지한다
 - 화면 확인: Claude 앱 미리보기 서버는 `~/Documents` 를 못 읽는다 → 로컬 사본에서 `npm run build` 후 `dist/` 를 세션 폴더로 복사해 미리보기
