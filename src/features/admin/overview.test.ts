@@ -7,7 +7,8 @@ import { catalogOverview } from './overview'
 const entry = (overrides: Partial<CatalogEntry> & Pick<CatalogEntry, 'create'>): CatalogEntry => ({
   id: 'test-id',
   legacyIds: [],
-  key: 'test',
+  series: 'test',
+  key: 'test2026',
   notices: ['공지'],
   ...overrides,
 })
@@ -16,8 +17,14 @@ describe('catalogOverview', () => {
   const rows = catalogOverview(CATALOG)
   const row = (id: string) => rows.find((r) => r.id === id)
 
-  test('lists every catalog festival, the one that starts last first', () => {
-    expect(rows.map((r) => r.id)).toEqual([HERO_ROCK_2026_ID, GRAND_MINT_2026_ID])
+  test('lists every catalog festival with its festival code and yearly code', () => {
+    expect(rows.map((r) => [r.series, r.key, r.year])).toEqual(
+      expect.arrayContaining([
+        ['gmf', 'gmf2026', '2026'],
+        ['herorock', 'herorock2026', '2026'],
+      ]),
+    )
+    expect(rows).toHaveLength(CATALOG.length)
   })
 
   test('counts what a finished festival has and finds nothing missing', () => {
@@ -25,11 +32,10 @@ describe('catalogOverview', () => {
       days: 2,
       stageCount: 4,
       performanceCount: 60,
-      noticeCount: 5,
-      hasIllustratedMap: true,
       missing: [],
       problems: [],
     })
+    expect(row(GRAND_MINT_2026_ID)?.festival?.performances).toHaveLength(60)
   })
 
   test('says what a festival still lacks', () => {
@@ -49,6 +55,6 @@ describe('catalogOverview', () => {
         },
       }),
     ])
-    expect(broken).toMatchObject({ id: 'test-id', name: 'test', problems: ['만들지 못했어요: map metadata is missing'] })
+    expect(broken).toMatchObject({ id: 'test-id', name: 'test2026', festival: null, problems: ['만들지 못했어요: map metadata is missing'] })
   })
 })

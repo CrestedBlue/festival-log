@@ -17,6 +17,15 @@ describe('catalog', () => {
     expect(new Set(CATALOG.map((e) => e.key)).size).toBe(CATALOG.length)
   })
 
+  test('every festival has a festival code, and its yearly code is that code plus the year it starts in', () => {
+    for (const entry of CATALOG) {
+      expect(entry.series).toMatch(/^[a-z0-9]+$/)
+      expect(entry.key).toBe(`${entry.series}${entry.create().startDate.slice(0, 4)}`)
+    }
+    expect(catalogEntry(HERO_ROCK_2026_ID)).toMatchObject({ series: 'herorock', key: 'herorock2026' })
+    expect(catalogEntry(GRAND_MINT_2026_ID)).toMatchObject({ series: 'gmf', key: 'gmf2026' })
+  })
+
   test('lists the 2026 Hero Rock Festival with its notices', () => {
     expect(catalogEntry(HERO_ROCK_2026_ID)?.create().name).toBe('2026 히어로 락 페스티벌 - 인천')
     expect(catalogEntry(HERO_ROCK_2026_ID)?.notices.length).toBeGreaterThan(0)

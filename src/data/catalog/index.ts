@@ -1,14 +1,16 @@
 import type { Festival, Pin } from '../schema'
 import { GRAND_MINT_2026_NOTICES, createGrandMint2026 } from './grandMint2026'
 import { HERO_ROCK_2026_NOTICES, createHeroRock2026 } from './heroRock2026'
-import { GRAND_MINT_2026_ID, GRAND_MINT_2026_KEY, HERO_ROCK_2026_ID, HERO_ROCK_2026_KEY } from './ids'
+import { GRAND_MINT_2026_ID, GRAND_MINT_2026_KEY, GRAND_MINT_SERIES, HERO_ROCK_2026_ID, HERO_ROCK_2026_KEY, HERO_ROCK_SERIES } from './ids'
 
 /** A festival the admin maintains in the app (no admin UI: edit these files and push). */
 export interface CatalogEntry {
   id: string
   /** Ids this festival had in older app versions (used when migrating saved data). */
   legacyIds: readonly string[]
-  /** Prefix of the stage/performance/pin ids the catalog owns. */
+  /** Festival code: the same every year (e.g. "herorock"). */
+  series: string
+  /** Yearly code: festival code + year (e.g. "herorock2026"). Prefixes the stage/performance/pin ids. */
   key: string
   create: () => Festival
   /** Things to know before going (admin). */
@@ -19,6 +21,7 @@ export const CATALOG: readonly CatalogEntry[] = [
   {
     id: GRAND_MINT_2026_ID,
     legacyIds: [GRAND_MINT_2026_KEY],
+    series: GRAND_MINT_SERIES,
     key: GRAND_MINT_2026_KEY,
     create: createGrandMint2026,
     notices: GRAND_MINT_2026_NOTICES,
@@ -26,6 +29,7 @@ export const CATALOG: readonly CatalogEntry[] = [
   {
     id: HERO_ROCK_2026_ID,
     legacyIds: [],
+    series: HERO_ROCK_SERIES,
     key: HERO_ROCK_2026_KEY,
     create: createHeroRock2026,
     notices: HERO_ROCK_2026_NOTICES,

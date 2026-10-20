@@ -13,7 +13,8 @@ interface Props {
   performances: readonly Performance[]
   favorites: ReadonlySet<string>
   moment: FestivalMoment | null
-  onToggle: (id: string) => void
+  /** Without it the sets are shown read-only (the admin page). */
+  onToggle?: (id: string) => void
 }
 
 export function TimetableGrid({ stages, performances, favorites, moment, onToggle }: Props) {
@@ -81,25 +82,32 @@ export function TimetableGrid({ stages, performances, favorites, moment, onToggl
                   isLive && 'tt-set--live',
                   height < COMPACT_BELOW_PX && 'tt-set--compact',
                 ]
+                const setProps = {
+                  className: classes.filter(Boolean).join(' '),
+                  style: { top: (span.start - range.start) * PX_PER_MIN, height: height - 3, '--stage-color': stage.color } as CSSProperties,
+                  'aria-label': `${p.artist}, ${p.start}부터 ${p.end}까지${isFavorite ? ', 찜함' : ''}`,
+                }
+                const body = (
+                  <>
+                    <span className="tt-set__artist">
+                      {isFavorite && <span aria-hidden="true">★ </span>}
+                      {p.artist}
+                    </span>
+                    <span className="tt-set__time">
+                      {p.start}–{p.end}
+                    </span>
+                    {conflicts.has(p.id) && <span className="tt-set__warn">겹침</span>}
+                  </>
+                )
                 return (
                   <div role="listitem" key={p.id}>
-                    <button
-                      type="button"
-                      className={classes.filter(Boolean).join(' ')}
-                      style={{ top: (span.start - range.start) * PX_PER_MIN, height: height - 3, '--stage-color': stage.color } as CSSProperties}
-                      aria-pressed={isFavorite}
-                      aria-label={`${p.artist}, ${p.start}부터 ${p.end}까지${isFavorite ? ', 찜함' : ''}`}
-                      onClick={() => onToggle(p.id)}
-                    >
-                      <span className="tt-set__artist">
-                        {isFavorite && <span aria-hidden="true">★ </span>}
-                        {p.artist}
-                      </span>
-                      <span className="tt-set__time">
-                        {p.start}–{p.end}
-                      </span>
-                      {conflicts.has(p.id) && <span className="tt-set__warn">겹침</span>}
-                    </button>
+                    {onToggle ? (
+                      <button type="button" {...setProps} aria-pressed={isFavorite} onClick={() => onToggle(p.id)}>
+                        {body}
+                      </button>
+                    ) : (
+                      <div {...setProps}>{body}</div>
+                    )}
                   </div>
                 )
               })}
