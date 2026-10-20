@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { GRAND_MINT_2026_ID } from './catalog/ids'
+import { GRAND_MINT_2026_ID, HERO_ROCK_2026_ID } from './catalog/ids'
 import { BACKUP_KEY_PREFIX, STORAGE_KEY, loadUserData, saveUserData } from './storage'
 import { makeFestival, makeUserData } from './testFixtures'
 
@@ -31,6 +31,21 @@ describe('loadUserData', () => {
     const loaded = loadUserData(memoryStorage({ [STORAGE_KEY]: JSON.stringify(v1) }))
     expect(loaded.status).toBe('migrated')
     expect(loaded.data.myFestivalIds).toEqual([GRAND_MINT_2026_ID])
+  })
+
+  test('folds a festival the user made into the catalog festival on the same dates at the same place', () => {
+    const own = makeFestival({
+      id: 'mine-hero',
+      startDate: '2026-12-18',
+      endDate: '2026-12-20',
+      venue: { name: '송도 컨벤시아', lat: 37.5195, lng: 127.1265 },
+      performances: [],
+    })
+    const data = makeUserData({ myFestivalIds: ['mine-hero'], activeFestivalId: 'mine-hero', archivedFestivals: [own] })
+    const loaded = loadUserData(memoryStorage({ [STORAGE_KEY]: JSON.stringify(data) }))
+    expect(loaded.status).toBe('migrated')
+    expect(loaded.data.myFestivalIds).toEqual([HERO_ROCK_2026_ID])
+    expect(loaded.data.archivedFestivals).toEqual([])
   })
 
   test('backs up corrupted data instead of discarding it', () => {

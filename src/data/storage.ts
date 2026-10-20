@@ -1,5 +1,6 @@
 import { migrateV1 } from './migrate'
 import { EMPTY_USER_DATA, LegacyAppDataSchema, UserDataSchema, type UserData } from './schema'
+import { mergeCatalogTwins } from './twins'
 
 export const STORAGE_KEY = 'festival-log:data'
 export const BACKUP_KEY_PREFIX = 'festival-log:backup-'
@@ -20,14 +21,22 @@ function tryParseJson(raw: string): unknown {
   }
 }
 
+type ReadResult = { ok: true; data: UserData; migrated: boolean } | { ok: false; error: string }
+
+/** Festivals the user made that the catalog now has too are folded into it (see mergeCatalogTwins). */
+function withTwinsMerged(data: UserData, migrated: boolean): ReadResult {
+  const merged = mergeCatalogTwins(data)
+  return { ok: true, data: merged, migrated: migrated || merged !== data }
+}
+
 /** Validation must never take the app down, whatever is on disk. Older formats are migrated. */
-function read(raw: string): { ok: true; data: UserData; migrated: boolean } | { ok: false; error: string } {
+function read(raw: string): ReadResult {
   try {
     const json = tryParseJson(raw)
     const current = UserDataSchema.safeParse(json)
-    if (current.success) return { ok: true, data: current.data, migrated: false }
+    if (current.success) return withTwinsMerged(current.data, false)
     const legacy = LegacyAppDataSchema.safeParse(json)
-    if (legacy.success) return { ok: true, data: migrateV1(legacy.data), migrated: true }
+    if (legacy.success) return withTwinsMerged(migrateV1(legacy.data), true)
     return { ok: false, error: current.error.message }
   } catch (error) {
     return { ok: false, error: String(error) }

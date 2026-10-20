@@ -10,7 +10,7 @@ export interface ResolvedFestival {
 
 const built = new Map<string, Festival>()
 // Catalog festivals are immutable app data: build each once per session.
-const catalogFestival = (id: string): Festival | null => {
+export const catalogFestival = (id: string): Festival | null => {
   const entry = catalogEntry(id)
   if (!entry) return null
   if (!built.has(id)) built.set(id, entry.create())
