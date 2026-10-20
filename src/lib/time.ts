@@ -78,6 +78,12 @@ export function festivalMoment(now: Date): FestivalMoment {
   return { day: addDays(today, -1), minutes: minutes + MINUTES_PER_DAY }
 }
 
+/** "금" for a Friday; '' for an invalid date. */
+export function weekdayLabel(day: string): string {
+  const utc = isoToUtc(day)
+  return utc === null ? '' : WEEKDAYS_KO[new Date(utc).getUTCDay()] ?? ''
+}
+
 export function formatDayLabel(day: string): string {
   const utc = isoToUtc(day)
   if (utc === null) return day

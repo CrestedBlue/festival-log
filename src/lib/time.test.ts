@@ -9,6 +9,7 @@ import {
   parseClock,
   toFestivalMinutes,
   toIsoDate,
+  weekdayLabel,
 } from './time'
 
 describe('parseClock', () => {
@@ -100,5 +101,12 @@ describe('dayDiff', () => {
   test('counts whole days from a to b', () => {
     expect(dayDiff('2026-10-16', '2026-10-19')).toBe(3)
     expect(dayDiff('2026-10-19', '2026-10-16')).toBe(-3)
+  })
+})
+
+describe('weekdayLabel', () => {
+  test('names the weekday in Korean, or nothing for an invalid date', () => {
+    expect(weekdayLabel('2026-12-18')).toBe('금')
+    expect(weekdayLabel('2026-13-01')).toBe('')
   })
 })

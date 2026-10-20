@@ -11,6 +11,7 @@ import { TimetableView } from './features/timetable/TimetableView'
 import { useHashRoute } from './hooks/useHashRoute'
 import { useNow } from './hooks/useNow'
 import { homeTab } from './lib/route'
+import { festivalMoment } from './lib/time'
 
 // Leaflet is the heaviest dependency, so it only loads when the map tab opens.
 const MapView = lazy(() => import('./features/map/MapView'))
@@ -23,7 +24,17 @@ export default function App() {
   const now = useNow()
 
   const renderView = () => {
-    if (route.tab === 'manage') return <ManageView data={data} />
+    if (route.tab === 'manage') {
+      return (
+        <ManageView
+          data={data}
+          params={route.params}
+          setParams={(params) => route.setParams('manage', params)}
+          today={festivalMoment(now).day}
+          onOpenActive={() => route.go(homeTab(festival))}
+        />
+      )
+    }
     if (!festival) return <EmptyState onOpenList={() => route.go('manage')} />
     if (route.tab === 'info') {
       return <InfoView festivalId={festival.id} ticketLink={data.ticketLinks[festival.id] ?? null} notices={resolved?.notices ?? []} />

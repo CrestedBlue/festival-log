@@ -70,3 +70,22 @@ export const EditIcon = () => (
     <path d="m13.5 6.5 4 4" />
   </svg>
 )
+
+export const CheckIcon = () => (
+  <svg {...base}>
+    <path d="m5 12.5 4.5 4.5L19 7.5" />
+  </svg>
+)
+
+export const SearchIcon = () => (
+  <svg {...base}>
+    <circle cx="11" cy="11" r="6.5" />
+    <path d="m20 20-4.4-4.4" />
+  </svg>
+)
+
+export const ChevronRightIcon = () => (
+  <svg {...base}>
+    <path d="m9 6 6 6-6 6" />
+  </svg>
+)
