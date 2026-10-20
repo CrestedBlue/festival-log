@@ -4,7 +4,6 @@ import type { LineupImage } from '../../data/catalog/lineup'
 export function Lineup({ images }: { images: readonly LineupImage[] }) {
   return (
     <div className="lineup">
-      <p className="lineup__note">타임테이블이 나오기 전이라 라인업을 먼저 보여드려요.</p>
       {images.map((image, i) => (
         <figure key={image.src} className="lineup__item">
           <figcaption className="lineup__label">{image.label}</figcaption>
