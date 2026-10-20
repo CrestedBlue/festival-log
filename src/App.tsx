@@ -10,6 +10,7 @@ import { ManageView } from './features/manage/ManageView'
 import { TimetableView } from './features/timetable/TimetableView'
 import { useHashRoute } from './hooks/useHashRoute'
 import { useNow } from './hooks/useNow'
+import { homeTab } from './lib/route'
 
 // Leaflet is the heaviest dependency, so it only loads when the map tab opens.
 const MapView = lazy(() => import('./features/map/MapView'))
@@ -18,7 +19,7 @@ export default function App() {
   const { data, notice } = useAppState()
   const resolved = selectActiveFestival(data)
   const festival = resolved?.festival ?? null
-  const route = useHashRoute()
+  const route = useHashRoute(homeTab(festival))
   const now = useNow()
 
   const renderView = () => {

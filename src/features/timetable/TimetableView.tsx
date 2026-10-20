@@ -31,6 +31,15 @@ export function TimetableView({ festival, favorites, now, params, setParams }: P
   const select = (next: { day?: string; mine?: boolean }) =>
     setParams({ day: next.day ?? selectedDay, mine: (next.mine ?? showMine) ? '1' : undefined })
 
+  // Before the timetable is out there are no days or favorites to pick (the dates may not be set either).
+  if (festival.performances.length === 0) {
+    return (
+      <section className="timetable" aria-label="타임테이블">
+        <p className="timetable__empty">타임테이블이 아직 공개되지 않았어요.</p>
+      </section>
+    )
+  }
+
   return (
     <section className="timetable" aria-label="타임테이블">
       <div className="timetable__controls">
@@ -62,7 +71,7 @@ export function TimetableView({ festival, favorites, now, params, setParams }: P
       </div>
 
       {festival.stages.length === 0 || dayPerformances.length === 0 ? (
-        <p className="timetable__empty">이 날짜에 등록된 공연이 없어요. 관리 탭에서 타임테이블을 입력해 보세요.</p>
+        <p className="timetable__empty">이 날짜에 등록된 공연이 없어요.</p>
       ) : showMine ? (
         <MyPlanList
           stages={festival.stages}
