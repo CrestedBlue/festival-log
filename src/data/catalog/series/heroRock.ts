@@ -17,4 +17,6 @@ export const HERO_ROCK: FestivalSeries = {
   name: '히어로 락 페스티벌 - 인천',
   venue: { name: '송도컨벤시아', lat: 37.388776, lng: 126.646738 },
   pins: () => [...PINS],
+  // 2026 data came from Melon Ticket and a poster the user sent: nothing scraped from this account yet.
+  sources: [{ method: '인스타', value: '@herorockfestival', lastScrapedPostDate: null }],
 }

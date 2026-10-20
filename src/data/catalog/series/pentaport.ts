@@ -45,4 +45,10 @@ export const PENTAPORT: FestivalSeries = {
   name: '인천펜타포트 락 페스티벌',
   venue: { name: '송도달빛축제공원', lat: 37.406261, lng: 126.63584 },
   pins: () => [...drawnPins(), ...EXIT_PINS],
+  sources: [
+    // Only the timetable post (2026-07-09) was read here; without logging in the account shows its newest 12 posts.
+    { method: '인스타', value: '@pentaportrf', lastScrapedPostDate: '2026-07-09' },
+    // Mirrors the Instagram posts; every 2026 notice up to 2026-08-06 was checked (2026-10-20).
+    { method: '공홈', value: 'https://www.pentaport.co.kr/Notice', lastScrapedPostDate: '2026-08-06' },
+  ],
 }

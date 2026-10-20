@@ -39,6 +39,22 @@ describe('catalog', () => {
     }
   })
 
+  test('every festival code lists where Claude collects it from, with the last post scraped from each', () => {
+    for (const series of Object.values(SERIES)) {
+      expect(series.sources.length, series.code).toBeGreaterThan(0)
+      for (const source of series.sources) {
+        expect(source.value).toMatch(source.method === '인스타' ? /^@[\w.]+$/ : /^https:\/\//)
+        expect(source.lastScrapedPostDate === null || /^\d{4}-\d{2}-\d{2}$/.test(source.lastScrapedPostDate)).toBe(true)
+      }
+    }
+    expect(SERIES.pentaport?.sources.map((s) => [s.method, s.value])).toEqual([
+      ['인스타', '@pentaportrf'],
+      ['공홈', 'https://www.pentaport.co.kr/Notice'],
+    ])
+    expect(SERIES.gmf?.sources.map((s) => s.value)).toEqual(['@grandmintfestival'])
+    expect(SERIES.herorock?.sources.map((s) => s.value)).toEqual(['@herorockfestival'])
+  })
+
   test('lists the 2026 Hero Rock Festival with its notices', () => {
     expect(catalogEntry(HERO_ROCK_2026_ID)?.create().name).toBe('2026 히어로 락 페스티벌 - 인천')
     expect(catalogEntry(HERO_ROCK_2026_ID)?.notices.length).toBeGreaterThan(0)

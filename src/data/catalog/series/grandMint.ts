@@ -74,4 +74,6 @@ export const GRAND_MINT: FestivalSeries = {
   name: '그랜드 민트 페스티벌',
   venue: { name: '올림픽공원', lat: 37.5195, lng: 127.1265 },
   pins: () => [...zonePins(), ...markPins()],
+  // 2026 data came from the NOL ticket page, not from this account: nothing scraped from it yet.
+  sources: [{ method: '인스타', value: '@grandmintfestival', lastScrapedPostDate: null }],
 }
