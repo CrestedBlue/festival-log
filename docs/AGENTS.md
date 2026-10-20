@@ -26,5 +26,5 @@
 - 배포 워크플로: `.github/workflows/deploy.yml` (push to `main` → test → build → deploy-pages)
 - 로컬 작업 사본: `~/Documents/workspace/festival-log` (커밋 작성자 로컬 설정 완료). 다른 컴퓨터에서 새로 clone 하면 작성자 설정부터 다시 건다
 - 프리셋: `src/data/presets/` (GMF 2026 = `grandMint2026.ts`)
-- 지도 이미지 생성: `node scripts/map/build-gmf2026.mjs` — 입력 `map-src/gmf2026/`(공식 지도 크롭·OSM 추출), 출력 `src/assets/maps/gmf2026.{webp,json}`. **지도 그림은 이 스크립트로만 바꾼다**(webp 를 직접 고치지 않는다). 지형 출처 OSM 은 ODbL 이라 지도에 출처 표기를 유지한다
+- 지도 이미지 생성: `node scripts/map/build-gmf.mjs` — 입력 `map-src/gmf/`(공식 지도 크롭·OSM 추출), 출력 `src/assets/maps/gmf.{webp,json}`. 지도·장소·지도 핀은 연도가 아니라 페스티벌 코드(`gmf`) 단위다(`src/data/catalog/series/`). **지도 그림은 이 스크립트로만 바꾼다**(webp 를 직접 고치지 않는다). 지형 출처 OSM 은 ODbL 이라 지도에 출처 표기를 유지한다
 - 화면 확인: Claude 앱 미리보기 서버는 `~/Documents` 를 못 읽는다 → 로컬 사본에서 `npm run build` 후 `dist/` 를 세션 폴더로 복사해 미리보기
