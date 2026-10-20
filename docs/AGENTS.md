@@ -8,6 +8,7 @@
   - 링크 재생성: `ln -s ~/Documents/workspace/festival-log/docs ~/workspace/ai/work/festival/docs`
   - 공개 저장소에 올라간다 — 개인 경로는 `~` 로 쓰고, 이메일·키·회사 정보는 적지 않는다.
 - **커밋 작성자는 저장소 로컬 설정 `CrestedBlue <294632025+CrestedBlue@users.noreply.github.com>` 만 쓴다.** 공개 저장소라 전역 설정(회사 메일)으로 커밋하면 회사 메일이 그대로 공개된다. 새로 clone 하면 `git config user.name/user.email` 부터 다시 건다.
+- **커밋 메시지는 되도록 한글로 쓴다**(사용자 지시, 2026-10-20). 형식은 `<type>: <설명>` 그대로(type 은 feat, fix, docs 등 영어 유지), 설명과 본문을 한글로. 코드 이름·경로·고유명사는 원래 표기 그대로 둔다.
 - **festival-log 폴더 안의 작업은 사용자에게 확인받지 않고 알아서 진행하고, 작업 끝에는 반드시 push 한다**(사용자 지시, 2026-10-16). 스스로 내린 판단은 HISTORY.md 에 남긴다.
 - **`main` push = 즉시 운영 배포**(GitHub Actions → Pages). 그래서 push 전 `npm test && npm run build` 를 통과시킨다. 깨지면 고쳐서 통과시킨 뒤 push 하고, 끝내 안 되는 부분은 그 부분만 되돌려서라도 push 한다.
 - 공개 저장소다 — 키·토큰·개인정보를 커밋하지 않는다.
