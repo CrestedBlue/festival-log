@@ -1,16 +1,17 @@
 import { describe, expect, test } from 'vitest'
 import { FestivalSchema } from '../schema'
 import { HERO_ROCK_2026_ID, HERO_ROCK_2026_KEY } from './ids'
-import { createHeroRock2026 } from './heroRock2026'
+import { HERO_ROCK_2026_NOTICES, createHeroRock2026 } from './heroRock2026'
 
 describe('createHeroRock2026', () => {
   const festival = createHeroRock2026()
 
-  test('is a schema-valid 2026 festival whose dates are not announced yet', () => {
+  test('is a schema-valid three-day festival on the dates Melon Ticket lists', () => {
     expect(FestivalSchema.safeParse(festival).success).toBe(true)
     expect(festival.id).toBe(HERO_ROCK_2026_ID)
-    expect(festival.datesTbd).toBe(true)
-    expect(festival.startDate.slice(0, 4)).toBe('2026')
+    expect(festival.name).toBe('2026 히어로 락 페스티벌 - 인천')
+    expect([festival.startDate, festival.endDate]).toEqual(['2026-12-18', '2026-12-20'])
+    expect(festival.datesTbd).toBeUndefined()
   })
 
   test('is at Songdo Convensia and has no timetable yet', () => {
@@ -24,5 +25,9 @@ describe('createHeroRock2026', () => {
   test('pins the venue and the nearest subway exit under the festival key', () => {
     expect(festival.pins.map((p) => p.name)).toEqual(['송도컨벤시아 · 행사장', '인천대입구역 4번 출구 (인천 1호선)'])
     expect(festival.pins.every((p) => p.id.startsWith(`${HERO_ROCK_2026_KEY}-`))).toBe(true)
+  })
+
+  test('has notices from the ticket page', () => {
+    expect(HERO_ROCK_2026_NOTICES.length).toBeGreaterThan(0)
   })
 })
