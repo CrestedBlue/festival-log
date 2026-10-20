@@ -1,6 +1,8 @@
 import { catalogEntry } from './catalog'
 import type { GuideSet } from './catalog/guide'
 import type { LineupImage } from './catalog/lineup'
+import { SERIES } from './catalog/series'
+import type { CollectionSource } from './catalog/series/types'
 import type { Festival, UserData } from './schema'
 
 export interface ResolvedFestival {
@@ -12,6 +14,8 @@ export interface ResolvedFestival {
   lineup: readonly LineupImage[]
   /** Official guide pages for the info tab (catalog only). */
   guides: readonly GuideSet[]
+  /** The festival's official channels (Instagram, website), shown on the info tab (catalog only). */
+  sources: readonly CollectionSource[]
 }
 
 const built = new Map<string, Festival>()
@@ -33,10 +37,11 @@ export function resolveFestival(data: UserData, festivalId: string): ResolvedFes
       notices: catalogEntry(festivalId)?.notices ?? [],
       lineup: catalogEntry(festivalId)?.lineup ?? [],
       guides: catalogEntry(festivalId)?.guides ?? [],
+      sources: SERIES[catalogEntry(festivalId)?.series ?? '']?.sources ?? [],
     }
   }
   const archived = data.archivedFestivals.find((f) => f.id === festivalId)
-  return archived ? { source: 'archived', festival: archived, notices: [], lineup: [], guides: [] } : null
+  return archived ? { source: 'archived', festival: archived, notices: [], lineup: [], guides: [], sources: [] } : null
 }
 
 export function activeFestival(data: UserData): ResolvedFestival | null {

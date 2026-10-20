@@ -16,7 +16,11 @@ describe('resolveFestival', () => {
   test('serves archived festivals as they were saved', () => {
     const archived = makeFestival({ id: 'old' })
     const resolved = resolveFestival(makeUserData({ archivedFestivals: [archived] }), 'old')
-    expect(resolved).toEqual({ source: 'archived', festival: archived, notices: [], lineup: [], guides: [] })
+    expect(resolved).toEqual({ source: 'archived', festival: archived, notices: [], lineup: [], guides: [], sources: [] })
+  })
+
+  test('carries the official channels of the festival', () => {
+    expect(resolveFestival(makeUserData(), PENTAPORT_2026_ID)?.sources.map((s) => s.value)).toEqual(['@pentaportrf', 'https://www.pentaport.co.kr/Notice'])
   })
 
   test('carries the guide images of a catalog festival', () => {

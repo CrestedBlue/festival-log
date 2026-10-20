@@ -1,4 +1,5 @@
 import { Suspense, lazy, type KeyboardEvent } from 'react'
+import { sourceHref, sourceLabel } from '../../data/catalog/series/sources'
 import type { CollectionSource } from '../../data/catalog/series/types'
 import { AdminTimetable } from './AdminTimetable'
 import type { FestivalOverview, SeriesOverview } from './overview'
@@ -8,10 +9,6 @@ import { ADMIN_VIEWS, type AdminView } from './selection'
 const AdminMap = lazy(() => import('./AdminMap'))
 
 const VIEW_LABELS: Record<AdminView, string> = { timetable: '타임테이블', map: '지도', notices: '주의사항' }
-
-const sourceHref = ({ method, value }: CollectionSource) =>
-  method === '인스타' ? `https://www.instagram.com/${value.replace(/^@/, '')}/` : value
-const sourceLabel = ({ method, value }: CollectionSource) => (method === '인스타' ? value : value.replace(/^https?:\/\/(www\.)?/, ''))
 
 function Sources({ sources }: { sources: readonly CollectionSource[] }) {
   return (

@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from 'react'
 import { EditIcon } from '../../components/icons'
 import type { GuideSet } from '../../data/catalog/guide'
+import { sourceHref, sourceLabel } from '../../data/catalog/series/sources'
+import type { CollectionSource } from '../../data/catalog/series/types'
 import { updateData } from '../../data/store'
 import { setTicketLink } from '../../data/userData'
 import { linkLabel, parseTicketLink } from '../../lib/ticketLink'
@@ -15,7 +17,11 @@ interface Props {
   notices: readonly string[]
   /** Official guide pages (checklist, venue map, …) from the catalog (admin). */
   guides: readonly GuideSet[]
+  /** Official channels (Instagram, website) from the catalog (admin). */
+  sources: readonly CollectionSource[]
 }
+
+const CHANNEL_NAMES: Record<CollectionSource['method'], string> = { 인스타: '인스타그램', 공홈: '공식 홈페이지' }
 
 function TicketLink({ festivalId, ticketLink }: Pick<Props, 'festivalId' | 'ticketLink'>) {
   const [editing, setEditing] = useState(false)
@@ -92,7 +98,7 @@ function TicketLink({ festivalId, ticketLink }: Pick<Props, 'festivalId' | 'tick
   )
 }
 
-export function InfoView({ festivalId, ticketLink, notices, guides }: Props) {
+export function InfoView({ festivalId, ticketLink, notices, guides, sources }: Props) {
   return (
     <div className="info">
       <section className="panel" aria-labelledby="info-ticket">
@@ -101,6 +107,23 @@ export function InfoView({ festivalId, ticketLink, notices, guides }: Props) {
         </h2>
         <TicketLink key={festivalId} festivalId={festivalId} ticketLink={ticketLink} />
       </section>
+      {sources.length > 0 && (
+        <section className="panel" aria-labelledby="info-channels">
+          <h2 id="info-channels" className="panel__title">
+            공식 채널
+          </h2>
+          <ul className="channel-list">
+            {sources.map((source) => (
+              <li key={`${source.method}-${source.value}`}>
+                <span className="channel-list__name">{CHANNEL_NAMES[source.method]}</span>
+                <a className="channel-list__link" href={sourceHref(source)} target="_blank" rel="noopener noreferrer">
+                  {sourceLabel(source)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       <section className="panel" aria-labelledby="info-notices">
         <h2 id="info-notices" className="panel__title">
           주의사항
