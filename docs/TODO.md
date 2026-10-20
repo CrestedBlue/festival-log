@@ -74,7 +74,7 @@ v0.1 배포 — https://crestedblue.github.io/festival-log/ (최신 앱 커밋: 
 
 ### 2026.10.20
 
-- (수집) Claude "예약됨"에 주 1회 작업 등록: `festival-weekly-collect`, 매주 월요일 오전 9시쯤, Auto 모드. 프롬프트는 COLLECT.md 를 읽고 따르라는 짧은 지시만 넣었다
+- (수집) Claude "예약됨"에 주 1회 작업 등록: `festival-weekly-collect`, 매주 월요일 오전 6시쯤, Auto 모드. 프롬프트는 COLLECT.md 를 읽고 따르라는 짧은 지시만 넣었다
 - (관리자 페이지) 헤더에 "페스티벌", "CS" 두 메뉴(CS 화면은 내용이 정해지지 않아 안내 문구만)
 - (관리자 페이지) 페스티벌 화면 왼쪽: 지금처럼 페스티벌 목록. 단 연도에 묶이지 않는 origin 값(페스티벌 코드 `series`, 예: `pentaport`)으로 나열
 - (관리자 페이지) 페스티벌 화면 오른쪽: 타임테이블 / 지도 / 주의사항만 남기고, 그 위의 정보(이름·기간·통계 등)는 모두 지움. 맨 위에는 인스타 계정(@pentaportrf, @grandmintfestival, @herorockfestival), 연도 선택, 회차 ID 만 둔다
