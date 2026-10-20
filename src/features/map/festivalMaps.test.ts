@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
-import { GRAND_MINT_2026_ID } from '../../data/catalog/ids'
-import { festivalMapFor, parseMapMeta } from './festivalMaps'
+import { GRAND_MINT_SERIES, HERO_ROCK_SERIES } from '../../data/catalog/ids'
+import { parseMapMeta, seriesMapFor } from './festivalMaps'
 
 describe('parseMapMeta', () => {
   const valid = {
@@ -42,9 +42,9 @@ describe('parseMapMeta', () => {
   })
 })
 
-describe('festivalMapFor', () => {
-  test('returns the bundled Grand Mint 2026 map and nothing for other festivals', () => {
-    expect(festivalMapFor(GRAND_MINT_2026_ID)?.imageUrl).toBeTruthy()
-    expect(festivalMapFor('someone-else')).toBeNull()
+describe('seriesMapFor', () => {
+  test('returns the bundled Grand Mint map by festival code, and nothing for festivals without one', () => {
+    expect(seriesMapFor(GRAND_MINT_SERIES)?.imageUrl).toBeTruthy()
+    expect(seriesMapFor(HERO_ROCK_SERIES)).toBeNull()
   })
 })

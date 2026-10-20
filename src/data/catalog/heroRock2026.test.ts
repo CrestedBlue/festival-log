@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { FestivalSchema } from '../schema'
-import { HERO_ROCK_2026_ID, HERO_ROCK_2026_KEY } from './ids'
+import { HERO_ROCK_2026_ID, HERO_ROCK_SERIES } from './ids'
 import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICES, createHeroRock2026 } from './heroRock2026'
 
 describe('createHeroRock2026', () => {
@@ -22,9 +22,9 @@ describe('createHeroRock2026', () => {
     expect(festival.performances).toEqual([])
   })
 
-  test('pins the venue and the nearest subway exit under the festival key', () => {
+  test('pins the venue and the nearest subway exit under the festival code', () => {
     expect(festival.pins.map((p) => p.name)).toEqual(['송도컨벤시아 · 행사장', '인천대입구역 4번 출구 (인천 1호선)'])
-    expect(festival.pins.every((p) => p.id.startsWith(`${HERO_ROCK_2026_KEY}-`))).toBe(true)
+    expect(festival.pins.every((p) => p.id.startsWith(`${HERO_ROCK_SERIES}-`))).toBe(true)
   })
 
   test('has notices from the ticket page', () => {

@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest'
 import { FestivalSchema } from '../schema'
-import { festivalMapFor } from '../../features/map/festivalMaps'
 import { isInsideBounds } from '../../lib/geo'
 import { GRAND_MINT_2026_ID, createGrandMint2026 } from './grandMint2026'
-import { GRAND_MINT_2026_KEY } from './ids'
+import { GRAND_MINT_SERIES } from './ids'
+import { festivalMapFor } from './index'
 
 describe('createGrandMint2026', () => {
   const festival = createGrandMint2026()
@@ -46,7 +46,7 @@ describe('createGrandMint2026', () => {
   })
 
   test('turns every official map marker into a pin of the matching kind', () => {
-    const marks = festival.pins.filter((pin) => pin.id.startsWith(`${GRAND_MINT_2026_KEY}-mark-`))
+    const marks = festival.pins.filter((pin) => pin.id.startsWith(`${GRAND_MINT_SERIES}-mark-`))
     expect(marks).toHaveLength(34)
     expect(marks.filter((pin) => pin.kind === 'toilet').length).toBeGreaterThanOrEqual(10)
     expect(marks.map((pin) => pin.kind)).toEqual(expect.arrayContaining(['info', 'firstaid', 'luggage', 'water', 'wristband', 'food', 'eating']))
@@ -54,7 +54,7 @@ describe('createGrandMint2026', () => {
   })
 
   test('keeps zone pins (stages, exits, …) separate from marker pins', () => {
-    const zones = festival.pins.filter((pin) => pin.id.startsWith(`${GRAND_MINT_2026_KEY}-zone-`))
+    const zones = festival.pins.filter((pin) => pin.id.startsWith(`${GRAND_MINT_SERIES}-zone-`))
     expect(zones.filter((pin) => pin.kind === 'stage')).toHaveLength(3)
     expect(zones.length + 34).toBe(festival.pins.length)
   })

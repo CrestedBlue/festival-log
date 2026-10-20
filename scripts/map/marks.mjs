@@ -49,7 +49,7 @@ const ZONE_LABELS = {
   between: '공원 길가',
 }
 
-// Which zone each official marker belongs to (by id in map-src/gmf2026/markers.json).
+// Which zone each official marker belongs to (by id in map-src/gmf/markers.json).
 const ZONE_OF = {
   mintBreeze: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
   lovingForest: [12],

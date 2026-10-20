@@ -1,15 +1,15 @@
 import lineup1 from '../../assets/lineups/herorock2026-1.webp'
-import type { Festival, Pin } from '../schema'
-import { HERO_ROCK_2026_ID, HERO_ROCK_2026_KEY as KEY } from './ids'
+import type { Festival } from '../schema'
+import { HERO_ROCK_2026_ID } from './ids'
 import type { LineupImage } from './lineup'
+import { HERO_ROCK } from './series/heroRock'
 
 /**
  * 2026 히어로 락 페스티벌 - 인천 (2026-12-18/20, Songdo Convensia, Incheon).
  * Source: Melon Ticket product page (ticket.melon.com/performance/index.htm?prodId=214033).
  * The line-up is out but the timetable is not, so there are no stages or performances yet: the timetable
  * tab shows the line-up posters instead. Fill them in once the official timetable is out.
- * Coordinates: OpenStreetMap (Songdo Convensia building, Incheon National University station exit 4 —
- * the exit closest to the venue in a straight line, about 640 m).
+ * The venue and its map pins belong to the festival, not the year: see series/heroRock.ts.
  */
 export { HERO_ROCK_2026_ID }
 
@@ -35,20 +35,15 @@ export const HERO_ROCK_2026_LINEUP: readonly LineupImage[] = [
   },
 ]
 
-const PINS: readonly Pin[] = [
-  { id: `${KEY}-zone-venue`, name: '송도컨벤시아 · 행사장', kind: 'stage', lat: 37.388776, lng: 126.646738 },
-  { id: `${KEY}-zone-incheon-univ-exit-4`, name: '인천대입구역 4번 출구 (인천 1호선)', kind: 'etc', lat: 37.3868987, lng: 126.6398836 },
-]
-
 export function createHeroRock2026(): Festival {
   return {
     id: HERO_ROCK_2026_ID,
     name: '2026 히어로 락 페스티벌 - 인천',
     startDate: '2026-12-18',
     endDate: '2026-12-20',
-    venue: { name: '송도컨벤시아', lat: 37.388776, lng: 126.646738 },
+    venue: HERO_ROCK.venue,
     stages: [],
     performances: [],
-    pins: [...PINS],
+    pins: HERO_ROCK.pins(),
   }
 }

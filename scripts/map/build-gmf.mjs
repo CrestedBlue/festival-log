@@ -1,5 +1,7 @@
 /**
- * Builds the Grand Mint Festival 2026 map image.
+ * Builds the Grand Mint Festival map image (festival code "gmf"). The festival is held at Olympic Park every
+ * year, so this one map belongs to the festival, not to a year; rebuild it only when the site layout changes.
+ * The 2026 official map is the current design reference.
  *
  * The look follows the official festival map (paper background, park green, pale walkways, its trees),
  * but nothing is pasted from it except the trees: every zone is redrawn on its real footprint
@@ -8,11 +10,11 @@
  * the redrawn zones (scripts/map/marks.mjs) and written out for the app to show as pins.
  * The output is a plain lat/lng-bounded image, so GPS positions can be drawn on it directly.
  *
- *   node scripts/map/build-gmf2026.mjs
+ *   node scripts/map/build-gmf.mjs
  *
- * Inputs:  map-src/gmf2026/osm.json (OSM extract), map-src/gmf2026/markers.json (official marker icons),
- *          map-src/gmf2026/official-map.png (tree art only)
- * Outputs: src/assets/maps/gmf2026.webp, src/assets/maps/gmf2026.json (bounds, initial view, zone anchors, marks)
+ * Inputs:  map-src/gmf/osm.json (OSM extract), map-src/gmf/markers.json (official marker icons),
+ *          map-src/gmf/official-map.png (tree art only)
+ * Outputs: src/assets/maps/gmf.webp, src/assets/maps/gmf.json (bounds, initial view, zone anchors, marks)
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -26,8 +28,9 @@ import { treeSpots } from './trees.mjs'
 import { SPOTS, renderZones, stationBadge } from './zones.mjs'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
-const SRC = path.join(ROOT, 'map-src/gmf2026')
+const SRC = path.join(ROOT, 'map-src/gmf')
 const OUT = path.join(ROOT, 'src/assets/maps')
+const NAME = 'gmf'
 const OFFICIAL = path.join(SRC, 'official-map.png')
 
 // Covers the venue plus both nearby subway exits (몽촌토성역 1번, 올림픽공원역 3번).
@@ -111,7 +114,7 @@ async function main() {
   await sharp(base)
     .composite([...trees, { input: svgLayer(zones.svg + stations + exitDots), left: 0, top: 0 }])
     .webp({ quality: WEBP_QUALITY })
-    .toFile(path.join(OUT, 'gmf2026.webp'))
+    .toFile(path.join(OUT, `${NAME}.webp`))
 
   const anchors = {
     mintBreezeStage: SPOTS.mbStage,
@@ -146,8 +149,8 @@ async function main() {
     anchors,
     marks,
   }
-  fs.writeFileSync(path.join(OUT, 'gmf2026.json'), `${JSON.stringify(meta, null, 2)}\n`)
-  console.log(`map ${proj.width}x${proj.height}px →`, path.relative(ROOT, path.join(OUT, 'gmf2026.webp')))
+  fs.writeFileSync(path.join(OUT, `${NAME}.json`), `${JSON.stringify(meta, null, 2)}\n`)
+  console.log(`map ${proj.width}x${proj.height}px →`, path.relative(ROOT, path.join(OUT, `${NAME}.webp`)))
 }
 
 await main()
