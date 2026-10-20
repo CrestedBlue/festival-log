@@ -19,6 +19,7 @@ const ICON_PRESET = {
 // Workbox serializes matchers into sw.js, so they must be self-contained regexes (no closure variables).
 const OSM_TILE_PATTERN = /^https:\/\/tile\.openstreetmap\.org\//
 const FONT_PATTERN = /^https:\/\/(cdn\.jsdelivr\.net|fonts\.googleapis\.com|fonts\.gstatic\.com)\//
+const GUIDE_PATTERN = /\/assets\/guide-[^/]+\.webp$/
 
 // GitHub Pages serves from /<repo>/, so the deploy workflow passes BASE_PATH.
 const base = process.env.BASE_PATH ?? '/'
@@ -79,6 +80,8 @@ export default defineConfig({
       workbox: {
         // webp = bundled festival maps, so the map works with no signal at the venue.
         globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2}'],
+        // Official guide pages are large: cache each one the first time it is opened instead of up front.
+        globIgnores: ['**/guide-*'],
         // The admin page (manage/, with or without a query) must never get the app shell.
         navigateFallbackDenylist: [/\/manage(?:\/|$)/],
         runtimeCaching: [
@@ -89,6 +92,15 @@ export default defineConfig({
             options: {
               cacheName: 'osm-tiles',
               expiration: { maxEntries: 3000, maxAgeSeconds: 30 * DAY_SECONDS },
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+          {
+            urlPattern: GUIDE_PATTERN,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'guides',
+              expiration: { maxEntries: 200, maxAgeSeconds: 365 * DAY_SECONDS },
               cacheableResponse: { statuses: [200] },
             },
           },

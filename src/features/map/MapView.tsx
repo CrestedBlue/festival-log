@@ -140,7 +140,9 @@ export default function MapView({ festival, userPinIds }: Props) {
   return (
     <section className="map-view" aria-label="지도">
       <div className="map-stage">
-        <div ref={containerRef} className={`map-canvas${festivalMap ? ' map-canvas--image' : ''}`} />
+        <div ref={containerRef} className={`map-canvas${festivalMap ? ' map-canvas--image' : ''}`}
+        style={festivalMap?.background ? { backgroundColor: festivalMap.background } : undefined}
+      />
         <div className="map-fabs">
           <button type="button" className={`map-fab${tracking ? ' is-on' : ''}`} onClick={locate} aria-label="내 위치 보기">
             <LocateIcon />

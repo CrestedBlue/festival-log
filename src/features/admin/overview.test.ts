@@ -11,6 +11,7 @@ const entry = (overrides: Partial<CatalogEntry> & Pick<CatalogEntry, 'create'>):
   key: 'test2026',
   notices: ['공지'],
   lineup: [],
+  guides: [],
   ...overrides,
 })
 

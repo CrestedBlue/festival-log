@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from 'react'
 import { EditIcon } from '../../components/icons'
+import type { GuideSet } from '../../data/catalog/guide'
 import { updateData } from '../../data/store'
 import { setTicketLink } from '../../data/userData'
 import { linkLabel, parseTicketLink } from '../../lib/ticketLink'
+import { GuideCarousel } from './GuideCarousel'
 import './info.css'
 
 interface Props {
@@ -11,6 +13,8 @@ interface Props {
   ticketLink: string | null
   /** From the festival catalog (admin). */
   notices: readonly string[]
+  /** Official guide pages (checklist, venue map, …) from the catalog (admin). */
+  guides: readonly GuideSet[]
 }
 
 function TicketLink({ festivalId, ticketLink }: Pick<Props, 'festivalId' | 'ticketLink'>) {
@@ -88,7 +92,7 @@ function TicketLink({ festivalId, ticketLink }: Pick<Props, 'festivalId' | 'tick
   )
 }
 
-export function InfoView({ festivalId, ticketLink, notices }: Props) {
+export function InfoView({ festivalId, ticketLink, notices, guides }: Props) {
   return (
     <div className="info">
       <section className="panel" aria-labelledby="info-ticket">
@@ -111,6 +115,9 @@ export function InfoView({ festivalId, ticketLink, notices }: Props) {
           <p className="hint">아직 등록된 주의사항이 없어요.</p>
         )}
       </section>
+      {guides.map((guide, i) => (
+        <GuideCarousel key={`${festivalId}-${guide.title}`} guide={guide} headingId={`info-guide-${i}`} />
+      ))}
     </div>
   )
 }

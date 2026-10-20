@@ -38,7 +38,14 @@ export default function App() {
     }
     if (!festival) return <EmptyState onOpenList={() => route.go('manage')} />
     if (route.tab === 'info') {
-      return <InfoView festivalId={festival.id} ticketLink={data.ticketLinks[festival.id] ?? null} notices={resolved?.notices ?? []} />
+      return (
+        <InfoView
+          festivalId={festival.id}
+          ticketLink={data.ticketLinks[festival.id] ?? null}
+          notices={resolved?.notices ?? []}
+          guides={resolved?.guides ?? []}
+        />
+      )
     }
     if (route.tab === 'map') {
       return (

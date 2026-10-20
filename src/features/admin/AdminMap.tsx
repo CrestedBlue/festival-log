@@ -23,7 +23,9 @@ export default function AdminMap({ festival }: { festival: Festival }) {
 
   return (
     <div className="admin-map">
-      <div ref={containerRef} className={`map-canvas${festivalMap ? ' map-canvas--image' : ''}`} />
+      <div ref={containerRef} className={`map-canvas${festivalMap ? ' map-canvas--image' : ''}`}
+        style={festivalMap?.background ? { backgroundColor: festivalMap.background } : undefined}
+      />
       {festivalMap && <MapCredits text={festivalMap.attribution} />}
       {selected && (
         <div className="map-selected" role="status">

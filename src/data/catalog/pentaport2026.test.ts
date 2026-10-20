@@ -2,6 +2,8 @@ import { describe, expect, test } from 'vitest'
 import { FestivalSchema } from '../schema'
 import { PENTAPORT_2026_ID, PENTAPORT_2026_KEY, PENTAPORT_SERIES } from './ids'
 import { PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
+import { catalogEntry, festivalMapFor, isMapLabelPin } from './index'
+import { isInsideBounds } from '../../lib/geo'
 
 describe('createPentaport2026', () => {
   const festival = createPentaport2026()
@@ -55,7 +57,40 @@ describe('createPentaport2026', () => {
   test('uses the yearly code for timetable ids and the festival code for map pins', () => {
     expect(festival.performances.every((p) => p.id.startsWith(`${PENTAPORT_2026_KEY}-`))).toBe(true)
     expect(festival.pins.every((p) => p.id.startsWith(`${PENTAPORT_SERIES}-`))).toBe(true)
-    expect(festival.pins.map((p) => p.name)).toEqual(['송도달빛축제공원 · 행사장', '송도달빛축제공원역 4번 출구 (인천 1호선)'])
+  })
+
+  test('pins the stages, gates, ticket booths and shuttle stops from the official map, and the real subway exits', () => {
+    const names = festival.pins.map((p) => p.name)
+    expect(names).toEqual(
+      expect.arrayContaining([
+        'KB국민카드 STAGE',
+        'MONSTER ENERGY STAGE',
+        'STANLEY 1913 STAGE',
+        'GATE 1',
+        'GATE 2',
+        '제1 티켓부스 (지하철 이용객)',
+        '제2 티켓부스 (셔틀버스·택시 이용객)',
+        '송도달빛축제공원역 1번 출구 (인천 1호선)',
+        '송도달빛축제공원역 3번 출구 (인천 1호선)',
+        '송도달빛축제공원역 4번 출구 (인천 1호선)',
+      ]),
+    )
+    const map = festivalMapFor(PENTAPORT_2026_ID)
+    expect(map).not.toBeNull()
+    expect(festival.pins.every((pin) => map && isInsideBounds(pin, map.bounds))).toBe(true)
+    // Exits come from OpenStreetMap, so they are drawn on top of the map (not hidden as drawn labels).
+    const exits = festival.pins.filter((p) => p.name.includes('출구'))
+    expect(exits.every((p) => !isMapLabelPin(p))).toBe(true)
+    expect(festival.pins.filter((p) => p.kind === 'stage').every((p) => isMapLabelPin(p))).toBe(true)
+  })
+
+  test('comes with the official checklist and venue map to swipe through', () => {
+    const guides = catalogEntry(PENTAPORT_2026_ID)?.guides ?? []
+    expect(guides.map((g) => [g.title, g.images.length])).toEqual([
+      ['필수 체크리스트', 10],
+      ['행사장 안내도', 1],
+    ])
+    expect(guides.flatMap((g) => g.images).every((image) => image.alt.length > 10 && image.width === 1080 && image.height === 1350)).toBe(true)
   })
 
   test('has notices from the timetable post', () => {

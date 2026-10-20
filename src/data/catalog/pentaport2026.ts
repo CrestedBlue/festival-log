@@ -1,4 +1,16 @@
+import checklist01 from '../../assets/guides/guide-pentaport2026-checklist-01.webp'
+import checklist02 from '../../assets/guides/guide-pentaport2026-checklist-02.webp'
+import checklist03 from '../../assets/guides/guide-pentaport2026-checklist-03.webp'
+import checklist04 from '../../assets/guides/guide-pentaport2026-checklist-04.webp'
+import checklist05 from '../../assets/guides/guide-pentaport2026-checklist-05.webp'
+import checklist06 from '../../assets/guides/guide-pentaport2026-checklist-06.webp'
+import checklist07 from '../../assets/guides/guide-pentaport2026-checklist-07.webp'
+import checklist08 from '../../assets/guides/guide-pentaport2026-checklist-08.webp'
+import checklist09 from '../../assets/guides/guide-pentaport2026-checklist-09.webp'
+import checklist10 from '../../assets/guides/guide-pentaport2026-checklist-10.webp'
+import venueMap from '../../assets/guides/guide-pentaport2026-venue-map.webp'
 import type { Festival } from '../schema'
+import type { GuideImage, GuideSet } from './guide'
 import { PENTAPORT_2026_ID, PENTAPORT_2026_KEY as KEY } from './ids'
 import { PENTAPORT } from './series/pentaport'
 
@@ -16,6 +28,36 @@ export const PENTAPORT_2026_NOTICES: readonly string[] = [
   '입장은 사흘 모두 오전 10시 30분부터예요.',
   '드리머부스는 매일 10:30–19:30 열리는 상시 프로그램이에요(MONSTER ENERGY STAGE 시간표에 함께 안내).',
   '7월 31일(금) 13:00–16:00 메인 쿨존에서 "펜타포트 × 스포티파이 음모론"이 열려요.',
+]
+
+const OFFICIAL = '출처: 인천펜타포트 락 페스티벌 공식 인스타그램·홈페이지 (2026)'
+const page = (src: string, alt: string): GuideImage => ({ src, alt, width: 1080, height: 1350 })
+
+/** Official guide pages, as published (2026 CHECKLIST post of 7/23 and the venue map of 7/14). */
+export const PENTAPORT_2026_GUIDES: readonly GuideSet[] = [
+  {
+    title: '필수 체크리스트',
+    source: OFFICIAL,
+    images: [
+      page(checklist01, '펜타포트 필수체크: 반입 가능·불가능 물품, 의료부스 안내, 배리어프리 안내'),
+      page(checklist02, '피크닉존·리프레시존 백배 즐기기: 보냉백, 돗자리, 우산·양산, 좌식형 등받이 의자, 미니테이블 반입 기준'),
+      page(checklist03, '무더운 여름, 음식도 꼼꼼하게: 포장지를 없앤 다회용기 음식만 반입 가능, 상하기 쉬운 음식은 안 돼요'),
+      page(checklist04, '펜타포트 열기에서 살아남기: 500ml 이하 미개봉 생수, 600ml 이하 미개봉 이온음료만 반입 가능'),
+      page(checklist05, '찰칵! 휴대폰이면 충분: 촬영은 휴대폰만 가능하고 다른 촬영 장비는 안 돼요. 카메라와 귀중품은 물품보관소에 맡길 수 없어요'),
+      page(checklist06, '안전하게! 즐겁게! 자신있게! 즐기기: 응원봉·LED·레이저 같은 발광 물품, 화기류·칼·망치·가스충전식 스프레이 같은 위험물품은 안 돼요'),
+      page(checklist07, '펜타포트 의료부스에 있어요: 화상연고, 포도당 캔디, 소화제, 밴드, 기본 구급약, 생리대, 일회용 인공눈물, 붙이는 파스. 인공눈물·의약품 반입 시 필요한 서류 안내'),
+      page(checklist08, '배리어 프리 패스: 임산부 배지 확인 필수, 임산부와 교통약자 외 동반 1인만 가능'),
+      page(checklist09, '헷갈리는 포인트 YES/NO: 보냉가방, 의료 목적 휠체어(전동 포함)·유아차, 깃발, 좌식형·등받이 의자는 가능. 아이스박스, 바퀴 달린 물품, 정치·혐오 문구의 현수막·배너, 다리 있는 캠핑의자는 안 돼요'),
+      page(checklist10, '더 자세한 정보는 FAQ를 참고해 주세요 (FAQ QR코드)'),
+    ],
+  },
+  {
+    title: '행사장 안내도',
+    source: OFFICIAL,
+    images: [
+      page(venueMap, '2026 인천펜타포트 락 페스티벌 행사장 안내도: KB국민카드·MONSTER ENERGY·STANLEY 1913 스테이지, 제1·제2 입장동선, 피크닉존, F&B, 화장실, 의료부스, 물품보관소 위치'),
+    ],
+  },
 ]
 
 // Shortened so they fit the two-line stage header: "KB KOOKMIN CARD STAGE" as the poster's own "KB국민카드", the others without "STAGE".

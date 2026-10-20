@@ -1,10 +1,11 @@
 import { seriesMapFor, type FestivalMap } from '../../features/map/festivalMaps'
 import type { Festival, Pin } from '../schema'
+import type { GuideSet } from './guide'
 import type { LineupImage } from './lineup'
 import { SERIES } from './series'
 import { GRAND_MINT_2026_NOTICES, createGrandMint2026 } from './grandMint2026'
 import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICES, createHeroRock2026 } from './heroRock2026'
-import { PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
+import { PENTAPORT_2026_GUIDES, PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
 import {
   GRAND_MINT_2026_ID,
   GRAND_MINT_2026_KEY,
@@ -31,6 +32,8 @@ export interface CatalogEntry {
   notices: readonly string[]
   /** Line-up posters, shown on the timetable tab until the timetable is out (admin). */
   lineup: readonly LineupImage[]
+  /** Official guide pages (checklist, venue map, …) swiped through on the info tab (admin). */
+  guides: readonly GuideSet[]
 }
 
 export const CATALOG: readonly CatalogEntry[] = [
@@ -42,6 +45,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createGrandMint2026,
     notices: GRAND_MINT_2026_NOTICES,
     lineup: [],
+    guides: [],
   },
   {
     id: HERO_ROCK_2026_ID,
@@ -51,6 +55,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createHeroRock2026,
     notices: HERO_ROCK_2026_NOTICES,
     lineup: HERO_ROCK_2026_LINEUP,
+    guides: [],
   },
   {
     id: PENTAPORT_2026_ID,
@@ -60,6 +65,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createPentaport2026,
     notices: PENTAPORT_2026_NOTICES,
     lineup: [],
+    guides: PENTAPORT_2026_GUIDES,
   },
 ]
 
