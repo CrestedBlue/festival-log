@@ -25,6 +25,7 @@
 - 저장소: https://github.com/CrestedBlue/festival-log
 - 배포: https://crestedblue.github.io/festival-log/
 - 배포 워크플로: `.github/workflows/deploy.yml` (push to `main` → test → build → deploy-pages)
+- 공식 정보 수집 절차(주 1회 예약 작업): [COLLECT.md](COLLECT.md)
 - 로컬 작업 사본: `~/Documents/workspace/festival-log` (커밋 작성자 로컬 설정 완료). 다른 컴퓨터에서 새로 clone 하면 작성자 설정부터 다시 건다
 - 프리셋: `src/data/presets/` (GMF 2026 = `grandMint2026.ts`)
 - 지도 이미지 생성: `node scripts/map/build-gmf.mjs` — 입력 `map-src/gmf/`(공식 지도 크롭·OSM 추출), 출력 `src/assets/maps/gmf.{webp,json}`. 지도·장소·지도 핀은 연도가 아니라 페스티벌 코드(`gmf`) 단위다(`src/data/catalog/series/`).
