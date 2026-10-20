@@ -9,6 +9,10 @@ describe('parseHash', () => {
     expect(route.params.get('mine')).toBe('1')
   })
 
+  test('knows the info tab', () => {
+    expect(parseHash('#/info').tab).toBe('info')
+  })
+
   test('falls back to the timetable tab for unknown or empty hashes', () => {
     expect(parseHash('').tab).toBe('timetable')
     expect(parseHash('#/nope').tab).toBe('timetable')

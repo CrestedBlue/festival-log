@@ -1,4 +1,4 @@
-export const TABS = ['timetable', 'map', 'manage'] as const
+export const TABS = ['timetable', 'map', 'info', 'manage'] as const
 export type Tab = (typeof TABS)[number]
 
 export interface Route {

@@ -186,3 +186,28 @@ button {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Cards used by the manage and info tabs */
+.panel {
+  display: grid;
+  /* minmax(0, …) so a long unbreakable line (e.g. a URL) shrinks instead of widening the card */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-ticket);
+}
+
+.panel__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-lg);
+}
+
+.hint {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+}

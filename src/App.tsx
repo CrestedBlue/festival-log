@@ -5,6 +5,7 @@ import { EmptyState } from './components/EmptyState'
 import { NoticeBanner } from './components/NoticeBanner'
 import { NowStrip } from './components/NowStrip'
 import { dismissNotice, selectActiveFestival, useAppState } from './data/store'
+import { InfoView } from './features/info/InfoView'
 import { ManageView } from './features/manage/ManageView'
 import { TimetableView } from './features/timetable/TimetableView'
 import { useHashRoute } from './hooks/useHashRoute'
@@ -15,13 +16,17 @@ const MapView = lazy(() => import('./features/map/MapView'))
 
 export default function App() {
   const { data, notice } = useAppState()
-  const festival = selectActiveFestival(data)?.festival ?? null
+  const resolved = selectActiveFestival(data)
+  const festival = resolved?.festival ?? null
   const route = useHashRoute()
   const now = useNow()
 
   const renderView = () => {
     if (route.tab === 'manage') return <ManageView data={data} onOpen={() => route.go('timetable')} />
     if (!festival) return <EmptyState onOpenList={() => route.go('manage')} />
+    if (route.tab === 'info') {
+      return <InfoView festivalId={festival.id} ticketLink={data.ticketLinks[festival.id] ?? null} notices={resolved?.notices ?? []} />
+    }
     if (route.tab === 'map') {
       return (
         <Suspense fallback={<p className="timetable__empty">지도 불러오는 중…</p>}>

@@ -1,10 +1,11 @@
 import type { ReactNode } from 'react'
 import type { Tab } from '../lib/route'
-import { ManageIcon, MapIcon, TimetableIcon } from './icons'
+import { InfoIcon, ManageIcon, MapIcon, TimetableIcon } from './icons'
 
 const ITEMS: ReadonlyArray<{ tab: Tab; label: string; icon: ReactNode }> = [
   { tab: 'timetable', label: '타임테이블', icon: <TimetableIcon /> },
   { tab: 'map', label: '지도', icon: <MapIcon /> },
+  { tab: 'info', label: '정보', icon: <InfoIcon /> },
   { tab: 'manage', label: '관리', icon: <ManageIcon /> },
 ]
 
