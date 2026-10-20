@@ -22,7 +22,7 @@ export default function App() {
   const now = useNow()
 
   const renderView = () => {
-    if (route.tab === 'manage') return <ManageView data={data} onOpen={() => route.go('timetable')} />
+    if (route.tab === 'manage') return <ManageView data={data} />
     if (!festival) return <EmptyState onOpenList={() => route.go('manage')} />
     if (route.tab === 'info') {
       return <InfoView festivalId={festival.id} ticketLink={data.ticketLinks[festival.id] ?? null} notices={resolved?.notices ?? []} />
