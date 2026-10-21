@@ -48,7 +48,7 @@ describe('resolveFestival', () => {
     expect(gmf?.theme?.accent).toBe('#0f352f')
     expect(gmf?.theme?.art).toBeTruthy()
     expect(resolveFestival(makeUserData(), PENTAPORT_2026_ID)?.theme?.accent).toBe('#432a73')
-    expect(resolveFestival(makeUserData(), HERO_ROCK_2026_ID)?.theme).toMatchObject({ accent: null, art: null })
+    expect(resolveFestival(makeUserData(), HERO_ROCK_2026_ID)?.theme?.accent).toBe('#7d5a1c')
   })
 
   test('returns null for unknown ids', () => {
