@@ -38,6 +38,15 @@ const SHAPES: Record<StageIconName, ReactNode> = {
       />
     </>
   ),
+  star: <path d="m12 2.5 2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9Z" />,
+  bolt: <path d="M13.5 2 5 13.5h6L9.5 22 19 9.5h-6L13.5 2Z" />,
+  // A tumbler: lid, then a cup narrowing to the bottom.
+  cup: (
+    <>
+      <path d="M6 3.5h12V7H6z" />
+      <path d="M7.2 8.2h9.6L15.4 21H8.6Z" />
+    </>
+  ),
 }
 
 /** The shape beside a stage name, drawn in the current color (the stage color). */

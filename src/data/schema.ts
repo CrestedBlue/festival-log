@@ -14,7 +14,7 @@ const longitude = z.number().min(-180).max(180)
 const hexColor = z.string().regex(/^#[0-9a-f]{6}$/i)
 
 /** Shapes drawn beside a stage name (StageIcon). Catalog festivals pick one per stage in their theme; "dot" is the plain default. */
-export const STAGE_ICONS = ['dot', 'leaf', 'sunset', 'flower', 'radar'] as const
+export const STAGE_ICONS = ['dot', 'leaf', 'sunset', 'flower', 'radar', 'star', 'bolt', 'cup'] as const
 export type StageIconName = (typeof STAGE_ICONS)[number]
 
 export const StageSchema = z.object({ id, name, color: hexColor, icon: z.enum(STAGE_ICONS).optional() })

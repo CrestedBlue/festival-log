@@ -88,18 +88,19 @@ export function TimetableGrid({ stages, performances, favorites, moment, onToggl
                   style: { top: (span.start - range.start) * PX_PER_MIN, height: height - 3, '--stage-color': stage.color } as CSSProperties,
                   'aria-label': `${p.artist}, ${p.start}부터 ${p.end}까지${badge ? `, ${badge}` : ''}${isFavorite ? ', 찜함' : ''}`,
                 }
+                // The star comes first so it floats beside the name's first line only.
                 const body = (
                   <>
-                    <span className="tt-set__artist">{p.artist}</span>
-                    <span className="tt-set__time">
-                      {p.start} - {p.end}
-                    </span>
-                    {status && <span className={`badge badge--${status.kind}`}>{badge}</span>}
                     {onToggle && (
                       <span className="tt-set__star">
                         <StarIcon filled={isFavorite} />
                       </span>
                     )}
+                    <span className="tt-set__artist">{p.artist}</span>
+                    <span className={status ? 'tt-set__time tt-set__time--yields' : 'tt-set__time'}>
+                      {p.start} - {p.end}
+                    </span>
+                    {status && <span className={`badge badge--${status.kind}`}>{badge}</span>}
                   </>
                 )
                 return (

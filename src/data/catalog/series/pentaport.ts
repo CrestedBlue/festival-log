@@ -1,3 +1,4 @@
+import pentaportArt from '../../../assets/art/pentaport.svg'
 import { seriesMapFor } from '../../../features/map/festivalMaps'
 import type { Pin } from '../../schema'
 import { PENTAPORT_SERIES as CODE } from '../ids'
@@ -51,14 +52,16 @@ export const PENTAPORT: FestivalSeries = {
     // Mirrors the Instagram posts; every 2026 notice up to 2026-08-06 was checked (2026-10-20).
     { method: '공홈', value: 'https://www.pentaport.co.kr/Notice', lastScrapedPostDate: '2026-08-06' },
   ],
-  // No design of its own yet: the app's ink color and plain dots, stage colors from the 2026 poster.
+  // The user's pick from the second mockup (2026-10-21): deep purple from the 2026 official guide art, the red
+  // star logo alone as the title picture, a star for KB (yellow), a bolt for Monster Energy (green), a tumbler
+  // for Stanley (dark green).
   theme: {
-    accent: null,
-    art: null,
+    accent: '#432a73',
+    art: pentaportArt,
     stages: {
-      kb: { color: '#f5a50a', icon: 'dot' },
-      monster: { color: '#6abf2e', icon: 'dot' },
-      stanley: { color: '#55555f', icon: 'dot' },
+      kb: { color: '#e09a00', icon: 'star' },
+      monster: { color: '#4f9a1f', icon: 'bolt' },
+      stanley: { color: '#3f6b52', icon: 'cup' },
     },
   },
 }
