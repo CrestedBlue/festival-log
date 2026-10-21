@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 200">
+  <style>
+    .ink { fill: #1d4a3c; }
+    .stem { fill: none; stroke: #1d4a3c; stroke-width: 4; stroke-linecap: round; }
+    .sun { fill: #f5d48a; }
+    .petal { fill: #ec8566; }
+    .heart { fill: #f6b39a; }
+    .words { font: italic 22px 'Snell Roundhand', 'Segoe Script', 'Apple Chancery', 'Brush Script MT', cursive; }
+    @media (prefers-color-scheme: dark) {
+      .ink { fill: #a9d3bf; }
+      .stem { stroke: #a9d3bf; }
+    }
+  </style>
+  <defs>
+    <path id="leaf" d="M0 0C15-10 15-38 0-54C-15-38-15-10 0 0Z" />
+  </defs>
+  <path class="stem" d="M62 198C55 160 54 118 60 58" />
+  <use href="#leaf" class="ink" transform="translate(58 158) rotate(-48)" />
+  <use href="#leaf" class="ink" transform="translate(59 130) rotate(42) scale(1.1)" />
+  <use href="#leaf" class="ink" transform="translate(57 100) rotate(-30) scale(1.15)" />
+  <use href="#leaf" class="ink" transform="translate(60 66) rotate(12) scale(1.2)" />
+  <use href="#leaf" class="ink" transform="translate(60 184) rotate(56) scale(0.85)" />
+  <circle class="sun" cx="132" cy="46" r="30" />
+  <g class="petal">
+    <circle cx="140" cy="116" r="21" />
+    <circle cx="159" cy="130" r="21" />
+    <circle cx="152" cy="152" r="21" />
+    <circle cx="128" cy="152" r="21" />
+    <circle cx="121" cy="130" r="21" />
+  </g>
+  <circle class="heart" cx="140" cy="136" r="7" />
+  <g class="ink words" transform="rotate(-14 236 66) translate(-6 0)">
+    <text x="202" y="28">Good</text>
+    <text x="212" y="54">Music</text>
+    <text x="200" y="80">Brighter</text>
+    <text x="204" y="106">Tomorrow</text>
+  </g>
+</svg>

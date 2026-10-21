@@ -13,7 +13,11 @@ const latitude = z.number().min(-90).max(90)
 const longitude = z.number().min(-180).max(180)
 const hexColor = z.string().regex(/^#[0-9a-f]{6}$/i)
 
-export const StageSchema = z.object({ id, name, color: hexColor })
+/** Shapes drawn beside a stage name (StageIcon). Catalog festivals pick one per stage in their theme; "dot" is the plain default. */
+export const STAGE_ICONS = ['dot', 'leaf', 'sunset', 'flower', 'radar'] as const
+export type StageIconName = (typeof STAGE_ICONS)[number]
+
+export const StageSchema = z.object({ id, name, color: hexColor, icon: z.enum(STAGE_ICONS).optional() })
 
 // spanOf never throws, so this stays safe even when start/end already failed the clock check.
 export const PerformanceSchema = z

@@ -51,4 +51,14 @@ export const PENTAPORT: FestivalSeries = {
     // Mirrors the Instagram posts; every 2026 notice up to 2026-08-06 was checked (2026-10-20).
     { method: '공홈', value: 'https://www.pentaport.co.kr/Notice', lastScrapedPostDate: '2026-08-06' },
   ],
+  // No design of its own yet: the app's ink color and plain dots, stage colors from the 2026 poster.
+  theme: {
+    accent: null,
+    art: null,
+    stages: {
+      kb: { color: '#f5a50a', icon: 'dot' },
+      monster: { color: '#6abf2e', icon: 'dot' },
+      stanley: { color: '#55555f', icon: 'dot' },
+    },
+  },
 }

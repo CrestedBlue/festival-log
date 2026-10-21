@@ -69,9 +69,11 @@ button {
   transform: scale(0.96);
 }
 
+/* The festival's main color inside the app shell, ink elsewhere (the admin page). */
 .btn--primary {
-  background: var(--color-ink);
-  color: var(--color-paper);
+  border-color: var(--accent-fill, var(--color-ink));
+  background: var(--accent-fill, var(--color-ink));
+  color: var(--accent-on, var(--color-paper));
 }
 
 .btn--accent {
@@ -171,11 +173,12 @@ button {
   font-size: var(--text-xs);
 }
 
+/* The festival's main color where the app shell sets it (the admin page keeps ink). */
 .chip[aria-pressed='true'],
 .chip[aria-selected='true'] {
-  border-color: var(--color-ink);
-  background: var(--color-ink);
-  color: var(--color-paper);
+  border-color: var(--accent-fill, var(--color-ink));
+  background: var(--accent-fill, var(--color-ink));
+  color: var(--accent-on, var(--color-paper));
 }
 
 @media (prefers-reduced-motion: reduce) {

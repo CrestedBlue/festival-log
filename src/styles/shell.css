@@ -1,15 +1,56 @@
 .app-shell {
+  /* The festival's main color (set inline from its theme); ink when it has none. */
+  --accent-fill: var(--festival-accent, var(--color-ink));
+  --accent-on: var(--color-paper);
+  --accent-text: var(--festival-accent, var(--color-ink));
   display: flex;
   flex-direction: column;
   height: 100dvh;
   padding-top: env(safe-area-inset-top);
 }
 
+.app-shell[data-themed] {
+  --accent-on: #fffaf0;
+}
+
+@media (prefers-color-scheme: dark) {
+  /* Deep festival colors would sink into the night background: lift them. */
+  .app-shell[data-themed] {
+    --accent-fill: color-mix(in oklab, var(--festival-accent) 78%, #fff);
+    --accent-text: color-mix(in oklab, var(--festival-accent) 40%, #fff);
+  }
+}
+
+/* Title on the left, the festival's picture on the right; the timetable's day tickets run underneath. */
 .app-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-3) var(--space-4) var(--space-2);
+}
+
+.app-header__text {
+  grid-area: 1 / 1;
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.app-header__eyebrow {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--text-xs);
+  letter-spacing: 0.32em;
+  color: var(--accent-text);
+}
+
+.app-header__title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
 }
 
 .logo-mark {
@@ -22,11 +63,38 @@
   font-family: var(--font-display);
   font-weight: 400;
   font-size: var(--text-title);
-  line-height: 1.1;
+  line-height: 1.12;
   letter-spacing: -0.01em;
+  color: color-mix(in oklab, var(--accent-text) 35%, var(--color-ink));
+  /* Long names wrap to a second line rather than losing their end. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+}
+
+.app-header__art {
+  grid-area: 1 / 2;
+  align-self: start;
+  width: 88px;
+  height: auto;
+  pointer-events: none;
+}
+
+/* With the day tickets, the picture spans both rows and the "my plan" star sits in its empty corner. */
+.app-header--with-controls .app-header__art {
+  grid-row: 1 / span 2;
+  width: 96px;
+}
+
+.app-header__controls {
+  position: relative;
+  z-index: 1;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  min-width: 0;
 }
 
 .app-main {
@@ -97,8 +165,8 @@
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-2);
   padding: var(--space-2) var(--space-3) calc(var(--space-2) + env(safe-area-inset-bottom));
-  border-top: 2px solid var(--color-line);
-  background: var(--color-paper);
+  border-top: 1px solid var(--color-line);
+  background: var(--color-surface);
 }
 
 .bottom-nav__item {
@@ -108,7 +176,7 @@
   min-height: 52px;
   padding: var(--space-1) 0;
   border: none;
-  border-radius: var(--radius-card);
+  border-radius: var(--radius-sheet);
   background: transparent;
   color: var(--color-ink-soft);
   font-size: var(--text-xs);
@@ -124,8 +192,8 @@
 }
 
 .bottom-nav__item[aria-current='page'] {
-  background: var(--color-ink);
-  color: var(--color-paper);
+  background: var(--accent-fill);
+  color: var(--accent-on);
 }
 
 /* Notice banner */

@@ -1,17 +1,21 @@
 :root {
   color-scheme: light dark;
 
-  /* Daytime: warm poster paper + ink */
-  --color-paper: #f4eee3;
-  --color-paper-deep: #e9e0cf;
-  --color-surface: #fffaf0;
-  --color-ink: #1c1726;
-  --color-ink-soft: #5d5569;
-  --color-line: #d8ccb7;
-  --color-accent: #ff4d2e;
+  /* Daytime: cream poster paper + ink. Each festival adds its own main color (--festival-accent, shell.css). */
+  --color-paper: #fbf6ea;
+  --color-paper-deep: #efe8d6;
+  --color-surface: #fffcf4;
+  --color-ink: #1b1d1a;
+  --color-ink-soft: #5f625a;
+  --color-line: #e3d9c5;
+  /* Now: the now line and the "공연 중" badge */
+  --color-accent: #dc5534;
   --color-accent-ink: #ffffff;
   --color-now: #c6f432;
   --color-now-ink: #1c1726;
+  /* Starting soon: the "n분 후" badge */
+  --color-soon: #f3d27a;
+  --color-soon-ink: #4d3b06;
   --color-warn: #e11d48;
   --color-info: #2f5bff;
   --color-backdrop: rgb(28 23 38 / 0.45);
@@ -19,6 +23,8 @@
   --font-display: 'Black Han Sans', 'Pretendard Variable', sans-serif;
   --font-body: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
     'Noto Sans KR', sans-serif;
+  /* Stage names and the "GMF 2026" line: the system serif, no extra download */
+  --font-serif: Georgia, 'Times New Roman', AppleMyungjo, 'Noto Serif KR', serif;
 
   --text-xs: 0.75rem;
   --text-sm: 0.8125rem;
@@ -59,7 +65,9 @@
     --color-ink: #f4eee3;
     --color-ink-soft: #a89fb8;
     --color-line: #352d47;
-    --color-accent: #ff6040;
+    --color-accent: #ff6a4a;
+    --color-soon: #d9b85a;
+    --color-soon-ink: #2b2104;
     --color-backdrop: rgb(0 0 0 / 0.6);
     --shadow-ticket: 0 1px 0 rgb(255 255 255 / 0.04), 0 10px 22px -14px rgb(0 0 0 / 0.9);
     --shadow-float: 0 18px 40px -18px rgb(0 0 0 / 0.9);

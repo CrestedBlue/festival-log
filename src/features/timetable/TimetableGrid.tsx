@@ -1,10 +1,14 @@
 import { useEffect, useRef, type CSSProperties } from 'react'
+import { StarIcon } from '../../components/icons'
+import { StageIcon } from '../../components/StageIcon'
 import type { Performance, Stage } from '../../data/schema'
 import { performanceSpan, timelineRange } from '../../lib/schedule'
 import { formatClock, type FestivalMoment } from '../../lib/time'
 import { stageColumnWeights } from './columns'
+import { setStatus } from './setStatus'
 
 const PX_PER_MIN = 1.6
+const MARK_EVERY_MIN = 30
 const COMPACT_BELOW_PX = 44
 const SCROLL_LEAD_PX = 72
 
@@ -20,7 +24,7 @@ interface Props {
 export function TimetableGrid({ stages, performances, favorites, moment, onToggle }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const range = timelineRange(performances)
-  const hours = Array.from({ length: (range.end - range.start) / 60 }, (_, i) => range.start + i * 60)
+  const marks = Array.from({ length: (range.end - range.start) / MARK_EVERY_MIN }, (_, i) => range.start + i * MARK_EVERY_MIN)
   const nowInRange = moment !== null && moment.minutes >= range.start && moment.minutes <= range.end
   const nowTop = moment ? (moment.minutes - range.start) * PX_PER_MIN : 0
 
@@ -42,7 +46,7 @@ export function TimetableGrid({ stages, performances, favorites, moment, onToggl
   const gridStyle = {
     '--stage-weight-sum': weights.reduce((sum, w) => sum + w, 0),
     gridTemplateColumns: `48px ${weights.map((w) => `minmax(0, ${w}fr)`).join(' ')}`,
-    '--hour-px': `${60 * PX_PER_MIN}px`,
+    '--mark-px': `${MARK_EVERY_MIN * PX_PER_MIN}px`,
     '--body-px': `${(range.end - range.start) * PX_PER_MIN}px`,
   } as CSSProperties
 
@@ -52,14 +56,17 @@ export function TimetableGrid({ stages, performances, favorites, moment, onToggl
         <div className="tt-corner" aria-hidden="true" />
         {stages.map((stage) => (
           <div key={stage.id} className="tt-stage-head" style={{ '--stage-color': stage.color } as CSSProperties}>
-            <span className="tt-stage-head__name">{stage.name}</span>
+            <div className="tt-stage-head__card">
+              <StageIcon name={stage.icon} />
+              <span className="tt-stage-head__name">{stage.name}</span>
+            </div>
           </div>
         ))}
 
         <div className="tt-hours" aria-hidden="true">
-          {hours.map((h) => (
-            <span key={h} style={{ top: (h - range.start) * PX_PER_MIN }}>
-              {formatClock(h)}
+          {marks.map((m) => (
+            <span key={m} style={{ top: (m - range.start) * PX_PER_MIN }}>
+              {formatClock(m)}
             </span>
           ))}
         </div>
@@ -72,29 +79,27 @@ export function TimetableGrid({ stages, performances, favorites, moment, onToggl
                 const span = performanceSpan(p)
                 const height = (span.end - span.start) * PX_PER_MIN
                 const isFavorite = favorites.has(p.id)
-                const isPast = moment !== null && moment.minutes >= span.end
-                const isLive = moment !== null && span.start <= moment.minutes && moment.minutes < span.end
-                const classes = [
-                  'tt-set',
-                  isFavorite && 'tt-set--fav',
-                  isPast && 'tt-set--past',
-                  isLive && 'tt-set--live',
-                  height < COMPACT_BELOW_PX && 'tt-set--compact',
-                ]
+                // Every set looks the same whether it is on, over or still to come (the user's call); only badges tell.
+                const status = setStatus(span, moment?.minutes ?? null)
+                const badge = status && (status.kind === 'live' ? '공연 중' : `${status.minutes}분 후`)
+                const classes = ['tt-set', isFavorite && 'tt-set--fav', height < COMPACT_BELOW_PX && 'tt-set--compact']
                 const setProps = {
                   className: classes.filter(Boolean).join(' '),
                   style: { top: (span.start - range.start) * PX_PER_MIN, height: height - 3, '--stage-color': stage.color } as CSSProperties,
-                  'aria-label': `${p.artist}, ${p.start}부터 ${p.end}까지${isFavorite ? ', 찜함' : ''}`,
+                  'aria-label': `${p.artist}, ${p.start}부터 ${p.end}까지${badge ? `, ${badge}` : ''}${isFavorite ? ', 찜함' : ''}`,
                 }
                 const body = (
                   <>
-                    <span className="tt-set__artist">
-                      {isFavorite && <span aria-hidden="true">★ </span>}
-                      {p.artist}
-                    </span>
+                    <span className="tt-set__artist">{p.artist}</span>
                     <span className="tt-set__time">
-                      {p.start}–{p.end}
+                      {p.start} - {p.end}
                     </span>
+                    {status && <span className={`badge badge--${status.kind}`}>{badge}</span>}
+                    {onToggle && (
+                      <span className="tt-set__star">
+                        <StarIcon filled={isFavorite} />
+                      </span>
+                    )}
                   </>
                 )
                 return (
@@ -114,7 +119,9 @@ export function TimetableGrid({ stages, performances, favorites, moment, onToggl
 
         {nowInRange && moment && (
           <div className="tt-now" style={{ top: nowTop }} aria-label={`현재 시각 ${formatClock(moment.minutes)}`}>
-            <span>NOW {formatClock(moment.minutes)}</span>
+            <span className="tt-now__label">
+              <strong>{formatClock(moment.minutes)}</strong>지금
+            </span>
           </div>
         )}
       </div>

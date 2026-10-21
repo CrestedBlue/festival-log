@@ -1,6 +1,7 @@
 import type { Festival } from '../schema'
 import { GRAND_MINT_2026_ID, GRAND_MINT_2026_KEY as KEY } from './ids'
 import { GRAND_MINT } from './series/grandMint'
+import { stageLook } from './series/theme'
 
 /**
  * Grand Mint Festival 2026 (2026-10-17/18, Olympic Park, Seoul).
@@ -20,11 +21,12 @@ export const GRAND_MINT_2026_NOTICES: readonly string[] = [
   '우선입장권은 1인 1매이고 별도 부스에서 입장해요. 일행과 같이 들어갈 수 없어요.',
 ]
 
+// Stage colors and icons belong to the festival's design (series/grandMint.ts), keyed the same way.
 const STAGES = {
-  mint: { name: 'Mint Breeze', color: '#1f9e89' },
-  sunset: { name: 'Club Midnight Sunset', color: '#ff5a3c' },
-  forest: { name: 'Loving Forest Garden', color: '#ec4899' },
-  radar: { name: 'Radar', color: '#8a8f3c' },
+  mint: 'Mint Breeze',
+  sunset: 'Club Midnight Sunset',
+  forest: 'Loving Forest Garden',
+  radar: 'Radar',
 } as const
 
 type StageKey = keyof typeof STAGES
@@ -113,7 +115,7 @@ export function createGrandMint2026(): Festival {
     startDate: '2026-10-17',
     endDate: '2026-10-18',
     venue: GRAND_MINT.venue,
-    stages: (Object.keys(STAGES) as StageKey[]).map((key) => ({ id: `${KEY}-${key}`, ...STAGES[key] })),
+    stages: (Object.keys(STAGES) as StageKey[]).map((key) => ({ id: `${KEY}-${key}`, name: STAGES[key], ...stageLook(GRAND_MINT, key) })),
     performances: [...toPerformances('2026-10-17', 'd1', DAY1), ...toPerformances('2026-10-18', 'd2', DAY2)],
     pins: GRAND_MINT.pins(),
   }

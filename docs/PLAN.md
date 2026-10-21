@@ -31,7 +31,7 @@
 | 배포 | GitHub Pages (Actions, Node 24), `main` push 시 자동 |
 | 저장 키 | localStorage `festival-log:data` — 유저 데이터 v2 `{ myFestivalIds, activeFestivalId, favorites, userPins, ticketLinks, archivedFestivals }`. v1(페스티벌 통째 저장)은 열 때 자동 이전. 손상 시 `festival-log:backup-<ts>` 로 백업 |
 | 날짜 경계 | 새벽 06:00 이전 공연은 전날 밤으로 취급. `24:00` 허용. 한 공연 최대 12시간 |
-| 카탈로그 구조 | **페스티벌(코드 단위, 해마다 같음)** `src/data/catalog/series/` — 장소, 지도 핀(구역·공식 마커·역 출구, id 접두사 `<코드>-`), 그림 지도(`src/assets/maps/<코드>.*`). **연도(회차)** `src/data/catalog/<이름><연도>.ts` — id(UUID), 연도 코드(`<코드><연도>`), 이름·날짜·스테이지·공연(id 접두사 `<연도 코드>-`)·주의사항·라인업 |
+| 카탈로그 구조 | **페스티벌(코드 단위, 해마다 같음)** `src/data/catalog/series/` — 장소, 지도 핀(구역·공식 마커·역 출구, id 접두사 `<코드>-`), 그림 지도(`src/assets/maps/<코드>.*`), 디자인 테마(`theme`: 메인 컬러, 제목 오른쪽 그림 `src/assets/art/<코드>.svg`, 무대 키별 색·아이콘 — 연도 파일의 무대는 이름만 갖고 색·아이콘은 여기서 가져온다). **연도(회차)** `src/data/catalog/<이름><연도>.ts` — id(UUID), 연도 코드(`<코드><연도>`), 이름·날짜·스테이지·공연(id 접두사 `<연도 코드>-`)·주의사항·라인업 |
 | 카탈로그 | 그랜드 민트 페스티벌 2026 — id `e3bd21f7-d9b6-4b69-a61a-8210e787c5b9`, 코드 `gmf`, 연도 코드 `gmf2026`(예전 id), 첫 실행 시 기본 추가. 2026 히어로 락 페스티벌 - 인천 — 코드 `herorock`, 연도 코드 `herorock2026`. 2026 인천펜타포트 락 페스티벌 — 코드 `pentaport`, 연도 코드 `pentaport2026` |
 | GMF 지도 이미지 | `src/assets/maps/gmf.webp`(코드 단위, 해마다 재사용) 2825×1354px, 1.6px/m, 범위 위도 37.5152–37.5228 · 경도 127.1122–127.1322 |
 | 펜타포트 지도 | `src/assets/maps/pentaport.webp` — 공식 입장 동선 안내(2026)를 실제 좌표에 맞춰 편 그림. 기준점 5곳은 오차 0 m, 그 사이는 부드럽게 휜다. 범위 위도 37.3994–37.4112, 경도 126.6240–126.6386 |

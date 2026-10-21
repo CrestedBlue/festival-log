@@ -2,7 +2,7 @@ import { catalogEntry } from './catalog'
 import type { GuideSet } from './catalog/guide'
 import type { LineupImage } from './catalog/lineup'
 import { SERIES } from './catalog/series'
-import type { CollectionSource } from './catalog/series/types'
+import type { CollectionSource, FestivalTheme } from './catalog/series/types'
 import type { Festival, UserData } from './schema'
 
 export interface ResolvedFestival {
@@ -16,6 +16,10 @@ export interface ResolvedFestival {
   guides: readonly GuideSet[]
   /** The festival's official channels (Instagram, website), shown on the info tab (catalog only). */
   sources: readonly CollectionSource[]
+  /** The festival's own design: main color, title picture, stage looks (catalog only). */
+  theme: FestivalTheme | null
+  /** Festival code and year, shown above the title as "GMF 2026" (catalog only). */
+  edition: { series: string; year: string } | null
 }
 
 const built = new Map<string, Festival>()
@@ -29,19 +33,26 @@ export const catalogFestival = (id: string): Festival | null => {
 
 export function resolveFestival(data: UserData, festivalId: string): ResolvedFestival | null {
   const fromCatalog = catalogFestival(festivalId)
-  if (fromCatalog) {
+  const entry = catalogEntry(festivalId)
+  if (fromCatalog && entry) {
     const own = data.userPins[festivalId] ?? []
+    const series = SERIES[entry.series]
     return {
       source: 'catalog',
       festival: own.length ? { ...fromCatalog, pins: [...fromCatalog.pins, ...own] } : fromCatalog,
-      notices: catalogEntry(festivalId)?.notices ?? [],
-      lineup: catalogEntry(festivalId)?.lineup ?? [],
-      guides: catalogEntry(festivalId)?.guides ?? [],
-      sources: SERIES[catalogEntry(festivalId)?.series ?? '']?.sources ?? [],
+      notices: entry.notices,
+      lineup: entry.lineup,
+      guides: entry.guides,
+      sources: series?.sources ?? [],
+      theme: series?.theme ?? null,
+      // The yearly code is the festival code plus the year ("gmf2026").
+      edition: { series: entry.series, year: entry.key.slice(entry.series.length) },
     }
   }
   const archived = data.archivedFestivals.find((f) => f.id === festivalId)
-  return archived ? { source: 'archived', festival: archived, notices: [], lineup: [], guides: [], sources: [] } : null
+  return archived
+    ? { source: 'archived', festival: archived, notices: [], lineup: [], guides: [], sources: [], theme: null, edition: null }
+    : null
 }
 
 export function activeFestival(data: UserData): ResolvedFestival | null {

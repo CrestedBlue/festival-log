@@ -19,6 +19,17 @@ describe('catalog', () => {
     expect(new Set(CATALOG.map((e) => e.key)).size).toBe(CATALOG.length)
   })
 
+  test("every stage takes its color and icon from its festival's design", () => {
+    for (const entry of CATALOG) {
+      const theme = SERIES[entry.series]?.theme
+      for (const stage of entry.create().stages) {
+        const look = theme?.stages[stage.id.slice(`${entry.key}-`.length)]
+        expect(look, stage.id).toBeDefined()
+        expect({ color: stage.color, icon: stage.icon }).toEqual(look)
+      }
+    }
+  })
+
   test('every festival has a festival code, and its yearly code is that code plus the year it starts in', () => {
     for (const entry of CATALOG) {
       expect(entry.series).toMatch(/^[a-z0-9]+$/)

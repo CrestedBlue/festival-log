@@ -19,4 +19,6 @@ export const HERO_ROCK: FestivalSeries = {
   pins: () => [...PINS],
   // 2026 data came from Melon Ticket and a poster the user sent: nothing scraped from this account yet.
   sources: [{ method: '인스타', value: '@herorockfestival', lastScrapedPostDate: null }],
+  // No design of its own yet, and no stages until the timetable is out.
+  theme: { accent: null, art: null, stages: {} },
 }

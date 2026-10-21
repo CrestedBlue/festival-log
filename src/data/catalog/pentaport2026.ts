@@ -13,6 +13,7 @@ import type { Festival } from '../schema'
 import type { GuideImage, GuideSet } from './guide'
 import { PENTAPORT_2026_ID, PENTAPORT_2026_KEY as KEY } from './ids'
 import { PENTAPORT } from './series/pentaport'
+import { stageLook } from './series/theme'
 
 /**
  * 2026 인천펜타포트 락 페스티벌 (2026-07-31 – 08-02, Songdo Moonlight Festival Park, Incheon).
@@ -61,10 +62,11 @@ export const PENTAPORT_2026_GUIDES: readonly GuideSet[] = [
 ]
 
 // Shortened so they fit the two-line stage header: "KB KOOKMIN CARD STAGE" as the poster's own "KB국민카드", the others without "STAGE".
+// Stage colors and icons belong to the festival's design (series/pentaport.ts), keyed the same way.
 const STAGES = {
-  kb: { name: 'KB국민카드', color: '#f5a50a' },
-  monster: { name: 'MONSTER ENERGY', color: '#6abf2e' },
-  stanley: { name: 'STANLEY 1913', color: '#55555f' },
+  kb: 'KB국민카드',
+  monster: 'MONSTER ENERGY',
+  stanley: 'STANLEY 1913',
 } as const
 
 type StageKey = keyof typeof STAGES
@@ -183,7 +185,7 @@ export function createPentaport2026(): Festival {
     startDate: '2026-07-31',
     endDate: '2026-08-02',
     venue: PENTAPORT.venue,
-    stages: (Object.keys(STAGES) as StageKey[]).map((key) => ({ id: `${KEY}-${key}`, ...STAGES[key] })),
+    stages: (Object.keys(STAGES) as StageKey[]).map((key) => ({ id: `${KEY}-${key}`, name: STAGES[key], ...stageLook(PENTAPORT, key) })),
     performances: [
       ...toPerformances('2026-07-31', 'd1', DAY1),
       ...toPerformances('2026-08-01', 'd2', DAY2),

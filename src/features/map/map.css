@@ -62,8 +62,8 @@
 }
 
 .map-fab.is-on {
-  background: var(--color-ink);
-  color: var(--color-paper);
+  background: var(--accent-fill, var(--color-ink));
+  color: var(--accent-on, var(--color-paper));
 }
 
 .map-hint {

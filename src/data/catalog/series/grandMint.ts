@@ -1,3 +1,4 @@
+import gmfArt from '../../../assets/art/gmf.svg'
 import { seriesMapFor } from '../../../features/map/festivalMaps'
 import type { Pin } from '../../schema'
 import { GRAND_MINT_SERIES as CODE } from '../ids'
@@ -76,4 +77,15 @@ export const GRAND_MINT: FestivalSeries = {
   pins: () => [...zonePins(), ...markPins()],
   // 2026 data came from the NOL ticket page, not from this account: nothing scraped from it yet.
   sources: [{ method: '인스타', value: '@grandmintfestival', lastScrapedPostDate: null }],
+  // From the design the user drew for the app (2026-10-21): deep green, leaves, a sun and a flower.
+  theme: {
+    accent: '#0f352f',
+    art: gmfArt,
+    stages: {
+      mint: { color: '#2f8f62', icon: 'leaf' },
+      sunset: { color: '#e2603f', icon: 'sunset' },
+      forest: { color: '#de5579', icon: 'flower' },
+      radar: { color: '#c39a2e', icon: 'radar' },
+    },
+  },
 }

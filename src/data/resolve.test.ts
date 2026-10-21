@@ -16,7 +16,16 @@ describe('resolveFestival', () => {
   test('serves archived festivals as they were saved', () => {
     const archived = makeFestival({ id: 'old' })
     const resolved = resolveFestival(makeUserData({ archivedFestivals: [archived] }), 'old')
-    expect(resolved).toEqual({ source: 'archived', festival: archived, notices: [], lineup: [], guides: [], sources: [] })
+    expect(resolved).toEqual({
+      source: 'archived',
+      festival: archived,
+      notices: [],
+      lineup: [],
+      guides: [],
+      sources: [],
+      theme: null,
+      edition: null,
+    })
   })
 
   test('carries the official channels of the festival', () => {
@@ -31,6 +40,14 @@ describe('resolveFestival', () => {
   test('carries the line-up images of a catalog festival', () => {
     expect(resolveFestival(makeUserData(), HERO_ROCK_2026_ID)?.lineup.map((image) => image.label)).toEqual(['1차 라인업'])
     expect(resolveFestival(makeUserData(), GRAND_MINT_2026_ID)?.lineup).toEqual([])
+  })
+
+  test('carries the festival design and the code and year shown above the title', () => {
+    const gmf = resolveFestival(makeUserData(), GRAND_MINT_2026_ID)
+    expect(gmf?.edition).toEqual({ series: 'gmf', year: '2026' })
+    expect(gmf?.theme?.accent).toBe('#0f352f')
+    expect(gmf?.theme?.art).toBeTruthy()
+    expect(resolveFestival(makeUserData(), HERO_ROCK_2026_ID)?.theme).toMatchObject({ accent: null, art: null })
   })
 
   test('returns null for unknown ids', () => {
