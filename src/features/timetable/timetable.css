@@ -164,13 +164,15 @@
   padding: var(--space-1) 3px var(--space-2);
 }
 
-/* Stage heading: a tinted card with the stage's icon and its name in serif */
+/* Stage heading: a tinted card with the stage's icon and its name in serif. It is a size container so the
+   name can shrink with the column (below). */
 .tt-stage-head__card {
+  container-type: inline-size;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   min-height: 44px;
-  padding: 6px;
+  padding: 6px 5px;
   border-radius: var(--radius-ticket);
   background: color-mix(in oklab, var(--stage-color) 26%, var(--color-paper));
   color: var(--color-ink);
@@ -178,12 +180,15 @@
 
 .stage-icon {
   flex: none;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   color: var(--stage-color);
 }
 
-/* Long stage names wrap to at most three lines on a phone (clamped on the inner text so padding never shows more). */
+/* Long stage names wrap between words, up to three lines (clamped on the inner text so padding never shows more).
+   The size follows the card width so the longest word ("MONSTER", "KB국민카드": 5.6em in Georgia, measured) fits
+   beside the 20px icon: about 12.5px on a 375px phone, 9.5px at 320px. Only a longer word, or a narrower screen,
+   still breaks inside a word. */
 .tt-stage-head__name {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -191,10 +196,12 @@
   line-clamp: 3;
   min-width: 0;
   overflow: hidden;
+  word-break: keep-all;
   overflow-wrap: anywhere;
   font-family: var(--font-serif);
   font-weight: 700;
   font-size: var(--text-xs);
+  font-size: clamp(9.5px, 17cqi - 3.4px, 13px);
   line-height: 1.15;
 }
 
