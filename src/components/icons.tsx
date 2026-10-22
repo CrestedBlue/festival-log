@@ -57,6 +57,14 @@ export const StarIcon = ({ filled }: { filled: boolean }) => (
   </svg>
 )
 
+/** A U-turn arrow: back from "my plan" to the full timetable. */
+export const BackIcon = () => (
+  <svg {...base}>
+    <path d="M9 14 4 9l5-5" />
+    <path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11" />
+  </svg>
+)
+
 export const InfoIcon = () => (
   <svg {...base}>
     <circle cx="12" cy="12" r="9" />

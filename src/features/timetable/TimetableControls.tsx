@@ -1,4 +1,4 @@
-import { StarIcon } from '../../components/icons'
+import { BackIcon, StarIcon } from '../../components/icons'
 import type { Festival } from '../../data/schema'
 import { formatDayLabel } from '../../lib/time'
 import { selectionParams, type TimetableSelection } from './selection'
@@ -43,8 +43,9 @@ export function TimetableControls({ festival, favorites, selection, today, setPa
         title={showMine ? '전체 보기' : '내 일정만 보기'}
         onClick={() => select({ mine: !showMine })}
       >
-        <StarIcon filled={showMine} />
-        {favoriteCount > 0 && <span className="mine-toggle__count">{favoriteCount}</span>}
+        {/* In "my plan" the switch shows the way back; the count would only repeat the list. */}
+        {showMine ? <BackIcon /> : <StarIcon filled={false} />}
+        {!showMine && favoriteCount > 0 && <span className="mine-toggle__count">{favoriteCount}</span>}
       </button>
     </div>
   )
