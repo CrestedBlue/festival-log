@@ -37,7 +37,6 @@ export default function App() {
           params={route.params}
           setParams={(params) => route.setParams('manage', params)}
           today={today}
-          onOpenActive={() => route.go(homeTab(festival, lineup.length))}
         />
       )
     }

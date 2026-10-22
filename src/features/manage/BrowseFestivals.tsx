@@ -48,39 +48,41 @@ export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: P
           </button>
         ))}
       </div>
-      {groups.length === 0 ? (
-        <p className="manage__empty">{query.trim() ? `'${query.trim()}'에 맞는 페스티벌이 없어요.` : '이 해에 등록된 페스티벌이 없어요.'}</p>
-      ) : (
-        groups.map((group) => (
-          <section key={group.label} className="month" aria-label={group.label}>
-            <h3 className="month__label">{group.label}</h3>
-            <ul className="fest-list">
-              {group.festivals.map((festival) => (
-                <li key={festival.id}>
-                  <FestivalRow
-                    festival={festival}
-                    today={today}
-                    active={data.activeFestivalId === festival.id}
-                    tag={archived.has(festival.id) ? '직접 만든 것' : undefined}
-                    trailing={
-                      mine.has(festival.id) ? (
-                        <span className="fest-row__state is-added" aria-label="추가됨">
-                          <CheckIcon />
-                        </span>
-                      ) : (
-                        <span className="fest-row__state" aria-label="추가하기">
-                          <PlusIcon />
-                        </span>
-                      )
-                    }
-                    onPick={() => pick(festival)}
-                  />
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))
-      )}
+      <div className="manage__list">
+        {groups.length === 0 ? (
+          <p className="manage__empty">{query.trim() ? `'${query.trim()}'에 맞는 페스티벌이 없어요.` : '이 해에 등록된 페스티벌이 없어요.'}</p>
+        ) : (
+          groups.map((group) => (
+            <section key={group.label} className="month" aria-label={group.label}>
+              <h3 className="month__label">{group.label}</h3>
+              <ul className="fest-list">
+                {group.festivals.map((festival) => (
+                  <li key={festival.id}>
+                    <FestivalRow
+                      festival={festival}
+                      today={today}
+                      active={data.activeFestivalId === festival.id}
+                      tag={archived.has(festival.id) ? '직접 만든 것' : undefined}
+                      trailing={
+                        mine.has(festival.id) ? (
+                          <span className="fest-row__state is-added" aria-label="추가됨">
+                            <CheckIcon />
+                          </span>
+                        ) : (
+                          <span className="fest-row__state" aria-label="추가하기">
+                            <PlusIcon />
+                          </span>
+                        )
+                      }
+                      onPick={() => pick(festival)}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        )}
+      </div>
     </>
   )
 }

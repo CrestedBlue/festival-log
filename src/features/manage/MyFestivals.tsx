@@ -20,11 +20,13 @@ export function MyFestivals({ data, today, onBrowse }: Props) {
 
   if (mine.length === 0) {
     return (
-      <div className="manage__empty">
-        <p>아직 추가한 페스티벌이 없어요.</p>
-        <button type="button" className="btn btn--primary" onClick={onBrowse}>
-          둘러보기
-        </button>
+      <div className="manage__list">
+        <div className="manage__empty">
+          <p>아직 추가한 페스티벌이 없어요.</p>
+          <button type="button" className="btn btn--primary" onClick={onBrowse}>
+            둘러보기
+          </button>
+        </div>
       </div>
     )
   }
@@ -40,25 +42,27 @@ export function MyFestivals({ data, today, onBrowse }: Props) {
   }
 
   return (
-    <ul className="fest-list">
-      {mine.map((festival) => {
-        const active = data.activeFestivalId === festival.id
-        return (
-          <li key={festival.id} className="fest-list__mine">
-            <FestivalRow
-              festival={festival}
-              today={today}
-              active={active}
-              tag={archived.has(festival.id) ? '직접 만든 것' : undefined}
-              trailing={active ? <span className="fest-row__pill">보는 중</span> : null}
-              onPick={() => pick(festival)}
-            />
-            <button type="button" className="fest-remove" aria-label={`'${festival.name}' 목록에서 빼기`} onClick={() => remove(festival)}>
-              <CloseIcon />
-            </button>
-          </li>
-        )
-      })}
-    </ul>
+    <div className="manage__list">
+      <ul className="fest-list">
+        {mine.map((festival) => {
+          const active = data.activeFestivalId === festival.id
+          return (
+            <li key={festival.id} className="fest-list__mine">
+              <FestivalRow
+                festival={festival}
+                today={today}
+                active={active}
+                tag={archived.has(festival.id) ? '직접 만든 것' : undefined}
+                trailing={active ? <span className="fest-row__pill">보는 중</span> : null}
+                onPick={() => pick(festival)}
+              />
+              <button type="button" className="fest-remove" aria-label={`'${festival.name}' 목록에서 빼기`} onClick={() => remove(festival)}>
+                <CloseIcon />
+              </button>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
   )
 }
