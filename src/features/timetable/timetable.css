@@ -239,11 +239,20 @@
 /* A set: a ticket in its stage's tint with notched corners (a mask), the same whether it is on, over or to come. */
 .tt-set {
   --notch: 5px;
+  --edge: 1px;
+  --edge-color: color-mix(in oklab, var(--stage-color) 32%, var(--color-surface));
+  --fill: color-mix(in oklab, var(--stage-color) 12%, var(--color-surface));
   --ticket-corners:
     radial-gradient(circle at 0 0, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)) 0 0 / 51% 51% no-repeat,
     radial-gradient(circle at 100% 0, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)) 100% 0 / 51% 51% no-repeat,
     radial-gradient(circle at 0 100%, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)) 0 100% / 51% 51% no-repeat,
     radial-gradient(circle at 100% 100%, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)) 100% 100% / 51% 51% no-repeat;
+  /* The mask cuts the border away at the notches, so each notch gets a quarter ring in the border color. */
+  --notch-ring:
+    #0000 var(--notch),
+    var(--edge-color) var(--notch),
+    var(--edge-color) calc(var(--notch) + var(--edge) + 0.5px),
+    #0000 calc(var(--notch) + var(--edge) + 1px);
   /* A size container (its size is set from outside), so a short set can drop its time for a badge (below). */
   container-type: size;
   position: absolute;
@@ -252,8 +261,13 @@
   display: block;
   /* Tight enough that a 40-minute set (61px) still shows its name, time and a badge. */
   padding: 6px 7px 6px 9px;
-  border: 1px solid color-mix(in oklab, var(--stage-color) 32%, var(--color-surface));
-  background: color-mix(in oklab, var(--stage-color) 12%, var(--color-surface));
+  border: var(--edge) solid var(--edge-color);
+  background:
+    radial-gradient(circle at 0 0, var(--notch-ring)) 0 0 / 51% 51% no-repeat border-box,
+    radial-gradient(circle at 100% 0, var(--notch-ring)) 100% 0 / 51% 51% no-repeat border-box,
+    radial-gradient(circle at 0 100%, var(--notch-ring)) 0 100% / 51% 51% no-repeat border-box,
+    radial-gradient(circle at 100% 100%, var(--notch-ring)) 100% 100% / 51% 51% no-repeat border-box,
+    var(--fill);
   color: var(--color-ink);
   text-align: left;
   overflow: hidden;
@@ -336,9 +350,16 @@
   height: 15px;
 }
 
-/* Starred: the star fills in the stage color and the edge firms up. */
+/* Starred: the ticket is inked about three times deeper, with a 2px stage-color edge and a filled star. */
 .tt-set--fav {
-  border-color: var(--stage-color);
+  --edge: 2px;
+  --edge-color: var(--stage-color);
+  --fill: color-mix(in oklab, var(--stage-color) 34%, var(--color-surface));
+}
+
+/* The softer time color falls under 4.5:1 on the deeper tint; pull it toward the text color. */
+.tt-set--fav .tt-set__time {
+  color: color-mix(in oklab, var(--color-ink-soft) 55%, var(--color-ink));
 }
 
 .tt-set--fav .tt-set__star {
