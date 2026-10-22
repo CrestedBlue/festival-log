@@ -47,6 +47,30 @@ const SHAPES: Record<StageIconName, ReactNode> = {
       <path d="M7.2 8.2h9.6L15.4 21H8.6Z" />
     </>
   ),
+  // A hanok: curved tiled roof over a house with a door.
+  roof: (
+    <>
+      <path d="M1.5 10.5c3.2.2 5.6-1.2 7.6-4L12 3l2.9 3.5c2 2.8 4.4 4.2 7.6 4L21 13H3Z" />
+      <path d="M6 14h12v7h-3.5v-4h-5v4H6Z" />
+    </>
+  ),
+  // Two rolling swells.
+  wave: (
+    <>
+      <path d="M2 8c2.2 0 3.3-2.5 5-2.5S9.8 8 12 8s3.3-2.5 5-2.5S19.8 8 22 8v3.2c-2.2 0-3.3-2.5-5-2.5s-2.8 2.5-5 2.5-3.3-2.5-5-2.5-2.8 2.5-5 2.5Z" />
+      <path d="M2 15c2.2 0 3.3-2.5 5-2.5S9.8 15 12 15s3.3-2.5 5-2.5 2.8 2.5 5 2.5v3.2c-2.2 0-3.3-2.5-5-2.5s-2.8 2.5-5 2.5-3.3-2.5-5-2.5-2.8 2.5-5 2.5Z" />
+    </>
+  ),
+  // A breath of wind: three curling strokes.
+  breath: (
+    <path
+      d="M3 9h11a3 3 0 1 0-3-3M3 13h15a3 3 0 1 1-3 3M3 17h7"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+    />
+  ),
 }
 
 /** The shape beside a stage name, drawn in the current color (the stage color). */

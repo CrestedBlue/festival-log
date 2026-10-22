@@ -14,3 +14,7 @@ export const HERO_ROCK_2026_KEY = `${HERO_ROCK_SERIES}2026`
 export const PENTAPORT_SERIES = 'pentaport'
 export const PENTAPORT_2026_ID = '8eeb7b87-f5c7-455c-b6de-a772fd37b671'
 export const PENTAPORT_2026_KEY = `${PENTAPORT_SERIES}2026`
+
+export const JUMF_SERIES = 'jumf'
+export const JUMF_2026_ID = 'b97c0d8e-e01b-4fac-82af-3f8f9e433837'
+export const JUMF_2026_KEY = `${JUMF_SERIES}2026`
