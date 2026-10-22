@@ -57,6 +57,14 @@ export const StarIcon = ({ filled }: { filled: boolean }) => (
   </svg>
 )
 
+/** A box with an arrow out of it, the phone's own share sign. */
+export const ShareIcon = () => (
+  <svg {...base}>
+    <path d="M12 15V3M8 7l4-4 4 4" />
+    <path d="M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8" />
+  </svg>
+)
+
 /** A U-turn arrow: back from "my plan" to the full timetable. */
 export const BackIcon = () => (
   <svg {...base}>

@@ -92,6 +92,9 @@ export default function App() {
             selection={selection}
             today={today}
             setParams={(params) => route.setParams('timetable', params)}
+            edition={resolved?.edition ?? null}
+            accent={accent}
+            art={resolved?.theme?.art ?? null}
           />
         )}
       </AppHeader>

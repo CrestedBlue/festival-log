@@ -1,7 +1,9 @@
 import { BackIcon, StarIcon } from '../../components/icons'
+import type { ResolvedFestival } from '../../data/resolve'
 import type { Festival } from '../../data/schema'
 import { formatDayLabel } from '../../lib/time'
 import { selectionParams, type TimetableSelection } from './selection'
+import { ShareButton } from './share/ShareButton'
 import './timetable.css'
 
 interface Props {
@@ -10,12 +12,17 @@ interface Props {
   selection: TimetableSelection
   today: string
   setParams: (params: Record<string, string | undefined>) => void
+  /** For the shared picture: "GMF 2026", the main color and the title picture. */
+  edition: ResolvedFestival['edition']
+  accent: string | null
+  art: string | null
 }
 
-/** Day tickets and the "my plan" switch. They sit in the app header, under the festival title. */
-export function TimetableControls({ festival, favorites, selection, today, setParams }: Props) {
+/** Day tickets, the share button and the "my plan" switch. They sit in the app header, under the festival title. */
+export function TimetableControls({ festival, favorites, selection, today, setParams, edition, accent, art }: Props) {
   const favoriteSet = new Set(favorites)
-  const favoriteCount = festival.performances.filter((p) => p.day === selection.day && favoriteSet.has(p.id)).length
+  const dayPerformances = festival.performances.filter((p) => p.day === selection.day)
+  const favoriteCount = dayPerformances.filter((p) => favoriteSet.has(p.id)).length
   const select = (next: { day?: string; mine?: boolean }) => setParams(selectionParams(selection, next))
   const { showMine } = selection
 
@@ -35,6 +42,9 @@ export function TimetableControls({ festival, favorites, selection, today, setPa
           </button>
         ))}
       </div>
+      {dayPerformances.length > 0 && (
+        <ShareButton festival={festival} day={selection.day} favorites={favorites} edition={edition} accent={accent} art={art} />
+      )}
       <button
         type="button"
         className="mine-toggle"
