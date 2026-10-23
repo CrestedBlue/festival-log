@@ -19,7 +19,7 @@ const SNAP_M = 5 // a path end this close to another path is joined to it
 const SLIVER_M2 = 1000 // faces smaller than this between paths are paved, not a zone of their own
 const isPath = (t) => t.highway && !/motorway|secondary|residential/.test(t.highway)
 // faces are bounded by paths, parking lots, gardens and the main road
-const { barrierSvg, labelFaces } = makeFaces(frame, (t) => isPath(t) || t.amenity === 'parking' || t.leisure === 'garden' || t.highway === 'secondary')
+const { barriers, makeRunOn, labelFaces } = makeFaces(frame, (t) => isPath(t) || t.amenity === 'parking' || t.leisure === 'garden' || t.highway === 'secondary')
 
 // Split lines in local metres, drawn along the earlier zone borders. Both ends run on until they meet a path.
 const SPLITS = {
@@ -53,19 +53,10 @@ const SEEDS = [
 const stage = OSM.ways.find((w) => w.tags?.leisure === 'bandstand')
 const stageLine = `<path d="${pathD(stage.pts.map(llToPx), true)}" fill="none" stroke="#000" stroke-width="4"/>`
 
-// Run each split line's ends on until they reach a barrier (path, circle edge, stage).
-const { data: plain } = await sharp(Buffer.from(barrierSvg(stageLine))).greyscale().raw().toBuffer({ resolveWithObject: true })
-const isBarrier = ([e, n]) => { const [x, y] = toPx([e, n]); const xi = Math.round(x), yi = Math.round(y); return xi >= 0 && yi >= 0 && xi < W && yi < H && plain[yi * W + xi] < 128 }
-// `cross` lets an end go over the first line it meets (the circle's edge) and stop at the next (the road around it).
-function runOn(line, cross = false, reach = 25) {
-  const ext = (a, b, through) => { const len = Math.hypot(b[0] - a[0], b[1] - a[1]); const d = [(b[0] - a[0]) / len, (b[1] - a[1]) / len]
-    let crossed = !through, inside = false
-    for (let t = 0; t <= reach; t += 0.2) { const p = [b[0] + d[0] * t, b[1] + d[1] * t]; const hit = isBarrier(p)
-      if (!crossed) { if (hit) inside = true; else if (inside) crossed = true; continue }
-      if (hit) return [b[0] + d[0] * (t + 0.6), b[1] + d[1] * (t + 0.6)] }
-    throw new Error(`split line end ${b} meets no path within ${reach} m`) }
-  return [ext(line[1], line[0], false), ...line, ext(line[line.length - 2], line[line.length - 1], cross)]
-}
+// Run each split line's ends on until they reach a barrier (path, circle edge, stage); the monster line crosses the
+// circle's edge to the road around it.
+const plain = await barriers(stageLine)
+const runOn = makeRunOn(plain)
 const splitLines = Object.fromEntries(Object.entries(SPLITS).map(([k, l]) => [k, runOn(l, k === 'monster')]))
 // Walkways run on to the paths at both ends; each later one stops at the ones before it.
 const walkways = {}

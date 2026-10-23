@@ -24,8 +24,9 @@ const PAIRS = {
   lovingForest: [[[597, 222], m('lfgStage')], [[600, 300], m('lfgGate')], [[535, 258], m('lfgArea', [-LFG_HALF, 0])], [[657, 258], m('lfgArea', [LFG_HALF, 0])]],
   clubMidnight: [[[530, 650], m('domeCentre')], [[556, 597], m('cmsStage')], [[530, 537], m('gate23')], [[450, 587], m('gate22')], [[451, 728], m('gate21')]],
   artZone: [[[268, 612], m('artZone')], [[178, 612], m('artZone', [-ART[0], 0])], [[358, 612], m('artZone', [ART[0], 0])], [[268, 520], m('artZone', [0, ART[1]])]],
-  // the east hungry zone is drawn as a blob between the dome and the swimming pool; its label and RADAR flag anchor it
-  hungryEast: [[[555, 466], m('hungryEast')], [[626, 443], m('radar', [-40, 0])], [[640, 500], m('hungryEast', [30, -25])]],
+  // the east hungry zone: the official blob (x 580–740, y 408–512) laid onto the real space between 체조경기장 and
+  // 올림픽수영경기장 (layer1.mjs: about e 30–180, n 80–140 m)
+  hungryEast: [[[580, 460], [30, 110]], [[740, 460], [180, 110]], [[660, 408], [105, 140]], [[660, 512], [105, 80]]],
   ticketBooth: [[[272, 755], m('ticketBooth')], [[222, 755], m('ticketBooth', [-25, 0])], [[272, 730], m('ticketBooth', [0, 12])]],
   between: [[[270, 335], m('mbStanding')], [[597, 258], m('lfgArea')], [[530, 650], m('domeCentre')], [[268, 612], m('artZone')], [[680, 452], m('hungryEast')]],
 }
