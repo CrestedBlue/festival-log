@@ -99,6 +99,22 @@
 - 노점이 촘촘한 지도(GMF)는 `tidy`: 핀이 다른 물체도 가리지 않고, 가리키는 시설의 **아래로는 가지 않는** 자리를 먼저 찾는다(물방울 끝이 시설을 가리키게).
 - 앱용 핀 좌표는 핀이 아니라 **시설의 위치**다(시설이 없으면 핀이 가리키는 곳).
 
+## 5-1. 큰 지도 — 역·셔틀 정류장까지 (레이어 1만)
+
+행사장 안내도(작은 지도)는 행사장만 덮는다. 지하철역에서 걸어오는 길을 보이려고 **넓은 범위의 레이어 1만** 따로 만든다(사용자 지시, 2026-10-23: "지하철까지의 경로를 Layer1 작업만 해서 큰지도까지"). 펜타포트: `big-layer1.mjs`.
+
+- 틀: 같은 기준점에 범위만 넓힌 두 번째 틀(`frame.mjs` 의 `bigFrame`, 2 px/m). 송도달빛축제공원역 출구와 셔틀 정류장이 들어가게 잡는다. 확인 도구: `node scripts/map/layers/lib/read-osm-ways.mjs pentaport bigFrame`.
+- 실제 모양(OSM)만 쓴다: 길(차로 한 줄 = OSM 길 하나, 폭은 위성으로 잼 — 큰길은 양방향이 길 두 개라 반씩), 공원, 운동장, 호수, 공사장·빈터, 건물. 행사장 자리는 작은 지도의 바깥선을 옮겨 길 회색으로 칠만 한다(작은 지도가 위에 놓인다).
+- 색(`big-classes.mjs`): 행사장이 돋보이게 차분하게 — 땅 `#e9e6de`, 공사장 `#dfdbd0`, 공원 `#c6e3ad`, 운동장 `#9fd28a`, 호수 `#a9d8ea`, 건물 `#d1cec6`, 길 흰색.
+- 운영 표시(동선·정류장 그림)는 그리지 않는다. 티켓부스·셔틀 정류장·역 출구는 앱의 핀으로 보인다.
+- 결과: `out/big-layer1-ground-north-up.svg`, `out/big-north-up-bounds.json`. 미리보기 `preview-big.jpg`(작은 지도를 위에 겹친 확인용).
+
+## 5-2. 앱에 넣기 (`app.mjs`, `lib/app.mjs`)
+
+- 레이어 SVG 를 **한 장씩 따로** `src/assets/maps/<코드>/` 로 복사하고(합치지 않는다), `src/assets/maps/<코드>.json` 에 레이어마다 위경도 범위를 적는다. 앱은 아래부터 차례로 겹쳐 깐다(Leaflet 이미지 겹침): 큰 지도 레이어 1 → 작은 지도 레이어 1 → 2 → 3.
+- 벡터라 확대해도 선명하다(최대 확대 19.5). 큰 지도 바깥은 땅 색이라, 앱은 화면을 꽉 채우려 확대하지 않고 역~행사장 전체로 연다(`fillOnOpen: false`).
+- 앱 핀: 지도에 그려진 무대·게이트·물품검색존과 레이어 3 핀은 목록에만 나온다(`<코드>-zone-…`). 큰 지도에 그림이 없는 티켓부스·셔틀 정류장(입장 동선 안내에서 읽은 대략 위치)과 역 출구(OSM)는 핀으로 그린다.
+
 ## 6. 실행
 
 ```
@@ -115,7 +131,8 @@ node scripts/map/layers/gmf/build.mjs --preview
 | 4    | `layout-north-up.mjs` | 캐시: 북쪽 위 이름표·핀 자리                                                                     |
 | 5    | `layer2.mjs`          | `out/layer2-operations-{official-view,north-up}.svg`                                  |
 | 6    | `layer3.mjs`          | `out/layer3-pins-{official-view,north-up}.svg`, `out/layer3-pins.json`                |
-| (확인) | `preview.mjs`         | 캐시: `preview-vs-official.jpg`, `preview-official-view@2x.png`, `preview-north-up.jpg` |
+| (펜타포트) | `big-layer1.mjs` (2 다음), `app.mjs` (마지막) | `out/big-layer1-ground-north-up.svg` / `src/assets/maps/pentaport/*.svg`, `src/assets/maps/pentaport.json` |
+| (확인) | `preview.mjs`         | 캐시: `preview-vs-official.jpg`, `preview-official-view@2x.png`, `preview-north-up.jpg`, `preview-big.jpg` |
 
 
 - GMF 는 1번(`official-frame.mjs`)이 없고, 결과는 북쪽 위(`*-north-up.svg`)만 있다. 미리보기는 `preview-vs-official.jpg`(공식 안내도와 나란히), `preview-north-up@3x.png`.

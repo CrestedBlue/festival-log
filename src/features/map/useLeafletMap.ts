@@ -9,8 +9,10 @@ const DEFAULT_ZOOM = 16
 const MAX_ZOOM = 19
 const FIT_PADDING: L.PointTuple = [32, 32]
 const IMAGE_ZOOM_SNAP = 0.25
-// The map image is 1.6 px per metre; past this zoom it is only blown up and turns blurry.
+// A raster map image (1.6 px per metre) is only blown up past this zoom and turns blurry; vector maps say their own.
 const IMAGE_MAX_ZOOM = 18.5
+
+const toLatLngBounds = (bounds: FestivalMap['bounds']) => L.latLngBounds(bounds.map(([lat, lng]) => [lat, lng] as L.LatLngTuple))
 
 interface Options {
   center: LatLng
@@ -22,13 +24,15 @@ interface Options {
 /** The festival's own illustrated map when it has one; plain OSM tiles otherwise. */
 function setUpLayers(map: L.Map, { center, image, fitPoints }: Options): () => void {
   if (image) {
-    const bounds = L.latLngBounds(image.bounds.map(([lat, lng]) => [lat, lng] as L.LatLngTuple))
-    L.imageOverlay(image.imageUrl, bounds).addTo(map)
+    const bounds = toLatLngBounds(image.bounds)
+    // each layer is its own image (map layers are never merged), bottom first
+    for (const layer of image.layers) L.imageOverlay(layer.url, toLatLngBounds(layer.bounds)).addTo(map)
     map.setMaxBounds(bounds)
     map.fitBounds(image.initialView.map(([lat, lng]) => [lat, lng] as L.LatLngTuple))
-    // Open with the image filling the screen (no empty bands); zooming out further is still allowed.
+    // Open with the image filling the screen (no empty bands), unless its ground runs on in the background colour;
+    // zooming out further is still allowed.
     const coverZoom = map.getBoundsZoom(bounds, true)
-    if (map.getZoom() < coverZoom) map.setZoom(coverZoom)
+    if (image.fillOnOpen && map.getZoom() < coverZoom) map.setZoom(coverZoom)
     // Zooming out stops once the whole image (venue + both stations) fits on screen.
     const syncMinZoom = () => map.setMinZoom(map.getBoundsZoom(bounds, false))
     syncMinZoom()
@@ -52,7 +56,7 @@ export function useLeafletMap(options: Options) {
     const { image } = initialOptions.current
     const instance = L.map(el, {
       zoomControl: false,
-      maxZoom: image ? IMAGE_MAX_ZOOM : MAX_ZOOM,
+      maxZoom: image ? (image.maxZoom ?? IMAGE_MAX_ZOOM) : MAX_ZOOM,
       zoomSnap: image ? IMAGE_ZOOM_SNAP : 1,
       maxBoundsViscosity: image ? 1 : 0,
       // Illustrated maps show their credits behind an ⓘ button (MapCredits); tile maps keep Leaflet's line.

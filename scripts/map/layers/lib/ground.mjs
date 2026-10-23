@@ -44,15 +44,16 @@ export function makeGround({ sharp, W, H, PPM, BOX, toPx, toLL, trace, curve }) 
   /** One <g> per zone class, traced from the per-pixel classes. */
   const zoneGroups = (order, labels, cls, C, colour) => order.map((name) => { const d = trace(toF((i) => cls[i] === C[name])); return d ? `<g id="zone-${name}" data-name="${labels[name]}" fill="${colour[name]}" stroke="${colour[name]}" stroke-width="0.4" stroke-linejoin="round"><path fill-rule="evenodd" d="${d}"/></g>` : '' }).join('\n')
 
-  /** Write the north-up SVG (1 unit = 1 m), the classes (cache) and north-up-bounds.json; returns the SVG. */
-  function writeNorthUp({ content, cls, colour, out, cache }) {
+  /** Write the north-up SVG (1 unit = 1 m), the classes (cache) and north-up-bounds.json; returns the SVG. `prefix`
+   *  names a second map of the same festival (e.g. 'big-'). */
+  function writeNorthUp({ content, cls, colour, out, cache, prefix = '' }) {
     const VW = BOX.east - BOX.west, VH = BOX.north - BOX.south
     const northUp = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${VW} ${VH}">\n${content}\n</svg>\n`
     fs.mkdirSync(out, { recursive: true }); fs.mkdirSync(cache, { recursive: true })
-    fs.writeFileSync(path.join(out, 'layer1-ground-north-up.svg'), northUp)
-    fs.writeFileSync(path.join(cache, 'layer1-classes.bin'), Buffer.from(cls.buffer))
+    fs.writeFileSync(path.join(out, `${prefix}layer1-ground-north-up.svg`), northUp)
+    fs.writeFileSync(path.join(cache, `${prefix}layer1-classes.bin`), Buffer.from(cls.buffer))
     const [south, west] = toLL([BOX.west, BOX.south]), [north, east] = toLL([BOX.east, BOX.north])
-    fs.writeFileSync(path.join(out, 'north-up-bounds.json'), `${JSON.stringify({ size: [W, H], pxPerMeter: PPM, svgUnits: '1 unit = 1 m, origin at the north-west corner of bounds, y grows southward', bounds: [[+south.toFixed(6), +west.toFixed(6)], [+north.toFixed(6), +east.toFixed(6)]], colours: colour }, null, 2)}\n`)
+    fs.writeFileSync(path.join(out, `${prefix}north-up-bounds.json`), `${JSON.stringify({ size: [W, H], pxPerMeter: PPM, svgUnits: '1 unit = 1 m, origin at the north-west corner of bounds, y grows southward', bounds: [[+south.toFixed(6), +west.toFixed(6)], [+north.toFixed(6), +east.toFixed(6)]], colours: colour }, null, 2)}\n`)
     return northUp
   }
   /** Zone areas in m² (for the log). */

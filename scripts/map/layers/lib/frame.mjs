@@ -11,9 +11,10 @@ export const pathD = (pts, close = false) => pts.map(([x, y], i) => `${i ? 'L' :
 
 /**
  * lat0/lng0: origin; box: { west, east, south, north } in metres; ppm: pixels per metre; tileBox: { south, west, north,
- * east } of the satellite tiles; cache: where tiles and the resampled satellite go; osmJson: the OSM extract.
+ * east } of the satellite tiles; cache: where tiles and the resampled satellite go; osmJson: the OSM extract;
+ * name: tells the frame's cached satellite apart when a festival has more than one frame (e.g. a big area map).
  */
-export function makeFrame({ lat0, lng0, box, ppm = 3, tileBox, cache, osmJson }) {
+export function makeFrame({ lat0, lng0, box, ppm = 3, tileBox, cache, osmJson, name = 'local' }) {
   const OSM = JSON.parse(fs.readFileSync(osmJson))
   const M_LNG = M_LAT * Math.cos((lat0 * Math.PI) / 180)
   const toM = ([lat, lng]) => [(lng - lng0) * M_LNG, (lat - lat0) * M_LAT]
@@ -44,7 +45,7 @@ export function makeFrame({ lat0, lng0, box, ppm = 3, tileBox, cache, osmJson })
   }
   /** Satellite resampled into this frame (cached PNG path). */
   async function satellite() {
-    const out = path.join(cache, 'sat-local.png')
+    const out = path.join(cache, `sat-${name}.png`)
     if (fs.existsSync(out)) return out
     const { dir, grid } = await tiles()
     const N = 2 ** grid.Z

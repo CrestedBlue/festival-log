@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { GRAND_MINT_SERIES, HERO_ROCK_SERIES, PENTAPORT_SERIES } from '../../data/catalog/ids'
 import { isInsideBounds } from '../../lib/geo'
-import { parseMapMeta, seriesMapFor } from './festivalMaps'
+import { parseMapMeta, seriesMapFor, withImages } from './festivalMaps'
 
 describe('parseMapMeta', () => {
   const valid = {
@@ -49,19 +49,60 @@ describe('parseMapMeta', () => {
   })
 })
 
+describe('withImages', () => {
+  const meta = parseMapMeta({
+    bounds: [
+      [37.5, 127.1],
+      [37.6, 127.2],
+    ],
+    initialView: [
+      [37.52, 127.12],
+      [37.58, 127.18],
+    ],
+    layers: [
+      { file: 'ground.svg', bounds: [[37.5, 127.1], [37.6, 127.2]] },
+      { file: 'pins.svg', bounds: [[37.52, 127.12], [37.58, 127.18]] },
+    ],
+  })
+
+  test('gives each listed layer its own image, bottom first', () => {
+    const map = withImages(meta, { 'ground.svg': '/g.svg', 'pins.svg': '/p.svg' })
+    expect(map.layers.map((l) => l.url)).toEqual(['/g.svg', '/p.svg'])
+    expect(map.layers[1]?.bounds).toEqual([
+      [37.52, 127.12],
+      [37.58, 127.18],
+    ])
+  })
+
+  test('fails when a listed layer is not bundled', () => {
+    expect(() => withImages(meta, { 'ground.svg': '/g.svg' })).toThrow()
+  })
+
+  test('rejects a layer reaching outside the map', () => {
+    expect(() => parseMapMeta({ bounds: [[37.5, 127.1], [37.6, 127.2]], initialView: [[37.52, 127.12], [37.58, 127.18]], layers: [{ file: 'x.svg', bounds: [[37.4, 127.1], [37.6, 127.2]] }] })).toThrow()
+  })
+
+  test('one image covers the whole map', () => {
+    expect(withImages(meta, '/one.webp').layers).toEqual([{ url: '/one.webp', bounds: meta.bounds }])
+  })
+})
+
 describe('seriesMapFor', () => {
   test('returns the bundled Grand Mint map by festival code, and nothing for festivals without one', () => {
-    expect(seriesMapFor(GRAND_MINT_SERIES)?.imageUrl).toBeTruthy()
+    expect(seriesMapFor(GRAND_MINT_SERIES)?.layers[0]?.url).toBeTruthy()
     expect(seriesMapFor(HERO_ROCK_SERIES)).toBeNull()
   })
 
-  test('returns the Pentaport map laid onto real coordinates, with its drawn places inside it', () => {
+  test('returns the layered Pentaport map: the big ground under the venue layers, with its places inside it', () => {
     const map = seriesMapFor(PENTAPORT_SERIES)
-    expect(map?.imageUrl).toBeTruthy()
-    for (const key of ['kbStage', 'monsterStage', 'stanleyStage', 'gate1', 'gate2', 'ticketBooth1', 'ticketBooth2']) {
+    expect(map?.layers).toHaveLength(4)
+    for (const layer of map?.layers ?? []) expect(layer.url).toBeTruthy()
+    for (const key of ['kbStage', 'monsterStage', 'stanleyStage', 'gate1', 'gate2', 'securityCheck']) {
       const point = map?.anchors[key]
       expect(point, key).toBeDefined()
-      expect(map && point && isInsideBounds({ lat: point[0], lng: point[1] }, map.bounds)).toBe(true)
+      const venue = map?.layers[1]?.bounds
+      expect(venue && point && isInsideBounds({ lat: point[0], lng: point[1] }, venue)).toBe(true)
     }
+    expect(map?.marks.length).toBeGreaterThan(0)
   })
 })
