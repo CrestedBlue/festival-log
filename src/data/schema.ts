@@ -53,6 +53,8 @@ export const PinSchema = z.object({
   lat: latitude,
   lng: longitude,
   tap: TapAreaSchema.optional(),
+  /** The pin's role when a festival has several of it (화장실, 개수대, …): the pin list shows them as one row. */
+  group: name.optional(),
 })
 
 export const VenueSchema = z.object({ name: z.string().trim().max(MAX_NAME_LENGTH), lat: latitude, lng: longitude })

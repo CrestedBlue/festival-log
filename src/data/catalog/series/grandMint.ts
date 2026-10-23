@@ -62,7 +62,7 @@ function markPins(): Pin[] {
     const meta = MARK_KINDS[mark.kind]
     if (!meta) throw new Error(`GMF map mark ${mark.id} has unknown kind "${mark.kind}"`)
     const where = ESTIMATED_ZONES.has(mark.zone) ? `${mark.zone} (대략)` : mark.zone
-    return { id: `${CODE}-mark-${mark.id}`, name: `${meta.name} · ${where}`, kind: meta.kind, lat: mark.lat, lng: mark.lng }
+    return { id: `${CODE}-mark-${mark.id}`, name: `${meta.name} · ${where}`, group: meta.name, kind: meta.kind, lat: mark.lat, lng: mark.lng }
   })
 }
 

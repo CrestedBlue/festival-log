@@ -85,6 +85,9 @@ describe('createPentaport2026', () => {
     // …and tapping the drawing selects them: every listed-only pin knows where the map draws it
     const listedOnly = festival.pins.filter((p) => isMapLabelPin(p))
     expect(listedOnly.every((p) => p.tap && map && isInsideBounds(p.tap, map.bounds))).toBe(true)
+    // the pin list shows one row per role: all the toilets together, all three exits together
+    expect(festival.pins.filter((p) => p.group === '화장실').length).toBeGreaterThan(1)
+    expect(festival.pins.filter((p) => p.group === '송도달빛축제공원역 출구')).toHaveLength(3)
     const drawn = festival.pins.filter((p) => p.name.includes('출구') || p.name.includes('티켓부스') || p.name.includes('셔틀'))
     expect(drawn).toHaveLength(7)
     expect(drawn.every((p) => !isMapLabelPin(p))).toBe(true)

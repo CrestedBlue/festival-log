@@ -14,7 +14,8 @@ import { PinForm } from './PinForm'
 import { PIN_META } from './pinMeta'
 import { useLeafletMap } from './useLeafletMap'
 import { pinSizeForZoom } from './pinSize'
-import { useMapPick, useMapZoom, useMyLocationLayer, usePinLayer, useTapLayer } from './useMapLayers'
+import { useMapPick, useMapZoom, useMyLocationLayer, usePinHighlight, usePinLayer, useTapLayer, type PinHighlight } from './useMapLayers'
+import { groupPins, type PinGroup } from './pinGroups'
 import './map.css'
 
 const FOCUS_ZOOM = 17
@@ -46,6 +47,9 @@ export default function MapView({ festival, userPinIds }: Props) {
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [picking, setPicking] = useState(false)
   const [draft, setDraft] = useState<LatLng | null>(null)
+  // The pin-list row last tapped (its pins pulse on the map)
+  const [highlight, setHighlight] = useState<PinHighlight | null>(null)
+  const [activeGroup, setActiveGroup] = useState<string | null>(null)
   const [collapsed, setCollapsed] = useStoredFlag(PANEL_COLLAPSED_KEY, true)
   const flyOnNextFix = useRef(false)
   const me = geo.status === 'ok' ? geo.position : null
@@ -62,8 +66,10 @@ export default function MapView({ festival, userPinIds }: Props) {
   const mapPins = festivalMap ? festival.pins.filter((pin) => !isMapLabelPin(pin)) : festival.pins
   // …but where the map draws one itself (a badge, a stage), tapping the drawing selects it.
   const drawnPins = festivalMap ? festival.pins.filter((pin) => isMapLabelPin(pin) && pin.tap) : []
-  usePinLayer(map, mapPins, selectedId, setSelectedId, festivalMap ? pinSizeForZoom(zoom ?? 0) : TILE_MAP_PIN)
+  const pinLook = festivalMap ? pinSizeForZoom(zoom ?? 0) : TILE_MAP_PIN
+  usePinLayer(map, mapPins, selectedId, setSelectedId, pinLook)
   useTapLayer(map, drawnPins, selectedId, setSelectedId, !picking)
+  usePinHighlight(map, highlight, pinLook.size)
   useMyLocationLayer(map, geo)
   useMapPick(map, picking, onPick)
 
@@ -88,9 +94,12 @@ export default function MapView({ festival, userPinIds }: Props) {
     if (geo.status === 'error') setRetryKey((k) => k + 1)
   }
 
-  const focusPin = (id: string, at: LatLng) => {
-    setSelectedId(id)
-    map?.flyTo([at.lat, at.lng], Math.max(map.getZoom(), FOCUS_ZOOM))
+  // A row of one pin selects it; a row of several (화장실 N개) makes them all pulse. Either way the map moves to show them.
+  const showGroup = (group: PinGroup) => {
+    const only = group.pins.length === 1 ? group.pins[0] : null
+    setSelectedId(only ? only.id : null)
+    setActiveGroup(group.key)
+    setHighlight({ id: Date.now(), pins: group.pins, focusZoom: FOCUS_ZOOM })
   }
 
   const savePin = (name: string, kind: PinKind) => {
@@ -113,9 +122,9 @@ export default function MapView({ festival, userPinIds }: Props) {
 
   const selected = festival.pins.find((pin) => pin.id === selectedId) ?? null
 
-  const rows = festival.pins
-    .map((pin) => ({ pin, distance: me ? distanceMeters(me, pin) : null }))
-    .sort((a, b) => (a.distance ?? 0) - (b.distance ?? 0) || a.pin.name.localeCompare(b.pin.name, 'ko'))
+  const rows = groupPins(festival.pins, me)
+  const isActive = (group: PinGroup) =>
+    selectedId !== null ? group.pins.some((pin) => pin.id === selectedId) : activeGroup === group.key
 
   const hint = picking ? (
     <p className="map-hint" role="status">
@@ -172,7 +181,15 @@ export default function MapView({ festival, userPinIds }: Props) {
             </span>
             <span className="map-selected__name">{selected.name}</span>
             {me && <span className="pin-list__dist">{formatDistance(distanceMeters(me, selected))}</span>}
-            <button type="button" className="map-selected__close" aria-label="선택 닫기" onClick={() => setSelectedId(null)}>
+            <button
+              type="button"
+              className="map-selected__close"
+              aria-label="선택 닫기"
+              onClick={() => {
+                setSelectedId(null)
+                setActiveGroup(null)
+              }}
+            >
               ✕
             </button>
           </div>
@@ -200,22 +217,30 @@ export default function MapView({ festival, userPinIds }: Props) {
                   <p className="map-panel__empty">+ 버튼을 눌러 스테이지, 화장실, 만날 장소를 표시해 두세요.</p>
                 ) : (
                   <ul className="pin-list">
-                    {rows.map(({ pin, distance }) => (
-                      <li key={pin.id} className={pin.id === selectedId ? 'is-selected' : undefined}>
-                        <button type="button" className="pin-list__main" onClick={() => focusPin(pin.id, pin)}>
-                          <span className={`pin-list__icon map-pin--${pin.kind}`} aria-hidden="true">
-                            {PIN_META[pin.kind].emoji}
-                          </span>
-                          <span className="pin-list__name">{pin.name}</span>
-                          {distance !== null && <span className="pin-list__dist">{formatDistance(distance)}</span>}
-                        </button>
-                        {pin.id === selectedId && userPinIds.has(pin.id) && (
-                          <button type="button" className="btn btn--small btn--danger" onClick={() => deletePin(pin.id, pin.name)}>
-                            삭제
+                    {rows.map((group) => {
+                      const only = group.pins.length === 1 ? group.pins[0] : null
+                      return (
+                        <li key={group.key} className={isActive(group) ? 'is-selected' : undefined}>
+                          <button type="button" className="pin-list__main" onClick={() => showGroup(group)}>
+                            <span className={`pin-list__icon map-pin--${group.kind}`} aria-hidden="true">
+                              {PIN_META[group.kind].emoji}
+                            </span>
+                            <span className="pin-list__name">{group.label}</span>
+                            {group.distance !== null && (
+                              <span className="pin-list__dist">
+                                {only ? '' : '가까운 곳 '}
+                                {formatDistance(group.distance)}
+                              </span>
+                            )}
                           </button>
-                        )}
-                      </li>
-                    ))}
+                          {only && only.id === selectedId && userPinIds.has(only.id) && (
+                            <button type="button" className="btn btn--small btn--danger" onClick={() => deletePin(only.id, only.name)}>
+                              삭제
+                            </button>
+                          )}
+                        </li>
+                      )
+                    })}
                   </ul>
                 )}
               </div>

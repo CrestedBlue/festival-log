@@ -15,8 +15,8 @@ const LABELLED_PINS: ReadonlyArray<readonly [key: string, pin: Omit<Pin, 'id' | 
   ['security-check', { name: '물품검색존', kind: 'etc' }, 'securityCheck'],
 ]
 
-// The map's pins (layer 3, the official legend) are drawn there too; listed with the official names. Kinds the app
-// has no icon for are "etc".
+// The map's pins (layer 3, the official legend) are drawn there too; listed with the official names, one row per kind
+// (화장실 N개). Kinds the app has no icon for are "etc".
 const MARK_KINDS: Record<string, { kind: Pin['kind']; name: string }> = {
   info: { kind: 'info', name: '종합안내소' },
   barrierFreePass: { kind: 'etc', name: '배리어 프리 패스' },
@@ -55,11 +55,12 @@ const ENTRANCE_PINS: readonly Pin[] = [
   { id: `${CODE}-place-shuttle-drop-off`, name: '무료 셔틀버스 하차장 · 유료 셔틀버스 승하차장 (대략)', kind: 'etc', lat: 37.40193, lng: 126.632502 },
 ]
 
-// OpenStreetMap subway entrances: exact, drawn as pins (the map's ground has no station).
+// OpenStreetMap subway entrances: exact, drawn as pins (the map's ground has no station). Listed as one row.
+const EXIT_GROUP = '송도달빛축제공원역 출구'
 const EXIT_PINS: readonly Pin[] = [
-  { id: `${CODE}-exit-1`, name: '송도달빛축제공원역 1번 출구 (인천 1호선)', kind: 'etc', lat: 37.4066832, lng: 126.6258288 },
-  { id: `${CODE}-exit-3`, name: '송도달빛축제공원역 3번 출구 (인천 1호선)', kind: 'etc', lat: 37.4073687, lng: 126.6260568 },
-  { id: `${CODE}-exit-4`, name: '송도달빛축제공원역 4번 출구 (인천 1호선)', kind: 'etc', lat: 37.4069213, lng: 126.6263411 },
+  { id: `${CODE}-exit-1`, name: '송도달빛축제공원역 1번 출구 (인천 1호선)', group: EXIT_GROUP, kind: 'etc', lat: 37.4066832, lng: 126.6258288 },
+  { id: `${CODE}-exit-3`, name: '송도달빛축제공원역 3번 출구 (인천 1호선)', group: EXIT_GROUP, kind: 'etc', lat: 37.4073687, lng: 126.6260568 },
+  { id: `${CODE}-exit-4`, name: '송도달빛축제공원역 4번 출구 (인천 1호선)', group: EXIT_GROUP, kind: 'etc', lat: 37.4069213, lng: 126.6263411 },
 ]
 
 const pentaportMap = () => {
@@ -85,7 +86,7 @@ function markPins(): Pin[] {
   return pentaportMap().marks.filter((mark) => mark.kind !== 'gate').map((mark) => {
     const meta = MARK_KINDS[mark.kind]
     if (!meta) throw new Error(`Pentaport map mark ${mark.id} has unknown kind "${mark.kind}"`)
-    return { id: `${CODE}-zone-pin-${mark.id}`, name: meta.name, kind: meta.kind, lat: mark.lat, lng: mark.lng, ...(mark.tap ? { tap: mark.tap } : {}) }
+    return { id: `${CODE}-zone-pin-${mark.id}`, name: meta.name, group: meta.name, kind: meta.kind, lat: mark.lat, lng: mark.lng, ...(mark.tap ? { tap: mark.tap } : {}) }
   })
 }
 
