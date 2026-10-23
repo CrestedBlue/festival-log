@@ -1,10 +1,13 @@
-// Satellite in the drawing frame with every OSM way inside it, numbered, and a 50 m grid (cache): to read which real
-// path is which, and metre coordinates for seeds and split lines.
-//   node scripts/map/layers/pentaport/read-osm-ways.mjs
+// Satellite in a festival's drawing frame with every OSM way inside it, numbered, and a 50 m grid (cache): to read
+// which real path is which, and metre coordinates for seeds, split lines and the venue outline.
+//   node scripts/map/layers/lib/read-osm-ways.mjs <festival>   (pentaport, gmf, …) → cache osm-ways.jpg, osm-ways.txt
 import fs from 'node:fs'
 import path from 'node:path'
-import { sharp, OSM, W, H, BOX, PPM, llToPx, pathD, satellite } from './frame.mjs'
-import { CACHE } from './paths.mjs'
+
+const festival = process.argv[2]
+if (!festival) throw new Error('usage: read-osm-ways.mjs <festival folder, e.g. pentaport>')
+const { sharp, OSM, W, H, BOX, PPM, llToPx, pathD, satellite } = await import(`../${festival}/frame.mjs`)
+const { CACHE } = await import(`../${festival}/paths.mjs`)
 const sat = await satellite()
 const inFrame = (ll) => { const [x, y] = llToPx(ll); return x >= 0 && y >= 0 && x <= W && y <= H }
 const skip = (t) => t.building || ['-2', '-4'].includes(t.layer) || t.natural === 'coastline' || /motorway/.test(t.highway || '') || /residential|commercial/.test(t.landuse || '')

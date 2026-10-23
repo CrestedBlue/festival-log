@@ -1,0 +1,308 @@
+[
+ {
+  "id": 1,
+  "type": "toilet",
+  "s": [
+   100,
+   160
+  ],
+  "zone": "mintBreeze"
+ },
+ {
+  "id": 2,
+  "type": "toilet",
+  "s": [
+   161,
+   207
+  ],
+  "zone": "mintBreeze"
+ },
+ {
+  "id": 3,
+  "type": "toilet",
+  "s": [
+   148,
+   221
+  ],
+  "zone": "mintBreeze"
+ },
+ {
+  "id": 4,
+  "type": "sponsor",
+  "s": [
+   360,
+   226
+  ],
+  "zone": "mintBreeze"
+ },
+ {
+  "id": 5,
+  "type": "fnb",
+  "s": [
+   177,
+   229
+  ],
+  "zone": "mintBreeze"
+ },
+ {
+  "id": 6,
+  "type": "eating",
+  "s": [
+   139,
+   249
+  ],
+  "zone": "mintBreeze"
+ },
+ {
+  "id": 7,
+  "type": "photo",
+  "s": [
+   179,
+   267
+  ],
+  "zone": "mintBreeze"
+ },
+ {
+  "id": 8,
+  "type": "photo",
+  "s": [
+   395,
+   269
+  ],
+  "zone": "mintBreeze"
+ },
+ {
+  "id": 9,
+  "type": "water",
+  "s": [
+   132.5,
+   295
+  ],
+  "zone": "mintBreeze"
+ },
+ {
+  "id": 10,
+  "type": "photo",
+  "s": [
+   285,
+   322
+  ],
+  "zone": "mintBreeze"
+ },
+ {
+  "id": 11,
+  "type": "firstaid",
+  "s": [
+   353.75,
+   387.5
+  ],
+  "zone": "mintBreeze"
+ },
+ {
+  "id": 12,
+  "type": "toilet",
+  "s": [
+   563,
+   284
+  ],
+  "zone": "lovingForest"
+ },
+ {
+  "id": 13,
+  "type": "toilet",
+  "s": [
+   511,
+   326
+  ],
+  "zone": "between"
+ },
+ {
+  "id": 14,
+  "type": "fnb",
+  "s": [
+   693.75,
+   376.9
+  ],
+  "zone": "hungryEast"
+ },
+ {
+  "id": 15,
+  "type": "smoking",
+  "s": [
+   780,
+   397
+  ],
+  "zone": "hungryEast"
+ },
+ {
+  "id": 16,
+  "type": "photo",
+  "s": [
+   590,
+   412
+  ],
+  "zone": "between"
+ },
+ {
+  "id": 17,
+  "type": "sponsor",
+  "s": [
+   576,
+   426
+  ],
+  "zone": "between"
+ },
+ {
+  "id": 18,
+  "type": "water",
+  "s": [
+   734.4,
+   425
+  ],
+  "zone": "hungryEast"
+ },
+ {
+  "id": 19,
+  "type": "radar",
+  "s": [
+   651.9,
+   459.4
+  ],
+  "zone": "hungryEast"
+ },
+ {
+  "id": 20,
+  "type": "toilet",
+  "s": [
+   511,
+   536
+  ],
+  "zone": "clubMidnight"
+ },
+ {
+  "id": 21,
+  "type": "toilet",
+  "s": [
+   502,
+   559
+  ],
+  "zone": "clubMidnight"
+ },
+ {
+  "id": 22,
+  "type": "toilet",
+  "s": [
+   482,
+   576
+  ],
+  "zone": "clubMidnight"
+ },
+ {
+  "id": 23,
+  "type": "firstaid",
+  "s": [
+   448.75,
+   630
+  ],
+  "zone": "clubMidnight"
+ },
+ {
+  "id": 24,
+  "type": "toilet",
+  "s": [
+   449,
+   656
+  ],
+  "zone": "clubMidnight"
+ },
+ {
+  "id": 25,
+  "type": "toilet",
+  "s": [
+   445,
+   693
+  ],
+  "zone": "clubMidnight"
+ },
+ {
+  "id": 26,
+  "type": "luggage",
+  "s": [
+   488,
+   715
+  ],
+  "zone": "clubMidnight"
+ },
+ {
+  "id": 27,
+  "type": "toilet",
+  "s": [
+   511,
+   726
+  ],
+  "zone": "clubMidnight"
+ },
+ {
+  "id": 28,
+  "type": "photo",
+  "s": [
+   293,
+   546
+  ],
+  "zone": "artZone"
+ },
+ {
+  "id": 29,
+  "type": "slogan",
+  "s": [
+   252.5,
+   552.5
+  ],
+  "zone": "artZone"
+ },
+ {
+  "id": 30,
+  "type": "shop",
+  "s": [
+   228.75,
+   565.6
+  ],
+  "zone": "artZone"
+ },
+ {
+  "id": 31,
+  "type": "artist",
+  "s": [
+   317,
+   597
+  ],
+  "zone": "artZone"
+ },
+ {
+  "id": 32,
+  "type": "info",
+  "s": [
+   248,
+   615
+  ],
+  "zone": "artZone"
+ },
+ {
+  "id": 33,
+  "type": "vinyl",
+  "s": [
+   280,
+   620
+  ],
+  "zone": "artZone"
+ },
+ {
+  "id": 34,
+  "type": "wristband",
+  "s": [
+   272,
+   715
+  ],
+  "zone": "ticketBooth"
+ }
+]

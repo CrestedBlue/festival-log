@@ -3,19 +3,23 @@
 //   node scripts/map/layers/pentaport/layer1.mjs   (needs official-frame.mjs first; DEBUG_FACES=1 [DEBUG_CROP=x,y,w,h] dumps the faces)
 import fs from 'node:fs'
 import path from 'node:path'
-import { sharp, OSM, W, H, PPM, BOX, toM, toPx, pxToM, llToPx, pathD, toLL } from './frame.mjs'
-import { CLASSES, barrierSvg, labelFaces } from './faces.mjs'
-import { trace, curve } from './vector.mjs'
+import * as frame from './frame.mjs'
+import { CLASSES } from './classes.mjs'
+import { makeFaces } from '../lib/faces.mjs'
+import { makeGround } from '../lib/ground.mjs'
 import { officialToM, mToOfficial } from './official-to-m.mjs'
 import { OUT, CACHE } from './paths.mjs'
 
+const { sharp, OSM, W, H, PPM, BOX, toM, toPx, pxToM, llToPx, pathD } = frame
+const { maskOf, blurU8, toF, joinLooseEnds, pathStrokes, closeOpen, zoneGroups, writeNorthUp, areas } = makeGround(frame)
 const C = Object.fromEntries(CLASSES.map(([n], i) => [n, i]))
 const colour = Object.fromEntries(CLASSES.map(([n, c]) => [n, c]))
-const PATH_WIDTH = { service: 8, footway: 6, cycleway: 4, steps: 4, pedestrian: 6, track: 4 }
 const EDGE_BAND_M = 8
 const SNAP_M = 5 // a path end this close to another path is joined to it
 const SLIVER_M2 = 1000 // faces smaller than this between paths are paved, not a zone of their own
 const isPath = (t) => t.highway && !/motorway|secondary|residential/.test(t.highway)
+// faces are bounded by paths, parking lots, gardens and the main road
+const { barrierSvg, labelFaces } = makeFaces(frame, (t) => isPath(t) || t.amenity === 'parking' || t.leisure === 'garden' || t.highway === 'secondary')
 
 // Split lines in local metres, drawn along the earlier zone borders. Both ends run on until they meet a path.
 const SPLITS = {
@@ -96,7 +100,6 @@ for (let i = 0; i < W * H; i++) {
   if (zoneOf.has(lab[i])) inner[i] = 255
   else if (lab[i] === eastFace && sil[i] > 127) { const [e, n] = pxToM([i % W, Math.floor(i / W)]); if (e > 240 && n > 60 && n < 240) { inner[i] = 255; bulge[i] = 1 } }
 }
-const blurU8 = async (buf, sigma) => sharp(buf, { raw: { width: W, height: H, channels: 1 } }).blur(sigma).extractChannel(0).raw().toBuffer()
 const venue = Buffer.from((await blurU8(Buffer.from((await blurU8(inner, 3 * PPM)).map((v) => (v > 12 ? 255 : 0))), 5 * PPM)).map((v) => (v > 127 ? 255 : 0)))
 
 // Zones per pixel: whole faces; small faces between paths are paved; lines take the zone next to them.
@@ -122,58 +125,33 @@ for (let h = 0; h < q.length; h++) { const p = q[h], x = p % W, y = (p - x) / W
 
 // Paths: join loose ends to the path they nearly touch, then draw all of them at real widths.
 const ways = OSM.ways.filter((w) => isPath(w.tags || {})).map((w) => ({ hw: w.tags.highway, pts: w.pts.map(toM) }))
-function nearestOnOthers(p, self) {
-  let best = null
-  for (const w of ways) { if (w === self) continue
-    for (let i = 1; i < w.pts.length; i++) { const a = w.pts[i - 1], b = w.pts[i]; const dx = b[0] - a[0], dy = b[1] - a[1], l2 = dx * dx + dy * dy || 1e-9
-      const t = Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / l2)); const c = [a[0] + t * dx, a[1] + t * dy]; const d = Math.hypot(c[0] - p[0], c[1] - p[1])
-      if (!best || d < best.d) best = { c, d } } }
-  return best
-}
-let joined = 0
-for (const w of ways) for (const end of ['start', 'end']) {
-  const p = end === 'start' ? w.pts[0] : w.pts[w.pts.length - 1]; const near = nearestOnOthers(p, w)
-  if (near && near.d > 0.05 && near.d < SNAP_M) { if (end === 'start') w.pts.unshift(near.c); else w.pts.push(near.c); joined++ }
-}
-const strokes = ways.map((w) => `<path d="${curve(w.pts.map(toPx), false)}" stroke-width="${(PATH_WIDTH[w.hw] || 5) * PPM}"/>`).join('')
-  + Object.values(walkways).map((w) => `<path d="${curve(w.line.map(toPx), false)}" stroke-width="${WALKWAY_WIDTH_M * PPM}"/>`).join('')
-const strokeMask = await sharp(Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"><g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round">${strokes}</g></svg>`)).ensureAlpha().extractChannel(3).raw().toBuffer()
+const joined = joinLooseEnds(ways, SNAP_M)
+const strokes = pathStrokes([...ways, ...Object.values(walkways).map((w) => ({ pts: w.line, width: WALKWAY_WIDTH_M }))])
+const strokeMask = await maskOf(`<g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round">${strokes}</g>`)
 const erode = await blurU8(venue, (EDGE_BAND_M / 2) * PPM)
 // Grey = paths + edge band + paved zones, closed by ~1.5 m so junctions meet without notches.
 let grey = Buffer.alloc(W * H)
 for (let i = 0; i < W * H; i++) if (venue[i] && (strokeMask[i] > 127 || erode[i] < 235 || cls[i] === C.path)) grey[i] = 255
-grey = Buffer.from((await blurU8(grey, 1.5 * PPM)).map((v) => (v > 70 ? 255 : 0))) // close: fill notches at junctions
-grey = Buffer.from((await blurU8(grey, 1.5 * PPM)).map((v) => (v > 185 ? 255 : 0)))
-grey = Buffer.from((await blurU8(grey, 0.8 * PPM)).map((v) => (v > 185 ? 255 : 0))) // open: drop hooks thinner than ~1 m
-grey = Buffer.from((await blurU8(grey, 0.8 * PPM)).map((v, i) => (v > 70 && venue[i] ? 255 : 0)))
+grey = await closeOpen(grey, (i) => venue[i])
 
 // Vectors.
-const toF = (buf, test) => { const m = new Float32Array(W * H); for (let i = 0; i < W * H; i++) m[i] = test(buf[i], i) ? 1 : 0; return m }
-const venueD = trace(toF(venue, (v) => v > 0), { sigma: 3 })
+const venueD = frame.trace(toF((i) => venue[i] > 0), { sigma: 3 })
 const ORDER = ['lawn', 'forest', 'fnb', 'asphalt', 'kbPit', 'standing', 'picnic', 'refresh']
 const LABEL = { lawn: '잔디', forest: '숲', fnb: 'F&amp;B', asphalt: '아스팔트(물품검색·보관)', kbPit: 'KB 스탠딩', standing: '스탠딩', picnic: '피크닉존', refresh: '리프레시존' }
-const zones = ORDER.map((name) => { const d = trace(toF(cls, (v) => v === C[name])); return d ? `<g id="zone-${name}" data-name="${LABEL[name]}" fill="${colour[name]}" stroke="${colour[name]}" stroke-width="0.4" stroke-linejoin="round"><path fill-rule="evenodd" d="${d}"/></g>` : '' }).join('\n')
-const greyD = trace(toF(grey, (v) => v > 0), { sigma: 2, tolerance: 0.2 })
+const zones = zoneGroups(ORDER, LABEL, cls, C, colour)
+const greyD = frame.trace(toF((i) => grey[i] > 0), { sigma: 2, tolerance: 0.2 })
 const content = `<defs><clipPath id="venue-clip"><path d="${venueD}"/></clipPath></defs>
 <g id="layer1" data-name="레이어 1 · 바닥">
 <path id="venue" data-name="행사장 바탕" d="${venueD}" fill="${colour.path}"/>
 <g id="zones" data-name="구역" clip-path="url(#venue-clip)">${zones}</g>
 <path id="paved" data-name="길·바깥 띠·무대 뒤" d="${greyD}" fill="${colour.path}" fill-rule="evenodd" clip-path="url(#venue-clip)"/>
 </g>`
-const VW = BOX.east - BOX.west, VH = BOX.north - BOX.south
-const northUp = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${VW} ${VH}">\n${content}\n</svg>\n`
+const northUp = writeNorthUp({ content, cls, colour, out: OUT, cache: CACHE })
 // Official map frame (similarity fit of the control points).
 const toOfficial = ([X, Y]) => mToOfficial([X + BOX.west, BOX.north - Y])
 const o = toOfficial([0, 0]), ox = toOfficial([1, 0]), oy = toOfficial([0, 1])
 const matrix = [ox[0] - o[0], ox[1] - o[1], oy[0] - o[0], oy[1] - o[1], o[0], o[1]].map((v) => +v.toFixed(5))
 const official = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">\n<g transform="matrix(${matrix.join(' ')})">\n${content}\n</g>\n</svg>\n`
-fs.mkdirSync(OUT, { recursive: true })
-fs.writeFileSync(path.join(OUT, 'layer1-ground-north-up.svg'), northUp)
 fs.writeFileSync(path.join(OUT, 'layer1-ground-official-view.svg'), official)
-fs.writeFileSync(path.join(CACHE, 'layer1-classes.bin'), Buffer.from(cls.buffer))
-// where the north-up SVGs sit on the earth (1 unit = 1 m from the north-west corner, y grows southward)
-const [south, west] = toLL([BOX.west, BOX.south]), [north, east] = toLL([BOX.east, BOX.north])
-fs.writeFileSync(path.join(OUT, 'north-up-bounds.json'), `${JSON.stringify({ size: [W, H], pxPerMeter: PPM, svgUnits: '1 unit = 1 m, origin at the north-west corner of bounds, y grows southward', bounds: [[+south.toFixed(6), +west.toFixed(6)], [+north.toFixed(6), +east.toFixed(6)]], colours: Object.fromEntries(CLASSES.map(([n, c]) => [n, c])) }, null, 2)}\n`)
-const areas = Object.fromEntries(CLASSES.map(([n], k) => [n, 0])); for (let i = 0; i < W * H; i++) if (cls[i] >= 0) areas[CLASSES[cls[i]][0]] += 1 / (PPM * PPM)
 console.log('faces', count, 'path ends joined', joined, 'split ends', Object.fromEntries(Object.entries(splitLines).map(([k, l]) => [k, [l[0], l[l.length - 1]].map((p) => p.map((v) => +v.toFixed(1)))])))
-console.log('areas m²', Object.fromEntries(Object.entries(areas).map(([k, v]) => [k, Math.round(v)])))
+console.log('areas m²', areas(cls, CLASSES))

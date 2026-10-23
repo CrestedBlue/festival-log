@@ -1,8 +1,23 @@
 # festival — 공식 안내도를 레이어 지도로 다시 그리기
 
-> 펜타포트 2026 행사장 안내도로 만든 방법이다(2026-10-22~23, 사용자와 함께 정함). **새 페스티벌 지도도 이 순서로 만든다.**
+> 펜타포트 2026 행사장 안내도로 만든 방법이다(2026-10-22~23, 사용자와 함께 정함). 그랜드민트(GMF) 2026 도 같은 방법으로 다시 만들었다(2026-10-23). **새 페스티벌 지도도 이 순서로 만든다.**
 > 작업 규칙(커밋 작성자, 한글 커밋, push 전 검증)은 [AGENTS.md](AGENTS.md) 를 따른다.
-> 스크립트: `scripts/map/layers/pentaport/` · 입력과 결과: `map-src/pentaport/layers/` · 중간 파일·위성 타일: `node_modules/.cache/festival-map/pentaport/`(git 밖)
+> 스크립트: 공통 `scripts/map/layers/lib/` + 페스티벌별 `scripts/map/layers/<코드>/`(`pentaport`, `gmf`) · 입력과 결과: `map-src/<코드>/layers/` · 중간 파일·위성 타일: `node_modules/.cache/festival-map/<코드>/`(git 밖)
+
+## 공식 안내도의 두 종류
+
+| 종류 | 예 | 위치 맞추기 | 레이어 1 | 방향 |
+| --- | --- | --- | --- | --- |
+| **평면도형** — 실제 공원을 거의 축척대로 따라 그림 | 펜타포트 | 지도 전체 닮음 변환 하나 | 칸(face)마다 구역 하나 | 공식 방향 + 북쪽 위 |
+| **배치도형** — 구역을 동그랗게 부풀려 대충 늘어놓음 | GMF | **구역마다** 아핀 변환 | OSM 실제 모양 + 공식 구역 덩어리 | 북쪽 위만 |
+
+1단계(`check-fit.mjs`)에서 전체 닮음 변환의 평균 오차가 20 m 를 크게 넘거나 회전각이 엉뚱하면 배치도형이다.
+
+## 코드 구조
+
+- `lib/` (공통, 페스티벌 이름을 모른다): `frame.mjs`(좌표 틀·OSM·위성), `vector.mjs`(마스크 → 매끈한 SVG 윤곽), `faces.mjs`(길로 칸 나누기), `ground.mjs`(레이어 1 부품: 길 끝 잇기·길 한 도형·구역 윤곽·저장), `sprites.mjs`(스타일 B 부품), `geometry.mjs`(부품의 중심·크기), `texts.mjs`(글자 폭 재기), `layer2.mjs`, `layout.mjs`(북쪽 위 배치), `pins.mjs`(Tabler 아이콘·레이어 3 쓰기), `preview.mjs`, `run.mjs`, 확인 도구 `read-official-grid.mjs`·`read-osm-ways.mjs`(`node scripts/map/layers/lib/read-osm-ways.mjs <코드>`).
+- `<코드>/` (페스티벌마다): `paths.mjs`, `frame.mjs`(기준 위경도·범위만), `official-to-m.mjs`(공식 px → 실제 m), `check-fit.mjs`, `classes.mjs`(구역 색), `layer1.mjs`(바닥 만드는 방법), `objects.mjs`, `sprites.mjs`(그 페스티벌만의 무대 등 + 공통 부품 다시 내보내기), `geometry.mjs`(무대 크기), `pin-design.mjs`(핀 모양), `layout-north-up.mjs`(핀 ↔ 물체 짝 `MARKS`), `layer2.mjs`·`layer3.mjs`·`preview.mjs`·`build.mjs`(얇은 호출).
+- `lib/` 를 고치면 **두 페스티벌을 다 다시 만들고** `git diff map-src/*/layers/out` 이 비었거나 의도한 차이뿐인지 본다(공통화 때 펜타포트 결과는 바이트 단위로 같았다).
 
 ## 정한 것 (사용자 결정)
 
@@ -15,47 +30,63 @@
 
 ## 0. 자료
 
-| 자료 | 어디서 | 저장 |
-|---|---|---|
-| 공식 행사장 안내도 | 인스타·공홈 MAP 글 ([COLLECT.md](COLLECT.md)) | `map-src/<코드>/layers/official-site-map.jpg` (원본 그대로) |
-| 실제 길·잔디·건물 | OpenStreetMap — `node scripts/map/extract-osm.mjs <받은.osm> map-src/<코드>/osm.json` | `map-src/<코드>/osm.json` |
-| 위성 사진 | Esri World Imagery 타일(z18) — `frame.mjs` 의 `satellite()` 가 받는다 | **캐시에만.** 재배포가 안 되니 커밋하지 않는다. 확인용으로만 쓴다 |
-| 핀 아이콘 | Tabler Icons(MIT) | 쓰는 것만 `map-src/icons/tabler/` 에 복사(LICENSE 포함) |
+
+| 자료         | 어디서                                                                               | 저장                                                   |
+| ---------- | --------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| 공식 행사장 안내도 | 인스타·공홈 MAP 글 ([COLLECT.md](COLLECT.md))                                           | `map-src/<코드>/layers/official-site-map.jpg` (원본 그대로, 이미 저장소에 있으면 그 파일을 `paths.mjs` 에서 가리킨다 — GMF 는 `map-src/gmf/official-map.png`) |
+| 실제 길·잔디·건물 | OpenStreetMap — `node scripts/map/extract-osm.mjs <받은.osm> map-src/<코드>/osm.json` | `map-src/<코드>/osm.json`                              |
+| 위성 사진      | Esri World Imagery 타일(z18) — `frame.mjs` 의 `satellite()` 가 받는다                    | **캐시에만.** 재배포가 안 되니 커밋하지 않는다. 확인용으로만 쓴다              |
+| 핀 아이콘      | Tabler Icons(MIT)                                                                 | 쓰는 것만 `map-src/icons/tabler/` 에 복사(LICENSE 포함)       |
+
 
 ## 1. 공식 안내도 분석 — 원래 지도를 어떻게 가공했나
 
-1. 공식 안내도와 위성·OSM 에 둘 다 보이는 것(무대 건물, 원형 잔디, 주차장, 화장실 건물, 숲 …)을 10곳 넘게 짝짓는다. 
-   - 도구: `read-official-grid.mjs`(공식 안내도를 20 px 격자 2배 타일로), `read-osm-ways.mjs`(위성 위에 OSM 길 번호와 50 m 격자).
+1. 공식 안내도와 위성·OSM 에 둘 다 보이는 것(무대 건물, 원형 잔디, 주차장, 화장실 건물, 숲 …)을 10곳 넘게 짝짓는다.
+   - 도구: `lib/read-official-grid.mjs <코드>`(공식 안내도를 20 px 격자 2배 타일로), `lib/read-osm-ways.mjs <코드>`(위성 위에 OSM 길 번호와 50 m 격자).
    - 짝은 `map-src/<코드>/layers/control-points.json` 에 `{ name, s: [공식 x, y], m: [동 m, 북 m] }` 로 적는다.
-2. **닮음 변환(회전 + 축척 + 이동)만** 맞추고 오차를 본다: `node scripts/map/layers/pentaport/check-fit.mjs`.
+2. **닮음 변환(회전 + 축척 + 이동)만** 맞추고 오차를 본다: `node scripts/map/layers/<코드>/check-fit.mjs`.
    - 펜타포트: 0.45 m/px, −179.5°(남쪽이 위), 평균 오차 16.6 m. 공식 안내도는 실제 공원을 거의 축척대로 따라 그린 **평면도**이고, 물체만 정면 입체로 세운 것이었다.
+   - GMF: 0.59 m/px, 55°, 평균 오차 72.8 m — 88호수를 잔디마당 동쪽에 그렸지만 실제로는 북쪽에 있는 **배치도**다. 그래서 구역(민트 브리즈, 러빙 포레스트, 클럽 미드나잇, 아트존, 동쪽 헝그리존, 티켓 부스)마다 그 구역의 표지(무대·게이트·구역 끝)로 **아핀 변환**을 따로 맞춘다(`official-to-m.mjs` 의 `SPOTS`·`PAIRS`, 평균 오차 17.1 m). 구역 사이의 것은 모든 구역을 함께 맞춘 `between` 을 쓴다. 물체·핀마다 `zone` 을 단다.
    - 휘는 변환(thin-plate spline)은 레이어에 쓰지 않는다. 기준점 밖에서 크게 휘어 가장자리 핀이 40 m 밀렸다.
-3. `official-frame.mjs --check` 로 공식 안내도를 위성 위에 겹쳐(55 %) 어긋난 곳을 본다. 공식 안내도가 **좁게 그린 구간**을 여기서 찾는다(펜타포트: 아티스트MD 쪽 실제 길이 그림보다 약 50 m 서쪽).
+3. (평면도형) `official-frame.mjs --check` 로 공식 안내도를 위성 위에 겹쳐(55 %) 어긋난 곳을 본다. 공식 안내도가 **좁게 그린 구간**을 여기서 찾는다(ex. 펜타포트: 아티스트MD 쪽 실제 길이 그림보다 약 50 m 서쪽).
 
 ## 2. 레이어 1 — 바닥 (`layer1.mjs`)
 
-1. **칸 나누기**: OSM 길 중심선, 원형 잔디 테두리, 무대 건물로 화면을 칸(face)으로 나눈다(`faces.mjs`).
+평면도형(펜타포트):
+
+1. **칸 나누기**: OSM 길 중심선, 원형 잔디 테두리, 무대 건물로 화면을 칸(face)으로 나눈다(`lib/faces.mjs`).
 2. **칸마다 구역 하나**: 칸 안의 점 하나(`SEEDS`)로 구역을 통째로 정한다. 공식 안내도 색을 픽셀마다 읽어 칠하면 얼룩·꼬리·자투리가 생긴다(첫 버전의 실패).
 3. **나눌 칸만 선 하나로** (`SPLITS`): 공식 안내도의 경계를 따라 점을 찍고, 양 끝은 길에 닿을 때까지 자동으로 늘린다. 테두리와 길 사이에 가는 고리가 있으면(원형 잔디) `cross` 로 고리까지 넘겨 끊는다.
-4. **축제 산책로** (`WALKWAYS`): 공식 안내도에는 있고 OSM 에는 없는 길. 공식 픽셀로 찍어 같은 변환으로 옮기고, 폭 5 m 로 그린다. 앞에 놓인 산책로에 닿으면 멈추므로, 세로 기둥 2개 → 가로대 순서로 두면 H 모양이 된다.
-5. 1,000 m² 보다 작은 자투리 칸은 포장면(회색)으로 둔다.
-6. **행사장 바깥선**: 구역이 정해진 칸 + 공원 밖까지 나간 공식 실루엣(리프레시존)을 6 m 넓혀 매끈하게. 안쪽 8 m 는 회색 띠.
-7. **길은 한 도형**: 5 m 안에서 끊긴 길 끝을 옆 길에 붙이고, 길·바깥 띠·포장면을 합친 뒤 닫기(1.5 m)·열기(0.8 m)로 교차로의 홈과 갈고리를 없앤다.
-8. **벡터로**: 구역 마스크를 1.5 px 흐리게 한 뒤 0.5 높이에서 윤곽을 딴다(d3-contour) — 이웃 구역이 같은 경계를 나눠 가져 틈이 없다. Douglas–Peucker 0.2 m 로 줄이고 centripetal Catmull–Rom 베지어로 곡선을 만든다(`vector.mjs`). 행사장 바탕은 회색이라 세 구역이 만나는 점의 아주 작은 틈도 길처럼 보인다.
-9. 색(공식 안내도에서 뽑음): 길 `#c8c8ca`, 잔디 `#74bc6c`, 스탠딩 `#048444`, 피크닉 `#04a49c`, KB 스탠딩 `#4f68a8`, F&B `#c4b49c`, 아스팔트 `#545458`, 리프레시 `#319fd7`, 숲 `#4e8a5c`.
+4. 1,000 m² 보다 작은 자투리 칸은 포장면(회색)으로 둔다.
+5. **행사장 바깥선**: 구역이 정해진 칸 + 공원 밖까지 나간 공식 실루엣(리프레시존)을 6 m 넓혀 매끈하게. 안쪽 8 m 는 회색 띠.
+6. **길은 한 도형**: 5 m 안에서 끊긴 길 끝을 옆 길에 붙이고, 길·바깥 띠·포장면을 합친 뒤 닫기(1.5 m)·열기(0.8 m)로 교차로의 홈과 갈고리를 없앤다.
+7. **벡터로**: 구역 마스크를 1.5 px 흐리게 한 뒤 0.5 높이에서 윤곽을 딴다(d3-contour) — 이웃 구역이 같은 경계를 나눠 가져 틈이 없다. Douglas–Peucker 0.2 m 로 줄이고 centripetal Catmull–Rom 베지어로 곡선을 만든다(`vector.mjs`). 행사장 바탕은 회색이라 세 구역이 만나는 점의 아주 작은 틈도 길처럼 보인다.
+8. 색(공식 안내도에서 뽑음, `classes.mjs`): 길 `#c8c8ca`, 잔디 `#74bc6c`, 스탠딩 `#048444`, 피크닉 `#04a49c`, KB 스탠딩 `#4f68a8`, F&amp;B `#c4b49c`, 아스팔트 `#545458`, 리프레시 `#319fd7`, 숲 `#4e8a5c`.
+
 - 확인: `DEBUG_FACES=1 DEBUG_CROP=x,y,w,h node …/layer1.mjs` → 캐시 `debug-faces.png`(칸, seed, 분할선·산책로).
+
+배치도형(GMF):
+
+1. **행사장 바깥선**(`VENUE`): 공식 안내도의 초록 섬이 덮는 공원 범위를 위성(`read-osm-ways`) 위에서 m 좌표로 손으로 딴다. 공식 안내도가 시설을 그린 곳(흡연구역 등)은 바깥선 안에 들어오게 한다.
+2. **실제 모양**: OSM 에 있는 것은 실제 모양으로 칠한다(88잔디마당, KSPO DOME).
+3. **공식 구역 덩어리**(`BLOBS`): 피크닉 원, 러빙 포레스트, 헝그리존, 아트존, 티켓 부스는 공식 안내도의 타원을 그 구역의 변환으로 옮겨 칠한다. 공식 안내도가 그리지 않은 것(88호수)은 칠하지 않는다.
+4. 길은 평면도형과 같다(실제 OSM 길, 한 도형). 잔디마당 안의 장식 고리길과 큰 차도는 뺀다.
+5. 색: 길 `#ebe6e2`, 공원 `#abcd82`, 잔디 `#1d9f89`, 피크닉 `#2a8a76`, 러빙 포레스트 `#fea2c1`, 헝그리 `#d3dbb4`, 아트 `#f3d275`, 티켓 `#e6ebc6`, 돔 `#f26652`.
 
 ## 3. 레이어 3 — 핀 (레이어 2보다 먼저 해도 된다)
 
+핀 모양은 페스티벌마다 `pin-design.mjs` 에 공식 핀을 따라 그린다(펜타포트: 흰 원 배지 + 공식 색 아이콘, GMF: 흰 물방울 핀 + 검은 아이콘). 핀 크기도 공식 안내도의 그림 대비 크기를 따른다(GMF 는 펜타포트보다 작다).
+
 1. `pins-detect.mjs`: 흰 원(지름 30–60 px, 둘레가 거의 한 바퀴 흰색이 아님)을 찾아 번호를 매긴다 → 캐시 `candidates.jpg` 를 눈으로 본다.
 2. `pins-classify.mjs`: 범례 배지를 **지도 핀 크기로 줄여**(범례 50 px, 지도 39 px) 정규화 상관으로 비교해 종류를 정한다. 흰색이 아닌 핀(초록·파랑)은 색으로 찾아 더한다. 캐시 `pins-official.jpg` 로 전부 눈으로 확인한 뒤 `pins-official.json` 을 커밋한다.
-3. `pins-place.mjs`: 닮음 변환만 쓴다(공식 방향에서는 핀이 원래 픽셀 그대로). 주변 색으로 핀을 옮기는 방법은 텐트·길 색에 속아서 버렸다.
+3. `pins-place.mjs`: 닮음 변환만 쓴다(공식 방향에서는 핀이 원래 픽셀 그대로). 주변 색으로 핀을 옮기는 방법은 텐트·길 색에 속아서 버렸다. 배치도형은 핀마다 `zone` 의 변환을 쓰고, 물방울 핀은 머리가 아니라 **끝(tip)** 이 가리키는 곳을 핀 위치로 삼는다.
+   - GMF 핀은 예전 앱 지도(`map-src/gmf/markers.json`)에서 읽어 둔 34개를 `pins-official.json` 으로 옮겨 쓴다.
 4. `layer3.mjs`: 배지와 아이콘을 그리고 앱용 좌표(`layer3-pins.json`)를 쓴다. 아이콘은 진한 테두리 위에 공식 색 선을 겹쳐 노랑처럼 옅은 색도 보이게 한다.
 
 ## 4. 레이어 2 — 운영 표시 (`objects.mjs` + `sprites.mjs` + `layer2.mjs`)
 
-1. **위치**: 격자 타일을 보며 공식 픽셀로 `objects.mjs` 에 적는다. 서 있는 것은 발(아래 가운데), 이름표·돗자리·LUSH 는 가운데. 줄지어 선 것은 `line(a, b, n)`. 이름표는 가리키는 물체를 `of` 로 단다.
-2. **그림**: `sprites.mjs` 의 부품(텐트, 돔, 컨테이너, 화장실, 키오스크, 무대, 아치, 깃발, 이름표 …)을 스타일 B 규칙으로 그린다. 재질마다 `[기본, 밝음, 어두움]` 3단 색.
+1. **위치**: 격자 타일을 보며 공식 픽셀로 `objects.mjs` 에 적는다. 서 있는 것은 발(아래 가운데), 이름표·돗자리·LUSH 는 가운데. 줄지어 선 것은 `line(a, b, n)`. 이름표는 가리키는 물체를 `of` 로 단다(공식 안내도처럼 아래에 두려면 `side: 'below'`). 배치도형은 물체마다 `zone`, 공식 그림이 작게 그린 것은 크기 배율 `k` 를 단다(부품 1 px = 0.4496 m 로 모든 지도가 같다).
+2. **그림**: `lib/sprites.mjs` 의 공통 부품(텐트, 돔, 컨테이너, 화장실, 키오스크, 아치(색 팔레트), 깃발(왼쪽으로 날리기 `left`), 팻말 `sign`, 오두막 `hut`, 이름표 …)과 페스티벌 `sprites.mjs` 의 무대를 스타일 B 규칙으로 그린다. 재질마다 `[기본, 밝음, 어두움]` 3단 색. 새 무대는 `geometry.mjs` 에 중심 높이와 크기를 적는다.
 3. 이름표 글자 폭은 **실제로 그려서 잰다**(librsvg 는 `textLength` 를 무시한다).
 4. 브랜드 로고는 옮기지 않고 글자로 쓴다. 관객·불꽃·나무 같은 장식은 넣지 않는다.
 5. 디자인을 고칠 때는 같은 물체를 여러 방향으로 그려 지도에 끼워 비교한다(`kb-variants.mjs` 의 A/B/C).
@@ -64,25 +95,30 @@
 
 - **물체**: 그림의 시각 중심을 실제 좌표로 옮겨 똑바로 세운다(발을 기준으로 하면 남쪽 위 안내도와 반대로 매달린다).
 - **이름표**: 위 → (무대면 무대 윗면) → 아래 → 옆 순서로, 다른 물체를 가리지 않는 자리를 먼저 쓴다. 안 되면 핀을 놓은 뒤 핀·이름표만 피하는 가장 가까운 자리.
-- **핀**: 같은 종류의 가장 가까운 레이어 2 물체(시설)에 연결해, 공식 안내도와 같은 화면 방향에 둔다. 겹치면 둘레의 빈자리, 다 막히면 덜 겹치는 자리. 게이트·메인쿨존 핀을 먼저 놓는다.
-- 앱용 핀 좌표는 핀이 아니라 **시설의 위치**다.
+- **핀**: 같은 종류의 가장 가까운 레이어 2 물체(시설)에 연결해(`MARKS`, 공식 px 로 `near` 안), 공식 안내도와 같은 화면 방향에 둔다. 겹치면 둘레의 빈자리, 다 막히면 덜 겹치는 자리. 펜타포트는 게이트·메인쿨존 핀을 먼저 놓는다. 그린 시설이 없는 핀(GMF 화장실·물 등)은 제자리.
+- 노점이 촘촘한 지도(GMF)는 `tidy`: 핀이 다른 물체도 가리지 않고, 가리키는 시설의 **아래로는 가지 않는** 자리를 먼저 찾는다(물방울 끝이 시설을 가리키게).
+- 앱용 핀 좌표는 핀이 아니라 **시설의 위치**다(시설이 없으면 핀이 가리키는 곳).
 
 ## 6. 실행
 
 ```
 node scripts/map/layers/pentaport/build.mjs --preview
+node scripts/map/layers/gmf/build.mjs --preview
 ```
 
-| 순서 | 스크립트 | 결과 |
-|---|---|---|
-| 1 | `official-frame.mjs` | 캐시: 공식 안내도를 실제 틀에 놓은 그림, 실루엣 |
-| 2 | `layer1.mjs` | `out/layer1-ground-{official-view,north-up}.svg`, `out/north-up-bounds.json` |
-| 3 | `pins-place.mjs` | 캐시: 핀 좌표 |
-| 4 | `layout-north-up.mjs` | 캐시: 북쪽 위 이름표·핀 자리 |
-| 5 | `layer2.mjs` | `out/layer2-operations-{official-view,north-up}.svg` |
-| 6 | `layer3.mjs` | `out/layer3-pins-{official-view,north-up}.svg`, `out/layer3-pins.json` |
-| (확인) | `preview.mjs` | 캐시: `preview-vs-official.jpg`, `preview-official-view@2x.png`, `preview-north-up.jpg` |
 
+| 순서   | 스크립트                  | 결과                                                                                    |
+| ---- | --------------------- | ------------------------------------------------------------------------------------- |
+| 1    | `official-frame.mjs`  | 캐시: 공식 안내도를 실제 틀에 놓은 그림, 실루엣                                                          |
+| 2    | `layer1.mjs`          | `out/layer1-ground-{official-view,north-up}.svg`, `out/north-up-bounds.json`          |
+| 3    | `pins-place.mjs`      | 캐시: 핀 좌표                                                                              |
+| 4    | `layout-north-up.mjs` | 캐시: 북쪽 위 이름표·핀 자리                                                                     |
+| 5    | `layer2.mjs`          | `out/layer2-operations-{official-view,north-up}.svg`                                  |
+| 6    | `layer3.mjs`          | `out/layer3-pins-{official-view,north-up}.svg`, `out/layer3-pins.json`                |
+| (확인) | `preview.mjs`         | 캐시: `preview-vs-official.jpg`, `preview-official-view@2x.png`, `preview-north-up.jpg` |
+
+
+- GMF 는 1번(`official-frame.mjs`)이 없고, 결과는 북쪽 위(`*-north-up.svg`)만 있다. 미리보기는 `preview-vs-official.jpg`(공식 안내도와 나란히), `preview-north-up@3x.png`.
 - 공식 방향 SVG 는 1080×1350(공식 안내도와 같은 틀)이라 공식 안내도 위에 그대로 겹쳐 볼 수 있다. 북쪽 위 SVG 는 1 단위 = 1 m, 위경도 범위는 `north-up-bounds.json`.
 - 그림을 바꿀 때는 SVG 를 직접 고치지 않고 스크립트를 고쳐 다시 만든다.
 
@@ -93,14 +129,14 @@ node scripts/map/layers/pentaport/build.mjs --preview
 
 ## 8. 새 페스티벌에 쓸 때
 
-1. `scripts/map/layers/pentaport/` 를 `scripts/map/layers/<코드>/` 로, `map-src/pentaport/layers/` 를 `map-src/<코드>/layers/` 로 복사한다.
+1. 1단계로 공식 안내도의 종류를 정하고, 가까운 쪽 폴더를 복사한다: 평면도형은 `scripts/map/layers/pentaport/`, 배치도형은 `scripts/map/layers/gmf/` → `scripts/map/layers/<코드>/`. 입력은 `map-src/<코드>/layers/` 에 둔다. `lib/` 는 복사하지 않고 그대로 쓴다.
 2. 바꿀 것:
-   - `paths.mjs` (코드), `frame.mjs` (기준 위경도 `LAT0/LNG0`, 그릴 범위 `BOX`, 위성 범위)
-   - `control-points.json` (1단계)
-   - `layer1.mjs` 의 `SEEDS`·`SPLITS`·`WALKWAYS`·손으로 딴 다각형(예: `KB_TURF`)
-   - `pins-classify.mjs` 의 범례 번호, `layout-north-up.mjs` 의 `MARKS`(핀 종류 ↔ 물체 종류)
-   - `objects.mjs` (물체 목록), 그 페스티벌만의 그림(무대 등)은 `sprites.mjs`
-3. 그대로 쓰는 것: `vector.mjs`, `faces.mjs` 의 칸 나누기, `official-to-m.mjs`, `geometry.mjs`, 레이어 2·3 빌더, 확인 도구.
+   - `paths.mjs` (코드), `frame.mjs` (기준 위경도, 그릴 범위 `box`, 위성 범위 `tileBox`)
+   - `control-points.json` 과 `official-to-m.mjs` (1단계, 배치도형이면 구역별 `SPOTS`·`PAIRS`)
+   - `classes.mjs` (구역 색), `layer1.mjs` 의 `SEEDS`·`SPLITS`·`WALKWAYS`(평면도형) 또는 `VENUE`·`BLOBS`(배치도형)
+   - 핀: `pins-classify.mjs` 의 범례 번호(새로 읽을 때), `pin-design.mjs`(핀 모양), `layout-north-up.mjs` 의 `MARKS`(핀 종류 ↔ 물체 종류)
+   - `objects.mjs` (물체 목록), 그 페스티벌만의 그림(무대 등)은 `sprites.mjs`, 그 크기는 `geometry.mjs`
+3. 그대로 쓰는 것: `lib/` 전부(좌표 틀, 벡터화, 칸 나누기, 길 합치기, 부품, 레이어 2·3 쓰기, 북쪽 위 배치, 확인 도구). 여러 페스티벌에 쓸 만한 부품·규칙이 생기면 `lib/` 로 옮긴다.
 4. **사람이 정하는 것**(사용자 확인): 기준점, 구역 나누기(분할선·산책로), 디자인 방향. 고른 이유는 HISTORY.md 에 남긴다.
 
 ## 9. 겪은 함정
@@ -111,3 +147,5 @@ node scripts/map/layers/pentaport/build.mjs --preview
 - 다듬기·흐리기 단계가 칸 밖 픽셀까지 칠할 수 있다 → 행사장 안 픽셀만 다룬다.
 - 위성 사진의 높은 건물 지붕은 기울어져 보인다(대공연장 약 10 m). 바닥 위치는 OSM 건물을 기준으로 한다.
 - 공식 안내도가 좁게 그린 구간은 실제 길까지 늘려 잇는다(산책로 `reach`).
+- 배치도형에서 구역 밖 것(흡연구역 등)을 `between` 변환으로 옮기면 행사장 밖으로 튄다 → 가장 가까운 구역의 변환을 쓴다.
+- 공식 그림이 실제보다 크게 그린 구역(GMF 아트존)은 같은 크기의 부품·핀이 붐빈다 → 부품 `k`, 핀 크기, `tidy` 배치로 맞춘다.

@@ -1,0 +1,413 @@
+{
+  "source": "2026 Grand Mint Festival official site map pins; lat/lng = the facility each pin marks (its layer 2 object), else the spot the pin points at (per-zone fit, about ±17 m)",
+  "pins": [
+    {
+      "id": "gmf-pin-1",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.520096,
+      "lng": 127.124496,
+      "officialPx": [
+        100,
+        160
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-2",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.519758,
+      "lng": 127.124772,
+      "officialPx": [
+        161,
+        207
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-3",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.519635,
+      "lng": 127.124638,
+      "officialPx": [
+        148,
+        221
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-4",
+      "type": "sponsor",
+      "name": "스폰서 존",
+      "lat": 37.519765,
+      "lng": 127.12605,
+      "officialPx": [
+        360,
+        226
+      ],
+      "marks": "tents:2"
+    },
+    {
+      "id": "gmf-pin-5",
+      "type": "fnb",
+      "name": "푸드존 (식음료 판매)",
+      "lat": 37.519644,
+      "lng": 127.124888,
+      "officialPx": [
+        177,
+        229
+      ],
+      "marks": "tents:1"
+    },
+    {
+      "id": "gmf-pin-6",
+      "type": "eating",
+      "name": "취식존",
+      "lat": 37.519414,
+      "lng": 127.124525,
+      "officialPx": [
+        139,
+        249
+      ],
+      "marks": "tents:5"
+    },
+    {
+      "id": "gmf-pin-7",
+      "type": "photo",
+      "name": "포토존",
+      "lat": 37.519283,
+      "lng": 127.124708,
+      "officialPx": [
+        179,
+        267
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-8",
+      "type": "photo",
+      "name": "포토존",
+      "lat": 37.519424,
+      "lng": 127.126204,
+      "officialPx": [
+        395,
+        269
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-9",
+      "type": "water",
+      "name": "프리워터존",
+      "lat": 37.519022,
+      "lng": 127.124296,
+      "officialPx": [
+        132.5,
+        295
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-10",
+      "type": "photo",
+      "name": "포토존",
+      "lat": 37.518917,
+      "lng": 127.125186,
+      "officialPx": [
+        285,
+        322
+      ],
+      "marks": "tents:8"
+    },
+    {
+      "id": "gmf-pin-11",
+      "type": "firstaid",
+      "name": "의료부스",
+      "lat": 37.518429,
+      "lng": 127.12555,
+      "officialPx": [
+        353.75,
+        387.5
+      ],
+      "marks": "tents:9"
+    },
+    {
+      "id": "gmf-pin-12",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.520648,
+      "lng": 127.125211,
+      "officialPx": [
+        563,
+        284
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-13",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.520193,
+      "lng": 127.125953,
+      "officialPx": [
+        511,
+        326
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-14",
+      "type": "fnb",
+      "name": "푸드존 (식음료 판매)",
+      "lat": 37.520209,
+      "lng": 127.128402,
+      "officialPx": [
+        693.75,
+        376.9
+      ],
+      "marks": "tents:10"
+    },
+    {
+      "id": "gmf-pin-15",
+      "type": "smoking",
+      "name": "흡연구역",
+      "lat": 37.520096,
+      "lng": 127.129075,
+      "officialPx": [
+        780,
+        397
+      ],
+      "marks": "tents:33"
+    },
+    {
+      "id": "gmf-pin-16",
+      "type": "photo",
+      "name": "포토존",
+      "lat": 37.520121,
+      "lng": 127.126583,
+      "officialPx": [
+        590,
+        412
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-17",
+      "type": "sponsor",
+      "name": "스폰서 존",
+      "lat": 37.520021,
+      "lng": 127.126639,
+      "officialPx": [
+        576,
+        426
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-18",
+      "type": "water",
+      "name": "프리워터존",
+      "lat": 37.519992,
+      "lng": 127.128487,
+      "officialPx": [
+        734.4,
+        425
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-19",
+      "type": "radar",
+      "name": "RADAR (오픈 라디오)",
+      "lat": 37.520077,
+      "lng": 127.127883,
+      "officialPx": [
+        651.9,
+        459.4
+      ],
+      "marks": "flags:2"
+    },
+    {
+      "id": "gmf-pin-20",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.519708,
+      "lng": 127.127182,
+      "officialPx": [
+        511,
+        536
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-21",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.519567,
+      "lng": 127.12715,
+      "officialPx": [
+        502,
+        559
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-22",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.519444,
+      "lng": 127.127017,
+      "officialPx": [
+        482,
+        576
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-23",
+      "type": "firstaid",
+      "name": "의료부스",
+      "lat": 37.519098,
+      "lng": 127.126843,
+      "officialPx": [
+        448.75,
+        630
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-24",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.518953,
+      "lng": 127.126892,
+      "officialPx": [
+        449,
+        656
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-25",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.518742,
+      "lng": 127.126926,
+      "officialPx": [
+        445,
+        693
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-26",
+      "type": "luggage",
+      "name": "물품보관소",
+      "lat": 37.51868,
+      "lng": 127.127316,
+      "officialPx": [
+        488,
+        715
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-27",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.518652,
+      "lng": 127.127523,
+      "officialPx": [
+        511,
+        726
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-28",
+      "type": "photo",
+      "name": "포토존",
+      "lat": 37.518424,
+      "lng": 127.127319,
+      "officialPx": [
+        293,
+        546
+      ],
+      "marks": null
+    },
+    {
+      "id": "gmf-pin-29",
+      "type": "slogan",
+      "name": "슬로건 전시",
+      "lat": 37.51836,
+      "lng": 127.127087,
+      "officialPx": [
+        252.5,
+        552.5
+      ],
+      "marks": "tents:23"
+    },
+    {
+      "id": "gmf-pin-30",
+      "type": "shop",
+      "name": "민트샵 (공식 MD)",
+      "lat": 37.518365,
+      "lng": 127.126961,
+      "officialPx": [
+        228.75,
+        565.6
+      ],
+      "marks": "tents:22"
+    },
+    {
+      "id": "gmf-pin-31",
+      "type": "artist",
+      "name": "Artist & Label",
+      "lat": 37.518224,
+      "lng": 127.127385,
+      "officialPx": [
+        317,
+        597
+      ],
+      "marks": "tents:27"
+    },
+    {
+      "id": "gmf-pin-32",
+      "type": "info",
+      "name": "인포메이션",
+      "lat": 37.518245,
+      "lng": 127.127032,
+      "officialPx": [
+        248,
+        615
+      ],
+      "marks": "tents:25"
+    },
+    {
+      "id": "gmf-pin-33",
+      "type": "vinyl",
+      "name": "Vinyl & Accessory",
+      "lat": 37.518229,
+      "lng": 127.127247,
+      "officialPx": [
+        280,
+        620
+      ],
+      "marks": "tents:26"
+    },
+    {
+      "id": "gmf-pin-34",
+      "type": "wristband",
+      "name": "손목밴드 교환",
+      "lat": 37.517708,
+      "lng": 127.127943,
+      "officialPx": [
+        272,
+        715
+      ],
+      "marks": "tents:30"
+    }
+  ]
+}

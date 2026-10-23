@@ -1,8 +1,7 @@
 // Raster mask → smooth SVG outline helpers (d3-contour + Douglas–Peucker + centripetal Catmull–Rom).
 import { contours } from 'd3-contour'
-import { W, H, PPM } from './frame.mjs'
 
-export function gaussianBlur(src, sigma) {
+export function gaussianBlur(src, sigma, W, H) {
   const r = Math.ceil(sigma * 3), k = []
   let sum = 0
   for (let i = -r; i <= r; i++) { const v = Math.exp(-(i * i) / (2 * sigma * sigma)); k.push(v); sum += v }
@@ -42,9 +41,10 @@ export function curve(points, closed) {
   return d + (closed ? 'Z' : '')
 }
 const ringArea = (ring) => { let a = 0; for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) a += (ring[j][0] + ring[i][0]) * (ring[j][1] - ring[i][1]); return Math.abs(a / 2) }
-/** Trace a 0/1 mask (Float32Array, W×H) into an SVG path in metres (y down from the frame's north edge). */
-export function trace(mask, { sigma = 1.5, tolerance = 0.2, minAreaM2 = 2 } = {}) {
-  const [mp] = contours().size([W, H]).smooth(true).thresholds([0.5])(gaussianBlur(mask, sigma))
+/** A tracer for one frame: trace(mask) turns a 0/1 mask (Float32Array, W×H) into an SVG path in metres (y down from the
+ *  frame's north edge). */
+export const makeTracer = ({ W, H, PPM }) => function trace(mask, { sigma = 1.5, tolerance = 0.2, minAreaM2 = 2 } = {}) {
+  const [mp] = contours().size([W, H]).smooth(true).thresholds([0.5])(gaussianBlur(mask, sigma, W, H))
   let d = ''
   for (const polygon of mp.coordinates) for (const ring of polygon) {
     const m = ring.map(([x, y]) => [x / PPM, y / PPM])
