@@ -44,6 +44,22 @@ describe('parseMapMeta', () => {
     expect(parseMapMeta(valid).background).toBeNull()
   })
 
+  test('reads where the map draws its places and marks, to make them tappable', () => {
+    const meta = parseMapMeta({
+      ...valid,
+      anchorTaps: { stage: 30 },
+      marks: [{ id: 1, kind: 'toilet', zone: '', lat: 37.55, lng: 127.15, tap: { lat: 37.551, lng: 127.151, radius: 10 } }],
+    })
+    expect(meta.anchorTaps).toEqual({ stage: 30 })
+    expect(meta.marks[0]?.tap).toEqual({ lat: 37.551, lng: 127.151, radius: 10 })
+  })
+
+  test('rejects a tap area without an anchor, without a radius, or outside the image', () => {
+    expect(() => parseMapMeta({ ...valid, anchorTaps: { missing: 30 } })).toThrow()
+    expect(() => parseMapMeta({ ...valid, anchorTaps: { stage: 0 } })).toThrow()
+    expect(() => parseMapMeta({ ...valid, marks: [{ id: 1, kind: 'toilet', zone: '', lat: 37.55, lng: 127.15, tap: { lat: 36, lng: 127, radius: 10 } }] })).toThrow()
+  })
+
   test('rejects anchors outside the image', () => {
     expect(() => parseMapMeta({ ...valid, anchors: { far: [36, 127] } })).toThrow()
   })

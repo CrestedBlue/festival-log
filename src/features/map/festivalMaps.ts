@@ -1,5 +1,6 @@
 import { GRAND_MINT_SERIES, PENTAPORT_SERIES } from '../../data/catalog/ids'
 import { isInsideBounds, type LatLngBounds } from '../../lib/geo'
+import type { TapArea } from '../../data/schema'
 import gmfImage from '../../assets/maps/gmf.webp'
 import gmfMeta from '../../assets/maps/gmf.json'
 import pentaportMeta from '../../assets/maps/pentaport.json'
@@ -20,6 +21,8 @@ export interface MapMark {
   zone: string
   lat: number
   lng: number
+  /** Where the map draws the mark, when it draws it itself (a layer 3 badge): tapping there selects its pin. */
+  tap?: TapArea
 }
 
 /** One image of the map, stretched onto its bounds. A map's layers stay separate images, drawn bottom first. */
@@ -42,6 +45,8 @@ export interface FestivalMap {
   /** Shown around the image (it should match the drawing's own background); null = the default paper. */
   background: string | null
   anchors: Record<string, readonly [number, number]>
+  /** Radius (m) around an anchor where the drawing shows the place (a stage, a gate): tapping there selects its pin. */
+  anchorTaps: Record<string, number>
   marks: readonly MapMark[]
 }
 
@@ -64,6 +69,14 @@ function toBounds(value: unknown, label: string): LatLngBounds {
   return [sw, ne]
 }
 
+const isRadius = (value: unknown): value is number => typeof value === 'number' && value > 0 && value <= 200
+
+function toTapArea(value: unknown, bounds: LatLngBounds): TapArea | null {
+  const t = value as Partial<TapArea>
+  const ok = typeof t.lat === 'number' && typeof t.lng === 'number' && isRadius(t.radius) && isInsideBounds({ lat: t.lat, lng: t.lng }, bounds)
+  return ok ? { lat: t.lat!, lng: t.lng!, radius: t.radius! } : null
+}
+
 /** Validates the generator's JSON so a bad regeneration fails loudly instead of drawing a broken map. */
 export function parseMapMeta(raw: {
   attribution?: unknown
@@ -74,6 +87,7 @@ export function parseMapMeta(raw: {
   fillOnOpen?: unknown
   layers?: unknown
   anchors?: unknown
+  anchorTaps?: unknown
   marks?: unknown
 }): MapMeta {
   const bounds = toBounds(raw.bounds, 'bounds')
@@ -92,8 +106,14 @@ export function parseMapMeta(raw: {
     }
     return [key, value] as const
   })
+  const anchorTaps = Object.entries((raw.anchorTaps ?? {}) as Record<string, unknown>).map(([key, radius]) => {
+    if (!anchors.some(([k]) => k === key) || !isRadius(radius)) throw new Error(`map metadata: anchor tap ${key} needs an anchor and a radius`)
+    return [key, radius] as const
+  })
   const marks = (Array.isArray(raw.marks) ? raw.marks : []).map((value: unknown): MapMark => {
     const m = value as Partial<MapMark>
+    const tap = m.tap === undefined ? undefined : toTapArea(m.tap, bounds)
+    if (tap === null) throw new Error(`map metadata: mark ${String(m.id)} has a bad tap area`)
     const ok =
       typeof m.id === 'number' &&
       typeof m.kind === 'string' &&
@@ -102,7 +122,7 @@ export function parseMapMeta(raw: {
       typeof m.lng === 'number' &&
       isInsideBounds({ lat: m.lat, lng: m.lng }, bounds)
     if (!ok) throw new Error(`map metadata: mark ${String(m.id)} needs id, kind, zone and a lat/lng inside the image`)
-    return { id: m.id!, kind: m.kind!, zone: m.zone!, lat: m.lat!, lng: m.lng! }
+    return { id: m.id!, kind: m.kind!, zone: m.zone!, lat: m.lat!, lng: m.lng!, ...(tap ? { tap } : {}) }
   })
   return {
     bounds,
@@ -114,6 +134,7 @@ export function parseMapMeta(raw: {
     attribution: typeof raw.attribution === 'string' ? raw.attribution : '',
     background: typeof raw.background === 'string' && /^#[0-9a-f]{6}$/i.test(raw.background) ? raw.background : null,
     anchors: Object.fromEntries(anchors),
+    anchorTaps: Object.fromEntries(anchorTaps),
   }
 }
 

@@ -68,11 +68,15 @@ const pentaportMap = () => {
   return map
 }
 
+// Tapping the drawing selects them: the stage or gate around its anchor, the pin's badge.
 function labelledPins(): Pin[] {
   return LABELLED_PINS.map(([key, pin, anchorKey]) => {
-    const point = pentaportMap().anchors[anchorKey]
+    const map = pentaportMap()
+    const point = map.anchors[anchorKey]
     if (!point) throw new Error(`Pentaport map has no anchor "${anchorKey}"`)
-    return { id: `${CODE}-zone-${key}`, ...pin, lat: point[0], lng: point[1] }
+    const radius = map.anchorTaps[anchorKey]
+    const tap = radius ? { tap: { lat: point[0], lng: point[1], radius } } : {}
+    return { id: `${CODE}-zone-${key}`, ...pin, lat: point[0], lng: point[1], ...tap }
   })
 }
 
@@ -81,7 +85,7 @@ function markPins(): Pin[] {
   return pentaportMap().marks.filter((mark) => mark.kind !== 'gate').map((mark) => {
     const meta = MARK_KINDS[mark.kind]
     if (!meta) throw new Error(`Pentaport map mark ${mark.id} has unknown kind "${mark.kind}"`)
-    return { id: `${CODE}-zone-pin-${mark.id}`, name: meta.name, kind: meta.kind, lat: mark.lat, lng: mark.lng }
+    return { id: `${CODE}-zone-pin-${mark.id}`, name: meta.name, kind: meta.kind, lat: mark.lat, lng: mark.lng, ...(mark.tap ? { tap: mark.tap } : {}) }
   })
 }
 

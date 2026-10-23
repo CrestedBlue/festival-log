@@ -14,7 +14,7 @@ import { PinForm } from './PinForm'
 import { PIN_META } from './pinMeta'
 import { useLeafletMap } from './useLeafletMap'
 import { pinSizeForZoom } from './pinSize'
-import { useMapPick, useMapZoom, useMyLocationLayer, usePinLayer } from './useMapLayers'
+import { useMapPick, useMapZoom, useMyLocationLayer, usePinLayer, useTapLayer } from './useMapLayers'
 import './map.css'
 
 const FOCUS_ZOOM = 17
@@ -60,7 +60,10 @@ export default function MapView({ festival, userPinIds }: Props) {
   const zoom = useMapZoom(map)
   // The illustrated map already labels stages, exits, … so only the other pins are drawn on it.
   const mapPins = festivalMap ? festival.pins.filter((pin) => !isMapLabelPin(pin)) : festival.pins
+  // …but where the map draws one itself (a badge, a stage), tapping the drawing selects it.
+  const drawnPins = festivalMap ? festival.pins.filter((pin) => isMapLabelPin(pin) && pin.tap) : []
   usePinLayer(map, mapPins, selectedId, setSelectedId, festivalMap ? pinSizeForZoom(zoom ?? 0) : TILE_MAP_PIN)
+  useTapLayer(map, drawnPins, selectedId, setSelectedId, !picking)
   useMyLocationLayer(map, geo)
   useMapPick(map, picking, onPick)
 

@@ -37,7 +37,9 @@ export async function drawLayer3({ TYPES, draw, PX_TO_M, BOX, toLL, CACHE, OUT, 
   const northUp = `<svg xmlns="http://www.w3.org/2000/svg" width="${VW * 3}" height="${VH * 3}" viewBox="0 0 ${VW} ${VH}">\n${layer((p) => `translate(${NORTH_UP[p.id].badge.join(',')}) scale(${PX_TO_M})`)}\n</svg>\n`
   fs.writeFileSync(path.join(OUT, 'layer3-pins-north-up.svg'), northUp)
   // for the app: lat/lng = the facility the pin marks (its layer 2 object), else the spot the pin stands for
-  const json = pins.map((p) => { const nu = NORTH_UP[p.id]; const [lat, lng] = nu.facility ?? toLL(p.m); return { id: `${idPrefix}${p.id}`, type: p.type, name: TYPES[p.type].name, lat, lng, officialPx: p.official, marks: nu.marks } })
+  // badge: where the pin itself is drawn on the north-up map (the app makes it tappable there)
+  const badgeLL = ([x, y]) => toLL([x + BOX.west, BOX.north - y]).map((v) => +v.toFixed(6))
+  const json = pins.map((p) => { const nu = NORTH_UP[p.id]; const [lat, lng] = nu.facility ?? toLL(p.m); return { id: `${idPrefix}${p.id}`, type: p.type, name: TYPES[p.type].name, lat, lng, badge: badgeLL(nu.badge), officialPx: p.official, marks: nu.marks } })
   fs.writeFileSync(path.join(OUT, 'layer3-pins.json'), `${JSON.stringify({ source, pins: json }, null, 2)}\n`)
   // legend sheet: every pin design, to compare with the official map (cache)
   const types = Object.keys(TYPES), { cols, cell, scale, top, background } = legend

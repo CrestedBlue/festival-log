@@ -41,6 +41,42 @@ export function usePinLayer(
   }, [map, pins, selectedId, onSelect, pinSize, showIcon])
 }
 
+/**
+ * Catalog pins the illustrated map draws itself (a pin badge, a stage): an invisible circle over each drawing makes it
+ * tappable, and the selected one gets a ring. Circles are in metres, so they grow and shrink with the drawing.
+ * `active` is off while a new pin's place is being picked, so taps reach the map.
+ */
+export function useTapLayer(
+  map: L.Map | null,
+  pins: readonly Pin[],
+  selectedId: string | null,
+  onSelect: (id: string) => void,
+  active: boolean,
+) {
+  useEffect(() => {
+    if (!map) return
+    const layer = L.layerGroup().addTo(map)
+    pins.forEach((pin) => {
+      if (!pin.tap) return
+      const selected = pin.id === selectedId
+      L.circle([pin.tap.lat, pin.tap.lng], {
+        radius: pin.tap.radius,
+        className: `map-tap${selected ? ' is-selected' : ''}`,
+        interactive: active,
+        bubblingMouseEvents: false,
+        stroke: selected,
+        weight: 3,
+        fillOpacity: selected ? 0.15 : 0,
+      })
+        .on('click', () => onSelect(pin.id))
+        .addTo(layer)
+    })
+    return () => {
+      layer.remove()
+    }
+  }, [map, pins, selectedId, onSelect, active])
+}
+
 /** Blue dot + accuracy ring for the device position. */
 export function useMyLocationLayer(map: L.Map | null, geo: GeoState) {
   const markerRef = useRef<L.Marker | null>(null)

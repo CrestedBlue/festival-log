@@ -10,6 +10,7 @@ import { GROUPS } from './objects.mjs'
 import * as geometry from './geometry.mjs'
 import * as SP from './sprites.mjs'
 import { OUT, ROOT } from './paths.mjs'
+import { R, GATE_R } from './pin-design.mjs'
 import { measureTexts } from '../lib/texts.mjs'
 import { writeAppMap, boundsOf, boundsAround } from '../lib/app.mjs'
 
@@ -23,8 +24,17 @@ const anchors = {
   kbStage: byId('kbStage'), monsterStage: byId('monsterStage'), stanleyStage: byId('stanleyStage'), gate1: byId('gate1'), gate2: byId('gate2'),
   securityCheck: mean(items.filter((it) => it.tag === '물품검색').map(placeOf)),
 }
+// Tapping the drawing selects the place: within half the sprite's size of a stage or gate, along the row of
+// security-check containers.
+const M = geometry.PX_TO_M
+const half = (it) => (Math.max(...geometry.sizeOf(it)) / 2) * M
+const anchorTaps = Object.fromEntries(['kbStage', 'monsterStage', 'stanleyStage', 'gate1', 'gate2'].map((id) => [id, +half(items.find((i) => i.id === id)).toFixed(1)]))
+const metres = (a, b) => Math.hypot((a[0] - b[0]) * 111_320, (a[1] - b[1]) * 111_320 * Math.cos((a[0] * Math.PI) / 180))
+const checks = items.filter((it) => it.tag === '물품검색')
+anchorTaps.securityCheck = +Math.max(...checks.map((it) => metres(placeOf(it), anchors.securityCheck) + half(it))).toFixed(1)
 const pins = JSON.parse(fs.readFileSync(path.join(OUT, 'layer3-pins.json'))).pins
-const marks = pins.map((p, i) => ({ id: i + 1, kind: p.type, zone: '', lat: p.lat, lng: p.lng })) // numbered in layer 3's order
+const badgeRadius = (type) => +((type === 'gate' ? GATE_R : R) * M * 1.2).toFixed(1) // a little over the drawn badge
+const marks = pins.map((p, i) => ({ id: i + 1, kind: p.type, zone: '', lat: p.lat, lng: p.lng, tap: { lat: p.badge[0], lng: p.badge[1], radius: badgeRadius(p.type) } })) // numbered in layer 3's order
 const small = boundsOf(path.join(OUT, 'north-up-bounds.json'))
 // Opens on the walk: 송도달빛축제공원역 (west), the venue and the shuttle stops (south).
 const station = toLL([-560, 120]), shuttles = toLL([-60, -500])
@@ -37,7 +47,7 @@ writeAppMap({ root: ROOT, code: 'pentaport',
     { src: path.join(OUT, 'layer2-operations-north-up.svg'), file: 'layer2.svg', bounds: small },
     { src: path.join(OUT, 'layer3-pins-north-up.svg'), file: 'layer3.svg', bounds: small },
   ],
-  initialView, anchors, marks, maxZoom: 19.5,
-  background: '#e9e6de', fillOnOpen: false, // the big map's ground colour runs on around it, so it opens on the whole walk
+  initialView, anchors, anchorTaps, marks, maxZoom: 19.5,
+  background: '#ffffff', fillOnOpen: false, // the big map's ground colour runs on around it, so it opens on the whole walk
   attribution: '지도: 2026 인천펜타포트 락 페스티벌 공식 행사장 안내도를 실제 위치에 맞춰 다시 그림 · 지형: © OpenStreetMap 기여자',
 })

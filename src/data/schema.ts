@@ -43,12 +43,16 @@ export const PIN_KINDS = [
   'artist',
   'vinyl',
 ] as const
+/** Where an illustrated map draws a catalog pin (a badge, a stage): tapping within `radius` metres selects it. */
+export const TapAreaSchema = z.object({ lat: latitude, lng: longitude, radius: z.number().positive().max(200) })
+
 export const PinSchema = z.object({
   id,
   name,
   kind: z.enum(PIN_KINDS),
   lat: latitude,
   lng: longitude,
+  tap: TapAreaSchema.optional(),
 })
 
 export const VenueSchema = z.object({ name: z.string().trim().max(MAX_NAME_LENGTH), lat: latitude, lng: longitude })
@@ -113,6 +117,7 @@ export type Stage = z.infer<typeof StageSchema>
 export type Performance = z.infer<typeof PerformanceSchema>
 export type PinKind = (typeof PIN_KINDS)[number]
 export type Pin = z.infer<typeof PinSchema>
+export type TapArea = z.infer<typeof TapAreaSchema>
 export type Venue = z.infer<typeof VenueSchema>
 export type Festival = z.infer<typeof FestivalSchema>
 export type LegacyAppData = z.infer<typeof LegacyAppDataSchema>

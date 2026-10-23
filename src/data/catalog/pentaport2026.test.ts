@@ -82,6 +82,9 @@ describe('createPentaport2026', () => {
     // The map draws its stages, gates and layer 3 pins, so those are only listed; the exits (OpenStreetMap) and the
     // places outside the redrawn venue (ticket booths, shuttle stops) are drawn as pins.
     expect(festival.pins.filter((p) => p.kind === 'stage' || p.name === '화장실').every((p) => isMapLabelPin(p))).toBe(true)
+    // …and tapping the drawing selects them: every listed-only pin knows where the map draws it
+    const listedOnly = festival.pins.filter((p) => isMapLabelPin(p))
+    expect(listedOnly.every((p) => p.tap && map && isInsideBounds(p.tap, map.bounds))).toBe(true)
     const drawn = festival.pins.filter((p) => p.name.includes('출구') || p.name.includes('티켓부스') || p.name.includes('셔틀'))
     expect(drawn).toHaveLength(7)
     expect(drawn.every((p) => !isMapLabelPin(p))).toBe(true)

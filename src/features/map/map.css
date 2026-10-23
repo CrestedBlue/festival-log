@@ -118,6 +118,12 @@
   border-color: var(--color-accent);
 }
 
+/* Drawn pins and stages on an illustrated map: invisible tap circles; the selected one is ringed. */
+.map-tap.is-selected {
+  stroke: var(--color-accent);
+  fill: var(--color-accent);
+}
+
 .map-pin--stage {
   background: #ffe1d9;
 }

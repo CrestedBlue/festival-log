@@ -12,9 +12,10 @@ export const boundsOf = (file) => JSON.parse(fs.readFileSync(file)).bounds
 
 /**
  * root: repository root; code: festival code; layers: [{ src: SVG path, file: name in the app, bounds }], bottom first;
- * the other fields go into the JSON as they are (see src/features/map/festivalMaps.ts).
+ * anchorTaps: anchor key → radius (m) to tap the drawn place at its anchor; marks may carry `tap` ({ lat, lng, radius }:
+ * where the pin is drawn). The other fields go into the JSON as they are (see src/features/map/festivalMaps.ts).
  */
-export function writeAppMap({ root, code, layers, initialView, anchors = {}, marks = [], attribution, background, maxZoom, fillOnOpen = true }) {
+export function writeAppMap({ root, code, layers, initialView, anchors = {}, anchorTaps = {}, marks = [], attribution, background, maxZoom, fillOnOpen = true }) {
   const dir = path.join(root, 'src/assets/maps', code)
   fs.rmSync(dir, { recursive: true, force: true })
   fs.mkdirSync(dir, { recursive: true })
@@ -25,7 +26,7 @@ export function writeAppMap({ root, code, layers, initialView, anchors = {}, mar
   }
   const all = layers.flatMap((l) => l.bounds)
   const meta = { attribution, background, maxZoom, fillOnOpen, bounds: boundsAround(all), initialView, layers: layers.map(({ file, bounds }) => ({ file, bounds })),
-    anchors: Object.fromEntries(Object.entries(anchors).map(([k, v]) => [k, round(v)])), marks }
+    anchors: Object.fromEntries(Object.entries(anchors).map(([k, v]) => [k, round(v)])), anchorTaps, marks }
   fs.writeFileSync(path.join(root, 'src/assets/maps', `${code}.json`), `${JSON.stringify(meta, null, 2)}\n`)
   console.log('app map', code, '| layers', layers.map((l) => l.file).join(', '), '| anchors', Object.keys(anchors).length, '| marks', marks.length)
 }

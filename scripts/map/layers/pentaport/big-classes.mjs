@@ -1,12 +1,13 @@
-// Zone classes of the big area map's layer 1 (outside the venue): name, flat colour. Quiet colours, so the venue
-// (the small map on top) stands out; roads in the small map's path grey family.
+// Zone classes of the big area map's layer 1 (outside the venue): name, flat colour. The small map's layer 1 design
+// (the official site map's colours, classes.mjs): white ground, path grey roads, lawn green parks, refresh-zone blue
+// water; buildings a darker grey, bare sites a pale sand.
 export const BIG_CLASSES = [
-  ['land', '#e9e6de'], // open ground, empty lots
-  ['open', '#dfdbd0'], // construction sites, greenfield (송도 워터프런트 공사 구역 …)
-  ['park', '#c6e3ad'], // parks, gardens
-  ['pitch', '#9fd28a'], // sports pitches (야구장, 풋살장)
-  ['water', '#a9d8ea'],
-  ['building', '#d1cec6'],
+  ['land', '#ffffff'], // open ground (the official map's white)
+  ['open', '#e6dfd2'], // construction sites, greenfield (송도 워터프런트 공사 구역 …): the F&B sand, paler
+  ['park', '#74bc6c'], // parks, gardens: lawn
+  ['pitch', '#048444'], // sports pitches (야구장, 풋살장): standing-zone green
+  ['water', '#319fd7'], // refresh-zone blue
+  ['building', '#a9a9ad'],
   ['venue', '#c8c8ca'], // the festival grounds: the small map draws them on top
-  ['road', '#ffffff'],
+  ['road', '#c8c8ca'], // path grey
 ]
