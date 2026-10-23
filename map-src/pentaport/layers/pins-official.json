@@ -1,0 +1,492 @@
+[
+ {
+  "id": 0,
+  "type": "toilet",
+  "score": 0.95,
+  "runnerUp": "charging 0.59",
+  "s": [
+   561.5,
+   290.5
+  ]
+ },
+ {
+  "id": 1,
+  "type": "nursingRoom",
+  "score": 0.9,
+  "runnerUp": "info 0.66",
+  "s": [
+   662.5,
+   290.5
+  ]
+ },
+ {
+  "id": 2,
+  "type": "toilet",
+  "score": 0.95,
+  "runnerUp": "charging 0.60",
+  "s": [
+   703.5,
+   290.5
+  ]
+ },
+ {
+  "id": 3,
+  "type": "gate",
+  "score": 0.34,
+  "runnerUp": "fnb 0.26",
+  "s": [
+   260.5,
+   318
+  ]
+ },
+ {
+  "id": 4,
+  "type": "accessibleToilet",
+  "score": 0.91,
+  "runnerUp": "nursingRoom 0.63",
+  "s": [
+   544.5,
+   343.5
+  ]
+ },
+ {
+  "id": 5,
+  "type": "charging",
+  "score": 0.94,
+  "runnerUp": "nursingRoom 0.61",
+  "s": [
+   587.5,
+   343.5
+  ]
+ },
+ {
+  "id": 6,
+  "type": "coolZone",
+  "score": 0.89,
+  "runnerUp": "medical 0.71",
+  "s": [
+   630.5,
+   343.5
+  ]
+ },
+ {
+  "id": 7,
+  "type": "medical",
+  "score": 0.97,
+  "runnerUp": "coolZone 0.67",
+  "s": [
+   673,
+   343.5
+  ]
+ },
+ {
+  "id": 8,
+  "type": "medical",
+  "score": 0.95,
+  "runnerUp": "coolZone 0.68",
+  "s": [
+   1001.5,
+   391.5
+  ]
+ },
+ {
+  "id": 9,
+  "type": "coolZone",
+  "score": 0.81,
+  "runnerUp": "medical 0.64",
+  "s": [
+   262.5,
+   404.5
+  ]
+ },
+ {
+  "id": 10,
+  "type": "barrierFreeZone",
+  "score": 0.86,
+  "runnerUp": "nursingRoom 0.56",
+  "s": [
+   713.5,
+   425.5
+  ]
+ },
+ {
+  "id": 11,
+  "type": "toilet",
+  "score": 0.96,
+  "runnerUp": "charging 0.62",
+  "s": [
+   1015.5,
+   436.5
+  ]
+ },
+ {
+  "id": 12,
+  "type": "pentaDreamer",
+  "score": 0.83,
+  "runnerUp": "nursingRoom 0.54",
+  "s": [
+   368.5,
+   456.5
+  ]
+ },
+ {
+  "id": 13,
+  "type": "accessibleToilet",
+  "score": 0.96,
+  "runnerUp": "nursingRoom 0.63",
+  "s": [
+   1024.5,
+   486.5
+  ]
+ },
+ {
+  "id": 14,
+  "type": "promotionBooth",
+  "score": 0.87,
+  "runnerUp": "lockers 0.62",
+  "s": [
+   379.5,
+   508
+  ]
+ },
+ {
+  "id": 15,
+  "type": "vendorBooth",
+  "score": 0.9,
+  "runnerUp": "police 0.61",
+  "s": [
+   217.5,
+   517.5
+  ]
+ },
+ {
+  "id": 16,
+  "type": "barrierFreeZone",
+  "score": 0.88,
+  "runnerUp": "nursingRoom 0.52",
+  "s": [
+   606.5,
+   529
+  ]
+ },
+ {
+  "id": 17,
+  "type": "bar",
+  "score": 0.96,
+  "runnerUp": "lockers 0.73",
+  "s": [
+   1030.5,
+   536.5
+  ]
+ },
+ {
+  "id": 18,
+  "type": "medical",
+  "score": 0.95,
+  "runnerUp": "coolZone 0.68",
+  "s": [
+   195.5,
+   579.5
+  ]
+ },
+ {
+  "id": 19,
+  "type": "bar",
+  "score": 0.93,
+  "runnerUp": "lockers 0.67",
+  "s": [
+   582,
+   584
+  ]
+ },
+ {
+  "id": 20,
+  "type": "coolZone",
+  "score": 0.91,
+  "runnerUp": "medical 0.74",
+  "s": [
+   1034.5,
+   584.5
+  ]
+ },
+ {
+  "id": 21,
+  "type": "waterBar",
+  "score": 0.93,
+  "runnerUp": "washStation 0.66",
+  "s": [
+   625.5,
+   600.5
+  ]
+ },
+ {
+  "id": 22,
+  "type": "coolZone",
+  "score": 0.93,
+  "runnerUp": "medical 0.67",
+  "s": [
+   155.5,
+   607
+  ]
+ },
+ {
+  "id": 23,
+  "type": "medical",
+  "score": 0.92,
+  "runnerUp": "coolZone 0.66",
+  "s": [
+   559.5,
+   626.5
+  ]
+ },
+ {
+  "id": 24,
+  "type": "bar",
+  "score": 0.91,
+  "runnerUp": "lockers 0.70",
+  "s": [
+   347.5,
+   633.5
+  ]
+ },
+ {
+  "id": 25,
+  "type": "police",
+  "score": 0.97,
+  "runnerUp": "fireStation 0.80",
+  "s": [
+   1035.5,
+   633.5
+  ]
+ },
+ {
+  "id": 26,
+  "type": "interpretation",
+  "score": 0.91,
+  "runnerUp": "fireStation 0.59",
+  "s": [
+   600.5,
+   636.5
+  ]
+ },
+ {
+  "id": 27,
+  "type": "info",
+  "score": 0.88,
+  "runnerUp": "nursingRoom 0.65",
+  "s": [
+   581.5,
+   674
+  ]
+ },
+ {
+  "id": 28,
+  "type": "fireStation",
+  "score": 0.91,
+  "runnerUp": "police 0.74",
+  "s": [
+   1035.5,
+   678.5
+  ]
+ },
+ {
+  "id": 29,
+  "type": "smoking",
+  "score": 0.91,
+  "runnerUp": "coolZone 0.53",
+  "s": [
+   84.5,
+   686.5
+  ]
+ },
+ {
+  "id": 30,
+  "type": "fnb",
+  "score": 0.92,
+  "runnerUp": "promotionBooth 0.63",
+  "s": [
+   423.5,
+   690.5
+  ]
+ },
+ {
+  "id": 31,
+  "type": "bar",
+  "score": 0.89,
+  "runnerUp": "lockers 0.70",
+  "s": [
+   507.5,
+   691.5
+  ]
+ },
+ {
+  "id": 32,
+  "type": "coolZone",
+  "score": 0.87,
+  "runnerUp": "medical 0.60",
+  "s": [
+   940,
+   698
+  ]
+ },
+ {
+  "id": 33,
+  "type": "medical",
+  "score": 0.95,
+  "runnerUp": "coolZone 0.70",
+  "s": [
+   1033.5,
+   725.5
+  ]
+ },
+ {
+  "id": 34,
+  "type": "barrierFreeZone",
+  "score": 0.89,
+  "runnerUp": "nursingRoom 0.53",
+  "s": [
+   173,
+   729.5
+  ]
+ },
+ {
+  "id": 35,
+  "type": "washStation",
+  "score": 0.9,
+  "runnerUp": "waterBar 0.64",
+  "s": [
+   738,
+   735.5
+  ]
+ },
+ {
+  "id": 36,
+  "type": "kiosk",
+  "score": 0.96,
+  "runnerUp": "waterBar 0.65",
+  "s": [
+   578.5,
+   816.5
+  ]
+ },
+ {
+  "id": 37,
+  "type": "securityCheck",
+  "score": 0.91,
+  "runnerUp": "promotionBooth 0.57",
+  "s": [
+   765.5,
+   849.5
+  ]
+ },
+ {
+  "id": 38,
+  "type": "toilet",
+  "score": 0.89,
+  "runnerUp": "charging 0.57",
+  "s": [
+   216.5,
+   862.5
+  ]
+ },
+ {
+  "id": 39,
+  "type": "toilet",
+  "score": 0.95,
+  "runnerUp": "charging 0.60",
+  "s": [
+   712.5,
+   871.5
+  ]
+ },
+ {
+  "id": 40,
+  "type": "lockers",
+  "score": 0.9,
+  "runnerUp": "nursingRoom 0.69",
+  "s": [
+   834.5,
+   877.5
+  ]
+ },
+ {
+  "id": 41,
+  "type": "kiosk",
+  "score": 0.93,
+  "runnerUp": "waterBar 0.65",
+  "s": [
+   634.5,
+   899.5
+  ]
+ },
+ {
+  "id": 42,
+  "type": "washStation",
+  "score": 0.9,
+  "runnerUp": "waterBar 0.61",
+  "s": [
+   732.5,
+   912
+  ]
+ },
+ {
+  "id": 43,
+  "type": "gate",
+  "score": 0.32,
+  "runnerUp": "fnb 0.24",
+  "s": [
+   857,
+   990
+  ]
+ },
+ {
+  "id": 44,
+  "type": "officialMd",
+  "score": 0.9,
+  "runnerUp": "promotionBooth 0.63",
+  "s": [
+   614.5,
+   990.5
+  ]
+ },
+ {
+  "id": 45,
+  "type": "artistMd",
+  "score": 0.93,
+  "runnerUp": "vendorBooth 0.49",
+  "s": [
+   505.5,
+   1068.5
+  ]
+ },
+ {
+  "id": 48,
+  "type": "smoking",
+  "score": 0.9,
+  "runnerUp": "coolZone 0.48",
+  "s": [
+   582,
+   1099
+  ]
+ },
+ {
+  "id": "bfPass",
+  "type": "barrierFreePass",
+  "score": 0.97,
+  "runnerUp": "mainCoolZone 0.54",
+  "s": [
+   963.8,
+   766.2
+  ]
+ },
+ {
+  "id": "mainCool",
+  "type": "mainCoolZone",
+  "score": 0.66,
+  "runnerUp": "barrierFreePass 0.38",
+  "s": [
+   677.2,
+   766.1
+  ]
+ }
+]

@@ -1,0 +1,593 @@
+{
+  "source": "2026 Pentaport official site map pins; lat/lng = the facility each pin marks (its layer 2 object), else the pin itself (similarity fit, about ±15 m)",
+  "pins": [
+    {
+      "id": "pentaport-pin-0",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.40556,
+      "lng": 126.633217,
+      "officialPx": [
+        561.5,
+        290.5
+      ],
+      "marks": "facilities:0"
+    },
+    {
+      "id": "pentaport-pin-1",
+      "type": "nursingRoom",
+      "name": "수유실",
+      "lat": 37.405536,
+      "lng": 126.632709,
+      "officialPx": [
+        662.5,
+        290.5
+      ],
+      "marks": "facilities:31"
+    },
+    {
+      "id": "pentaport-pin-2",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.405543,
+      "lng": 126.632491,
+      "officialPx": [
+        703.5,
+        290.5
+      ],
+      "marks": "facilities:1"
+    },
+    {
+      "id": "pentaport-pin-3",
+      "type": "gate",
+      "name": "입장 게이트",
+      "lat": 37.405535,
+      "lng": 126.63474,
+      "officialPx": [
+        260.5,
+        318
+      ],
+      "marks": null
+    },
+    {
+      "id": "pentaport-pin-4",
+      "type": "accessibleToilet",
+      "name": "장애인 화장실",
+      "lat": 37.405747,
+      "lng": 126.633276,
+      "officialPx": [
+        544.5,
+        343.5
+      ],
+      "marks": "facilities:5"
+    },
+    {
+      "id": "pentaport-pin-5",
+      "type": "charging",
+      "name": "모바일 충전소",
+      "lat": 37.405749,
+      "lng": 126.633073,
+      "officialPx": [
+        587.5,
+        343.5
+      ],
+      "marks": "facilities:30"
+    },
+    {
+      "id": "pentaport-pin-6",
+      "type": "coolZone",
+      "name": "쿨존",
+      "lat": 37.40576,
+      "lng": 126.632854,
+      "officialPx": [
+        630.5,
+        343.5
+      ],
+      "marks": "domes:4"
+    },
+    {
+      "id": "pentaport-pin-7",
+      "type": "medical",
+      "name": "의료부스",
+      "lat": 37.405729,
+      "lng": 126.632641,
+      "officialPx": [
+        673,
+        343.5
+      ],
+      "marks": "tents:34"
+    },
+    {
+      "id": "pentaport-pin-8",
+      "type": "medical",
+      "name": "의료부스",
+      "lat": 37.405762,
+      "lng": 126.631125,
+      "officialPx": [
+        1001.5,
+        391.5
+      ],
+      "marks": "tents:32"
+    },
+    {
+      "id": "pentaport-pin-9",
+      "type": "coolZone",
+      "name": "쿨존",
+      "lat": 37.406084,
+      "lng": 126.634726,
+      "officialPx": [
+        262.5,
+        404.5
+      ],
+      "marks": "domes:0"
+    },
+    {
+      "id": "pentaport-pin-10",
+      "type": "barrierFreeZone",
+      "name": "배리어 프리 존",
+      "lat": 37.405952,
+      "lng": 126.632432,
+      "officialPx": [
+        713.5,
+        425.5
+      ],
+      "marks": null
+    },
+    {
+      "id": "pentaport-pin-11",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.406061,
+      "lng": 126.631066,
+      "officialPx": [
+        1015.5,
+        436.5
+      ],
+      "marks": "facilities:3"
+    },
+    {
+      "id": "pentaport-pin-12",
+      "type": "pentaDreamer",
+      "name": "펜타 드리머",
+      "lat": 37.406042,
+      "lng": 126.634279,
+      "officialPx": [
+        368.5,
+        456.5
+      ],
+      "marks": "tents:28"
+    },
+    {
+      "id": "pentaport-pin-13",
+      "type": "accessibleToilet",
+      "name": "장애인 화장실",
+      "lat": 37.406239,
+      "lng": 126.631023,
+      "officialPx": [
+        1024.5,
+        486.5
+      ],
+      "marks": "facilities:6"
+    },
+    {
+      "id": "pentaport-pin-14",
+      "type": "promotionBooth",
+      "name": "홍보 부스",
+      "lat": 37.406286,
+      "lng": 126.634317,
+      "officialPx": [
+        379.5,
+        508
+      ],
+      "marks": "tents:30"
+    },
+    {
+      "id": "pentaport-pin-15",
+      "type": "vendorBooth",
+      "name": "벤더 부스",
+      "lat": 37.40632,
+      "lng": 126.635062,
+      "officialPx": [
+        217.5,
+        517.5
+      ],
+      "marks": "tents:23"
+    },
+    {
+      "id": "pentaport-pin-16",
+      "type": "barrierFreeZone",
+      "name": "배리어 프리 존",
+      "lat": 37.406374,
+      "lng": 126.632971,
+      "officialPx": [
+        606.5,
+        529
+      ],
+      "marks": null
+    },
+    {
+      "id": "pentaport-pin-17",
+      "type": "bar",
+      "name": "주류",
+      "lat": 37.406373,
+      "lng": 126.630996,
+      "officialPx": [
+        1030.5,
+        536.5
+      ],
+      "marks": "tents:17"
+    },
+    {
+      "id": "pentaport-pin-18",
+      "type": "medical",
+      "name": "의료부스",
+      "lat": 37.4067,
+      "lng": 126.635065,
+      "officialPx": [
+        195.5,
+        579.5
+      ],
+      "marks": "tents:31"
+    },
+    {
+      "id": "pentaport-pin-19",
+      "type": "bar",
+      "name": "주류",
+      "lat": 37.406659,
+      "lng": 126.633052,
+      "officialPx": [
+        582,
+        584
+      ],
+      "marks": "tents:16"
+    },
+    {
+      "id": "pentaport-pin-20",
+      "type": "coolZone",
+      "name": "쿨존",
+      "lat": 37.406639,
+      "lng": 126.630983,
+      "officialPx": [
+        1034.5,
+        584.5
+      ],
+      "marks": "domes:1"
+    },
+    {
+      "id": "pentaport-pin-21",
+      "type": "waterBar",
+      "name": "워터바",
+      "lat": 37.406659,
+      "lng": 126.633052,
+      "officialPx": [
+        625.5,
+        600.5
+      ],
+      "marks": "tents:16"
+    },
+    {
+      "id": "pentaport-pin-22",
+      "type": "coolZone",
+      "name": "쿨존",
+      "lat": 37.406953,
+      "lng": 126.635255,
+      "officialPx": [
+        155.5,
+        607
+      ],
+      "marks": "domes:6"
+    },
+    {
+      "id": "pentaport-pin-23",
+      "type": "medical",
+      "name": "의료부스",
+      "lat": 37.406861,
+      "lng": 126.633217,
+      "officialPx": [
+        559.5,
+        626.5
+      ],
+      "marks": "facilities:33"
+    },
+    {
+      "id": "pentaport-pin-24",
+      "type": "bar",
+      "name": "주류",
+      "lat": 37.406882,
+      "lng": 126.634219,
+      "officialPx": [
+        347.5,
+        633.5
+      ],
+      "marks": "tents:14"
+    },
+    {
+      "id": "pentaport-pin-25",
+      "type": "police",
+      "name": "연수 경찰서",
+      "lat": 37.4068,
+      "lng": 126.630966,
+      "officialPx": [
+        1035.5,
+        633.5
+      ],
+      "marks": "tents:35"
+    },
+    {
+      "id": "pentaport-pin-26",
+      "type": "interpretation",
+      "name": "통역 안내",
+      "lat": 37.406861,
+      "lng": 126.633217,
+      "officialPx": [
+        600.5,
+        636.5
+      ],
+      "marks": "facilities:33"
+    },
+    {
+      "id": "pentaport-pin-27",
+      "type": "info",
+      "name": "종합안내소",
+      "lat": 37.407066,
+      "lng": 126.633098,
+      "officialPx": [
+        581.5,
+        674
+      ],
+      "marks": "facilities:32"
+    },
+    {
+      "id": "pentaport-pin-28",
+      "type": "fireStation",
+      "name": "송도 소방서",
+      "lat": 37.40697,
+      "lng": 126.630974,
+      "officialPx": [
+        1035.5,
+        678.5
+      ],
+      "marks": "tents:36"
+    },
+    {
+      "id": "pentaport-pin-29",
+      "type": "smoking",
+      "name": "흡연구역",
+      "lat": 37.407149,
+      "lng": 126.635614,
+      "officialPx": [
+        84.5,
+        686.5
+      ],
+      "marks": "facilities:34"
+    },
+    {
+      "id": "pentaport-pin-30",
+      "type": "fnb",
+      "name": "F&B",
+      "lat": 37.407072,
+      "lng": 126.634191,
+      "officialPx": [
+        423.5,
+        690.5
+      ],
+      "marks": "tents:1"
+    },
+    {
+      "id": "pentaport-pin-31",
+      "type": "bar",
+      "name": "주류",
+      "lat": 37.406957,
+      "lng": 126.633414,
+      "officialPx": [
+        507.5,
+        691.5
+      ],
+      "marks": "tents:15"
+    },
+    {
+      "id": "pentaport-pin-32",
+      "type": "coolZone",
+      "name": "쿨존",
+      "lat": 37.407182,
+      "lng": 126.631378,
+      "officialPx": [
+        940,
+        698
+      ],
+      "marks": "domes:2"
+    },
+    {
+      "id": "pentaport-pin-33",
+      "type": "medical",
+      "name": "의료부스",
+      "lat": 37.407162,
+      "lng": 126.630972,
+      "officialPx": [
+        1033.5,
+        725.5
+      ],
+      "marks": "tents:33"
+    },
+    {
+      "id": "pentaport-pin-34",
+      "type": "barrierFreeZone",
+      "name": "배리어 프리 존",
+      "lat": 37.4072,
+      "lng": 126.635166,
+      "officialPx": [
+        173,
+        729.5
+      ],
+      "marks": null
+    },
+    {
+      "id": "pentaport-pin-35",
+      "type": "washStation",
+      "name": "개수대",
+      "lat": 37.407379,
+      "lng": 126.632306,
+      "officialPx": [
+        738,
+        735.5
+      ],
+      "marks": "facilities:29"
+    },
+    {
+      "id": "pentaport-pin-36",
+      "type": "kiosk",
+      "name": "키오스크",
+      "lat": 37.407397,
+      "lng": 126.633119,
+      "officialPx": [
+        578.5,
+        816.5
+      ],
+      "marks": "facilities:11"
+    },
+    {
+      "id": "pentaport-pin-37",
+      "type": "securityCheck",
+      "name": "물품검색대",
+      "lat": 37.407735,
+      "lng": 126.632118,
+      "officialPx": [
+        765.5,
+        849.5
+      ],
+      "marks": "facilities:16"
+    },
+    {
+      "id": "pentaport-pin-38",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.407855,
+      "lng": 126.634894,
+      "officialPx": [
+        216.5,
+        862.5
+      ],
+      "marks": "facilities:4"
+    },
+    {
+      "id": "pentaport-pin-39",
+      "type": "toilet",
+      "name": "화장실",
+      "lat": 37.407753,
+      "lng": 126.632416,
+      "officialPx": [
+        712.5,
+        871.5
+      ],
+      "marks": null
+    },
+    {
+      "id": "pentaport-pin-40",
+      "type": "lockers",
+      "name": "물품보관소",
+      "lat": 37.407838,
+      "lng": 126.631777,
+      "officialPx": [
+        834.5,
+        877.5
+      ],
+      "marks": "facilities:22"
+    },
+    {
+      "id": "pentaport-pin-41",
+      "type": "kiosk",
+      "name": "키오스크",
+      "lat": 37.407864,
+      "lng": 126.632951,
+      "officialPx": [
+        634.5,
+        899.5
+      ],
+      "marks": "facilities:14"
+    },
+    {
+      "id": "pentaport-pin-42",
+      "type": "washStation",
+      "name": "개수대",
+      "lat": 37.408002,
+      "lng": 126.63239,
+      "officialPx": [
+        732.5,
+        912
+      ],
+      "marks": "facilities:36"
+    },
+    {
+      "id": "pentaport-pin-43",
+      "type": "gate",
+      "name": "입장 게이트",
+      "lat": 37.408227,
+      "lng": 126.631676,
+      "officialPx": [
+        857,
+        990
+      ],
+      "marks": null
+    },
+    {
+      "id": "pentaport-pin-44",
+      "type": "officialMd",
+      "name": "공식MD",
+      "lat": 37.408433,
+      "lng": 126.632802,
+      "officialPx": [
+        614.5,
+        990.5
+      ],
+      "marks": "tents:38"
+    },
+    {
+      "id": "pentaport-pin-45",
+      "type": "artistMd",
+      "name": "아티스트MD",
+      "lat": 37.408566,
+      "lng": 126.633782,
+      "officialPx": [
+        505.5,
+        1068.5
+      ],
+      "marks": "tents:43"
+    },
+    {
+      "id": "pentaport-pin-48",
+      "type": "smoking",
+      "name": "흡연구역",
+      "lat": 37.408664,
+      "lng": 126.632916,
+      "officialPx": [
+        582,
+        1099
+      ],
+      "marks": "facilities:35"
+    },
+    {
+      "id": "pentaport-pin-bfPass",
+      "type": "barrierFreePass",
+      "name": "배리어 프리 패스",
+      "lat": 37.407319,
+      "lng": 126.631144,
+      "officialPx": [
+        963.8,
+        766.2
+      ],
+      "marks": null
+    },
+    {
+      "id": "pentaport-pin-mainCool",
+      "type": "mainCoolZone",
+      "name": "메인쿨존",
+      "lat": 37.407486,
+      "lng": 126.63261,
+      "officialPx": [
+        677.2,
+        766.1
+      ],
+      "marks": "domes:5"
+    }
+  ]
+}

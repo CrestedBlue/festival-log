@@ -1,0 +1,431 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+<g id="layer3" data-name="레이어 3 · 핀">
+<g id="pins-gate" data-name="입장 게이트"><g id="pin-3" transform="translate(260.5,318)"><circle cx="0" cy="2.6" r="24.5" fill="#111"/><circle cx="0" cy="0" r="24.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><circle cx="0" cy="-7" r="10" fill="#f03048" stroke="#2b2b2b" stroke-width="1.4"/><g transform="translate(-7,-14.4) scale(0.5833333333333334)"><path fill="#ffffff" stroke="none" stroke-linejoin="round" d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" /></g><text x="0" y="12.5" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="9.5" fill="#2b2b2b">GATE</text></g><g id="pin-43" transform="translate(857,990)"><circle cx="0" cy="2.6" r="24.5" fill="#111"/><circle cx="0" cy="0" r="24.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><circle cx="0" cy="-7" r="10" fill="#f03048" stroke="#2b2b2b" stroke-width="1.4"/><g transform="translate(-7,-14.4) scale(0.5833333333333334)"><path fill="#ffffff" stroke="none" stroke-linejoin="round" d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" /></g><text x="0" y="12.5" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="9.5" fill="#2b2b2b">GATE</text></g></g>
+<g id="pins-info" data-name="종합안내소"><g id="pin-27" transform="translate(581.5,674)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g stroke="#2b2b2b" stroke-width="1.6"><circle cx="0" cy="-8.5" r="3.4" fill="#f03048"/><rect x="-3" y="-3" width="6" height="15" rx="2.6" fill="#f03048"/></g></g></g>
+<g id="pins-barrierFreePass" data-name="배리어 프리 패스"><g id="pin-bfPass" transform="translate(963.8,766.2)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#48f0a8" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-9.5,-15.5) scale(0.7916666666666666)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+  <path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M19 17a3 3 0 0 0 -3 -3h-3.4" />
+  <path d="M3 3h1a2 2 0 0 1 2 2v6" />
+  <path d="M6 8h11" />
+  <path d="M15 8v6" /></g><g stroke="#ffffff" stroke-width="2"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+  <path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M19 17a3 3 0 0 0 -3 -3h-3.4" />
+  <path d="M3 3h1a2 2 0 0 1 2 2v6" />
+  <path d="M6 8h11" />
+  <path d="M15 8v6" /></g></g><text x="0" y="8" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="5.2" fill="#184830">Barrier Free</text><text x="0" y="13.6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="5.2" fill="#184830">Pass</text></g></g>
+<g id="pins-securityCheck" data-name="물품검색대"><g id="pin-37" transform="translate(765.5,849.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-15,-13) scale(1)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M6 8a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2l0 -10" />
+  <path d="M9 6v-1a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1" />
+  <path d="M6 10h12" />
+  <path d="M6 16h12" />
+  <path d="M9 20v1" />
+  <path d="M15 20v1" /></g><g stroke="#ffe11a" stroke-width="2"><path d="M6 8a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2l0 -10" />
+  <path d="M9 6v-1a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1" />
+  <path d="M6 10h12" />
+  <path d="M6 16h12" />
+  <path d="M9 20v1" />
+  <path d="M15 20v1" /></g></g><g transform="translate(-0.5,-1.5) scale(0.625)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+  <path d="M21 21l-6 -6" /></g><g stroke="#304890" stroke-width="2"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+  <path d="M21 21l-6 -6" /></g></g></g></g>
+<g id="pins-lockers" data-name="물품보관소"><g id="pin-40" transform="translate(834.5,877.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M6 8a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2l0 -10" />
+  <path d="M9 6v-1a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1" />
+  <path d="M6 10h12" />
+  <path d="M6 16h12" />
+  <path d="M9 20v1" />
+  <path d="M15 20v1" /></g><g stroke="#ffe11a" stroke-width="2"><path d="M6 8a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2l0 -10" />
+  <path d="M9 6v-1a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1" />
+  <path d="M6 10h12" />
+  <path d="M6 16h12" />
+  <path d="M9 20v1" />
+  <path d="M15 20v1" /></g></g></g></g>
+<g id="pins-pentaDreamer" data-name="펜타 드리머"><g id="pin-12" transform="translate(368.5,456.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" />
+  <path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3" />
+  <path d="M9.7 17l4.6 0" /></g><g stroke="#ff90d8" stroke-width="2"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" />
+  <path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3" />
+  <path d="M9.7 17l4.6 0" /></g></g></g></g>
+<g id="pins-promotionBooth" data-name="홍보 부스"><g id="pin-14" transform="translate(379.5,508)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+  <path d="M12 12l8 -4.5" />
+  <path d="M12 12l0 9" />
+  <path d="M12 12l-8 -4.5" />
+  <path d="M16 5.25l-8 4.5" /></g><g stroke="#ffd830" stroke-width="2"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+  <path d="M12 12l8 -4.5" />
+  <path d="M12 12l0 9" />
+  <path d="M12 12l-8 -4.5" />
+  <path d="M16 5.25l-8 4.5" /></g></g></g></g>
+<g id="pins-vendorBooth" data-name="벤더 부스"><g id="pin-15" transform="translate(217.5,517.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3 21l18 0" />
+  <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
+  <path d="M5 21l0 -10.15" />
+  <path d="M19 21l0 -10.15" />
+  <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /></g><g stroke="#304890" stroke-width="2"><path d="M3 21l18 0" />
+  <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
+  <path d="M5 21l0 -10.15" />
+  <path d="M19 21l0 -10.15" />
+  <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /></g></g></g></g>
+<g id="pins-fnb" data-name="F&amp;B"><g id="pin-30" transform="translate(423.5,690.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M4 15h16a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4" />
+  <path d="M12 4c3.783 0 6.953 2.133 7.786 5h-15.572c.833 -2.867 4.003 -5 7.786 -5" />
+  <path d="M5 12h14" /></g><g stroke="#f04830" stroke-width="2"><path d="M4 15h16a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4" />
+  <path d="M12 4c3.783 0 6.953 2.133 7.786 5h-15.572c.833 -2.867 4.003 -5 7.786 -5" />
+  <path d="M5 12h14" /></g></g></g></g>
+<g id="pins-bar" data-name="주류"><g id="pin-17" transform="translate(1030.5,536.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M9 21h6a1 1 0 0 0 1 -1v-3.625c0 -1.397 .29 -2.775 .845 -4.025l.31 -.7c.556 -1.25 .845 -2.253 .845 -3.65v-4a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v4c0 1.397 .29 2.4 .845 3.65l.31 .7a9.931 9.931 0 0 1 .845 4.025v3.625a1 1 0 0 0 1 1" />
+  <path d="M6 8h12" /></g><g stroke="#ffc018" stroke-width="2"><path d="M9 21h6a1 1 0 0 0 1 -1v-3.625c0 -1.397 .29 -2.775 .845 -4.025l.31 -.7c.556 -1.25 .845 -2.253 .845 -3.65v-4a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v4c0 1.397 .29 2.4 .845 3.65l.31 .7a9.931 9.931 0 0 1 .845 4.025v3.625a1 1 0 0 0 1 1" />
+  <path d="M6 8h12" /></g></g></g><g id="pin-19" transform="translate(582,584)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M9 21h6a1 1 0 0 0 1 -1v-3.625c0 -1.397 .29 -2.775 .845 -4.025l.31 -.7c.556 -1.25 .845 -2.253 .845 -3.65v-4a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v4c0 1.397 .29 2.4 .845 3.65l.31 .7a9.931 9.931 0 0 1 .845 4.025v3.625a1 1 0 0 0 1 1" />
+  <path d="M6 8h12" /></g><g stroke="#ffc018" stroke-width="2"><path d="M9 21h6a1 1 0 0 0 1 -1v-3.625c0 -1.397 .29 -2.775 .845 -4.025l.31 -.7c.556 -1.25 .845 -2.253 .845 -3.65v-4a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v4c0 1.397 .29 2.4 .845 3.65l.31 .7a9.931 9.931 0 0 1 .845 4.025v3.625a1 1 0 0 0 1 1" />
+  <path d="M6 8h12" /></g></g></g><g id="pin-24" transform="translate(347.5,633.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M9 21h6a1 1 0 0 0 1 -1v-3.625c0 -1.397 .29 -2.775 .845 -4.025l.31 -.7c.556 -1.25 .845 -2.253 .845 -3.65v-4a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v4c0 1.397 .29 2.4 .845 3.65l.31 .7a9.931 9.931 0 0 1 .845 4.025v3.625a1 1 0 0 0 1 1" />
+  <path d="M6 8h12" /></g><g stroke="#ffc018" stroke-width="2"><path d="M9 21h6a1 1 0 0 0 1 -1v-3.625c0 -1.397 .29 -2.775 .845 -4.025l.31 -.7c.556 -1.25 .845 -2.253 .845 -3.65v-4a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v4c0 1.397 .29 2.4 .845 3.65l.31 .7a9.931 9.931 0 0 1 .845 4.025v3.625a1 1 0 0 0 1 1" />
+  <path d="M6 8h12" /></g></g></g><g id="pin-31" transform="translate(507.5,691.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M9 21h6a1 1 0 0 0 1 -1v-3.625c0 -1.397 .29 -2.775 .845 -4.025l.31 -.7c.556 -1.25 .845 -2.253 .845 -3.65v-4a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v4c0 1.397 .29 2.4 .845 3.65l.31 .7a9.931 9.931 0 0 1 .845 4.025v3.625a1 1 0 0 0 1 1" />
+  <path d="M6 8h12" /></g><g stroke="#ffc018" stroke-width="2"><path d="M9 21h6a1 1 0 0 0 1 -1v-3.625c0 -1.397 .29 -2.775 .845 -4.025l.31 -.7c.556 -1.25 .845 -2.253 .845 -3.65v-4a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1v4c0 1.397 .29 2.4 .845 3.65l.31 .7a9.931 9.931 0 0 1 .845 4.025v3.625a1 1 0 0 0 1 1" />
+  <path d="M6 8h12" /></g></g></g></g>
+<g id="pins-waterBar" data-name="워터바"><g id="pin-21" transform="translate(625.5,600.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><path d="M-8,-10H8L6,10H-6Z" fill="#30c0f0" stroke="#2b2b2b" stroke-width="1.6" stroke-linejoin="round"/><g transform="translate(-5.5,-4.5) scale(0.4583333333333333)"><path fill="#ffffff" stroke="none" stroke-linejoin="round" d="M10.708 2.372a2.382 2.382 0 0 0 -.71 .686l-4.892 7.26c-1.981 3.314 -1.22 7.466 1.767 9.882c2.969 2.402 7.286 2.402 10.254 0c2.987 -2.416 3.748 -6.569 1.795 -9.836l-4.919 -7.306c-.722 -1.075 -2.192 -1.376 -3.295 -.686z" /></g></g></g>
+<g id="pins-kiosk" data-name="키오스크"><g id="pin-36" transform="translate(578.5,816.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14" />
+  <path d="M11 4h2" />
+  <path d="M12 17v.01" /></g><g stroke="#1b4f8a" stroke-width="2"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14" />
+  <path d="M11 4h2" />
+  <path d="M12 17v.01" /></g></g></g><g id="pin-41" transform="translate(634.5,899.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14" />
+  <path d="M11 4h2" />
+  <path d="M12 17v.01" /></g><g stroke="#1b4f8a" stroke-width="2"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14" />
+  <path d="M11 4h2" />
+  <path d="M12 17v.01" /></g></g></g></g>
+<g id="pins-medical" data-name="의료부스"><g id="pin-7" transform="translate(673,343.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)"><path fill="#18a848" stroke="#2b2b2b" stroke-width="1.4" stroke-linejoin="round" d="M11.884 2.007l.114 -.007l.118 .007l.059 .008l.061 .013l.111 .034a.993 .993 0 0 1 .217 .112l.104 .082l.255 .218a11 11 0 0 0 7.189 2.537l.342 -.01a1 1 0 0 1 1.005 .717a13 13 0 0 1 -9.208 16.25a1 1 0 0 1 -.502 0a13 13 0 0 1 -9.209 -16.25a1 1 0 0 1 1.005 -.717a11 11 0 0 0 7.531 -2.527l.263 -.225l.096 -.075a.993 .993 0 0 1 .217 -.112l.112 -.034a.97 .97 0 0 1 .119 -.021z" /></g><path d="M0,-5.5V5.5M-5.5,0H5.5" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round"/></g><g id="pin-8" transform="translate(1001.5,391.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)"><path fill="#18a848" stroke="#2b2b2b" stroke-width="1.4" stroke-linejoin="round" d="M11.884 2.007l.114 -.007l.118 .007l.059 .008l.061 .013l.111 .034a.993 .993 0 0 1 .217 .112l.104 .082l.255 .218a11 11 0 0 0 7.189 2.537l.342 -.01a1 1 0 0 1 1.005 .717a13 13 0 0 1 -9.208 16.25a1 1 0 0 1 -.502 0a13 13 0 0 1 -9.209 -16.25a1 1 0 0 1 1.005 -.717a11 11 0 0 0 7.531 -2.527l.263 -.225l.096 -.075a.993 .993 0 0 1 .217 -.112l.112 -.034a.97 .97 0 0 1 .119 -.021z" /></g><path d="M0,-5.5V5.5M-5.5,0H5.5" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round"/></g><g id="pin-18" transform="translate(195.5,579.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)"><path fill="#18a848" stroke="#2b2b2b" stroke-width="1.4" stroke-linejoin="round" d="M11.884 2.007l.114 -.007l.118 .007l.059 .008l.061 .013l.111 .034a.993 .993 0 0 1 .217 .112l.104 .082l.255 .218a11 11 0 0 0 7.189 2.537l.342 -.01a1 1 0 0 1 1.005 .717a13 13 0 0 1 -9.208 16.25a1 1 0 0 1 -.502 0a13 13 0 0 1 -9.209 -16.25a1 1 0 0 1 1.005 -.717a11 11 0 0 0 7.531 -2.527l.263 -.225l.096 -.075a.993 .993 0 0 1 .217 -.112l.112 -.034a.97 .97 0 0 1 .119 -.021z" /></g><path d="M0,-5.5V5.5M-5.5,0H5.5" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round"/></g><g id="pin-23" transform="translate(559.5,626.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)"><path fill="#18a848" stroke="#2b2b2b" stroke-width="1.4" stroke-linejoin="round" d="M11.884 2.007l.114 -.007l.118 .007l.059 .008l.061 .013l.111 .034a.993 .993 0 0 1 .217 .112l.104 .082l.255 .218a11 11 0 0 0 7.189 2.537l.342 -.01a1 1 0 0 1 1.005 .717a13 13 0 0 1 -9.208 16.25a1 1 0 0 1 -.502 0a13 13 0 0 1 -9.209 -16.25a1 1 0 0 1 1.005 -.717a11 11 0 0 0 7.531 -2.527l.263 -.225l.096 -.075a.993 .993 0 0 1 .217 -.112l.112 -.034a.97 .97 0 0 1 .119 -.021z" /></g><path d="M0,-5.5V5.5M-5.5,0H5.5" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round"/></g><g id="pin-33" transform="translate(1033.5,725.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)"><path fill="#18a848" stroke="#2b2b2b" stroke-width="1.4" stroke-linejoin="round" d="M11.884 2.007l.114 -.007l.118 .007l.059 .008l.061 .013l.111 .034a.993 .993 0 0 1 .217 .112l.104 .082l.255 .218a11 11 0 0 0 7.189 2.537l.342 -.01a1 1 0 0 1 1.005 .717a13 13 0 0 1 -9.208 16.25a1 1 0 0 1 -.502 0a13 13 0 0 1 -9.209 -16.25a1 1 0 0 1 1.005 -.717a11 11 0 0 0 7.531 -2.527l.263 -.225l.096 -.075a.993 .993 0 0 1 .217 -.112l.112 -.034a.97 .97 0 0 1 .119 -.021z" /></g><path d="M0,-5.5V5.5M-5.5,0H5.5" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round"/></g></g>
+<g id="pins-coolZone" data-name="쿨존"><g id="pin-6" transform="translate(630.5,343.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 4l2 1l2 -1" />
+  <path d="M12 2v6.5l3 1.72" />
+  <path d="M17.928 6.268l.134 2.232l1.866 1.232" />
+  <path d="M20.66 7l-5.629 3.25l.01 3.458" />
+  <path d="M19.928 14.268l-1.866 1.232l-.134 2.232" />
+  <path d="M20.66 17l-5.629 -3.25l-2.99 1.738" />
+  <path d="M14 20l-2 -1l-2 1" />
+  <path d="M12 22v-6.5l-3 -1.72" />
+  <path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" />
+  <path d="M3.34 17l5.629 -3.25l-.01 -3.458" />
+  <path d="M4.072 9.732l1.866 -1.232l.134 -2.232" />
+  <path d="M3.34 7l5.629 3.25l2.99 -1.738" /></g><g stroke="#36b6e8" stroke-width="2"><path d="M10 4l2 1l2 -1" />
+  <path d="M12 2v6.5l3 1.72" />
+  <path d="M17.928 6.268l.134 2.232l1.866 1.232" />
+  <path d="M20.66 7l-5.629 3.25l.01 3.458" />
+  <path d="M19.928 14.268l-1.866 1.232l-.134 2.232" />
+  <path d="M20.66 17l-5.629 -3.25l-2.99 1.738" />
+  <path d="M14 20l-2 -1l-2 1" />
+  <path d="M12 22v-6.5l-3 -1.72" />
+  <path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" />
+  <path d="M3.34 17l5.629 -3.25l-.01 -3.458" />
+  <path d="M4.072 9.732l1.866 -1.232l.134 -2.232" />
+  <path d="M3.34 7l5.629 3.25l2.99 -1.738" /></g></g></g><g id="pin-9" transform="translate(262.5,404.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 4l2 1l2 -1" />
+  <path d="M12 2v6.5l3 1.72" />
+  <path d="M17.928 6.268l.134 2.232l1.866 1.232" />
+  <path d="M20.66 7l-5.629 3.25l.01 3.458" />
+  <path d="M19.928 14.268l-1.866 1.232l-.134 2.232" />
+  <path d="M20.66 17l-5.629 -3.25l-2.99 1.738" />
+  <path d="M14 20l-2 -1l-2 1" />
+  <path d="M12 22v-6.5l-3 -1.72" />
+  <path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" />
+  <path d="M3.34 17l5.629 -3.25l-.01 -3.458" />
+  <path d="M4.072 9.732l1.866 -1.232l.134 -2.232" />
+  <path d="M3.34 7l5.629 3.25l2.99 -1.738" /></g><g stroke="#36b6e8" stroke-width="2"><path d="M10 4l2 1l2 -1" />
+  <path d="M12 2v6.5l3 1.72" />
+  <path d="M17.928 6.268l.134 2.232l1.866 1.232" />
+  <path d="M20.66 7l-5.629 3.25l.01 3.458" />
+  <path d="M19.928 14.268l-1.866 1.232l-.134 2.232" />
+  <path d="M20.66 17l-5.629 -3.25l-2.99 1.738" />
+  <path d="M14 20l-2 -1l-2 1" />
+  <path d="M12 22v-6.5l-3 -1.72" />
+  <path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" />
+  <path d="M3.34 17l5.629 -3.25l-.01 -3.458" />
+  <path d="M4.072 9.732l1.866 -1.232l.134 -2.232" />
+  <path d="M3.34 7l5.629 3.25l2.99 -1.738" /></g></g></g><g id="pin-20" transform="translate(1034.5,584.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 4l2 1l2 -1" />
+  <path d="M12 2v6.5l3 1.72" />
+  <path d="M17.928 6.268l.134 2.232l1.866 1.232" />
+  <path d="M20.66 7l-5.629 3.25l.01 3.458" />
+  <path d="M19.928 14.268l-1.866 1.232l-.134 2.232" />
+  <path d="M20.66 17l-5.629 -3.25l-2.99 1.738" />
+  <path d="M14 20l-2 -1l-2 1" />
+  <path d="M12 22v-6.5l-3 -1.72" />
+  <path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" />
+  <path d="M3.34 17l5.629 -3.25l-.01 -3.458" />
+  <path d="M4.072 9.732l1.866 -1.232l.134 -2.232" />
+  <path d="M3.34 7l5.629 3.25l2.99 -1.738" /></g><g stroke="#36b6e8" stroke-width="2"><path d="M10 4l2 1l2 -1" />
+  <path d="M12 2v6.5l3 1.72" />
+  <path d="M17.928 6.268l.134 2.232l1.866 1.232" />
+  <path d="M20.66 7l-5.629 3.25l.01 3.458" />
+  <path d="M19.928 14.268l-1.866 1.232l-.134 2.232" />
+  <path d="M20.66 17l-5.629 -3.25l-2.99 1.738" />
+  <path d="M14 20l-2 -1l-2 1" />
+  <path d="M12 22v-6.5l-3 -1.72" />
+  <path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" />
+  <path d="M3.34 17l5.629 -3.25l-.01 -3.458" />
+  <path d="M4.072 9.732l1.866 -1.232l.134 -2.232" />
+  <path d="M3.34 7l5.629 3.25l2.99 -1.738" /></g></g></g><g id="pin-22" transform="translate(155.5,607)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 4l2 1l2 -1" />
+  <path d="M12 2v6.5l3 1.72" />
+  <path d="M17.928 6.268l.134 2.232l1.866 1.232" />
+  <path d="M20.66 7l-5.629 3.25l.01 3.458" />
+  <path d="M19.928 14.268l-1.866 1.232l-.134 2.232" />
+  <path d="M20.66 17l-5.629 -3.25l-2.99 1.738" />
+  <path d="M14 20l-2 -1l-2 1" />
+  <path d="M12 22v-6.5l-3 -1.72" />
+  <path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" />
+  <path d="M3.34 17l5.629 -3.25l-.01 -3.458" />
+  <path d="M4.072 9.732l1.866 -1.232l.134 -2.232" />
+  <path d="M3.34 7l5.629 3.25l2.99 -1.738" /></g><g stroke="#36b6e8" stroke-width="2"><path d="M10 4l2 1l2 -1" />
+  <path d="M12 2v6.5l3 1.72" />
+  <path d="M17.928 6.268l.134 2.232l1.866 1.232" />
+  <path d="M20.66 7l-5.629 3.25l.01 3.458" />
+  <path d="M19.928 14.268l-1.866 1.232l-.134 2.232" />
+  <path d="M20.66 17l-5.629 -3.25l-2.99 1.738" />
+  <path d="M14 20l-2 -1l-2 1" />
+  <path d="M12 22v-6.5l-3 -1.72" />
+  <path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" />
+  <path d="M3.34 17l5.629 -3.25l-.01 -3.458" />
+  <path d="M4.072 9.732l1.866 -1.232l.134 -2.232" />
+  <path d="M3.34 7l5.629 3.25l2.99 -1.738" /></g></g></g><g id="pin-32" transform="translate(940,698)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 4l2 1l2 -1" />
+  <path d="M12 2v6.5l3 1.72" />
+  <path d="M17.928 6.268l.134 2.232l1.866 1.232" />
+  <path d="M20.66 7l-5.629 3.25l.01 3.458" />
+  <path d="M19.928 14.268l-1.866 1.232l-.134 2.232" />
+  <path d="M20.66 17l-5.629 -3.25l-2.99 1.738" />
+  <path d="M14 20l-2 -1l-2 1" />
+  <path d="M12 22v-6.5l-3 -1.72" />
+  <path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" />
+  <path d="M3.34 17l5.629 -3.25l-.01 -3.458" />
+  <path d="M4.072 9.732l1.866 -1.232l.134 -2.232" />
+  <path d="M3.34 7l5.629 3.25l2.99 -1.738" /></g><g stroke="#36b6e8" stroke-width="2"><path d="M10 4l2 1l2 -1" />
+  <path d="M12 2v6.5l3 1.72" />
+  <path d="M17.928 6.268l.134 2.232l1.866 1.232" />
+  <path d="M20.66 7l-5.629 3.25l.01 3.458" />
+  <path d="M19.928 14.268l-1.866 1.232l-.134 2.232" />
+  <path d="M20.66 17l-5.629 -3.25l-2.99 1.738" />
+  <path d="M14 20l-2 -1l-2 1" />
+  <path d="M12 22v-6.5l-3 -1.72" />
+  <path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" />
+  <path d="M3.34 17l5.629 -3.25l-.01 -3.458" />
+  <path d="M4.072 9.732l1.866 -1.232l.134 -2.232" />
+  <path d="M3.34 7l5.629 3.25l2.99 -1.738" /></g></g></g></g>
+<g id="pins-mainCoolZone" data-name="메인쿨존"><g id="pin-mainCool" transform="translate(677.2,766.1)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#30c0f0" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13.5,-13.5) scale(1.125)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 4l2 1l2 -1" />
+  <path d="M12 2v6.5l3 1.72" />
+  <path d="M17.928 6.268l.134 2.232l1.866 1.232" />
+  <path d="M20.66 7l-5.629 3.25l.01 3.458" />
+  <path d="M19.928 14.268l-1.866 1.232l-.134 2.232" />
+  <path d="M20.66 17l-5.629 -3.25l-2.99 1.738" />
+  <path d="M14 20l-2 -1l-2 1" />
+  <path d="M12 22v-6.5l-3 -1.72" />
+  <path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" />
+  <path d="M3.34 17l5.629 -3.25l-.01 -3.458" />
+  <path d="M4.072 9.732l1.866 -1.232l.134 -2.232" />
+  <path d="M3.34 7l5.629 3.25l2.99 -1.738" /></g><g stroke="#ffffff" stroke-width="2"><path d="M10 4l2 1l2 -1" />
+  <path d="M12 2v6.5l3 1.72" />
+  <path d="M17.928 6.268l.134 2.232l1.866 1.232" />
+  <path d="M20.66 7l-5.629 3.25l.01 3.458" />
+  <path d="M19.928 14.268l-1.866 1.232l-.134 2.232" />
+  <path d="M20.66 17l-5.629 -3.25l-2.99 1.738" />
+  <path d="M14 20l-2 -1l-2 1" />
+  <path d="M12 22v-6.5l-3 -1.72" />
+  <path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" />
+  <path d="M3.34 17l5.629 -3.25l-.01 -3.458" />
+  <path d="M4.072 9.732l1.866 -1.232l.134 -2.232" />
+  <path d="M3.34 7l5.629 3.25l2.99 -1.738" /></g></g></g></g>
+<g id="pins-officialMd" data-name="공식MD"><g id="pin-44" transform="translate(614.5,990.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3 9a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -2" />
+  <path d="M12 8l0 13" />
+  <path d="M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7" />
+  <path d="M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5" /></g><g stroke="#f03048" stroke-width="2"><path d="M3 9a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -2" />
+  <path d="M12 8l0 13" />
+  <path d="M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7" />
+  <path d="M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5" /></g></g></g></g>
+<g id="pins-artistMd" data-name="아티스트MD"><g id="pin-45" transform="translate(505.5,1068.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3 8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3l0 -8" />
+  <path d="M7 16l3 -3l3 3" />
+  <path d="M8 13c-.789 0 -2 -.672 -2 -1.5s.711 -1.5 1.5 -1.5c1.128 -.02 2.077 1.17 2.5 3c.423 -1.83 1.372 -3.02 2.5 -3c.789 0 1.5 .672 1.5 1.5s-1.211 1.5 -2 1.5h-4" /></g><g stroke="#783090" stroke-width="2"><path d="M3 8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3l0 -8" />
+  <path d="M7 16l3 -3l3 3" />
+  <path d="M8 13c-.789 0 -2 -.672 -2 -1.5s.711 -1.5 1.5 -1.5c1.128 -.02 2.077 1.17 2.5 3c.423 -1.83 1.372 -3.02 2.5 -3c.789 0 1.5 .672 1.5 1.5s-1.211 1.5 -2 1.5h-4" /></g></g></g></g>
+<g id="pins-charging" data-name="모바일 충전소"><g id="pin-5" transform="translate(587.5,343.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13.5,-13.5) scale(1.125)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M7 18v-11a2 2 0 0 1 2 -2h.5a.5 .5 0 0 0 .5 -.5a.5 .5 0 0 1 .5 -.5h3a.5 .5 0 0 1 .5 .5a.5 .5 0 0 0 .5 .5h.5a2 2 0 0 1 2 2v11a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2" />
+  <path d="M12.667 8l-2.667 4h4l-2.667 4" /></g><g stroke="#18a848" stroke-width="2"><path d="M7 18v-11a2 2 0 0 1 2 -2h.5a.5 .5 0 0 0 .5 -.5a.5 .5 0 0 1 .5 -.5h3a.5 .5 0 0 1 .5 .5a.5 .5 0 0 0 .5 .5h.5a2 2 0 0 1 2 2v11a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2" />
+  <path d="M12.667 8l-2.667 4h4l-2.667 4" /></g></g></g></g>
+<g id="pins-toilet" data-name="화장실"><g id="pin-0" transform="translate(561.5,290.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-17.5,-11) scale(0.9166666666666666)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M9 9h6l-1 7h-4l-1 -7" />
+  <path d="M5 11c1.333 -1.333 2.667 -2 4 -2" />
+  <path d="M19 11c-1.333 -1.333 -2.667 -2 -4 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g><g stroke="#303090" stroke-width="2"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M9 9h6l-1 7h-4l-1 -7" />
+  <path d="M5 11c1.333 -1.333 2.667 -2 4 -2" />
+  <path d="M19 11c-1.333 -1.333 -2.667 -2 -4 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g></g><g transform="translate(-4.5,-11) scale(0.9166666666666666)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M8 16h8l-2 -7h-4l-2 7" />
+  <path d="M5 11c1.667 -1.333 3.333 -2 5 -2" />
+  <path d="M19 11c-1.667 -1.333 -3.333 -2 -5 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g><g stroke="#f01878" stroke-width="2"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M8 16h8l-2 -7h-4l-2 7" />
+  <path d="M5 11c1.667 -1.333 3.333 -2 5 -2" />
+  <path d="M19 11c-1.667 -1.333 -3.333 -2 -5 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g></g></g><g id="pin-2" transform="translate(703.5,290.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-17.5,-11) scale(0.9166666666666666)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M9 9h6l-1 7h-4l-1 -7" />
+  <path d="M5 11c1.333 -1.333 2.667 -2 4 -2" />
+  <path d="M19 11c-1.333 -1.333 -2.667 -2 -4 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g><g stroke="#303090" stroke-width="2"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M9 9h6l-1 7h-4l-1 -7" />
+  <path d="M5 11c1.333 -1.333 2.667 -2 4 -2" />
+  <path d="M19 11c-1.333 -1.333 -2.667 -2 -4 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g></g><g transform="translate(-4.5,-11) scale(0.9166666666666666)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M8 16h8l-2 -7h-4l-2 7" />
+  <path d="M5 11c1.667 -1.333 3.333 -2 5 -2" />
+  <path d="M19 11c-1.667 -1.333 -3.333 -2 -5 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g><g stroke="#f01878" stroke-width="2"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M8 16h8l-2 -7h-4l-2 7" />
+  <path d="M5 11c1.667 -1.333 3.333 -2 5 -2" />
+  <path d="M19 11c-1.667 -1.333 -3.333 -2 -5 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g></g></g><g id="pin-11" transform="translate(1015.5,436.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-17.5,-11) scale(0.9166666666666666)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M9 9h6l-1 7h-4l-1 -7" />
+  <path d="M5 11c1.333 -1.333 2.667 -2 4 -2" />
+  <path d="M19 11c-1.333 -1.333 -2.667 -2 -4 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g><g stroke="#303090" stroke-width="2"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M9 9h6l-1 7h-4l-1 -7" />
+  <path d="M5 11c1.333 -1.333 2.667 -2 4 -2" />
+  <path d="M19 11c-1.333 -1.333 -2.667 -2 -4 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g></g><g transform="translate(-4.5,-11) scale(0.9166666666666666)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M8 16h8l-2 -7h-4l-2 7" />
+  <path d="M5 11c1.667 -1.333 3.333 -2 5 -2" />
+  <path d="M19 11c-1.667 -1.333 -3.333 -2 -5 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g><g stroke="#f01878" stroke-width="2"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M8 16h8l-2 -7h-4l-2 7" />
+  <path d="M5 11c1.667 -1.333 3.333 -2 5 -2" />
+  <path d="M19 11c-1.667 -1.333 -3.333 -2 -5 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g></g></g><g id="pin-38" transform="translate(216.5,862.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-17.5,-11) scale(0.9166666666666666)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M9 9h6l-1 7h-4l-1 -7" />
+  <path d="M5 11c1.333 -1.333 2.667 -2 4 -2" />
+  <path d="M19 11c-1.333 -1.333 -2.667 -2 -4 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g><g stroke="#303090" stroke-width="2"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M9 9h6l-1 7h-4l-1 -7" />
+  <path d="M5 11c1.333 -1.333 2.667 -2 4 -2" />
+  <path d="M19 11c-1.333 -1.333 -2.667 -2 -4 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g></g><g transform="translate(-4.5,-11) scale(0.9166666666666666)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M8 16h8l-2 -7h-4l-2 7" />
+  <path d="M5 11c1.667 -1.333 3.333 -2 5 -2" />
+  <path d="M19 11c-1.667 -1.333 -3.333 -2 -5 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g><g stroke="#f01878" stroke-width="2"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M8 16h8l-2 -7h-4l-2 7" />
+  <path d="M5 11c1.667 -1.333 3.333 -2 5 -2" />
+  <path d="M19 11c-1.667 -1.333 -3.333 -2 -5 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g></g></g><g id="pin-39" transform="translate(712.5,871.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-17.5,-11) scale(0.9166666666666666)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M9 9h6l-1 7h-4l-1 -7" />
+  <path d="M5 11c1.333 -1.333 2.667 -2 4 -2" />
+  <path d="M19 11c-1.333 -1.333 -2.667 -2 -4 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g><g stroke="#303090" stroke-width="2"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M9 9h6l-1 7h-4l-1 -7" />
+  <path d="M5 11c1.333 -1.333 2.667 -2 4 -2" />
+  <path d="M19 11c-1.333 -1.333 -2.667 -2 -4 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g></g><g transform="translate(-4.5,-11) scale(0.9166666666666666)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M8 16h8l-2 -7h-4l-2 7" />
+  <path d="M5 11c1.667 -1.333 3.333 -2 5 -2" />
+  <path d="M19 11c-1.667 -1.333 -3.333 -2 -5 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g><g stroke="#f01878" stroke-width="2"><path d="M10 16v5" />
+  <path d="M14 16v5" />
+  <path d="M8 16h8l-2 -7h-4l-2 7" />
+  <path d="M5 11c1.667 -1.333 3.333 -2 5 -2" />
+  <path d="M19 11c-1.667 -1.333 -3.333 -2 -5 -2" />
+  <path d="M10 4a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></g></g></g></g>
+<g id="pins-accessibleToilet" data-name="장애인 화장실"><g id="pin-4" transform="translate(544.5,343.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+  <path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M19 17a3 3 0 0 0 -3 -3h-3.4" />
+  <path d="M3 3h1a2 2 0 0 1 2 2v6" />
+  <path d="M6 8h11" />
+  <path d="M15 8v6" /></g><g stroke="#1878c0" stroke-width="2"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+  <path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M19 17a3 3 0 0 0 -3 -3h-3.4" />
+  <path d="M3 3h1a2 2 0 0 1 2 2v6" />
+  <path d="M6 8h11" />
+  <path d="M15 8v6" /></g></g></g><g id="pin-13" transform="translate(1024.5,486.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+  <path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M19 17a3 3 0 0 0 -3 -3h-3.4" />
+  <path d="M3 3h1a2 2 0 0 1 2 2v6" />
+  <path d="M6 8h11" />
+  <path d="M15 8v6" /></g><g stroke="#1878c0" stroke-width="2"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+  <path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M19 17a3 3 0 0 0 -3 -3h-3.4" />
+  <path d="M3 3h1a2 2 0 0 1 2 2v6" />
+  <path d="M6 8h11" />
+  <path d="M15 8v6" /></g></g></g></g>
+<g id="pins-washStation" data-name="개수대"><g id="pin-35" transform="translate(738,735.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3.486 8.965c.168 .02 .34 .033 .514 .035c.79 .009 1.539 -.178 2 -.5c.426 -.296 .777 -.5 1.5 -.5h1" />
+  <path d="M16 8l.615 .034c.552 .067 1.046 .23 1.385 .466c.461 .322 1.21 .509 2 .5c.17 0 .339 -.014 .503 -.034" />
+  <path d="M14 10.5l.586 .578a1.516 1.516 0 0 0 2 0c.476 -.433 .55 -1.112 .176 -1.622l-1.762 -2.456c-.37 -.506 -1.331 -1 -2 -1h-3.117a1 1 0 0 0 -.992 .876l-.499 3.986a3.857 3.857 0 0 0 2.608 4.138a2.28 2.28 0 0 0 3 -2.162v-2.338" />
+  <path d="M3 6l1.721 10.329a2 2 0 0 0 1.973 1.671h10.612a2 2 0 0 0 1.973 -1.671l1.721 -10.329" /></g><g stroke="#30c0f0" stroke-width="2"><path d="M3.486 8.965c.168 .02 .34 .033 .514 .035c.79 .009 1.539 -.178 2 -.5c.426 -.296 .777 -.5 1.5 -.5h1" />
+  <path d="M16 8l.615 .034c.552 .067 1.046 .23 1.385 .466c.461 .322 1.21 .509 2 .5c.17 0 .339 -.014 .503 -.034" />
+  <path d="M14 10.5l.586 .578a1.516 1.516 0 0 0 2 0c.476 -.433 .55 -1.112 .176 -1.622l-1.762 -2.456c-.37 -.506 -1.331 -1 -2 -1h-3.117a1 1 0 0 0 -.992 .876l-.499 3.986a3.857 3.857 0 0 0 2.608 4.138a2.28 2.28 0 0 0 3 -2.162v-2.338" />
+  <path d="M3 6l1.721 10.329a2 2 0 0 0 1.973 1.671h10.612a2 2 0 0 0 1.973 -1.671l1.721 -10.329" /></g></g></g><g id="pin-42" transform="translate(732.5,912)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3.486 8.965c.168 .02 .34 .033 .514 .035c.79 .009 1.539 -.178 2 -.5c.426 -.296 .777 -.5 1.5 -.5h1" />
+  <path d="M16 8l.615 .034c.552 .067 1.046 .23 1.385 .466c.461 .322 1.21 .509 2 .5c.17 0 .339 -.014 .503 -.034" />
+  <path d="M14 10.5l.586 .578a1.516 1.516 0 0 0 2 0c.476 -.433 .55 -1.112 .176 -1.622l-1.762 -2.456c-.37 -.506 -1.331 -1 -2 -1h-3.117a1 1 0 0 0 -.992 .876l-.499 3.986a3.857 3.857 0 0 0 2.608 4.138a2.28 2.28 0 0 0 3 -2.162v-2.338" />
+  <path d="M3 6l1.721 10.329a2 2 0 0 0 1.973 1.671h10.612a2 2 0 0 0 1.973 -1.671l1.721 -10.329" /></g><g stroke="#30c0f0" stroke-width="2"><path d="M3.486 8.965c.168 .02 .34 .033 .514 .035c.79 .009 1.539 -.178 2 -.5c.426 -.296 .777 -.5 1.5 -.5h1" />
+  <path d="M16 8l.615 .034c.552 .067 1.046 .23 1.385 .466c.461 .322 1.21 .509 2 .5c.17 0 .339 -.014 .503 -.034" />
+  <path d="M14 10.5l.586 .578a1.516 1.516 0 0 0 2 0c.476 -.433 .55 -1.112 .176 -1.622l-1.762 -2.456c-.37 -.506 -1.331 -1 -2 -1h-3.117a1 1 0 0 0 -.992 .876l-.499 3.986a3.857 3.857 0 0 0 2.608 4.138a2.28 2.28 0 0 0 3 -2.162v-2.338" />
+  <path d="M3 6l1.721 10.329a2 2 0 0 0 1.973 1.671h10.612a2 2 0 0 0 1.973 -1.671l1.721 -10.329" /></g></g></g></g>
+<g id="pins-nursingRoom" data-name="수유실"><g id="pin-1" transform="translate(662.5,290.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M5 10h14" />
+  <path d="M12 2v2" />
+  <path d="M12 4a5 5 0 0 1 5 5v11a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2v-11a5 5 0 0 1 5 -5" /></g><g stroke="#e8a868" stroke-width="2"><path d="M5 10h14" />
+  <path d="M12 2v2" />
+  <path d="M12 4a5 5 0 0 1 5 5v11a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2v-11a5 5 0 0 1 5 -5" /></g></g></g></g>
+<g id="pins-barrierFreeZone" data-name="배리어 프리 존"><g id="pin-10" transform="translate(713.5,425.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-9,-15) scale(0.75)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+  <path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M19 17a3 3 0 0 0 -3 -3h-3.4" />
+  <path d="M3 3h1a2 2 0 0 1 2 2v6" />
+  <path d="M6 8h11" />
+  <path d="M15 8v6" /></g><g stroke="#00a8a8" stroke-width="2"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+  <path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M19 17a3 3 0 0 0 -3 -3h-3.4" />
+  <path d="M3 3h1a2 2 0 0 1 2 2v6" />
+  <path d="M6 8h11" />
+  <path d="M15 8v6" /></g></g><text x="0" y="8" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="5.2" fill="#2b2b2b">Barrier Free</text><text x="0" y="13.6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="5.2" fill="#2b2b2b">Zone</text></g><g id="pin-16" transform="translate(606.5,529)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-9,-15) scale(0.75)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+  <path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M19 17a3 3 0 0 0 -3 -3h-3.4" />
+  <path d="M3 3h1a2 2 0 0 1 2 2v6" />
+  <path d="M6 8h11" />
+  <path d="M15 8v6" /></g><g stroke="#00a8a8" stroke-width="2"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+  <path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M19 17a3 3 0 0 0 -3 -3h-3.4" />
+  <path d="M3 3h1a2 2 0 0 1 2 2v6" />
+  <path d="M6 8h11" />
+  <path d="M15 8v6" /></g></g><text x="0" y="8" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="5.2" fill="#2b2b2b">Barrier Free</text><text x="0" y="13.6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="5.2" fill="#2b2b2b">Zone</text></g><g id="pin-34" transform="translate(173,729.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-9,-15) scale(0.75)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+  <path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M19 17a3 3 0 0 0 -3 -3h-3.4" />
+  <path d="M3 3h1a2 2 0 0 1 2 2v6" />
+  <path d="M6 8h11" />
+  <path d="M15 8v6" /></g><g stroke="#00a8a8" stroke-width="2"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+  <path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M19 17a3 3 0 0 0 -3 -3h-3.4" />
+  <path d="M3 3h1a2 2 0 0 1 2 2v6" />
+  <path d="M6 8h11" />
+  <path d="M15 8v6" /></g></g><text x="0" y="8" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="5.2" fill="#2b2b2b">Barrier Free</text><text x="0" y="13.6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="5.2" fill="#2b2b2b">Zone</text></g></g>
+<g id="pins-police" data-name="연수 경찰서"><g id="pin-25" transform="translate(1035.5,633.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><text x="0" y="0.5" text-anchor="middle" dominant-baseline="central" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="15" fill="#303090" stroke="#2b2b2b" stroke-width="1.6666666666666667" paint-order="stroke">112</text></g></g>
+<g id="pins-fireStation" data-name="송도 소방서"><g id="pin-28" transform="translate(1035.5,678.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><text x="0" y="0.5" text-anchor="middle" dominant-baseline="central" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="15" fill="#d81830" stroke="#2b2b2b" stroke-width="1.6666666666666667" paint-order="stroke">119</text></g></g>
+<g id="pins-interpretation" data-name="통역 안내"><g id="pin-26" transform="translate(600.5,636.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M9 6.371c0 4.418 -2.239 6.629 -5 6.629" />
+  <path d="M4 6.371h7" />
+  <path d="M5 9c0 2.144 2.252 3.908 6 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+  <path d="M6.694 3l.793 .582" /></g><g stroke="#d81848" stroke-width="2"><path d="M9 6.371c0 4.418 -2.239 6.629 -5 6.629" />
+  <path d="M4 6.371h7" />
+  <path d="M5 9c0 2.144 2.252 3.908 6 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+  <path d="M6.694 3l.793 .582" /></g></g></g></g>
+<g id="pins-smoking" data-name="흡연구역"><g id="pin-29" transform="translate(84.5,686.5)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3 14a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -2" />
+  <path d="M8 13l0 4" />
+  <path d="M16 5v.5a2 2 0 0 0 2 2a2 2 0 0 1 2 2v.5" /></g><g stroke="#9a9a9a" stroke-width="2"><path d="M3 14a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -2" />
+  <path d="M8 13l0 4" />
+  <path d="M16 5v.5a2 2 0 0 0 2 2a2 2 0 0 1 2 2v.5" /></g></g></g><g id="pin-48" transform="translate(582,1099)"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3 14a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -2" />
+  <path d="M8 13l0 4" />
+  <path d="M16 5v.5a2 2 0 0 0 2 2a2 2 0 0 1 2 2v.5" /></g><g stroke="#9a9a9a" stroke-width="2"><path d="M3 14a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -2" />
+  <path d="M8 13l0 4" />
+  <path d="M16 5v.5a2 2 0 0 0 2 2a2 2 0 0 1 2 2v.5" /></g></g></g></g>
+</g>
+</svg>
