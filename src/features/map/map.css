@@ -66,6 +66,26 @@
   color: var(--accent-on, var(--color-paper));
 }
 
+/* Leaflet's zoom buttons in the app's own surface and ink, like the buttons above (and the dark theme) */
+.map-canvas .leaflet-bar {
+  border: 2px solid var(--color-ink);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-float);
+}
+
+.map-canvas .leaflet-bar a,
+.map-canvas .leaflet-bar a:hover {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border-bottom-color: var(--color-line);
+}
+
+.map-canvas .leaflet-bar a.leaflet-disabled {
+  background: var(--color-surface);
+  color: var(--color-line);
+}
+
 .map-hint {
   position: absolute;
   left: var(--space-3);
