@@ -3,15 +3,18 @@ import type { Pin } from '../../schema'
 import { HERO_ROCK_SERIES as CODE } from '../ids'
 import type { FestivalSeries } from './types'
 
+// Only what is announced (the user's call, 2026-10-27): the venue — which hall and entrance is not out yet — and the
+// subway stations near it, as one list row. Coordinates: the Convensia building (OpenStreetMap); the stations where
+// Wikipedia puts them (their exits for the venue are not announced).
+const NEAR_STATIONS = '가까운 역'
 const PINS: readonly Pin[] = [
-  { id: `${CODE}-zone-venue`, name: '송도컨벤시아 · 행사장', kind: 'stage', lat: 37.388776, lng: 126.646738 },
-  { id: `${CODE}-zone-incheon-univ-exit-4`, name: '인천대입구역 4번 출구 (인천 1호선)', kind: 'etc', lat: 37.3868987, lng: 126.6398836 },
+  { id: `${CODE}-zone-venue`, name: '송도컨벤시아', kind: 'stage', detail: '공지된 행사장 · 홀과 입구는 아직 공지 전이에요', lat: 37.388776, lng: 126.646738 },
+  { id: `${CODE}-zone-incheon-univ-station`, name: '인천대입구역 (인천 1호선)', group: NEAR_STATIONS, detail: '행사장까지 직선 약 700 m', kind: 'etc', lat: 37.386, lng: 126.639528 },
+  { id: `${CODE}-zone-central-park-station`, name: '센트럴파크역 (인천 1호선)', group: NEAR_STATIONS, detail: '행사장까지 직선 약 1.2 km', kind: 'etc', lat: 37.393389, lng: 126.634556 },
 ]
 
 /**
- * Hero Rock Festival Incheon at Songdo Convensia. Coordinates: OpenStreetMap (the Convensia building, and
- * Incheon National University station exit 4 — the exit closest to the venue in a straight line, ~640 m).
- * No illustrated map yet, so the app shows it on OpenStreetMap tiles.
+ * Hero Rock Festival Incheon at Songdo Convensia. No illustrated map yet, so the app shows it on OpenStreetMap tiles.
  */
 export const HERO_ROCK: FestivalSeries = {
   code: CODE,

@@ -22,8 +22,13 @@ describe('createHeroRock2026', () => {
     expect(festival.performances).toEqual([])
   })
 
-  test('pins the venue and the nearest subway exit under the festival code', () => {
-    expect(festival.pins.map((p) => p.name)).toEqual(['송도컨벤시아 · 행사장', '인천대입구역 4번 출구 (인천 1호선)'])
+  test('pins only what is announced: the venue, and the stations near it as one row', () => {
+    expect(festival.pins.map((p) => [p.name, p.group ?? null])).toEqual([
+      ['송도컨벤시아', null],
+      ['인천대입구역 (인천 1호선)', '가까운 역'],
+      ['센트럴파크역 (인천 1호선)', '가까운 역'],
+    ])
+    expect(festival.pins.every((p) => p.detail)).toBe(true)
     expect(festival.pins.every((p) => p.id.startsWith(`${HERO_ROCK_SERIES}-`))).toBe(true)
   })
 
