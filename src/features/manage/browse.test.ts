@@ -34,6 +34,22 @@ describe('matchesQuery', () => {
   })
 })
 
+describe('other names of artists', () => {
+  const sets = (artists: string[]) => makeFestival({ performances: artists.map((artist, i) => ({ id: `p${i}`, stageId: 's1', day: '2026-10-17', artist, start: '18:00', end: '19:00' })) })
+
+  test('finds an artist by its name in the other script or a short name fans use', () => {
+    expect(matchesQuery(sets(['THORNAPPLE']), '쏜애플')).toBe(true)
+    expect(matchesQuery(sets(['극동아시아타이거즈']), '극아타')).toBe(true)
+    expect(matchesQuery(hero, 'guckkasten', ['1차 라인업 포스터: YB, 부활, 국카스텐, LACUNA COIL 외. 2026년'])).toBe(true)
+  })
+
+  test('says which other name it was found by', () => {
+    expect(artistHit(sets(['THORNAPPLE']), '쏜애플')).toBe('THORNAPPLE (쏜애플) 출연')
+    expect(artistHit(sets(['극동아시아타이거즈', '쏜애플']), '극아타')).toBe('극동아시아타이거즈 (극아타) 출연')
+    expect(artistHit(sets(['쏜애플']), '쏜애')).toBe('쏜애플 출연')
+  })
+})
+
 describe('artistHit', () => {
   const sets = (artists: string[]) => makeFestival({ performances: artists.map((artist, i) => ({ id: `p${i}`, stageId: 's1', day: '2026-10-17', artist, start: '18:00', end: '19:00' })) })
 

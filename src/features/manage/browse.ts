@@ -1,3 +1,4 @@
+import { ARTIST_NAMES } from '../../data/catalog/artists'
 import type { Festival } from '../../data/schema'
 import { weekdayLabel } from '../../lib/time'
 
@@ -14,10 +15,28 @@ function lineupNames(lineup: readonly string[]): string[] {
   })
 }
 
-/** The artists of a festival whose names contain the query: from its timetable, else from its line-up posters. */
-function matchingArtists(festival: Festival, q: string, lineup: readonly string[]): string[] {
-  const fromSets = [...new Set(festival.performances.map((p) => p.artist))].filter((artist) => normalize(artist).includes(q))
-  return fromSets.length > 0 ? fromSets : lineupNames(lineup).filter((name) => normalize(name).includes(q))
+// every name of an artist (data/catalog/artists.ts), by any of its names
+const NAMES_OF = new Map(ARTIST_NAMES.flatMap((names) => names.map((name) => [normalize(name), names] as const)))
+const namesOf = (artist: string): readonly string[] => NAMES_OF.get(normalize(artist)) ?? [artist]
+
+interface ArtistMatch {
+  artist: string
+  /** The other name it was found by, when not its own. */
+  alias: string | null
+}
+
+/** An artist the query finds, by its own name or by another one it goes by. */
+function matchArtist(artist: string, q: string): ArtistMatch | null {
+  if (normalize(artist).includes(q)) return { artist, alias: null }
+  const alias = namesOf(artist).find((name) => normalize(name).includes(q))
+  return alias ? { artist, alias } : null
+}
+
+/** The artists of a festival the query finds: from its timetable, else from its line-up posters. */
+function matchingArtists(festival: Festival, q: string, lineup: readonly string[]): ArtistMatch[] {
+  const find = (artists: readonly string[]) => [...new Set(artists)].flatMap((artist) => matchArtist(artist, q) ?? [])
+  const fromSets = find(festival.performances.map((p) => p.artist))
+  return fromSets.length > 0 ? fromSets : find(lineupNames(lineup))
 }
 
 /**
@@ -29,14 +48,18 @@ export function matchesQuery(festival: Festival, query: string, lineup: readonly
   return q === '' || normalize(festival.name).includes(q) || normalize(festival.venue.name).includes(q) || matchingArtists(festival, q, lineup).length > 0
 }
 
-/** What a search found among the festival's artists, for its row ("NELL 출연", "Roselia·Ro Ro 외 1팀 출연"); null if none. */
+/**
+ * What a search found among the festival's artists, for its row ("NELL 출연", "Roselia·Ro Ro 외 1팀 출연", with the
+ * other name it was found by: "THORNAPPLE (쏜애플) 출연"); null if none.
+ */
 export function artistHit(festival: Festival, query: string, lineup: readonly string[] = []): string | null {
   const q = normalize(query)
   if (q === '') return null
-  const names = matchingArtists(festival, q, lineup)
-  if (names.length === 0) return null
-  const more = names.length - 2
-  return `${names.slice(0, 2).join('·')}${more > 0 ? ` 외 ${more}팀` : ''} 출연`
+  const found = matchingArtists(festival, q, lineup)
+  if (found.length === 0) return null
+  const shown = found.slice(0, 2).map(({ artist, alias }) => (alias ? `${artist} (${alias})` : artist))
+  const more = found.length - 2
+  return `${shown.join('·')}${more > 0 ? ` 외 ${more}팀` : ''} 출연`
 }
 
 export interface MonthGroup {

@@ -37,7 +37,7 @@ export function ManageView({ data, params, setParams, today }: Props) {
       </div>
 
       {section === 'mine' ? (
-        <MyFestivals data={data} today={today} onBrowse={() => update({ view: 'browse' })} />
+        <MyFestivals data={data} today={today} year={params.get('year')} onYear={(year) => update({ year })} onBrowse={() => update({ view: 'browse' })} />
       ) : (
         <BrowseFestivals
           data={data}

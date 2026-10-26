@@ -7,7 +7,8 @@ import { hasNewContent, markSeen } from '../../data/updates'
 import { addMyFestival, setActiveFestival } from '../../data/userData'
 import { artistHit, groupByMonth, matchesQuery } from './browse'
 import { FestivalRow } from './FestivalRow'
-import { groupByYear } from './years'
+import { ALL_YEARS, inShownYear } from './years'
+import { YearChips } from './YearChips'
 
 interface Props {
   data: UserData
@@ -18,23 +19,16 @@ interface Props {
   onQuery: (query: string) => void
 }
 
-/** The year chip that lists every year together. */
-const ALL_YEARS = 'all'
-
 // a festival's line-up posters, searched for artists when its timetable is not out yet
 const lineupOf = (festivalId: string): string[] => catalogEntry(festivalId)?.lineup.map((image) => image.alt) ?? []
 
 /** Every registered festival: search (name, place or artist), year chips ("전체" first), then the festivals by month. */
 export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: Props) {
   const all = [...CATALOG.flatMap((entry) => resolveFestival(data, entry.id)?.festival ?? []), ...data.archivedFestivals]
-  const years = groupByYear(all)
-  const activeYear = activeFestival(data)?.festival.startDate.slice(0, 4)
-  const shownYear =
-    year === ALL_YEARS ? ALL_YEARS : (years.find((g) => g.year === year)?.year ?? years.find((g) => g.year === activeYear)?.year ?? years[0]?.year)
-  const inYear = shownYear === ALL_YEARS ? all : (years.find((g) => g.year === shownYear)?.festivals ?? [])
+  const shown = inShownYear(all, year, activeFestival(data)?.festival.startDate.slice(0, 4))
   const groups = groupByMonth(
-    inYear.filter((f) => matchesQuery(f, query, lineupOf(f.id))),
-    { withYear: shownYear === ALL_YEARS },
+    shown.festivals.filter((f) => matchesQuery(f, query, lineupOf(f.id))),
+    { withYear: shown.year === ALL_YEARS },
   )
   const mine = new Set(data.myFestivalIds)
   const archived = new Set(data.archivedFestivals.map((f) => f.id))
@@ -53,16 +47,7 @@ export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: P
         <span className="visually-hidden">페스티벌 찾기</span>
         <input type="search" value={query} placeholder="이름·장소·아티스트로 찾기" onChange={(e) => onQuery(e.target.value)} />
       </label>
-      <div className="chip-row" role="group" aria-label="연도">
-        <button type="button" className="chip chip--compact" aria-pressed={shownYear === ALL_YEARS} onClick={() => onYear(ALL_YEARS)}>
-          전체
-        </button>
-        {years.map((g) => (
-          <button key={g.year} type="button" className="chip chip--compact" aria-pressed={g.year === shownYear} onClick={() => onYear(g.year)}>
-            {g.year}
-          </button>
-        ))}
-      </div>
+      <YearChips years={shown.years} shown={shown.year} onYear={onYear} />
       <div className="manage__list">
         {groups.length === 0 ? (
           <p className="manage__empty">{query.trim() ? `'${query.trim()}'에 맞는 페스티벌이 없어요.` : '이 해에 등록된 페스티벌이 없어요.'}</p>
