@@ -13,6 +13,7 @@ const entry = (overrides: Partial<CatalogEntry> & Pick<CatalogEntry, 'create'>):
   notices: ['공지'],
   lineup: [],
   guides: [],
+  updatedAt: '2026-10-01',
   ...overrides,
 })
 

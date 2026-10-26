@@ -5,6 +5,7 @@ import { EmptyState } from './components/EmptyState'
 import { NoticeBanner } from './components/NoticeBanner'
 import { NowStrip } from './components/NowStrip'
 import { dismissNotice, selectActiveFestival, useAppState } from './data/store'
+import { newContentAnywhere } from './data/updates'
 import { InfoView } from './features/info/InfoView'
 import { ManageView } from './features/manage/ManageView'
 import { timetableSelection } from './features/timetable/selection'
@@ -104,7 +105,7 @@ export default function App() {
         {notice && <NoticeBanner key={notice.id} notice={notice} onDismiss={dismissNotice} />}
         {renderView()}
       </main>
-      <BottomNav active={route.tab} onSelect={route.go} />
+      <BottomNav active={route.tab} onSelect={route.go} news={{ manage: newContentAnywhere(data) }} />
     </div>
   )
 }

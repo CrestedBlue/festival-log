@@ -120,6 +120,9 @@ export const UserDataSchema = z.object({
   ticketLinks: z.record(id, z.string().url().max(MAX_TICKET_LINK_LENGTH)),
   // Festivals the user typed in with an older version: kept read-only so nothing is lost.
   archivedFestivals: z.array(FestivalSchema).max(MAX_ITEMS),
+  // For each festival on my list, the catalog's update date as of when I last opened it: a newer one means new
+  // content (a red dot). Data saved before this was kept has none (see updates.ts).
+  seenUpdates: z.record(id, isoDate).default({}),
 })
 
 export type Stage = z.infer<typeof StageSchema>
@@ -139,4 +142,5 @@ export const EMPTY_USER_DATA: UserData = {
   userPins: {},
   ticketLinks: {},
   archivedFestivals: [],
+  seenUpdates: {},
 }

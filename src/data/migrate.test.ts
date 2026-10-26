@@ -21,6 +21,7 @@ describe('migrateV1', () => {
       userPins: { [GRAND_MINT_2026_ID]: [userPin] },
       ticketLinks: {},
       archivedFestivals: [custom],
+      seenUpdates: {},
     })
   })
 

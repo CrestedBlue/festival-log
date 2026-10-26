@@ -1,6 +1,7 @@
 import { migrateV1 } from './migrate'
 import { EMPTY_USER_DATA, LegacyAppDataSchema, UserDataSchema, type UserData } from './schema'
 import { mergeCatalogTwins } from './twins'
+import { fillSeenUpdates } from './updates'
 
 export const STORAGE_KEY = 'festival-log:data'
 export const BACKUP_KEY_PREFIX = 'festival-log:backup-'
@@ -23,9 +24,12 @@ function tryParseJson(raw: string): unknown {
 
 type ReadResult = { ok: true; data: UserData; migrated: boolean } | { ok: false; error: string }
 
-/** Festivals the user made that the catalog now has too are folded into it (see mergeCatalogTwins). */
+/**
+ * Festivals the user made that the catalog now has too are folded into it (see mergeCatalogTwins), and festivals
+ * saved before update dates were kept get today's (see fillSeenUpdates).
+ */
 function withTwinsMerged(data: UserData, migrated: boolean): ReadResult {
-  const merged = mergeCatalogTwins(data)
+  const merged = fillSeenUpdates(mergeCatalogTwins(data))
   return { ok: true, data: merged, migrated: migrated || merged !== data }
 }
 

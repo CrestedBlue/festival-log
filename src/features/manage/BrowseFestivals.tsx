@@ -3,6 +3,7 @@ import { CATALOG } from '../../data/catalog'
 import { activeFestival, resolveFestival } from '../../data/resolve'
 import type { Festival, UserData } from '../../data/schema'
 import { showNotice, updateData } from '../../data/store'
+import { hasNewContent, markSeen } from '../../data/updates'
 import { addMyFestival, setActiveFestival } from '../../data/userData'
 import { groupByMonth, matchesQuery } from './browse'
 import { FestivalRow } from './FestivalRow'
@@ -30,8 +31,9 @@ export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: P
 
   const pick = (festival: Festival) => {
     const isMine = mine.has(festival.id)
-    updateData((d) => (isMine ? setActiveFestival(d, festival.id) : addMyFestival(d, festival.id)))
-    showNotice('info', isMine ? `'${festival.name}'로 바꿨어요.` : `'${festival.name}'를 추가했어요.`)
+    updateData((d) => markSeen(isMine ? setActiveFestival(d, festival.id) : addMyFestival(d, festival.id), festival.id))
+    // switching needs no word (the header changes); adding says so
+    if (!isMine) showNotice('info', `'${festival.name}'를 추가했어요.`)
   }
 
   return (
@@ -74,6 +76,7 @@ export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: P
                           </span>
                         )
                       }
+                      updated={hasNewContent(data, festival.id)}
                       onPick={() => pick(festival)}
                     />
                   </li>

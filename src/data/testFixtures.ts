@@ -29,5 +29,6 @@ export const makeUserData = (overrides: Partial<UserData> = {}): UserData => ({
   userPins: {},
   ticketLinks: {},
   archivedFestivals: [],
+  seenUpdates: {},
   ...overrides,
 })

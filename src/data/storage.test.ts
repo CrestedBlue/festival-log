@@ -2,6 +2,7 @@ import { describe, expect, test } from 'vitest'
 import { GRAND_MINT_2026_ID, HERO_ROCK_2026_ID } from './catalog/ids'
 import { BACKUP_KEY_PREFIX, STORAGE_KEY, loadUserData, saveUserData } from './storage'
 import { makeFestival, makeUserData } from './testFixtures'
+import { catalogUpdatedAt } from './updates'
 
 const memoryStorage = (initial: Record<string, string> = {}) => {
   const map = new Map(Object.entries(initial))
@@ -21,9 +22,21 @@ describe('loadUserData', () => {
 
   test('round-trips data saved with saveUserData', () => {
     const storage = memoryStorage()
-    const data = makeUserData({ myFestivalIds: [GRAND_MINT_2026_ID], activeFestivalId: GRAND_MINT_2026_ID, favorites: ['x'] })
+    const data = makeUserData({
+      myFestivalIds: [GRAND_MINT_2026_ID],
+      activeFestivalId: GRAND_MINT_2026_ID,
+      favorites: ['x'],
+      seenUpdates: { [GRAND_MINT_2026_ID]: catalogUpdatedAt(GRAND_MINT_2026_ID)! },
+    })
     expect(saveUserData(storage, data)).toEqual({ ok: true })
     expect(loadUserData(storage)).toEqual({ status: 'ok', data })
+  })
+
+  test('festivals saved before update dates were kept get the date they have now, and the data is saved again', () => {
+    const data = makeUserData({ myFestivalIds: [GRAND_MINT_2026_ID], activeFestivalId: GRAND_MINT_2026_ID })
+    const { seenUpdates: _, ...older } = data
+    const loaded = loadUserData(memoryStorage({ [STORAGE_KEY]: JSON.stringify(older) }))
+    expect(loaded).toMatchObject({ status: 'migrated', data: { seenUpdates: { [GRAND_MINT_2026_ID]: catalogUpdatedAt(GRAND_MINT_2026_ID) } } })
   })
 
   test('migrates data saved by the previous app version', () => {

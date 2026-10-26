@@ -146,6 +146,12 @@
 }
 
 /* Calendar square: weekday band on top, first day below. Past festivals go grey. */
+.cal-wrap {
+  position: relative;
+  flex: none;
+  display: grid;
+}
+
 .cal {
   flex: none;
   display: grid;

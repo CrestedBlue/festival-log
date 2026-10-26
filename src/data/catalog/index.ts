@@ -41,6 +41,12 @@ export interface CatalogEntry {
   lineup: readonly LineupImage[]
   /** Official guide pages (checklist, venue map, …) swiped through on the info tab (admin). */
   guides: readonly GuideSet[]
+  /**
+   * When this edition last got new content (timetable, line-up, notices, guides, map, pins), YYYY-MM-DD. Moving it
+   * on puts a red dot on the festival for users who have it on their list (data/updates.ts) — bump it with every
+   * such change (COLLECT.md).
+   */
+  updatedAt: string
 }
 
 export const CATALOG: readonly CatalogEntry[] = [
@@ -53,6 +59,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     notices: GRAND_MINT_2026_NOTICES,
     lineup: [],
     guides: [],
+    updatedAt: '2026-10-26',
   },
   {
     id: HERO_ROCK_2026_ID,
@@ -63,6 +70,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     notices: HERO_ROCK_2026_NOTICES,
     lineup: HERO_ROCK_2026_LINEUP,
     guides: [],
+    updatedAt: '2026-10-27',
   },
   {
     id: PENTAPORT_2026_ID,
@@ -73,6 +81,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     notices: PENTAPORT_2026_NOTICES,
     lineup: [],
     guides: PENTAPORT_2026_GUIDES,
+    updatedAt: '2026-10-26',
   },
   {
     id: JUMF_2026_ID,
@@ -83,6 +92,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     notices: JUMF_2026_NOTICES,
     lineup: [],
     guides: JUMF_2026_GUIDES,
+    updatedAt: '2026-10-22',
   },
   {
     id: WONDERLIVET_2026_ID,
@@ -93,6 +103,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     notices: WONDERLIVET_2026_NOTICES,
     lineup: [],
     guides: WONDERLIVET_2026_GUIDES,
+    updatedAt: '2026-10-27',
   },
 ]
 

@@ -33,5 +33,6 @@ export function migrateV1(v1: LegacyAppData): UserData {
     userPins,
     ticketLinks: {},
     archivedFestivals,
+    seenUpdates: {},
   }
 }

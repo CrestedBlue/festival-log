@@ -9,7 +9,14 @@ const ITEMS: ReadonlyArray<{ tab: Tab; label: string; icon: ReactNode }> = [
   { tab: 'manage', label: '관리', icon: <ManageIcon /> },
 ]
 
-export function BottomNav({ active, onSelect }: { active: Tab; onSelect: (tab: Tab) => void }) {
+interface Props {
+  active: Tab
+  onSelect: (tab: Tab) => void
+  /** Tabs with something new (a red dot): the manage tab when a festival on my list got new content. */
+  news?: Partial<Record<Tab, boolean>>
+}
+
+export function BottomNav({ active, onSelect, news = {} }: Props) {
   return (
     <nav className="bottom-nav" aria-label="주요 화면">
       {ITEMS.map((item) => (
@@ -20,8 +27,12 @@ export function BottomNav({ active, onSelect }: { active: Tab; onSelect: (tab: T
           aria-current={active === item.tab ? 'page' : undefined}
           onClick={() => onSelect(item.tab)}
         >
-          {item.icon}
+          <span className="bottom-nav__icon">
+            {item.icon}
+            {news[item.tab] && <span className="new-dot" aria-hidden="true" />}
+          </span>
           {item.label}
+          {news[item.tab] && <span className="visually-hidden"> (새 소식)</span>}
         </button>
       ))}
     </nav>

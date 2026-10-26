@@ -197,6 +197,28 @@
   color: var(--accent-on);
 }
 
+.bottom-nav__icon {
+  position: relative;
+  display: grid;
+}
+
+/* Something new to look at (a festival on my list got new content): a red dot on the icon's top right */
+.new-dot {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--color-paper);
+  border-radius: 50%;
+  background: var(--color-warn);
+}
+
+.new-dot--corner {
+  top: -4px;
+  right: -4px;
+}
+
 /* Notice banner */
 .notice {
   position: absolute;

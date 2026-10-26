@@ -1,7 +1,8 @@
 import { CloseIcon } from '../../components/icons'
 import { resolveFestival } from '../../data/resolve'
 import type { Festival, UserData } from '../../data/schema'
-import { showNotice, updateData } from '../../data/store'
+import { updateData } from '../../data/store'
+import { hasNewContent, markSeen } from '../../data/updates'
 import { removeMyFestival, setActiveFestival } from '../../data/userData'
 import { FestivalRow } from './FestivalRow'
 
@@ -11,7 +12,10 @@ interface Props {
   onBrowse: () => void
 }
 
-/** The festivals the user added, latest first: tap to switch, ✕ to take one off the list. */
+/**
+ * The festivals the user added, latest first: tap to switch (and to see what is new: the red dot goes), ✕ to take
+ * one off the list.
+ */
 export function MyFestivals({ data, today, onBrowse }: Props) {
   const mine = data.myFestivalIds
     .flatMap((id) => resolveFestival(data, id)?.festival ?? [])
@@ -32,9 +36,8 @@ export function MyFestivals({ data, today, onBrowse }: Props) {
   }
 
   const pick = (festival: Festival) => {
-    if (data.activeFestivalId === festival.id) return
-    updateData((d) => setActiveFestival(d, festival.id))
-    showNotice('info', `'${festival.name}'로 바꿨어요.`)
+    if (data.activeFestivalId === festival.id && !hasNewContent(data, festival.id)) return
+    updateData((d) => markSeen(setActiveFestival(d, festival.id), festival.id))
   }
   const remove = (festival: Festival) => {
     if (!window.confirm(`'${festival.name}'를 내 목록에서 뺄까요? 이 페스티벌에 남긴 핀과 티켓 링크도 지워져요.`)) return
@@ -54,6 +57,7 @@ export function MyFestivals({ data, today, onBrowse }: Props) {
                 active={active}
                 tag={archived.has(festival.id) ? '직접 만든 것' : undefined}
                 trailing={active ? <span className="fest-row__pill">보는 중</span> : null}
+                updated={hasNewContent(data, festival.id)}
                 onPick={() => pick(festival)}
               />
               <button type="button" className="fest-remove" aria-label={`'${festival.name}' 목록에서 빼기`} onClick={() => remove(festival)}>

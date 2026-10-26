@@ -50,6 +50,10 @@ describe('catalog', () => {
     }
   })
 
+  test('every edition says when it last got new content, a real date', () => {
+    for (const entry of CATALOG) expect(entry.updatedAt, entry.key).toMatch(/^2\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/)
+  })
+
   test('every festival code lists where Claude collects it from, with the last post scraped from each', () => {
     for (const series of Object.values(SERIES)) {
       expect(series.sources.length, series.code).toBeGreaterThan(0)
