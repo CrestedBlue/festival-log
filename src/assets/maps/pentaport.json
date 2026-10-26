@@ -96,7 +96,6 @@
     "exit-2": "icons/exit-2.svg",
     "exit-3": "icons/exit-3.svg",
     "exit-4": "icons/exit-4.svg",
-    "station": "icons/station.svg",
     "ticket": "icons/ticket.svg",
     "shuttle": "icons/shuttle.svg",
     "bus": "icons/bus.svg"
@@ -105,10 +104,13 @@
     {
       "text": "송도달빛축제공원역",
       "kind": "station",
-      "icon": "station",
+      "badge": {
+        "text": "인천1",
+        "colour": "#7ca8d5"
+      },
       "minZoom": 14,
-      "lat": 37.407036,
-      "lng": 126.625937
+      "lat": 37.407677,
+      "lng": 126.625433
     },
     {
       "text": "송도 랜드마크 푸르지오시티",

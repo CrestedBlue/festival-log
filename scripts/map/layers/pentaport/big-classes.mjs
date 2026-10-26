@@ -16,4 +16,6 @@ export const BIG_STYLE = {
   kerb: '#f8f0d9', kerbWidth: 2.4, // a pale pavement edge along every road (half shows outside)
   wall: '#c4c6cc', roofLift: 2.2, // a building's roof sits this far up its walls (looking from the south)
   shadow: '#c0bcb4', shadowOffset: [1.4, 1.2],
+  // 송도달빛축제공원역 (인천 1호선): a box in the line's colour along the track (lib/station.mjs)
+  station: { near: [-540, 115], fill: '#7ca8d5', outline: '#4f7fb3', length: 140, width: 18, line: '인천1' },
 }

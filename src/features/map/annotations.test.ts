@@ -27,6 +27,13 @@ describe('buildAnnotations', () => {
     expect(keys(14, 'wc')).toContain('pin:wc')
   })
 
+  test('the pins of the list row last tapped show at any zoom, ahead of everything but the selected pin', () => {
+    const items = buildAnnotations(map, pins, 14, null, new Set(['wc']))
+    expect(items.map((a) => a.key)).toContain('pin:wc')
+    const wc = items.find((a) => a.key === 'pin:wc')!
+    expect(Math.max(...items.filter((a) => a !== wc).map((a) => a.priority))).toBeLessThan(wc.priority)
+  })
+
   test('icons grow a step at a time as the map zooms in', () => {
     expect([iconSize(16.5), iconSize(17.2), iconSize(18.5)]).toEqual([20, 24, 30])
   })

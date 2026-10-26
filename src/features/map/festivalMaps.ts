@@ -38,6 +38,8 @@ export interface MapLabel {
   minZoom: number
   /** An icon of the map's (a key of `icons`) before the text. */
   icon?: string
+  /** A small coloured tag before the text (a subway line: "인천1"). */
+  badge?: { text: string; colour: string }
   colour?: string
 }
 
@@ -97,8 +99,9 @@ function toLabel(value: unknown, bounds: LatLngBounds, icons: Readonly<Record<st
     typeof l.lat === 'number' &&
     typeof l.lng === 'number' &&
     isInsideBounds({ lat: l.lat, lng: l.lng }, bounds) &&
-    (l.icon === undefined || l.icon in icons)
-  if (!ok) throw new Error(`map metadata: label ${String(l.text)} needs text, a kind, minZoom, a known icon and a lat/lng inside the map`)
+    (l.icon === undefined || l.icon in icons) &&
+    (l.badge === undefined || (typeof l.badge.text === 'string' && l.badge.text.length > 0 && isColour(l.badge.colour)))
+  if (!ok) throw new Error(`map metadata: label ${String(l.text)} needs text, a kind, minZoom, a known icon and badge and a lat/lng inside the map`)
   return {
     text: l.text!,
     kind: l.kind!,
@@ -106,6 +109,7 @@ function toLabel(value: unknown, bounds: LatLngBounds, icons: Readonly<Record<st
     lng: l.lng!,
     minZoom: l.minZoom!,
     ...(l.icon ? { icon: l.icon } : {}),
+    ...(l.badge ? { badge: { text: l.badge.text, colour: l.badge.colour } } : {}),
     ...(isColour(l.colour) ? { colour: l.colour } : {}),
   }
 }

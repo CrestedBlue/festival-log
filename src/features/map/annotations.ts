@@ -13,10 +13,11 @@ export const CAPTIONED_FROM_ZOOM = 15
 const CAPTION_FONT = 11
 const LABEL_FONT: Record<MapLabelKind, number> = { station: 13, building: 11, stage: 12, place: 11, bus: 10 }
 const LABEL_ICON = 18
+const BADGE_FONT = 10
 const GAP = 3 // px kept clear around each one
 
 /** Higher first when two would overlap. */
-const PRIORITY = { selected: 1000, station: 100, named: 90, stage: 80, exit: 70, pin: 60, place: 50, building: 40, bus: 35 }
+const PRIORITY = { selected: 1000, active: 900, station: 100, named: 90, stage: 80, exit: 70, pin: 60, place: 50, building: 40, bus: 35 }
 
 export const iconSize = (zoom: number): number => (zoom < 17 ? 20 : zoom < 18 ? 24 : 30)
 
@@ -26,7 +27,7 @@ export function textWidth(text: string, font: number): number {
 }
 
 export type AnnotationView =
-  | { type: 'pin'; pin: Pin; iconUrl: string; size: number; caption: string | null; selected: boolean }
+  | { type: 'pin'; pin: Pin; iconUrl: string; size: number; caption: string | null; selected: boolean; active: boolean }
   | { type: 'label'; label: MapLabel; iconUrl: string | null; font: number }
 
 export interface Annotation {
@@ -39,22 +40,22 @@ export interface Annotation {
   view: AnnotationView
 }
 
-function pinAnnotation(pin: Pin, iconUrl: string, zoom: number, selected: boolean): Annotation | null {
+function pinAnnotation(pin: Pin, iconUrl: string, zoom: number, selected: boolean, active: boolean): Annotation | null {
   const exitIcon = pin.mapIcon?.startsWith('exit-') ?? false
   const fromZoom = pin.caption ? CAPTIONED_FROM_ZOOM : ICON_FROM_ZOOM
-  if (!selected && zoom < fromZoom) return null
+  if (!selected && !active && zoom < fromZoom) return null
   const size = iconSize(zoom) - (exitIcon ? 4 : 0)
   const caption = pin.caption ?? null
   const width = size + (caption ? 4 + textWidth(caption, CAPTION_FONT) + 8 : 0)
   const at = pin.spot ?? pin
-  const priority = selected ? PRIORITY.selected : caption ? PRIORITY.named : exitIcon ? PRIORITY.exit : PRIORITY.pin
+  const priority = selected ? PRIORITY.selected : active ? PRIORITY.active : caption ? PRIORITY.named : exitIcon ? PRIORITY.exit : PRIORITY.pin
   return {
     key: `pin:${pin.id}`,
     lat: at.lat,
     lng: at.lng,
     box: { left: -size / 2, top: -size / 2, width, height: size },
     priority,
-    view: { type: 'pin', pin, iconUrl, size, caption, selected },
+    view: { type: 'pin', pin, iconUrl, size, caption, selected, active },
   }
 }
 
@@ -62,7 +63,8 @@ function labelAnnotation(label: MapLabel, index: number, icons: FestivalMap['ico
   if (zoom < label.minZoom) return null
   const font = LABEL_FONT[label.kind] + (zoom >= 17.5 && label.kind !== 'building' && label.kind !== 'bus' ? 1 : 0)
   const iconUrl = label.icon ? (icons[label.icon] ?? null) : null
-  const width = (iconUrl ? LABEL_ICON + 4 : 0) + textWidth(label.text, font) + 12
+  const badge = label.badge ? textWidth(label.badge.text, BADGE_FONT) + 10 : 0
+  const width = (iconUrl ? LABEL_ICON + 4 : 0) + (badge ? badge + 4 : 0) + textWidth(label.text, font) + 12
   const height = Math.max(font + 10, iconUrl ? LABEL_ICON + 4 : 0)
   return {
     key: `label:${index}`,
@@ -74,11 +76,21 @@ function labelAnnotation(label: MapLabel, index: number, icons: FestivalMap['ico
   }
 }
 
-/** Everything the map would show at this zoom (before leaving out overlaps): its labels and the pins it has icons for. */
-export function buildAnnotations(map: FestivalMap, pins: readonly Pin[], zoom: number, selectedId: string | null): Annotation[] {
+/**
+ * Everything the map would show at this zoom (before leaving out overlaps): its labels and the pins it has icons for.
+ * The selected pin and the active ones (a pin-list row tapped) show at any zoom and before everything else, so a row's
+ * pins are all on the map.
+ */
+export function buildAnnotations(
+  map: FestivalMap,
+  pins: readonly Pin[],
+  zoom: number,
+  selectedId: string | null,
+  activeIds: ReadonlySet<string> = new Set(),
+): Annotation[] {
   const pinItems = pins.flatMap((pin) => {
     const iconUrl = pin.mapIcon ? map.icons[pin.mapIcon] : undefined
-    const item = iconUrl ? pinAnnotation(pin, iconUrl, zoom, pin.id === selectedId) : null
+    const item = iconUrl ? pinAnnotation(pin, iconUrl, zoom, pin.id === selectedId, activeIds.has(pin.id)) : null
     return item ? [item] : []
   })
   const labelItems = map.labels.flatMap((label, i) => {

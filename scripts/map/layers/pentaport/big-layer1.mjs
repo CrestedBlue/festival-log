@@ -8,6 +8,7 @@ import path from 'node:path'
 import { bigFrame as frame, BOX as SMALL_BOX } from './frame.mjs'
 import { BIG_CLASSES as CLASSES, BIG_STYLE as STYLE } from './big-classes.mjs'
 import { makeGround } from '../lib/ground.mjs'
+import { findStation, stationBoxSvg } from '../lib/station.mjs'
 import { OUT, CACHE } from './paths.mjs'
 
 const { OSM, W, H, PPM, BOX, toPx, llToPx, pathD } = frame
@@ -58,11 +59,13 @@ const zones = zoneGroups(ORDER, LABEL, cls, C, colour)
 const roadD = frame.trace(toF((i) => cls[i] === C.road), { sigma: 1.5, tolerance: 0.3 })
 const buildingD = frame.trace(toF((i) => cls[i] === C.building), { sigma: 1, tolerance: 0.2 })
 const [sx, sy] = STYLE.shadowOffset
+const station = findStation(frame, STYLE.station.near, { length: STYLE.station.length })
 const VW = BOX.east - BOX.west, VH = BOX.north - BOX.south
 const content = `<g id="layer1" data-name="레이어 1 · 바닥 (큰 지도)">
 <rect id="land" data-name="땅" width="${VW}" height="${VH}" fill="${colour.land}"/>
 <g id="zones" data-name="구역">${zones}</g>
 <path id="roads" data-name="길" d="${roadD}" fill="${colour.road}" fill-rule="evenodd" stroke="${STYLE.kerb}" stroke-width="${STYLE.kerbWidth}" stroke-linejoin="round" paint-order="stroke"/>
+<g id="station" data-name="역 (송도달빛축제공원역)">${stationBoxSvg(station, BOX, STYLE.station)}</g>
 <g id="buildings" data-name="건물" fill-rule="evenodd">
 <path data-name="그림자" d="${buildingD}" fill="${STYLE.shadow}" transform="translate(${sx},${sy})"/>
 <path data-name="벽" d="${buildingD}" fill="${STYLE.wall}"/>

@@ -63,6 +63,8 @@ describe('parseMapMeta', () => {
     expect(() => parseMapMeta({ ...valid, labels: [{ ...label, lat: 36 }] })).toThrow()
     expect(() => parseMapMeta({ ...valid, labels: [{ ...label, kind: 'castle' }] })).toThrow()
     expect(() => parseMapMeta({ ...valid, labels: [{ ...label, icon: 'missing' }] })).toThrow()
+    expect(() => parseMapMeta({ ...valid, labels: [{ ...label, badge: { text: '인천1', colour: 'blue' } }] })).toThrow()
+    expect(parseMapMeta({ ...valid, labels: [{ ...label, badge: { text: '인천1', colour: '#7ca8d5' } }] }).labels[0]).toMatchObject({ badge: { text: '인천1', colour: '#7ca8d5' } })
   })
 
   test('rejects anchors outside the image', () => {

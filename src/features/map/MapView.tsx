@@ -1,5 +1,5 @@
 import 'leaflet/dist/leaflet.css'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { addUserPin, removeUserPin } from '../../data/userData'
 import { PinSchema, type Festival, type Pin, type PinKind } from '../../data/schema'
 import { showNotice, updateData } from '../../data/store'
@@ -15,7 +15,7 @@ import { PIN_META } from './pinMeta'
 import { useLeafletMap } from './useLeafletMap'
 import { useMapPick, useMapZoom, useMyLocationLayer, usePinHighlight, type PinHighlight } from './useMapLayers'
 import { useMapContent } from './useMapContent'
-import { groupPins, type PinGroup } from './pinGroups'
+import { groupKeyOf, groupPins, type PinGroup } from './pinGroups'
 import './map.css'
 
 const FOCUS_ZOOM = 17
@@ -73,7 +73,20 @@ export default function MapView({ festival, userPinIds }: Props) {
   }, [])
 
   const zoom = useMapZoom(map)
-  const pinSize = useMapContent(map, festivalMap, festival.pins, zoom, selectedId, setSelectedId, !picking)
+  // The row last tapped in the list stays active (its pins all kept on the map) until a pin of another row is chosen.
+  const activeIds = useMemo(
+    () => new Set(activeGroup ? festival.pins.filter((pin) => groupKeyOf(pin) === activeGroup).map((pin) => pin.id) : []),
+    [activeGroup, festival.pins],
+  )
+  const selectOnMap = useCallback(
+    (id: string) => {
+      setSelectedId(id)
+      const pin = festival.pins.find((p) => p.id === id)
+      setActiveGroup((key) => (pin && key === groupKeyOf(pin) ? key : null))
+    },
+    [festival.pins],
+  )
+  const pinSize = useMapContent(map, festivalMap, festival.pins, zoom, selectedId, selectOnMap, !picking, activeIds)
   usePinHighlight(map, highlight, pinSize)
   useMyLocationLayer(map, geo)
   useMapPick(map, picking, onPick)

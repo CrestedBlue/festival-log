@@ -8,12 +8,14 @@ const esc = (text: string) => text.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<
 function html({ view }: Annotation): string {
   if (view.type === 'pin') {
     const caption = view.caption ? `<span class="map-icon-pin__caption">${esc(view.caption)}</span>` : ''
-    return `<span class="map-icon-pin${view.selected ? ' is-selected' : ''}"><img src="${view.iconUrl}" width="${view.size}" height="${view.size}" alt="">${caption}</span>`
+    const state = view.selected ? ' is-selected' : view.active ? ' is-active' : ''
+    return `<span class="map-icon-pin${state}"><img src="${view.iconUrl}" width="${view.size}" height="${view.size}" alt="">${caption}</span>`
   }
   const { label, iconUrl, font } = view
   const icon = iconUrl ? `<img src="${iconUrl}" width="18" height="18" alt="">` : ''
+  const badge = label.badge ? `<span class="map-label__badge" style="background:${label.badge.colour}">${esc(label.badge.text)}</span>` : ''
   const colour = label.colour ? `;--label-colour:${label.colour}` : ''
-  return `<span class="map-label map-label--${label.kind}" style="font-size:${font}px${colour}">${icon}<span>${esc(label.text)}</span></span>`
+  return `<span class="map-label map-label--${label.kind}" style="font-size:${font}px${colour}">${icon}${badge}<span>${esc(label.text)}</span></span>`
 }
 
 /**

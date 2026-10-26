@@ -172,6 +172,11 @@
   transition: transform var(--duration-fast) var(--ease-out-expo);
 }
 
+/* a pin of the list row last tapped: ringed until a pin of another row is chosen */
+.map-icon-pin.is-active img {
+  filter: drop-shadow(0 0 0 #ffffff) drop-shadow(0 0 2px var(--color-accent));
+}
+
 .map-icon-pin.is-selected img {
   transform: scale(1.3);
   filter: drop-shadow(0 0 0 var(--color-accent)) drop-shadow(0 0 3px var(--color-accent));
@@ -211,6 +216,18 @@
 .map-label--station {
   color: #1d4f86;
   font-weight: 800;
+}
+
+/* a subway line's tag before a station name ("인천1"), as on Korean street maps */
+.map-label__badge {
+  flex: none;
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.4;
+  text-shadow: none;
 }
 
 .map-label--building {

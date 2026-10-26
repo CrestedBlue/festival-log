@@ -12,11 +12,14 @@ export interface PinGroup {
   distance: number | null
 }
 
+/** The list row a pin belongs to. */
+export const groupKeyOf = (pin: Pin): string => (pin.group ? `group:${pin.group}` : `pin:${pin.id}`)
+
 /** Pins sharing a `group` form one row; the others a row each. Nearest first when the position is known, else by name. */
 export function groupPins(pins: readonly Pin[], me: LatLng | null): PinGroup[] {
   const byKey = new Map<string, readonly Pin[]>()
   for (const pin of pins) {
-    const key = pin.group ? `group:${pin.group}` : `pin:${pin.id}`
+    const key = groupKeyOf(pin)
     byKey.set(key, [...(byKey.get(key) ?? []), pin])
   }
   return [...byKey]

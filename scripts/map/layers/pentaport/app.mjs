@@ -12,11 +12,12 @@ import * as geometry from './geometry.mjs'
 import * as SP from './sprites.mjs'
 import { OUT, CACHE, ROOT } from './paths.mjs'
 import { R, GATE_R, TYPES, badge } from './pin-design.mjs'
-import { badgeIcon, busIcon, exitIcon, stationIcon, ticketIcon, shuttleIcon } from '../lib/app-icons.mjs'
+import { badgeIcon, busIcon, exitIcon, ticketIcon, shuttleIcon } from '../lib/app-icons.mjs'
+import { findStation } from '../lib/station.mjs'
+import { BIG_STYLE } from './big-classes.mjs'
 import { measureTexts } from '../lib/texts.mjs'
 import { writeAppMap, boundsOf } from '../lib/app.mjs'
 
-const INCHEON_LINE_1 = '#7ca8d5' // 인천 1호선 line colour
 const ll = ([lat, lng]) => ({ lat: +lat.toFixed(6), lng: +lng.toFixed(6) })
 
 await measureTexts(SP, GROUPS)
@@ -57,19 +58,20 @@ icons.checkLockers = icons.lockers
 icons.gate1 = icons.gate2 = icons.gate
 for (const unused of ['lockers', 'securityCheck', 'gate']) delete icons[unused]
 for (const n of [1, 2, 3, 4]) icons[`exit-${n}`] = exitIcon(n)
-icons.station = stationIcon(INCHEON_LINE_1)
 icons.ticket = ticketIcon()
 icons.shuttle = shuttleIcon()
 icons.bus = busIcon()
 
 // Names the app writes on the map (fixed size, shown from `minZoom` on, fewer when they would overlap).
-const exits = OSM.subwayEntrances.filter((x) => Math.hypot(...toM([x.lat, x.lng]).map((v, i) => v - [-540, 115][i])) < 80)
+const STATION = BIG_STYLE.station
+const station = findStation({ OSM, toM }, STATION.near, { length: STATION.length })
 const way = (name) => { const w = OSM.ways.find((x) => x.tags?.name === name); if (!w) throw new Error(`no OSM ${name}`); return mean(w.pts) }
 const labelItems = GROUPS.flatMap((g) => g.items.map((it, i) => ({ it, key: `${g.id}:${i}` }))).filter(({ it }) => it.kind === 'label')
 const LAYOUT = JSON.parse(fs.readFileSync(path.join(CACHE, 'labels-northup.json')))
 const STAGES = new Set(['kbStage', 'monsterStage', 'stanleyStage'])
 const labels = [
-  { text: '송도달빛축제공원역', kind: 'station', icon: 'station', minZoom: 14, ...ll(mean(exits.map((x) => [x.lat, x.lng]))) },
+  // past the north end of the station box the big map draws, with the line's badge, as on Korean street maps
+  { text: '송도달빛축제공원역', kind: 'station', badge: { text: STATION.line, colour: STATION.fill }, minZoom: 14, ...ll(toLL(station.nameAt)) },
   { text: '송도 랜드마크 푸르지오시티', kind: 'building', minZoom: 15.5, ...ll(way('송도랜드마크푸르지오 오피스텔')) },
   { text: '송도 한라웨스턴파크', kind: 'building', minZoom: 15.5, ...ll(way('송도한라웨스턴파크 셀럽하우스 아파트')) },
   { text: '송도 씨워크인테라스 한라', kind: 'building', minZoom: 15.5, ...ll(way('송도씨워크인테라스한라')) },
