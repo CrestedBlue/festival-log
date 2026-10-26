@@ -137,13 +137,15 @@
   border-radius: var(--radius-ticket);
   list-style: none;
   cursor: grab;
+  /* sideways swipes are dragged by hand (GuideCarousel), up/down still scrolls the page */
+  touch-action: pan-y;
 }
 
 .guide__strip::-webkit-scrollbar {
   display: none;
 }
 
-/* While a mouse drags the strip, snapping would fight the hand. */
+/* While the strip is dragged or settling, snapping would fight it. */
 .guide__strip.is-dragging {
   scroll-snap-type: none;
   cursor: grabbing;

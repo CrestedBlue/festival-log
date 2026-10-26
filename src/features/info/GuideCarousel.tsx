@@ -1,24 +1,36 @@
-import { useRef, useState, type PointerEvent } from 'react'
+import { useEffect, useRef, useState, type PointerEvent } from 'react'
 import type { GuideSet } from '../../data/catalog/guide'
 import { ChevronRightIcon } from '../../components/icons'
-import { slideIndexAt } from '../../lib/carousel'
+import { releaseSlide, settleMs, slideIndexAt } from '../../lib/carousel'
 
 const prefersReducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
 
-interface MouseDrag {
+const DIRECTION_PX = 6 // a touch has to move this far before it counts as a sideways swipe (or the page's own scroll)
+const VELOCITY_WINDOW_MS = 80 // the finger's speed when it lets go: over its last moves within this time
+const easeOutQuad = (t: number) => 1 - (1 - t) ** 2 // starts at twice its average speed (settleMs)
+
+interface Drag {
   startX: number
+  startY: number
   startScroll: number
+  /** Decided once the finger has moved a little: sideways drags the strip, up/down is left to the page. */
+  sideways: boolean | null
+  moves: { t: number; x: number }[]
 }
 
 /**
- * Official guide pages side by side: swipe (or drag with a mouse) to the next one. Native scroll snapping
- * does the work on touch; a mouse drag scrolls the strip by hand and then settles on the nearest page.
+ * Official guide pages side by side: swipe (or drag with a mouse) to the next one. The strip follows the finger, and
+ * when it lets go settles on a page at the finger's own speed — the nearest page, or the next one after a flick —
+ * instead of the browser's quick snap.
  */
 export function GuideCarousel({ guide, headingId }: { guide: GuideSet; headingId: string }) {
   const strip = useRef<HTMLUListElement>(null)
-  const drag = useRef<MouseDrag | null>(null)
+  const drag = useRef<Drag | null>(null)
+  const settling = useRef(0) // the animation frame of a settle under way
   const [index, setIndex] = useState(0)
   const count = guide.images.length
+
+  useEffect(() => () => cancelAnimationFrame(settling.current), [])
 
   const goTo = (target: number) => {
     const el = strip.current
@@ -32,24 +44,58 @@ export function GuideCarousel({ guide, headingId }: { guide: GuideSet; headingId
     if (el) setIndex(slideIndexAt(el.scrollLeft, el.clientWidth, count))
   }
 
-  // Touch and pen already scroll natively; only a mouse needs dragging by hand.
+  /** Glide from where the strip is to page `target`, starting at `speed` px/ms and slowing down. */
+  const settle = (el: HTMLUListElement, target: number, speed: number) => {
+    const from = el.scrollLeft, to = target * el.clientWidth
+    const ms = prefersReducedMotion() ? 0 : settleMs(Math.abs(to - from), speed)
+    const start = performance.now()
+    const step = (now: number) => {
+      const t = ms > 0 ? Math.min(1, (now - start) / ms) : 1
+      el.scrollLeft = from + (to - from) * easeOutQuad(t)
+      if (t < 1) settling.current = requestAnimationFrame(step)
+      else el.classList.remove('is-dragging') // snapping back on, right on a page
+    }
+    settling.current = requestAnimationFrame(step)
+  }
+
+  // Every pointer drags the strip by hand (CSS leaves sideways touch moves to us, up/down ones to the page).
   const onPointerDown = (e: PointerEvent<HTMLUListElement>) => {
-    if (e.pointerType !== 'mouse' || e.button !== 0) return
+    if (e.pointerType === 'mouse' && e.button !== 0) return
+    cancelAnimationFrame(settling.current)
     const el = e.currentTarget
-    drag.current = { startX: e.clientX, startScroll: el.scrollLeft }
-    el.setPointerCapture(e.pointerId)
-    el.classList.add('is-dragging')
+    const sideways = e.pointerType === 'mouse' ? true : null
+    drag.current = { startX: e.clientX, startY: e.clientY, startScroll: el.scrollLeft, sideways, moves: [{ t: e.timeStamp, x: e.clientX }] }
+    if (sideways) {
+      el.setPointerCapture(e.pointerId)
+      el.classList.add('is-dragging')
+    }
   }
   const onPointerMove = (e: PointerEvent<HTMLUListElement>) => {
-    if (!drag.current) return
-    e.currentTarget.scrollLeft = drag.current.startScroll - (e.clientX - drag.current.startX)
+    const d = drag.current
+    if (!d) return
+    const dx = e.clientX - d.startX, dy = e.clientY - d.startY
+    if (d.sideways === null) {
+      if (Math.max(Math.abs(dx), Math.abs(dy)) < DIRECTION_PX) return
+      d.sideways = Math.abs(dx) > Math.abs(dy)
+      if (!d.sideways) {
+        drag.current = null
+        return
+      }
+      e.currentTarget.setPointerCapture(e.pointerId)
+      e.currentTarget.classList.add('is-dragging')
+    }
+    e.currentTarget.scrollLeft = d.startScroll - dx
+    d.moves = [...d.moves.filter((m) => e.timeStamp - m.t <= VELOCITY_WINDOW_MS), { t: e.timeStamp, x: e.clientX }]
   }
   const onPointerEnd = (e: PointerEvent<HTMLUListElement>) => {
-    if (!drag.current) return
+    const d = drag.current
     drag.current = null
+    if (!d?.sideways) return
     const el = e.currentTarget
-    el.classList.remove('is-dragging')
-    goTo(slideIndexAt(el.scrollLeft, el.clientWidth, count))
+    const first = d.moves[0]!, last = d.moves[d.moves.length - 1]!
+    // the strip scrolls the other way from the finger
+    const velocity = last.t > first.t ? -(last.x - first.x) / (last.t - first.t) : 0
+    settle(el, releaseSlide({ scrollLeft: el.scrollLeft, slideWidth: el.clientWidth, count, velocity }), velocity)
   }
 
   return (
