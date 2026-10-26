@@ -1,9 +1,9 @@
 // Layer 1 (ground) of a festival's big area map: the walk from the stations (and stops) to the venue, in real shapes
 // (OSM) — roads at real widths as one shape with pale kerbs, parks, pitches, water, car parks, construction sites, the
 // stations as boxes in their line's colour along the track (lib/station.mjs), and buildings as light 2.5D blocks (roof
-// lifted over its walls, a soft shadow). The venue itself is only its outline here (in the small map's path grey): the
-// small map's layers lie on top of it. One look for every festival: a light street map (the reference the user liked,
-// 2026-10-26).
+// lifted over its walls, a soft shadow). The venue is either only its outline (in the small map's path grey, the small
+// map's layers lying on top of it), or — for a festival with no venue map — its building as a block in the festival's
+// own colours. One look for every festival: a light street map (the reference the user liked, 2026-10-26).
 import fs from 'node:fs'
 import path from 'node:path'
 import { makeGround } from './ground.mjs'
@@ -52,7 +52,7 @@ const closed = (pts) => pts.length > 3 && same(pts[0], pts[pts.length - 1])
 /** The closed outlines of an OSM area: a closed way, or a multipolygon relation's outer ways joined end to end. */
 function areaRings(OSM) {
   const byId = new Map(OSM.ways.map((w) => [w.id, w]))
-  const rings = OSM.ways.filter((w) => closed(w.pts)).map((w) => ({ tags: w.tags || {}, pts: w.pts }))
+  const rings = OSM.ways.filter((w) => closed(w.pts)).map((w) => ({ id: w.id, tags: w.tags || {}, pts: w.pts }))
   for (const rel of OSM.relations ?? []) {
     const open = rel.outer.map((id) => byId.get(id)?.pts).filter(Boolean).map((pts) => [...pts])
     while (open.length) {
@@ -66,33 +66,45 @@ function areaRings(OSM) {
           ring = [...ring, ...next.slice(1)]; open.splice(i, 1); grown = true; break
         }
       }
-      if (closed(ring)) rings.push({ tags: rel.tags || {}, pts: ring })
+      if (closed(ring)) rings.push({ id: rel.id, tags: rel.tags || {}, pts: ring })
     }
   }
   return rings
 }
 
+/** Mask of the venue: the small map's outline (its layer 1 `venue` path, small-frame metres) moved into this frame, or
+ *  the OSM areas (ways or relations) the festival names. */
+async function venueMask({ frame, maskOf, rings, out, venue }) {
+  const { PPM, BOX, llToPx, pathD } = frame
+  if (venue.osm) {
+    const shapes = rings.filter((r) => venue.osm.includes(r.id)).map((r) => `<path d="${pathD(r.pts.map(llToPx), true)}"/>`)
+    if (shapes.length === 0) throw new Error(`no OSM area ${venue.osm.join(', ')} for the venue`)
+    return maskOf(`<g fill="#000">${shapes.join('')}</g>`)
+  }
+  const small = fs.readFileSync(path.join(out, 'layer1-ground-north-up.svg'), 'utf8')
+  const venueD = small.match(/<path id="venue"[^>]* d="([^"]+)"/)?.[1]
+  if (!venueD) throw new Error('run layer1.mjs first: no venue outline in the small layer 1')
+  const [dx, dy] = [venue.small.west - BOX.west, BOX.north - venue.small.north] // small-frame origin in this frame, metres
+  return maskOf(`<path transform="scale(${PPM}) translate(${dx},${dy})" d="${venueD}" fill="#000"/>`)
+}
+
 /**
- * frame: the big map's frame (lib/frame.mjs); smallBox: the small map's box (same origin); out/cache: where the
- * festival's layers go — the small layer 1 must be there (its `venue` outline); stations: [{ name, near: [e, n],
- * lines: [{ text, colour }], length?, outline? }] (the box takes the first line's colour).
+ * frame: the big map's frame (lib/frame.mjs); venue: { small: the small map's box (same origin) } when the small
+ * map's layers go on top (its layer 1 must be in out/: its `venue` outline), or { osm: [way or relation ids], roof,
+ * wall } for a festival with no venue map: that building drawn as a block in those colours; out/cache: where the
+ * festival's layers go; stations: [{ name, near: [e, n], lines: [{ text, colour }], length?, outline?, track? }] (the
+ * box takes the first line's colour; `track`: the OSM name of the line's track when it is not tagged subway).
  * Writes out/big-layer1-ground-north-up.svg and out/big-north-up-bounds.json.
  */
-export async function drawBigLayer1({ frame, smallBox, out, cache, stations }) {
-  const { OSM, W, H, PPM, BOX, llToPx, pathD } = frame
+export async function drawBigLayer1({ frame, venue: where, out, cache, stations }) {
+  const { OSM, W, H, BOX, llToPx, pathD } = frame
   const { maskOf, toF, joinLooseEnds, pathStrokes, closeOpen, zoneGroups, writeNorthUp, areas } = makeGround(frame)
   const C = Object.fromEntries(BIG_CLASSES.map(([n], i) => [n, i]))
   const colour = Object.fromEntries(BIG_CLASSES)
 
-  // The venue: the small map's own outline (its layer 1 `venue` path, small-frame metres), moved into this frame.
-  const small = fs.readFileSync(path.join(out, 'layer1-ground-north-up.svg'), 'utf8')
-  const venueD = small.match(/<path id="venue"[^>]* d="([^"]+)"/)?.[1]
-  if (!venueD) throw new Error('run layer1.mjs first: no venue outline in the small layer 1')
-  const [dx, dy] = [smallBox.west - BOX.west, BOX.north - smallBox.north] // small-frame origin in this frame, metres
-  const venue = await maskOf(`<path transform="scale(${PPM}) translate(${dx},${dy})" d="${venueD}" fill="#000"/>`)
-
   const cls = new Int8Array(W * H).fill(C.land)
   const rings = areaRings(OSM)
+  const venue = await venueMask({ frame, maskOf, rings, out, venue: where })
   for (const [test, name] of AREA) {
     // each area its own shape: one path of them all would cut holes where a ring lies inside another one wound the other way
     const shapes = rings.filter((r) => test(r.tags)).map((r) => `<path d="${pathD(r.pts.map(llToPx), true)}"/>`).join('')
@@ -113,8 +125,8 @@ export async function drawBigLayer1({ frame, smallBox, out, cache, stations }) {
   const roadD = frame.trace(toF((i) => cls[i] === C.road), { ...TRACE, sigma: 1.5 })
   const buildingD = frame.trace(toF((i) => cls[i] === C.building), { ...TRACE, sigma: 1 })
   const [sx, sy] = STYLE.shadowOffset
-  const stationBoxes = stations.map(({ name, near, lines, length = 140, outline }) => {
-    const station = findStation(frame, near, { length })
+  const stationBoxes = stations.map(({ name, near, lines, length = 140, outline, track }) => {
+    const station = findStation(frame, near, { length, track })
     return `<g data-name="${name}">${stationBoxSvg(station, BOX, { length, fill: lines[0].colour, outline: outline ?? darker(lines[0].colour) })}</g>`
   })
   const VW = BOX.east - BOX.west, VH = BOX.north - BOX.south
@@ -128,10 +140,21 @@ export async function drawBigLayer1({ frame, smallBox, out, cache, stations }) {
 <use data-name="그림자" href="#building-outline" fill="${STYLE.shadow}" transform="translate(${sx},${sy})"/>
 <use data-name="벽" href="#building-outline" fill="${STYLE.wall}"/>
 <use data-name="지붕" href="#building-outline" fill="${colour.building}" transform="translate(0,${-STYLE.roofLift})"/>
-</g>
+</g>${where.osm ? venueBlock(frame.trace(toF((i) => venue[i] > 127), { ...TRACE, sigma: 1 }), where) : ''}
 </g>`
   writeNorthUp({ content, cls, colour, out, cache, prefix: 'big-' })
   console.log('path ends joined', joined, '| areas m²', areas(cls, BIG_CLASSES))
+}
+
+/** The venue building as a 2.5D block in the festival's colours (roof lifted a little higher than the others). */
+function venueBlock(d, { roof, wall }) {
+  const [sx, sy] = STYLE.shadowOffset
+  return `
+<g id="venue" data-name="공연장" fill-rule="evenodd">
+<path data-name="그림자" d="${d}" fill="${STYLE.shadow}" transform="translate(${sx * 1.5},${sy * 1.5})"/>
+<path data-name="벽" d="${d}" fill="${wall}"/>
+<path data-name="지붕" d="${d}" fill="${roof}" transform="translate(0,${-STYLE.roofLift * 1.5})"/>
+</g>`
 }
 
 /** A line colour a third of the way to black (the station box's outline). */
@@ -141,6 +164,11 @@ function darker(hex) {
 }
 
 /** Where the app writes a station's name (past the northern end of its box), [lat, lng]. */
-export function stationNameAt(frame, { near, length = 140 }) {
-  return frame.toLL(findStation(frame, near, { length }).nameAt)
+export function stationNameAt(frame, { near, length = 140, track }) {
+  return frame.toLL(findStation(frame, near, { length, track }).nameAt)
+}
+
+/** The middle of a station's box on its track, [lat, lng]. */
+export function stationCentre(frame, { near, length = 140, track }) {
+  return frame.toLL(findStation(frame, near, { length, track }).centre)
 }

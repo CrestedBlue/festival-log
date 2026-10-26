@@ -53,9 +53,11 @@ describe('createWonderlivet2026', () => {
     expect(festival.pins.every((p) => p.id.startsWith(`${WONDERLIVET_SERIES}-`))).toBe(true)
   })
 
-  test('pins the halls and the stations the official directions name, and has no illustrated map yet', () => {
-    expect(festival.pins.map((p) => p.name)).toEqual(['킨텍스 제2전시장 7–10홀 · 공연장', '킨텍스역 (GTX-A) (대략)', '대화역 (3호선) (대략)'])
-    expect(festivalMapFor(WONDERLIVET_2026_ID)).toBeNull()
+  test('pins the halls and the stations the official directions name, drawn as the big map\'s icons', () => {
+    expect(festival.pins.map((p) => p.name)).toEqual(['킨텍스 제2전시장 7–10홀 · 공연장', '킨텍스역 (GTX-A)', '대화역 (3호선)'])
+    const map = festivalMapFor(WONDERLIVET_2026_ID)
+    expect(map?.layers).toHaveLength(1)
+    expect(festival.pins.every((p) => p.mapIcon && map?.icons[p.mapIcon])).toBe(true)
   })
 
   test('comes with notices from the official FAQ, and the design of its own', () => {

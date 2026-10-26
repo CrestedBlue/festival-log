@@ -4,17 +4,22 @@
 const sub = (a, b) => [a[0] - b[0], a[1] - b[1]]
 const len = (v) => Math.hypot(v[0], v[1])
 
+// Railway values a line's track may have in OpenStreetMap (GTX-A and 일산선 are tagged rail, not subway).
+const TRACKS = new Set(['subway', 'rail', 'light_rail'])
+
 /**
- * frame: lib/frame.mjs; near: [e, n] metres around the station; radius: how far its exits may be.
+ * frame: lib/frame.mjs; near: [e, n] metres around the station; radius: how far its exits may be; track: the OSM name
+ * of the line's track (any railway kind), else the nearest subway track.
  * Returns the box centre on the track, the track direction (unit [e, n]), the exits, and where the name goes (just past
  * the box's northern end).
  */
-export function findStation({ OSM, toM }, near, { radius = 120, length = 140 } = {}) {
+export function findStation({ OSM, toM }, near, { radius = 120, length = 140, track } = {}) {
   const exits = OSM.subwayEntrances.map((x) => ({ ...x, m: toM([x.lat, x.lng]) })).filter((x) => len(sub(x.m, near)) < radius)
   if (exits.length === 0) throw new Error(`no subway exits within ${radius} m of ${near}`)
   const middle = [exits.reduce((s, x) => s + x.m[0], 0) / exits.length, exits.reduce((s, x) => s + x.m[1], 0) / exits.length]
   let best = null
-  for (const way of OSM.ways.filter((w) => w.tags?.railway === 'subway')) {
+  const onTrack = (w) => (track ? w.tags?.name === track && TRACKS.has(w.tags.railway) : w.tags?.railway === 'subway')
+  for (const way of OSM.ways.filter(onTrack)) {
     const m = way.pts.map(toM)
     for (let i = 1; i < m.length; i++) {
       const d = sub(m[i], m[i - 1]), l2 = d[0] ** 2 + d[1] ** 2 || 1e-9

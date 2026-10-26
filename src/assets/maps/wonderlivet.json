@@ -1,0 +1,886 @@
+{
+  "attribution": "지도: 원더리벳 2026 공연장(킨텍스 제2전시장)을 표시함 · 지형: © OpenStreetMap 기여자",
+  "background": "#f3e9ce",
+  "maxZoom": 19.5,
+  "fillOnOpen": false,
+  "zoomOutFills": true,
+  "bounds": [
+    [
+      37.651263,
+      126.728252
+    ],
+    [
+      37.680009,
+      126.756622
+    ]
+  ],
+  "initialView": [
+    [
+      37.663843,
+      126.735835
+    ],
+    [
+      37.665979,
+      126.749007
+    ]
+  ],
+  "layers": [
+    {
+      "file": "big-layer1.svg",
+      "bounds": [
+        [
+          37.651263,
+          126.728252
+        ],
+        [
+          37.680009,
+          126.756622
+        ]
+      ]
+    }
+  ],
+  "icons": {
+    "venue": "icons/venue.svg",
+    "bus": "icons/bus.svg",
+    "station-kintex": "icons/station-kintex.svg",
+    "station-daehwa": "icons/station-daehwa.svg"
+  },
+  "labels": [
+    {
+      "text": "킨텍스역",
+      "kind": "station",
+      "badges": [
+        {
+          "text": "GTX-A",
+          "colour": "#9a6292"
+        }
+      ],
+      "minZoom": 14,
+      "lat": 37.665551,
+      "lng": 126.747378
+    },
+    {
+      "text": "대화역",
+      "kind": "station",
+      "badges": [
+        {
+          "text": "3",
+          "colour": "#ef7c1c"
+        }
+      ],
+      "minZoom": 14,
+      "lat": 37.676523,
+      "lng": 126.746591
+    },
+    {
+      "text": "킨텍스 제1전시장",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.668466,
+      "lng": 126.745481
+    },
+    {
+      "text": "이마트타운 킨텍스점",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.661669,
+      "lng": 126.744045
+    },
+    {
+      "text": "원마운트",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.664327,
+      "lng": 126.754171
+    },
+    {
+      "text": "고양종합운동장",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.676387,
+      "lng": 126.743187
+    },
+    {
+      "text": "킨텍스온누리공원",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.665102,
+      "lng": 126.746593
+    },
+    {
+      "text": "연세프라자",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.678396,
+      "lng": 126.754656
+    },
+    {
+      "text": "연세프라자",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.678716,
+      "lng": 126.754161
+    },
+    {
+      "text": "문촌마을",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.672254,
+      "lng": 126.756572
+    },
+    {
+      "text": "백병원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.674583,
+      "lng": 126.750983
+    },
+    {
+      "text": "백병원(중)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.674292,
+      "lng": 126.751886
+    },
+    {
+      "text": "문촌마을",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.67251,
+      "lng": 126.755745
+    },
+    {
+      "text": "신우아파트.대원아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.668163,
+      "lng": 126.753643
+    },
+    {
+      "text": "킨텍스후문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.67046,
+      "lng": 126.74835
+    },
+    {
+      "text": "킨텍스제1전시장",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.671917,
+      "lng": 126.745012
+    },
+    {
+      "text": "대화중학교.종합운동장",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.674658,
+      "lng": 126.744424
+    },
+    {
+      "text": "예비군훈련장.성저3.4단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.679564,
+      "lng": 126.747843
+    },
+    {
+      "text": "현대백화점",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.668569,
+      "lng": 126.752161
+    },
+    {
+      "text": "킨텍스제1전시장",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.671634,
+      "lng": 126.74507
+    },
+    {
+      "text": "원마운트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.664634,
+      "lng": 126.75356
+    },
+    {
+      "text": "대화역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.676204,
+      "lng": 126.747074
+    },
+    {
+      "text": "대화역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.676394,
+      "lng": 126.7472
+    },
+    {
+      "text": "건설산업혁신센터",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.673506,
+      "lng": 126.741388
+    },
+    {
+      "text": "건설산업혁신센터",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.67324,
+      "lng": 126.741434
+    },
+    {
+      "text": "가로수길",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.666868,
+      "lng": 126.755877
+    },
+    {
+      "text": "현대백화점",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.669523,
+      "lng": 126.750493
+    },
+    {
+      "text": "킨텍스삼거리",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.671129,
+      "lng": 126.746862
+    },
+    {
+      "text": "현대모터스튜디오고양",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.665675,
+      "lng": 126.747524
+    },
+    {
+      "text": "힐스테이트일산",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.666255,
+      "lng": 126.745633
+    },
+    {
+      "text": "킨텍스",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.668193,
+      "lng": 126.741726
+    },
+    {
+      "text": "킨텍스",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.667974,
+      "lng": 126.74157
+    },
+    {
+      "text": "한국건설기술연구원.킨텍스",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.669989,
+      "lng": 126.740919
+    },
+    {
+      "text": "한국건설기술연구원.킨텍스",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.669938,
+      "lng": 126.74123
+    },
+    {
+      "text": "장촌공원사거리.일산백병원입구",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.672795,
+      "lng": 126.753429
+    },
+    {
+      "text": "문촌마을14.19단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.671328,
+      "lng": 126.752447
+    },
+    {
+      "text": "문촌마을14.19단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.670872,
+      "lng": 126.75229
+    },
+    {
+      "text": "한수초등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.669016,
+      "lng": 126.756392
+    },
+    {
+      "text": "한수초등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.669012,
+      "lng": 126.756574
+    },
+    {
+      "text": "백병원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.675125,
+      "lng": 126.74901
+    },
+    {
+      "text": "장촌초등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.673185,
+      "lng": 126.747707
+    },
+    {
+      "text": "장촌초등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.673091,
+      "lng": 126.747941
+    },
+    {
+      "text": "대화중학교.종합운동장",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.67461,
+      "lng": 126.744057
+    },
+    {
+      "text": "원마운트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.664798,
+      "lng": 126.753475
+    },
+    {
+      "text": "한화꿈에그린아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.665449,
+      "lng": 126.751254
+    },
+    {
+      "text": "현대백화점후문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.66674,
+      "lng": 126.751164
+    },
+    {
+      "text": "포레나킨텍스오피스텔",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.665964,
+      "lng": 126.748981
+    },
+    {
+      "text": "킨텍스꿈에그린.원시티1단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.66497,
+      "lng": 126.749187
+    },
+    {
+      "text": "킨텍스꿈에그린.원시티1단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.664677,
+      "lng": 126.749296
+    },
+    {
+      "text": "킨텍스원시티3단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.661496,
+      "lng": 126.751236
+    },
+    {
+      "text": "킨텍스원시티3단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.661467,
+      "lng": 126.751425
+    },
+    {
+      "text": "소노캄호텔",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.66263,
+      "lng": 126.751311
+    },
+    {
+      "text": "소노캄호텔",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.663008,
+      "lng": 126.750703
+    },
+    {
+      "text": "아쿠아리움",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.662656,
+      "lng": 126.753989
+    },
+    {
+      "text": "빛마루.이비에스",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.661325,
+      "lng": 126.754056
+    },
+    {
+      "text": "원시티1.2단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.66412,
+      "lng": 126.747736
+    },
+    {
+      "text": "더샵그라비스타.힐스테이트일산",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.663904,
+      "lng": 126.747223
+    },
+    {
+      "text": "더샵그라비스타.이마트킨텍스점",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.662556,
+      "lng": 126.745072
+    },
+    {
+      "text": "더샵그라비스타.이마트킨텍스점",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.662476,
+      "lng": 126.744866
+    },
+    {
+      "text": "킨텍스원시티2단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.661464,
+      "lng": 126.747582
+    },
+    {
+      "text": "킨텍스원시티2단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.661391,
+      "lng": 126.74736
+    },
+    {
+      "text": "장성초교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.677567,
+      "lng": 126.750732
+    },
+    {
+      "text": "장성초교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.677915,
+      "lng": 126.75132
+    },
+    {
+      "text": "예비군훈련장.성저3.4단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.678669,
+      "lng": 126.746878
+    },
+    {
+      "text": "일산서부경찰서",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.679276,
+      "lng": 126.741848
+    },
+    {
+      "text": "일산서부경찰서",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.679305,
+      "lng": 126.740009
+    },
+    {
+      "text": "고양종합운동장.일산서구청",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.677855,
+      "lng": 126.744126
+    },
+    {
+      "text": "고양종합운동장.일산서구청",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.677647,
+      "lng": 126.74378
+    },
+    {
+      "text": "대화동동문3단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.673834,
+      "lng": 126.729708
+    },
+    {
+      "text": "대화동동문3단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.673722,
+      "lng": 126.730143
+    },
+    {
+      "text": "대화마을2.3단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.672277,
+      "lng": 126.731013
+    },
+    {
+      "text": "대화마을2.3단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.671815,
+      "lng": 126.731194
+    },
+    {
+      "text": "대송중학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.669921,
+      "lng": 126.732524
+    },
+    {
+      "text": "대송중학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.669713,
+      "lng": 126.732558
+    },
+    {
+      "text": "한라아파트.대송중학교후문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.671307,
+      "lng": 126.731001
+    },
+    {
+      "text": "GS자이아파트정문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.670618,
+      "lng": 126.729795
+    },
+    {
+      "text": "GS자이아파트정문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.670199,
+      "lng": 126.729715
+    },
+    {
+      "text": "GS자이아파트후문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.669436,
+      "lng": 126.729548
+    },
+    {
+      "text": "GS자이아파트후문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.669452,
+      "lng": 126.729505
+    },
+    {
+      "text": "대화마을8.9단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.668369,
+      "lng": 126.733579
+    },
+    {
+      "text": "대화마을8.9단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.668267,
+      "lng": 126.73341
+    },
+    {
+      "text": "대화동",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.669074,
+      "lng": 126.731967
+    },
+    {
+      "text": "대화동",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.668962,
+      "lng": 126.731315
+    },
+    {
+      "text": "양우아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.670457,
+      "lng": 126.73461
+    },
+    {
+      "text": "현대파크아파트.양우아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.670083,
+      "lng": 126.734289
+    },
+    {
+      "text": "송포파출소.송포농협",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.671815,
+      "lng": 126.73732
+    },
+    {
+      "text": "송포파출소.송포농협",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.672004,
+      "lng": 126.737741
+    },
+    {
+      "text": "대화마을입구삼거리",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.667244,
+      "lng": 126.735321
+    },
+    {
+      "text": "대화마을입구삼거리",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.667091,
+      "lng": 126.735792
+    },
+    {
+      "text": "멱절마을입구",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.657475,
+      "lng": 126.730074
+    },
+    {
+      "text": "멱절마을입구",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.658087,
+      "lng": 126.73028
+    },
+    {
+      "text": "멱절",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.658397,
+      "lng": 126.733131
+    },
+    {
+      "text": "멱절",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.658277,
+      "lng": 126.733211
+    },
+    {
+      "text": "일산디엠시스카이뷰.현대백화점",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.668639,
+      "lng": 126.750537
+    },
+    {
+      "text": "일산서부경찰서",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.679496,
+      "lng": 126.740195
+    },
+    {
+      "text": "한라아파트.대송중학교후문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.671262,
+      "lng": 126.730734
+    },
+    {
+      "text": "대화역(중)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.676051,
+      "lng": 126.74789
+    },
+    {
+      "text": "킨텍스역5번출구",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.665487,
+      "lng": 126.747327
+    },
+    {
+      "text": "현대모터스튜디오고양.포레나킨텍스",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.666015,
+      "lng": 126.748684
+    },
+    {
+      "text": "일산라이브더센텀",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.652219,
+      "lng": 126.74589
+    },
+    {
+      "text": "대화역(중)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.676135,
+      "lng": 126.747378
+    }
+  ],
+  "marks": [
+    {
+      "id": 1,
+      "kind": "venue",
+      "zone": "",
+      "lat": 37.664911,
+      "lng": 126.742421
+    },
+    {
+      "id": 2,
+      "kind": "station-kintex",
+      "zone": "",
+      "lat": 37.665179,
+      "lng": 126.748207
+    },
+    {
+      "id": 3,
+      "kind": "station-daehwa",
+      "zone": "",
+      "lat": 37.676161,
+      "lng": 126.747428
+    }
+  ]
+}

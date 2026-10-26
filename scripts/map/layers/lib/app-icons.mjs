@@ -4,6 +4,10 @@ const svg = (viewBox, body) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox=
 const tile = (fill, glyph) => svg('-12 -12 24 24', `<rect x="-11" y="-11" width="22" height="22" rx="6" fill="${fill}" stroke="#ffffff" stroke-width="1.6"/>${glyph}`)
 const BUS = '<rect x="-6" y="-7" width="12" height="11" rx="2.4" fill="#ffffff"/><rect x="-4.4" y="-5.4" width="8.8" height="4.2" rx="1" fill="currentColor"/>'
   + '<circle cx="-3.4" cy="5.6" r="1.6" fill="#ffffff"/><circle cx="3.4" cy="5.6" r="1.6" fill="#ffffff"/>'
+const NOTE = '<path d="M-1.6,-6.4 L5.6,-8 V3.2" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+  + '<ellipse cx="-3.6" cy="4.2" rx="2.6" ry="2.1" fill="#ffffff"/><ellipse cx="3.6" cy="3" rx="2.6" ry="2.1" fill="#ffffff"/><path d="M-1.6,-6.4 V4" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>'
+const TRAIN = '<rect x="-5.5" y="-7.5" width="11" height="12" rx="3" fill="#ffffff"/><rect x="-3.8" y="-5.6" width="7.6" height="4" rx="1" fill="currentColor"/>'
+  + '<circle cx="-2.6" cy="1.6" r="1.1" fill="currentColor"/><circle cx="2.6" cy="1.6" r="1.1" fill="currentColor"/><path d="M-4,8 L-2,4.6 M4,8 L2,4.6" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>'
 const TICKET = '<path d="M-7,-4.5 H7 V-1.6 A1.6,1.6 0 0 0 7,1.6 V4.5 H-7 V1.6 A1.6,1.6 0 0 0 -7,-1.6 Z" fill="#ffffff"/><path d="M2,-4.5 V4.5" stroke="currentColor" stroke-width="1.2" stroke-dasharray="1.4 1.2"/>'
 
 /** A city bus stop. */
@@ -16,3 +20,7 @@ export const ticketIcon = (fill = '#e8455a') => tile(fill, TICKET.replaceAll('cu
 export const exitIcon = (n) => svg('-10 -10 20 20', `<circle r="9" fill="#ffd33d" stroke="#ffffff" stroke-width="1.6"/><text y="3.6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="11" fill="#2b2b2b">${n}</text>`)
 /** A pin badge drawn by the festival's pin design at (0,0), radius r (plus its drop shadow below). */
 export const badgeIcon = (body, r) => svg(`${-r - 1} ${-r - 1} ${2 * r + 2} ${2 * r + 5}`, body)
+/** The festival's venue, in its own colour: a music note. */
+export const venueIcon = (fill) => tile(fill, NOTE)
+/** A subway station: a train front, in the colour of its line. */
+export const stationIcon = (fill = '#3d5a99') => tile(fill, TRAIN.replaceAll('currentColor', fill))

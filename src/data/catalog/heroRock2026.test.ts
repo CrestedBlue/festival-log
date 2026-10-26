@@ -2,6 +2,7 @@ import { describe, expect, test } from 'vitest'
 import { FestivalSchema } from '../schema'
 import { HERO_ROCK_2026_ID, HERO_ROCK_SERIES } from './ids'
 import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICES, createHeroRock2026 } from './heroRock2026'
+import { festivalMapFor } from './index'
 
 describe('createHeroRock2026', () => {
   const festival = createHeroRock2026()
@@ -22,13 +23,16 @@ describe('createHeroRock2026', () => {
     expect(festival.performances).toEqual([])
   })
 
-  test('pins only what is announced: the venue, and the stations near it as one row', () => {
+  test('pins only what is announced: the venue, and the stations near it as one row, drawn as the map\'s icons', () => {
     expect(festival.pins.map((p) => [p.name, p.group ?? null])).toEqual([
       ['송도컨벤시아', null],
       ['인천대입구역 (인천 1호선)', '가까운 역'],
       ['센트럴파크역 (인천 1호선)', '가까운 역'],
+      ['지식정보단지역 (인천 1호선)', '가까운 역'],
     ])
     expect(festival.pins.every((p) => p.detail)).toBe(true)
+    const map = festivalMapFor(HERO_ROCK_2026_ID)
+    expect(festival.pins.every((p) => p.mapIcon && map?.icons[p.mapIcon])).toBe(true)
     expect(festival.pins.every((p) => p.id.startsWith(`${HERO_ROCK_SERIES}-`))).toBe(true)
   })
 

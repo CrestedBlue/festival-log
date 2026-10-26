@@ -24,6 +24,18 @@ describe('buildAnnotations', () => {
     expect(keys(16.5)).toEqual(['label:0', 'label:1', 'pin:wc', 'pin:booth'])
   })
 
+  test('a venue (a stage pin the map has an icon for) shows from much further out than other pins', () => {
+    const venue = pin('hall', 'toilet', { kind: 'stage', caption: '공연장' })
+    expect(buildAnnotations(map, [venue], 13.5, null).map((a) => a.key)).toContain('pin:hall')
+    expect(buildAnnotations(map, [{ ...venue, kind: 'etc' }], 13.5, null).map((a) => a.key)).not.toContain('pin:hall')
+  })
+
+  test('a venue wins over everything but the selected and active pins, the station names included', () => {
+    const items = buildAnnotations(map, [pin('hall', 'toilet', { kind: 'stage', caption: '공연장' })], 16, null)
+    const venue = items.find((a) => a.key === 'pin:hall')!
+    expect(Math.max(...items.filter((a) => a !== venue).map((a) => a.priority))).toBeLessThan(venue.priority)
+  })
+
   test('a selected pin shows at any zoom', () => {
     expect(keys(14, 'wc')).toContain('pin:wc')
   })

@@ -1,0 +1,1162 @@
+{
+  "attribution": "지도: 2026 히어로 락 페스티벌 공지 장소(송도컨벤시아)를 표시함 · 지형: © OpenStreetMap 기여자",
+  "background": "#f3e9ce",
+  "maxZoom": 19.5,
+  "fillOnOpen": false,
+  "zoomOutFills": true,
+  "bounds": [
+    [
+      37.3762,
+      126.629779
+    ],
+    [
+      37.401352,
+      126.654652
+    ]
+  ],
+  "initialView": [
+    [
+      37.385076,
+      126.638802
+    ],
+    [
+      37.393035,
+      126.654965
+    ]
+  ],
+  "layers": [
+    {
+      "file": "big-layer1.svg",
+      "bounds": [
+        [
+          37.3762,
+          126.629779
+        ],
+        [
+          37.401352,
+          126.654652
+        ]
+      ]
+    }
+  ],
+  "icons": {
+    "venue": "icons/venue.svg",
+    "bus": "icons/bus.svg",
+    "station-incheonUniv": "icons/station-incheonUniv.svg",
+    "station-centralPark": "icons/station-centralPark.svg",
+    "station-knowledgeInfo": "icons/station-knowledgeInfo.svg"
+  },
+  "labels": [
+    {
+      "text": "인천대입구역",
+      "kind": "station",
+      "badges": [
+        {
+          "text": "인천1",
+          "colour": "#7ca8d5"
+        }
+      ],
+      "minZoom": 14,
+      "lat": 37.386507,
+      "lng": 126.639081
+    },
+    {
+      "text": "센트럴파크역",
+      "kind": "station",
+      "badges": [
+        {
+          "text": "인천1",
+          "colour": "#7ca8d5"
+        }
+      ],
+      "minZoom": 14,
+      "lat": 37.394129,
+      "lng": 126.634045
+    },
+    {
+      "text": "지식정보단지역",
+      "kind": "station",
+      "badges": [
+        {
+          "text": "인천1",
+          "colour": "#7ca8d5"
+        }
+      ],
+      "minZoom": 14,
+      "lat": 37.378932,
+      "lng": 126.644937
+    },
+    {
+      "text": "송도 센트럴파크",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.392503,
+      "lng": 126.639313
+    },
+    {
+      "text": "포스코타워-송도",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.389311,
+      "lng": 126.6442
+    },
+    {
+      "text": "트라이볼",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.394286,
+      "lng": 126.634843
+    },
+    {
+      "text": "경원재 앰배서더 인천",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.391865,
+      "lng": 126.637724
+    },
+    {
+      "text": "쉐라톤 인천호텔",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.390167,
+      "lng": 126.645404
+    },
+    {
+      "text": "송도커낼워크",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.400069,
+      "lng": 126.637861
+    },
+    {
+      "text": "쉐라톤호텔",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.390152,
+      "lng": 126.644476
+    },
+    {
+      "text": "해양경찰청",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.394923,
+      "lng": 126.649505
+    },
+    {
+      "text": "송도푸르지오월드마크",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.392683,
+      "lng": 126.646413
+    },
+    {
+      "text": "송도힐스테이트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.393809,
+      "lng": 126.646656
+    },
+    {
+      "text": "松島ブルジオハーバービュー",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.397679,
+      "lng": 126.641396
+    },
+    {
+      "text": "엑스포빌리지9단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.400919,
+      "lng": 126.644374
+    },
+    {
+      "text": "지식정보단지역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.376844,
+      "lng": 126.645986
+    },
+    {
+      "text": "지식정보단지역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.376999,
+      "lng": 126.646491
+    },
+    {
+      "text": "웰카운티",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.379956,
+      "lng": 126.647164
+    },
+    {
+      "text": "웰카운티",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.380003,
+      "lng": 126.647579
+    },
+    {
+      "text": "인천가톨릭대",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.383486,
+      "lng": 126.646059
+    },
+    {
+      "text": "인천가톨릭대",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.383812,
+      "lng": 126.645189
+    },
+    {
+      "text": "미추홀공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.384898,
+      "lng": 126.645092
+    },
+    {
+      "text": "국제업무지구역5번출구",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.400163,
+      "lng": 126.630654
+    },
+    {
+      "text": "국제업무지구역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.399106,
+      "lng": 126.630459
+    },
+    {
+      "text": "경제자유구역청",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.39668,
+      "lng": 126.633679
+    },
+    {
+      "text": "경제자유구역청",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.39682,
+      "lng": 126.633508
+    },
+    {
+      "text": "송도센트럴파크역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.394427,
+      "lng": 126.634301
+    },
+    {
+      "text": "센트럴파크역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.394132,
+      "lng": 126.633623
+    },
+    {
+      "text": "송도아트윈푸르지오",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.392995,
+      "lng": 126.633762
+    },
+    {
+      "text": "송도아트윈푸르지오",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.391809,
+      "lng": 126.632111
+    },
+    {
+      "text": "송도센트럴파크",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.392256,
+      "lng": 126.634755
+    },
+    {
+      "text": "센트럴파크역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.392314,
+      "lng": 126.63569
+    },
+    {
+      "text": "해돋이공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.390003,
+      "lng": 126.653291
+    },
+    {
+      "text": "해돋이공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.389641,
+      "lng": 126.653191
+    },
+    {
+      "text": "해돋이공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.390599,
+      "lng": 126.650787
+    },
+    {
+      "text": "한국생산기술연구원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.383767,
+      "lng": 126.649367
+    },
+    {
+      "text": "풍림2.3차아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.392754,
+      "lng": 126.652946
+    },
+    {
+      "text": "푸르지오하버뷰",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.396569,
+      "lng": 126.639347
+    },
+    {
+      "text": "푸르지오하버뷰",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.396599,
+      "lng": 126.640209
+    },
+    {
+      "text": "푸르지오월드마크",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.397188,
+      "lng": 126.650215
+    },
+    {
+      "text": "포스코타워앤쉐라톤호텔",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.39004,
+      "lng": 126.644394
+    },
+    {
+      "text": "코오롱더프라우",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.398869,
+      "lng": 126.651094
+    },
+    {
+      "text": "코오롱더프라우",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.399035,
+      "lng": 126.651077
+    },
+    {
+      "text": "컨벤시아",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.389699,
+      "lng": 126.647356
+    },
+    {
+      "text": "커넬워크",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.401305,
+      "lng": 126.638237
+    },
+    {
+      "text": "커넬워크",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.401039,
+      "lng": 126.638587
+    },
+    {
+      "text": "지식정보단지역(4번출구)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.37679,
+      "lng": 126.646663
+    },
+    {
+      "text": "인천포스코고등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.400829,
+      "lng": 126.648523
+    },
+    {
+      "text": "인천포스코고등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.400526,
+      "lng": 126.648613
+    },
+    {
+      "text": "인천스타트업파크",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.387255,
+      "lng": 126.64063
+    },
+    {
+      "text": "인천스타트업파크",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.387162,
+      "lng": 126.641217
+    },
+    {
+      "text": "인천송일초등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.384484,
+      "lng": 126.636126
+    },
+    {
+      "text": "인천송일초등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.384488,
+      "lng": 126.635639
+    },
+    {
+      "text": "인천대학교북문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.378031,
+      "lng": 126.631097
+    },
+    {
+      "text": "인천대학교북문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.379195,
+      "lng": 126.632061
+    },
+    {
+      "text": "인천대정문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.378455,
+      "lng": 126.634506
+    },
+    {
+      "text": "인천대정문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.377507,
+      "lng": 126.63519
+    },
+    {
+      "text": "인천대입구역.롯데몰",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.384,
+      "lng": 126.64056
+    },
+    {
+      "text": "인천대입구역.롯데몰",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.384953,
+      "lng": 126.640788
+    },
+    {
+      "text": "인천대입구역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.385501,
+      "lng": 126.63876
+    },
+    {
+      "text": "인천대입구역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.385106,
+      "lng": 126.638967
+    },
+    {
+      "text": "이안송도",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.396859,
+      "lng": 126.651635
+    },
+    {
+      "text": "웰카운티4단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.38109,
+      "lng": 126.643506
+    },
+    {
+      "text": "웰카운티4단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.38029,
+      "lng": 126.64341
+    },
+    {
+      "text": "웰카운티2단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.37915,
+      "lng": 126.653533
+    },
+    {
+      "text": "알앤디써비스",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.378088,
+      "lng": 126.639391
+    },
+    {
+      "text": "알앤디써비스",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.378269,
+      "lng": 126.639128
+    },
+    {
+      "text": "송도힐스테이트6단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.394012,
+      "lng": 126.646989
+    },
+    {
+      "text": "송도힐스테이트5단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.395014,
+      "lng": 126.64896
+    },
+    {
+      "text": "송도풍림아이원2단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.394032,
+      "lng": 126.65123
+    },
+    {
+      "text": "송도풍림아이원2단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.39408,
+      "lng": 126.651059
+    },
+    {
+      "text": "송도풍림아이원2단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.394683,
+      "lng": 126.653228
+    },
+    {
+      "text": "송도풍림아이원1단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.394616,
+      "lng": 126.653678
+    },
+    {
+      "text": "송도푸르지오하버뷰",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.398102,
+      "lng": 126.640661
+    },
+    {
+      "text": "송도타임스페이스",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.383482,
+      "lng": 126.641753
+    },
+    {
+      "text": "송도컨벤시아남문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.38707,
+      "lng": 126.643392
+    },
+    {
+      "text": "송도컨벤시아남문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.386752,
+      "lng": 126.644367
+    },
+    {
+      "text": "송도컨벤시아",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.388523,
+      "lng": 126.648368
+    },
+    {
+      "text": "송도컨벤시아",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.388356,
+      "lng": 126.648628
+    },
+    {
+      "text": "송도지웰푸르지오시티",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.383757,
+      "lng": 126.643483
+    },
+    {
+      "text": "송도자이하버뷰2단지(정문)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.394257,
+      "lng": 126.643699
+    },
+    {
+      "text": "송도자이하버뷰2단지(정문)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.394387,
+      "lng": 126.643583
+    },
+    {
+      "text": "송도자이하버뷰2단지(205동)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.394832,
+      "lng": 126.641887
+    },
+    {
+      "text": "송도자이하버뷰2단지(202동)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.395633,
+      "lng": 126.644258
+    },
+    {
+      "text": "송도자이하버뷰1단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.396866,
+      "lng": 126.642347
+    },
+    {
+      "text": "송도자이하버뷰",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.396489,
+      "lng": 126.640565
+    },
+    {
+      "text": "송도더샵하버뷰2차",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.397088,
+      "lng": 126.642555
+    },
+    {
+      "text": "송도더샵퍼스트파크15단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.385446,
+      "lng": 126.634267
+    },
+    {
+      "text": "송도더샵퍼스트파크15단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.385479,
+      "lng": 126.63466
+    },
+    {
+      "text": "송도더샵퍼스트파크14단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.386672,
+      "lng": 126.632545
+    },
+    {
+      "text": "송도더샵퍼스트파크14단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.38681,
+      "lng": 126.632702
+    },
+    {
+      "text": "송도더샵퍼스트월드D동",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.390192,
+      "lng": 126.650117
+    },
+    {
+      "text": "송도더샵퍼스트월드B동.C동",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.39277,
+      "lng": 126.64723
+    },
+    {
+      "text": "송도더샵퍼스트월드(서문)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.390156,
+      "lng": 126.647191
+    },
+    {
+      "text": "송도더샵퍼스트월드(동문)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.391897,
+      "lng": 126.649647
+    },
+    {
+      "text": "송도더샵퍼스트월드",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.392193,
+      "lng": 126.646692
+    },
+    {
+      "text": "송도더샵마스터뷰23단지(정문)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.382263,
+      "lng": 126.632564
+    },
+    {
+      "text": "송도더샵마스터뷰23단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.381336,
+      "lng": 126.634207
+    },
+    {
+      "text": "송도더샵마스터뷰23단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.381432,
+      "lng": 126.634997
+    },
+    {
+      "text": "송도더샵마스터뷰22단지(하행)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.382142,
+      "lng": 126.630897
+    },
+    {
+      "text": "송도더샵마스터뷰22단지(정문)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.382197,
+      "lng": 126.632191
+    },
+    {
+      "text": "송도더샵마스터뷰22단지(2202동)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.383771,
+      "lng": 126.632731
+    },
+    {
+      "text": "송도더샵마스터뷰22단지(2202동)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.384056,
+      "lng": 126.63272
+    },
+    {
+      "text": "송도더샵마스터뷰22단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.381987,
+      "lng": 126.63079
+    },
+    {
+      "text": "송도더샵마스터뷰21단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.3851,
+      "lng": 126.630056
+    },
+    {
+      "text": "송도글로벌캠퍼스푸르지오아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.378329,
+      "lng": 126.653456
+    },
+    {
+      "text": "송도1동행정복지센터",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.391796,
+      "lng": 126.650246
+    },
+    {
+      "text": "소리공원(하모니로)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.380007,
+      "lng": 126.640807
+    },
+    {
+      "text": "소리공원(하모니로)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.381124,
+      "lng": 126.641196
+    },
+    {
+      "text": "센트럴파크푸르지오아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.392669,
+      "lng": 126.643196
+    },
+    {
+      "text": "센트럴파크푸르지오아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.39233,
+      "lng": 126.642899
+    },
+    {
+      "text": "센트럴파크2",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.395225,
+      "lng": 126.641
+    },
+    {
+      "text": "센트럴파크1",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.396506,
+      "lng": 126.639132
+    },
+    {
+      "text": "센트럴공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.39025,
+      "lng": 126.643839
+    },
+    {
+      "text": "생산기술연구원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.383293,
+      "lng": 126.649662
+    },
+    {
+      "text": "먼우금초등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.392882,
+      "lng": 126.652789
+    },
+    {
+      "text": "롯데마트송도점",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.388723,
+      "lng": 126.642835
+    },
+    {
+      "text": "더프라우",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.397107,
+      "lng": 126.651139
+    },
+    {
+      "text": "더샵하버뷰14단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.396343,
+      "lng": 126.645978
+    },
+    {
+      "text": "더샵하버뷰(D14)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.396624,
+      "lng": 126.645967
+    },
+    {
+      "text": "더샵하버뷰(D13)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.397397,
+      "lng": 126.646781
+    },
+    {
+      "text": "더샵하버뷰(D13)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.397834,
+      "lng": 126.647595
+    },
+    {
+      "text": "더샵하버뷰",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.395808,
+      "lng": 126.644418
+    },
+    {
+      "text": "더샵하버뷰",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.398885,
+      "lng": 126.64716
+    },
+    {
+      "text": "더샵퍼스트파크13단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.388661,
+      "lng": 126.630562
+    },
+    {
+      "text": "더샵퍼스트파크13단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.388453,
+      "lng": 126.630805
+    },
+    {
+      "text": "더샵엑스포빌리지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.401317,
+      "lng": 126.643627
+    },
+    {
+      "text": "더샵그린워크1단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.398267,
+      "lng": 126.640881
+    },
+    {
+      "text": "더샵그린애비뉴",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.399582,
+      "lng": 126.649198
+    },
+    {
+      "text": "더샵그린애비뉴",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.39935,
+      "lng": 126.649194
+    },
+    {
+      "text": "더샵그린애비뉴",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.39892,
+      "lng": 126.64754
+    },
+    {
+      "text": "국제학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.399811,
+      "lng": 126.640922
+    },
+    {
+      "text": "국제학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.399619,
+      "lng": 126.641111
+    },
+    {
+      "text": "해양경찰청",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.392905,
+      "lng": 126.649812
+    }
+  ],
+  "marks": [
+    {
+      "id": 1,
+      "kind": "venue",
+      "zone": "",
+      "lat": 37.389055,
+      "lng": 126.646883
+    },
+    {
+      "id": 2,
+      "kind": "station-incheonUniv",
+      "zone": "",
+      "lat": 37.385876,
+      "lng": 126.639602
+    },
+    {
+      "id": 3,
+      "kind": "station-centralPark",
+      "zone": "",
+      "lat": 37.393454,
+      "lng": 126.634468
+    },
+    {
+      "id": 4,
+      "kind": "station-knowledgeInfo",
+      "zone": "",
+      "lat": 37.378291,
+      "lng": 126.645438
+    }
+  ]
+}

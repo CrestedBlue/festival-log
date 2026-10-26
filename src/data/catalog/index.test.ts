@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest'
 import { FestivalSchema } from '../schema'
 import { seriesMapFor } from '../../features/map/festivalMaps'
 import { CATALOG, catalogEntry, catalogEntryForLegacyId, festivalMapFor } from './index'
-import { GRAND_MINT_2026_ID, GRAND_MINT_2026_KEY, GRAND_MINT_SERIES, HERO_ROCK_2026_ID } from './ids'
+import { GRAND_MINT_2026_ID, GRAND_MINT_2026_KEY, GRAND_MINT_SERIES, HERO_ROCK_2026_ID, HERO_ROCK_SERIES, JUMF_2026_ID } from './ids'
 import { SERIES } from './series'
 
 describe('catalog', () => {
@@ -90,7 +90,8 @@ describe('festivalMapFor', () => {
   test('finds a festival map through the festival code, so every year of it shares one map', () => {
     expect(festivalMapFor(GRAND_MINT_2026_ID)).not.toBeNull()
     expect(festivalMapFor(GRAND_MINT_2026_ID)).toBe(seriesMapFor(GRAND_MINT_SERIES))
-    expect(festivalMapFor(HERO_ROCK_2026_ID)).toBeNull()
+    expect(festivalMapFor(HERO_ROCK_2026_ID)).toBe(seriesMapFor(HERO_ROCK_SERIES))
+    expect(festivalMapFor(JUMF_2026_ID)).toBeNull()
     expect(festivalMapFor('someone-else')).toBeNull()
   })
 })

@@ -6,4 +6,4 @@ import { STATIONS } from './stations.mjs'
 import { OUT, CACHE } from './paths.mjs'
 import { drawBigLayer1 } from '../lib/big-layer1.mjs'
 
-await drawBigLayer1({ frame: bigFrame, smallBox: BOX, out: OUT, cache: CACHE, stations: STATIONS })
+await drawBigLayer1({ frame: bigFrame, venue: { small: BOX }, out: OUT, cache: CACHE, stations: STATIONS })

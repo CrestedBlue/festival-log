@@ -8,17 +8,20 @@ import { pinRank, standingOf } from './pinGroups'
  * is left out at that zoom.
  */
 
-/** Pins drawn as the map's own icons show from this zoom on; named places (a caption) from CAPTIONED_FROM_ZOOM. */
+/** Pins drawn as the map's own icons show from this zoom on; named places (a caption) from CAPTIONED_FROM_ZOOM, and the
+ *  venue itself (a stage pin: a map with no venue map draws the hall as one) from VENUE_FROM_ZOOM. */
 export const ICON_FROM_ZOOM = 16
 export const CAPTIONED_FROM_ZOOM = 15
+export const VENUE_FROM_ZOOM = 13
 const CAPTION_FONT = 11
 const LABEL_FONT: Record<MapLabelKind, number> = { station: 13, building: 11, stage: 12, place: 11, zone: 11, bus: 10 }
 const LABEL_ICON = 18
 const BADGE_FONT = 10
 const GAP = 3 // px kept clear around each one
 
-/** Higher first when two would overlap. Stage names come right after the station, so they never drop out for a pin. */
-const PRIORITY = { selected: 1000, active: 900, station: 100, stage: 95, named: 90, exit: 70, pin: 60, zone: 55, place: 50, building: 40, bus: 35 }
+/** Higher first when two would overlap. Stage names come right after the station, so they never drop out for a pin;
+ *  a venue drawn as a pin (a map with no venue map) comes before the stations. */
+const PRIORITY = { selected: 1000, active: 900, venue: 110, station: 100, stage: 95, named: 90, exit: 70, pin: 60, zone: 55, place: 50, building: 40, bus: 35 }
 // pins by standing (pinGroups RANK): the all-day ones above other pins, barrier-free help and smoking areas below
 const PIN_BY_STANDING = [PRIORITY.pin, PRIORITY.pin + 6, PRIORITY.pin, PRIORITY.pin - 2, PRIORITY.pin - 4]
 
@@ -54,13 +57,13 @@ export interface Annotation {
 
 function pinAnnotation(pin: Pin, iconUrl: string, zoom: number, selected: boolean, active: boolean): Annotation | null {
   const exitIcon = pin.mapIcon?.startsWith('exit-') ?? false
-  const fromZoom = pin.caption ? CAPTIONED_FROM_ZOOM : ICON_FROM_ZOOM
+  const fromZoom = pin.kind === 'stage' ? VENUE_FROM_ZOOM : pin.caption ? CAPTIONED_FROM_ZOOM : ICON_FROM_ZOOM
   if (!selected && !active && zoom < fromZoom) return null
   const size = iconSize(zoom) - (exitIcon ? 4 : 0)
   const caption = pin.caption ?? null
   const width = size + (caption ? 4 + textWidth(caption, CAPTION_FONT) + 8 : 0)
   const at = pin.spot ?? pin
-  const priority = selected ? PRIORITY.selected : active ? PRIORITY.active : caption ? PRIORITY.named : exitIcon ? PRIORITY.exit : PIN_BY_STANDING[standingOf(pinRank(pin))]!
+  const priority = selected ? PRIORITY.selected : active ? PRIORITY.active : pin.kind === 'stage' ? PRIORITY.venue : caption ? PRIORITY.named : exitIcon ? PRIORITY.exit : PIN_BY_STANDING[standingOf(pinRank(pin))]!
   return {
     key: `pin:${pin.id}`,
     lat: at.lat,

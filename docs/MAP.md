@@ -116,6 +116,15 @@
 - 작은 지도보다 거칠게 그린다(10 cm 단위, 윤곽에서 30 cm 안의 직선 — 곡선은 세 배 커짐). 건물 윤곽은 한 번만 쓰고 그림자·벽·지붕이 다시 쓴다(`<use>`). 앱이 받는 파일이 작아야 해서다: GMF 0.5 MB, 펜타포트 0.05 MB.
 - 결과: `out/big-layer1-ground-north-up.svg`, `out/big-north-up-bounds.json`. 미리보기 `preview-big.jpg`(작은 지도를 위에 겹친 확인용).
 
+### 5-1-1. 공식 안내도가 아직 없는 페스티벌 — 큰 지도만
+
+공식 행사장 안내도가 없으면(히어로 락, 원더리벳 — 2026-10-27, 사용자 지시: "펜타포트 '큰지도' 처럼 이미지를 만들어달라는거예요. 역이랑 공연장 아이콘이랑 주변 큰건물정도") 큰 지도 하나가 앱의 지도다. 폴더 `scripts/map/layers/<코드>/` 에 `paths`·`frame`(bigFrame 만)·`stations`·`venue`·`big-layer1`·`app`·`build`·`preview`.
+- 공연장은 작은 지도 자리 대신 그 건물(OSM 길·관계 id)을 페스티벌 색의 블록으로 그린다(`drawBigLayer1` 의 `venue: { osm, roof, wall }`). 작은 지도가 있으면 `venue: { small: 작은 지도 틀 }`.
+- 역 선로가 OSM 에 subway 가 아니라 rail 로 된 노선(GTX-A, 일산선)은 `stations` 에 선로 이름(`track`)을 적는다.
+- 앱 내보내기는 `lib/big-app.mjs`(`writeBigOnlyAppMap`): 공연장·역을 지도 표시(marks: `venue`, `station-<key>`)로 내보내고 카탈로그가 그 자리로 핀을 만든다(공연장은 음표 아이콘, 역은 노선 색 기차 아이콘). 역 이름(노선 표시), 큰 건물 이름, 시내버스 정류장은 이름표. 처음 화면은 공연장 가운데, 가장 가까운 역까지 보이게.
+- 앱에서 공연장 핀(종류 stage)은 확대 13 부터 보이고, 겹치면 역 이름보다 먼저 남는다.
+- OSM 은 Overpass 로 그 범위만 받는다(사용자 확인 후).
+
 ## 5-2. 앱에 넣기 (`app.mjs`, `lib/app.mjs`, `lib/app-icons.mjs`)
 
 - **그림(이미지)**: 땅처럼 지도와 같이 커지고 작아지는 것만 SVG 로 깐다 — 큰 지도 레이어 1 → 작은 지도 레이어 1 → 레이어 2(이름표 그룹 `l2-labels` 를 뺀 사본). 레이어 파일은 한 장씩 따로 둔다(합치지 않음).

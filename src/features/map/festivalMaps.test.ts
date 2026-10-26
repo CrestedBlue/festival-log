@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { GRAND_MINT_SERIES, HERO_ROCK_SERIES, PENTAPORT_SERIES } from '../../data/catalog/ids'
+import { GRAND_MINT_SERIES, HERO_ROCK_SERIES, JUMF_SERIES, PENTAPORT_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
 import { isInsideBounds } from '../../lib/geo'
 import { parseMapMeta, seriesMapFor, withImages } from './festivalMaps'
 
@@ -104,7 +104,22 @@ describe('withImages', () => {
 
 describe('seriesMapFor', () => {
   test('returns nothing for festivals without a map', () => {
-    expect(seriesMapFor(HERO_ROCK_SERIES)).toBeNull()
+    expect(seriesMapFor(JUMF_SERIES)).toBeNull()
+  })
+
+  // festivals with no venue map yet: the big area map alone, with the venue and the stations as the map's own icons
+  test.each([
+    [HERO_ROCK_SERIES, ['인천대입구역', '센트럴파크역', '지식정보단지역']],
+    [WONDERLIVET_SERIES, ['킨텍스역', '대화역']],
+  ])('returns the big area map of %s with its venue and stations', (series, stations) => {
+    const map = seriesMapFor(series)
+    expect(map?.layers).toHaveLength(1)
+    expect(map?.marks.map((m) => m.kind)).toEqual(['venue', ...stations.map(() => expect.stringMatching(/^station-/))])
+    for (const mark of map?.marks ?? []) expect(map?.icons[mark.kind], mark.kind).toBeTruthy()
+    expect(map?.labels.filter((l) => l.kind === 'station').map((l) => l.text)).toEqual(stations)
+    expect(map?.labels.filter((l) => l.kind === 'building').length).toBeGreaterThan(2)
+    const venue = map?.marks[0]
+    expect(venue && map && isInsideBounds(venue, map.initialView)).toBe(true)
   })
 
   // big map's layer 1, small map's layers 1 and 2 (layer 3's pins are drawn by the app as icons, inside the venue);
