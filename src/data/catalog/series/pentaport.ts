@@ -1,5 +1,6 @@
 import pentaportArt from '../../../assets/art/pentaport.svg'
 import { seriesMapFor } from '../../../features/map/festivalMaps'
+import { RANK } from '../../../features/map/pinGroups'
 import type { Pin } from '../../schema'
 import { PENTAPORT_SERIES as CODE } from '../ids'
 import type { FestivalSeries } from './types'
@@ -25,8 +26,8 @@ const MARK_KINDS: Record<string, MarkMeta> = {
   checkLockers: { kind: 'luggage', name: '물품검색·보관소', detail: 'GATE 1 앞 물품검색존: 물품검색대와 물품보관소' },
   info: { kind: 'info', name: '종합안내소', group: '안내' },
   interpretation: { kind: 'info', name: '통역 안내', group: '안내' },
-  barrierFreeZone: { kind: 'etc', name: '배리어 프리 존', group: '배리어 프리' },
-  barrierFreePass: { kind: 'etc', name: '배리어 프리 패스', group: '배리어 프리' },
+  barrierFreeZone: { kind: 'etc', rank: RANK.barrierFree, name: '배리어 프리 존', group: '배리어 프리' },
+  barrierFreePass: { kind: 'etc', rank: RANK.barrierFree, name: '배리어 프리 패스', group: '배리어 프리' },
   pentaDreamer: { kind: 'etc', name: '펜타 드리머', group: '홍보·벤더 부스' },
   promotionBooth: { kind: 'etc', name: '홍보 부스', group: '홍보·벤더 부스' },
   vendorBooth: { kind: 'etc', name: '벤더 부스', group: '홍보·벤더 부스' },
@@ -35,14 +36,14 @@ const MARK_KINDS: Record<string, MarkMeta> = {
   waterBar: { kind: 'water', name: '워터바' },
   kiosk: { kind: 'etc', name: '키오스크' },
   medical: { kind: 'firstaid', name: '의료부스' },
-  coolZone: { kind: 'etc', name: '쿨존', group: '쿨존' },
-  mainCoolZone: { kind: 'etc', name: '메인쿨존', group: '쿨존' },
+  coolZone: { kind: 'etc', rank: RANK.coolZone, name: '쿨존', group: '쿨존' },
+  mainCoolZone: { kind: 'etc', rank: RANK.coolZone, name: '메인쿨존', group: '쿨존' },
   officialMd: { kind: 'shop', name: '공식MD', group: 'MD 부스' },
   artistMd: { kind: 'shop', name: '아티스트MD', group: 'MD 부스' },
   charging: { kind: 'etc', name: '모바일 충전소' },
   toilet: { kind: 'toilet', name: '화장실' },
-  accessibleToilet: { kind: 'toilet', name: '장애인 화장실' },
-  washStation: { kind: 'etc', name: '개수대' },
+  accessibleToilet: { kind: 'toilet', rank: RANK.accessibleToilet, name: '장애인 화장실' },
+  washStation: { kind: 'etc', rank: RANK.washStation, name: '개수대' },
   nursingRoom: { kind: 'etc', name: '수유실' },
   police: { kind: 'etc', name: '연수 경찰서', group: '경찰·소방' },
   fireStation: { kind: 'etc', name: '송도 소방서', group: '경찰·소방' },

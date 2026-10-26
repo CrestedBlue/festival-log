@@ -4,6 +4,7 @@ import type { Pin } from '../../data/schema'
 import type { GeoState } from '../../hooks/useGeolocation'
 import type { LatLng } from '../../lib/geo'
 import { PIN_META } from './pinMeta'
+import type { PinHighlight } from './selection'
 
 const ME_SIZE = 22
 
@@ -41,14 +42,6 @@ export function usePinLayer(
   }, [map, pins, selectedId, onSelect, pinSize, showIcon])
 }
 
-/** Pins to make stand out on the map for a moment (a pin-list row was tapped); a new id replays it. */
-export interface PinHighlight {
-  id: number
-  pins: readonly Pin[]
-  /** The map zooms in to frame the pins, up to this far (and never out of view of them). */
-  focusZoom: number
-}
-
 const PULSE_MS = 3300 // three pulses (map.css .map-pulse)
 const PULSE_MIN_PX = 48 // a pulse is at least this wide on screen, however far out the map is
 const HIGHLIGHT_PANE = 'pinHighlight'
@@ -57,10 +50,16 @@ const HIGHLIGHT_PADDING: L.PointTuple = [48, 48]
 const spotOf = (pin: Pin): LatLng => pin.spot ?? pin
 
 /**
- * A short pulse behind every pin of the highlight (all the toilets, …), after moving the map so they are in view.
- * Its own pane sits under the pin markers and over the map images.
+ * A short pulse behind every pin of the highlight (all the toilets, …), after moving the map so they are in view —
+ * once per highlight: zooming afterwards neither moves the map back nor replays it. Its own pane sits under the pin
+ * markers and over the map images.
  */
 export function usePinHighlight(map: L.Map | null, highlight: PinHighlight | null, pinSize: number) {
+  // read when the pulse is drawn, not a reason to draw it again (it changes with every zoom step)
+  const pinSizeRef = useRef(pinSize)
+  useEffect(() => {
+    pinSizeRef.current = pinSize
+  }, [pinSize])
   useEffect(() => {
     if (!map || !highlight || highlight.pins.length === 0) return
     if (!map.getPane(HIGHLIGHT_PANE)) {
@@ -73,7 +72,7 @@ export function usePinHighlight(map: L.Map | null, highlight: PinHighlight | nul
     const pulse = () => {
       highlight.pins.forEach((pin) => {
         const at = spotOf(pin)
-        const size = Math.round(Math.max(PULSE_MIN_PX, pinSize * 1.8))
+        const size = Math.round(Math.max(PULSE_MIN_PX, pinSizeRef.current * 1.8))
         L.marker([at.lat, at.lng], {
           pane: HIGHLIGHT_PANE,
           interactive: false,
@@ -102,7 +101,7 @@ export function usePinHighlight(map: L.Map | null, highlight: PinHighlight | nul
       window.clearTimeout(timer)
       layer.remove()
     }
-  }, [map, highlight, pinSize])
+  }, [map, highlight])
 }
 
 /** Blue dot + accuracy ring for the device position. */

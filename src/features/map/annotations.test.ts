@@ -2,6 +2,7 @@ import { describe, expect, test } from 'vitest'
 import type { Pin } from '../../data/schema'
 import { buildAnnotations, iconSize, placeAnnotations, type Annotation } from './annotations'
 import type { FestivalMap } from './festivalMaps'
+import { RANK } from './pinGroups'
 
 const map = {
   icons: { toilet: '/toilet.svg', ticket: '/ticket.svg', station: '/station.svg' },
@@ -37,6 +38,15 @@ describe('buildAnnotations', () => {
   test('names that may make room move a line up or down; buildings and stops stay put', () => {
     const nudges = (zoom: number) => Object.fromEntries(buildAnnotations(map, pins, zoom, null).map((a) => [a.key, a.nudges.length]))
     expect(nudges(16.5)).toMatchObject({ 'label:0': 3, 'label:1': 0 })
+  })
+
+  test('where pins overlap, the ones people look for most win, barrier-free help and smoking areas give way', () => {
+    const at = (kind: Pin['kind'], extra: Partial<Pin> = {}) =>
+      buildAnnotations(map, [pin(kind, 'toilet', { kind, ...extra })], 17, null).find((a) => a.key === `pin:${kind}`)!.priority
+    const [toilet, photo, barrier, smoking] = [at('toilet'), at('photo'), at('etc', { rank: RANK.barrierFree }), at('smoking')]
+    expect(toilet).toBeGreaterThan(photo)
+    expect(photo).toBeGreaterThan(barrier)
+    expect(barrier).toBeGreaterThan(smoking)
   })
 
   test('icons grow a step at a time as the map zooms in', () => {

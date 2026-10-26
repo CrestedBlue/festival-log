@@ -13,9 +13,10 @@ import { MapCredits } from './MapCredits'
 import { PinForm } from './PinForm'
 import { PIN_META } from './pinMeta'
 import { useLeafletMap } from './useLeafletMap'
-import { useMapPick, useMapZoom, useMyLocationLayer, usePinHighlight, type PinHighlight } from './useMapLayers'
+import { useMapPick, useMapZoom, useMyLocationLayer, usePinHighlight } from './useMapLayers'
 import { useMapContent } from './useMapContent'
 import { groupKeyOf, groupPins, type PinGroup } from './pinGroups'
+import { NO_SELECTION, selectPin, showRow, type MapSelection } from './selection'
 import { routeUrl } from './routeLink'
 import './map.css'
 
@@ -57,12 +58,12 @@ export default function MapView({ festival, userPinIds }: Props) {
   const [tracking, setTracking] = useState(false)
   const [retryKey, setRetryKey] = useState(0)
   const geo = useGeolocation(tracking, retryKey)
-  const [selectedId, setSelectedId] = useState<string | null>(null)
+  // The pin whose card is open, and the pin-list row last tapped (its pins kept on the map, pulsing once) — let go
+  // together when a pin of another row is chosen (selection.ts)
+  const [selection, setSelection] = useState<MapSelection>(NO_SELECTION)
+  const { selectedId, activeGroup, highlight } = selection
   const [picking, setPicking] = useState(false)
   const [draft, setDraft] = useState<LatLng | null>(null)
-  // The pin-list row last tapped (its pins pulse on the map)
-  const [highlight, setHighlight] = useState<PinHighlight | null>(null)
-  const [activeGroup, setActiveGroup] = useState<string | null>(null)
   const [collapsed, setCollapsed] = useStoredFlag(PANEL_COLLAPSED_KEY, true)
   const flyOnNextFix = useRef(false)
   const cardRef = useRef<HTMLDivElement>(null)
@@ -78,17 +79,16 @@ export default function MapView({ festival, userPinIds }: Props) {
   }, [])
 
   const zoom = useMapZoom(map)
-  // The row last tapped in the list stays active (its pins all kept on the map) until a pin of another row is chosen.
   const activeIds = useMemo(
     () => new Set(activeGroup ? festival.pins.filter((pin) => groupKeyOf(pin) === activeGroup).map((pin) => pin.id) : []),
     [activeGroup, festival.pins],
   )
   const selectOnMap = useCallback(
     (id: string) => {
-      setSelectedId(id)
-      keepAboveCard.current = true
       const pin = festival.pins.find((p) => p.id === id)
-      setActiveGroup((key) => (pin && key === groupKeyOf(pin) ? key : null))
+      if (!pin) return
+      keepAboveCard.current = true
+      setSelection((state) => selectPin(state, pin))
     },
     [festival.pins],
   )
@@ -131,11 +131,8 @@ export default function MapView({ festival, userPinIds }: Props) {
 
   // A row of one pin selects it; a row of several (화장실 N개) makes them all pulse. Either way the map moves to show them.
   const showGroup = (group: PinGroup) => {
-    const only = group.pins.length === 1 ? group.pins[0] : null
-    setSelectedId(only ? only.id : null)
-    setActiveGroup(group.key)
+    setSelection(showRow(group, Date.now(), FOCUS_ZOOM))
     setCollapsed(true) // fold the list so the map shows them
-    setHighlight({ id: Date.now(), pins: group.pins, focusZoom: FOCUS_ZOOM })
   }
 
   const savePin = (name: string, kind: PinKind) => {
@@ -147,13 +144,13 @@ export default function MapView({ festival, userPinIds }: Props) {
     }
     updateData((d) => addUserPin(d, festival.id, parsed.data))
     setDraft(null)
-    setSelectedId(parsed.data.id)
+    setSelection((state) => selectPin(state, parsed.data))
   }
 
   const deletePin = (id: string, name: string) => {
     if (!window.confirm(`'${name}' 핀을 지울까요?`)) return
     updateData((d) => removeUserPin(d, festival.id, id))
-    setSelectedId(null)
+    setSelection(NO_SELECTION)
   }
 
   const selected = festival.pins.find((pin) => pin.id === selectedId) ?? null
@@ -226,10 +223,7 @@ export default function MapView({ festival, userPinIds }: Props) {
               type="button"
               className="map-selected__close"
               aria-label="선택 닫기"
-              onClick={() => {
-                setSelectedId(null)
-                setActiveGroup(null)
-              }}
+              onClick={() => setSelection(NO_SELECTION)}
             >
               ✕
             </button>

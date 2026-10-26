@@ -1,5 +1,6 @@
 import type { Pin } from '../../data/schema'
 import type { FestivalMap, MapLabel, MapLabelKind } from './festivalMaps'
+import { pinRank, standingOf } from './pinGroups'
 
 /*
  * What an illustrated map writes and draws on top of its images, the way a street map does: names and icons keep
@@ -18,6 +19,8 @@ const GAP = 3 // px kept clear around each one
 
 /** Higher first when two would overlap. Stage names come right after the station, so they never drop out for a pin. */
 const PRIORITY = { selected: 1000, active: 900, station: 100, stage: 95, named: 90, exit: 70, pin: 60, zone: 55, place: 50, building: 40, bus: 35 }
+// pins by standing (pinGroups RANK): the all-day ones above other pins, barrier-free help and smoking areas below
+const PIN_BY_STANDING = [PRIORITY.pin, PRIORITY.pin + 6, PRIORITY.pin, PRIORITY.pin - 2, PRIORITY.pin - 4]
 
 export const iconSize = (zoom: number): number => (zoom < 17 ? 20 : zoom < 18 ? 24 : 30)
 
@@ -57,7 +60,7 @@ function pinAnnotation(pin: Pin, iconUrl: string, zoom: number, selected: boolea
   const caption = pin.caption ?? null
   const width = size + (caption ? 4 + textWidth(caption, CAPTION_FONT) + 8 : 0)
   const at = pin.spot ?? pin
-  const priority = selected ? PRIORITY.selected : active ? PRIORITY.active : caption ? PRIORITY.named : exitIcon ? PRIORITY.exit : PRIORITY.pin
+  const priority = selected ? PRIORITY.selected : active ? PRIORITY.active : caption ? PRIORITY.named : exitIcon ? PRIORITY.exit : PIN_BY_STANDING[standingOf(pinRank(pin))]!
   return {
     key: `pin:${pin.id}`,
     lat: at.lat,
