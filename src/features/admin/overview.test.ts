@@ -66,7 +66,7 @@ describe('seriesOverview', () => {
   const series = seriesOverview(CATALOG, SERIES)
 
   test('lists each festival once by its festival code, in name order, with its editions newest first', () => {
-    expect(series.map((s) => s.code)).toEqual(['gmf', 'pentaport', 'jumf', 'herorock'])
+    expect(series.map((s) => s.code)).toEqual(['gmf', 'wonderlivet', 'pentaport', 'jumf', 'herorock'])
     expect(series.find((s) => s.code === 'pentaport')).toMatchObject({ name: '인천펜타포트 락 페스티벌' })
     expect(series.find((s) => s.code === 'pentaport')?.editions.map((e) => e.key)).toEqual(['pentaport2026'])
   })

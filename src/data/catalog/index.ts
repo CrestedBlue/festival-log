@@ -6,6 +6,7 @@ import { GRAND_MINT_2026_NOTICES, createGrandMint2026 } from './grandMint2026'
 import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICES, createHeroRock2026 } from './heroRock2026'
 import { JUMF_2026_GUIDES, JUMF_2026_NOTICES, createJumf2026 } from './jumf2026'
 import { PENTAPORT_2026_GUIDES, PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
+import { WONDERLIVET_2026_GUIDES, WONDERLIVET_2026_NOTICES, createWonderlivet2026 } from './wonderlivet2026'
 import {
   GRAND_MINT_2026_ID,
   GRAND_MINT_2026_KEY,
@@ -19,6 +20,9 @@ import {
   PENTAPORT_2026_ID,
   PENTAPORT_2026_KEY,
   PENTAPORT_SERIES,
+  WONDERLIVET_2026_ID,
+  WONDERLIVET_2026_KEY,
+  WONDERLIVET_SERIES,
 } from './ids'
 
 /** A festival the admin maintains in the app (no admin UI: edit these files and push). */
@@ -79,6 +83,16 @@ export const CATALOG: readonly CatalogEntry[] = [
     notices: JUMF_2026_NOTICES,
     lineup: [],
     guides: JUMF_2026_GUIDES,
+  },
+  {
+    id: WONDERLIVET_2026_ID,
+    legacyIds: [],
+    series: WONDERLIVET_SERIES,
+    key: WONDERLIVET_2026_KEY,
+    create: createWonderlivet2026,
+    notices: WONDERLIVET_2026_NOTICES,
+    lineup: [],
+    guides: WONDERLIVET_2026_GUIDES,
   },
 ]
 

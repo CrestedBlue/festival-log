@@ -18,3 +18,7 @@ export const PENTAPORT_2026_KEY = `${PENTAPORT_SERIES}2026`
 export const JUMF_SERIES = 'jumf'
 export const JUMF_2026_ID = 'b97c0d8e-e01b-4fac-82af-3f8f9e433837'
 export const JUMF_2026_KEY = `${JUMF_SERIES}2026`
+
+export const WONDERLIVET_SERIES = 'wonderlivet'
+export const WONDERLIVET_2026_ID = '3c7a3dfb-02b0-4721-a49c-f7c04d2009f9'
+export const WONDERLIVET_2026_KEY = `${WONDERLIVET_SERIES}2026`
