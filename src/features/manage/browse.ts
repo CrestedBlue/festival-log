@@ -3,10 +3,40 @@ import { weekdayLabel } from '../../lib/time'
 
 const normalize = (text: string) => text.replace(/\s+/g, '').toLowerCase()
 
-/** Name or venue contains the query, ignoring spaces and letter case. */
-export function matchesQuery(festival: Festival, query: string): boolean {
+/**
+ * The artists a line-up poster's text names: its alt text reads "…포스터: A, B, C 외. dates, venue", so the names are
+ * what comes after the colon, up to " 외" or the end of the first sentence.
+ */
+function lineupNames(lineup: readonly string[]): string[] {
+  return lineup.flatMap((text) => {
+    const names = text.slice(text.indexOf(':') + 1).split(/\s외[.\s]|\.\s/)[0] ?? ''
+    return names.split(',').map((name) => name.trim()).filter(Boolean)
+  })
+}
+
+/** The artists of a festival whose names contain the query: from its timetable, else from its line-up posters. */
+function matchingArtists(festival: Festival, q: string, lineup: readonly string[]): string[] {
+  const fromSets = [...new Set(festival.performances.map((p) => p.artist))].filter((artist) => normalize(artist).includes(q))
+  return fromSets.length > 0 ? fromSets : lineupNames(lineup).filter((name) => normalize(name).includes(q))
+}
+
+/**
+ * Name, venue or an artist (in its timetable, or on its line-up posters: their alt texts in `lineup`) contains the
+ * query, ignoring spaces and letter case.
+ */
+export function matchesQuery(festival: Festival, query: string, lineup: readonly string[] = []): boolean {
   const q = normalize(query)
-  return q === '' || normalize(festival.name).includes(q) || normalize(festival.venue.name).includes(q)
+  return q === '' || normalize(festival.name).includes(q) || normalize(festival.venue.name).includes(q) || matchingArtists(festival, q, lineup).length > 0
+}
+
+/** What a search found among the festival's artists, for its row ("NELL 출연", "Roselia·Ro Ro 외 1팀 출연"); null if none. */
+export function artistHit(festival: Festival, query: string, lineup: readonly string[] = []): string | null {
+  const q = normalize(query)
+  if (q === '') return null
+  const names = matchingArtists(festival, q, lineup)
+  if (names.length === 0) return null
+  const more = names.length - 2
+  return `${names.slice(0, 2).join('·')}${more > 0 ? ` 외 ${more}팀` : ''} 출연`
 }
 
 export interface MonthGroup {
@@ -16,12 +46,14 @@ export interface MonthGroup {
 
 const TBD_LABEL = '날짜 미정'
 
-/** One year's festivals by start month, latest first; festivals whose dates are not out come last. */
-export function groupByMonth(festivals: readonly Festival[]): MonthGroup[] {
+/** Festivals by start month, latest first (with the year in the label when several years are listed:
+ *  `withYear`); festivals whose dates are not out come last. */
+export function groupByMonth(festivals: readonly Festival[], { withYear = false } = {}): MonthGroup[] {
   const byLatest = [...festivals].sort((a, b) => b.startDate.localeCompare(a.startDate))
   const groups = new Map<string, Festival[]>()
   for (const festival of byLatest.filter((f) => !f.datesTbd)) {
-    const label = `${Number(festival.startDate.slice(5, 7))}월`
+    const month = `${Number(festival.startDate.slice(5, 7))}월`
+    const label = withYear ? `${festival.startDate.slice(0, 4)}년 ${month}` : month
     groups.set(label, [...(groups.get(label) ?? []), festival])
   }
   const tbd = byLatest.filter((f) => f.datesTbd)

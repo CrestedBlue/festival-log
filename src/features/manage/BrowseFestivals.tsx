@@ -1,11 +1,11 @@
 import { CheckIcon, PlusIcon, SearchIcon } from '../../components/icons'
-import { CATALOG } from '../../data/catalog'
+import { CATALOG, catalogEntry } from '../../data/catalog'
 import { activeFestival, resolveFestival } from '../../data/resolve'
 import type { Festival, UserData } from '../../data/schema'
 import { showNotice, updateData } from '../../data/store'
 import { hasNewContent, markSeen } from '../../data/updates'
 import { addMyFestival, setActiveFestival } from '../../data/userData'
-import { groupByMonth, matchesQuery } from './browse'
+import { artistHit, groupByMonth, matchesQuery } from './browse'
 import { FestivalRow } from './FestivalRow'
 import { groupByYear } from './years'
 
@@ -18,14 +18,24 @@ interface Props {
   onQuery: (query: string) => void
 }
 
-/** Every registered festival: search, year chips, then the year's festivals by month. */
+/** The year chip that lists every year together. */
+const ALL_YEARS = 'all'
+
+// a festival's line-up posters, searched for artists when its timetable is not out yet
+const lineupOf = (festivalId: string): string[] => catalogEntry(festivalId)?.lineup.map((image) => image.alt) ?? []
+
+/** Every registered festival: search (name, place or artist), year chips ("전체" first), then the festivals by month. */
 export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: Props) {
   const all = [...CATALOG.flatMap((entry) => resolveFestival(data, entry.id)?.festival ?? []), ...data.archivedFestivals]
   const years = groupByYear(all)
   const activeYear = activeFestival(data)?.festival.startDate.slice(0, 4)
-  const shownYear = years.find((g) => g.year === year)?.year ?? years.find((g) => g.year === activeYear)?.year ?? years[0]?.year
-  const inYear = years.find((g) => g.year === shownYear)?.festivals ?? []
-  const groups = groupByMonth(inYear.filter((f) => matchesQuery(f, query)))
+  const shownYear =
+    year === ALL_YEARS ? ALL_YEARS : (years.find((g) => g.year === year)?.year ?? years.find((g) => g.year === activeYear)?.year ?? years[0]?.year)
+  const inYear = shownYear === ALL_YEARS ? all : (years.find((g) => g.year === shownYear)?.festivals ?? [])
+  const groups = groupByMonth(
+    inYear.filter((f) => matchesQuery(f, query, lineupOf(f.id))),
+    { withYear: shownYear === ALL_YEARS },
+  )
   const mine = new Set(data.myFestivalIds)
   const archived = new Set(data.archivedFestivals.map((f) => f.id))
 
@@ -41,9 +51,12 @@ export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: P
       <label className="search">
         <SearchIcon />
         <span className="visually-hidden">페스티벌 찾기</span>
-        <input type="search" value={query} placeholder="이름이나 장소로 찾기" onChange={(e) => onQuery(e.target.value)} />
+        <input type="search" value={query} placeholder="이름·장소·아티스트로 찾기" onChange={(e) => onQuery(e.target.value)} />
       </label>
       <div className="chip-row" role="group" aria-label="연도">
+        <button type="button" className="chip chip--compact" aria-pressed={shownYear === ALL_YEARS} onClick={() => onYear(ALL_YEARS)}>
+          전체
+        </button>
         {years.map((g) => (
           <button key={g.year} type="button" className="chip chip--compact" aria-pressed={g.year === shownYear} onClick={() => onYear(g.year)}>
             {g.year}
@@ -77,6 +90,7 @@ export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: P
                         )
                       }
                       updated={hasNewContent(data, festival.id)}
+                      note={artistHit(festival, query, lineupOf(festival.id)) ?? undefined}
                       onPick={() => pick(festival)}
                     />
                   </li>

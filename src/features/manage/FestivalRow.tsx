@@ -14,11 +14,13 @@ interface Props {
   trailing: ReactNode
   /** Got new content since I last opened it: a red dot on its calendar square. */
   updated?: boolean
+  /** A line under the place: what a search found ("NELL 출연"). */
+  note?: string
   onPick: () => void
 }
 
 /** A festival as one row: calendar square, name, length and venue. */
-export function FestivalRow({ festival, today, active, tag, trailing, updated = false, onPick }: Props) {
+export function FestivalRow({ festival, today, active, tag, trailing, updated = false, note, onPick }: Props) {
   const tile = calendarTile(festival)
   const length = festival.datesTbd ? '날짜 미정' : `${listDays(festival.startDate, festival.endDate).length}일`
   return (
@@ -41,6 +43,7 @@ export function FestivalRow({ festival, today, active, tag, trailing, updated = 
           {length}
           {festival.venue.name && ` · ${festival.venue.name}`}
         </span>
+        {note && <span className="fest-row__note">{note}</span>}
       </span>
       {trailing}
     </button>
