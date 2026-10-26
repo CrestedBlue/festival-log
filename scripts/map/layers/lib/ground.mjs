@@ -41,8 +41,8 @@ export function makeGround({ sharp, W, H, PPM, BOX, toPx, toLL, trace, curve }) 
     g = Buffer.from((await blurU8(g, 0.8 * PPM)).map((v) => (v > 185 ? 255 : 0)))
     return Buffer.from((await blurU8(g, 0.8 * PPM)).map((v, i) => (v > 70 && keep(i) ? 255 : 0)))
   }
-  /** One <g> per zone class, traced from the per-pixel classes. */
-  const zoneGroups = (order, labels, cls, C, colour) => order.map((name) => { const d = trace(toF((i) => cls[i] === C[name])); return d ? `<g id="zone-${name}" data-name="${labels[name]}" fill="${colour[name]}" stroke="${colour[name]}" stroke-width="0.4" stroke-linejoin="round"><path fill-rule="evenodd" d="${d}"/></g>` : '' }).join('\n')
+  /** One <g> per zone class, traced from the per-pixel classes (`opts`: the tracer's). */
+  const zoneGroups = (order, labels, cls, C, colour, opts) => order.map((name) => { const d = trace(toF((i) => cls[i] === C[name]), opts); return d ? `<g id="zone-${name}" data-name="${labels[name]}" fill="${colour[name]}" stroke="${colour[name]}" stroke-width="0.4" stroke-linejoin="round"><path fill-rule="evenodd" d="${d}"/></g>` : '' }).join('\n')
 
   /** Write the north-up SVG (1 unit = 1 m), the classes (cache) and north-up-bounds.json; returns the SVG. `prefix`
    *  names a second map of the same festival (e.g. 'big-'). */

@@ -6,11 +6,11 @@
   "zoomOutFills": true,
   "bounds": [
     [
-      37.514149,
+      37.508669,
       127.11139
     ],
     [
-      37.523222,
+      37.52978,
       127.133022
     ]
   ],
@@ -29,11 +29,11 @@
       "file": "big-layer1.svg",
       "bounds": [
         [
-          37.514149,
+          37.508669,
           127.11139
         ],
         [
-          37.523222,
+          37.52978,
           127.133022
         ]
       ]
@@ -84,7 +84,8 @@
     "exit-2": "icons/exit-2.svg",
     "exit-3": "icons/exit-3.svg",
     "exit-4": "icons/exit-4.svg",
-    "exit-5": "icons/exit-5.svg"
+    "exit-5": "icons/exit-5.svg",
+    "bus": "icons/bus.svg"
   },
   "labels": [
     {
@@ -131,6 +132,19 @@
       "lng": 127.131508
     },
     {
+      "text": "송파나루역",
+      "kind": "station",
+      "badges": [
+        {
+          "text": "9",
+          "colour": "#bdb092"
+        }
+      ],
+      "minZoom": 14,
+      "lat": 37.510996,
+      "lng": 127.112631
+    },
+    {
       "text": "평화의광장",
       "kind": "building",
       "minZoom": 15.5,
@@ -171,6 +185,462 @@
       "minZoom": 15.5,
       "lat": 37.520936,
       "lng": 127.126613
+    },
+    {
+      "text": "송파나루역.방이시장",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.511733,
+      "lng": 127.113006
+    },
+    {
+      "text": "몽촌토성역.한성백제역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.516934,
+      "lng": 127.113416
+    },
+    {
+      "text": "송파나루역.방이전통시장서문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.511679,
+      "lng": 127.113161
+    },
+    {
+      "text": "한성백제역4번출구",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.514853,
+      "lng": 127.115141
+    },
+    {
+      "text": "몽촌토성역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.518589,
+      "lng": 127.113144
+    },
+    {
+      "text": "잠실파크리오아파트상가,올림픽회관",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.521209,
+      "lng": 127.114719
+    },
+    {
+      "text": "성내동미주아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.52731,
+      "lng": 127.12863
+    },
+    {
+      "text": "윤선생영어교실앞서울통신기술",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.52494,
+      "lng": 127.12938
+    },
+    {
+      "text": "올림픽대교남단",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.526715,
+      "lng": 127.115415
+    },
+    {
+      "text": "방이동대림아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.50917,
+      "lng": 127.12418
+    },
+    {
+      "text": "방이동대림아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.5094,
+      "lng": 127.12425
+    },
+    {
+      "text": "방이초등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.512334,
+      "lng": 127.119455
+    },
+    {
+      "text": "방이초등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.51161,
+      "lng": 127.1192
+    },
+    {
+      "text": "방이역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.50882,
+      "lng": 127.126466
+    },
+    {
+      "text": "보성중고등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.519779,
+      "lng": 127.13297
+    },
+    {
+      "text": "풍납동극동.쌍용아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.526561,
+      "lng": 127.118165
+    },
+    {
+      "text": "풍납동극동.쌍용아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.526716,
+      "lng": 127.118442
+    },
+    {
+      "text": "풍납2동주민센터",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.529626,
+      "lng": 127.116143
+    },
+    {
+      "text": "오륜교회앞",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.522467,
+      "lng": 127.132107
+    },
+    {
+      "text": "강동구보건소",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.52874,
+      "lng": 127.12555
+    },
+    {
+      "text": "올림픽선수촌아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.513028,
+      "lng": 127.1291
+    },
+    {
+      "text": "강동보건소",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.52865,
+      "lng": 127.12518
+    },
+    {
+      "text": "성내동미주아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.52724,
+      "lng": 127.12824
+    },
+    {
+      "text": "올림픽공원역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.516522,
+      "lng": 127.13089
+    },
+    {
+      "text": "서울체육중.고등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.522197,
+      "lng": 127.13131
+    },
+    {
+      "text": "윤선생영어교실앞서울통신기술",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.5248,
+      "lng": 127.12914
+    },
+    {
+      "text": "방이우체국",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.509569,
+      "lng": 127.113841
+    },
+    {
+      "text": "송파나루역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.51067,
+      "lng": 127.11162
+    },
+    {
+      "text": "올림픽공원테니스장",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.513238,
+      "lng": 127.128704
+    },
+    {
+      "text": "서울방이초교.올림픽공원남2문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.514075,
+      "lng": 127.121571
+    },
+    {
+      "text": "올림픽공원장미광장",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.512726,
+      "lng": 127.126324
+    },
+    {
+      "text": "올림픽베어스타운아파트앞",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.514868,
+      "lng": 127.119175
+    },
+    {
+      "text": "올림픽공원장미광장",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.512791,
+      "lng": 127.124794
+    },
+    {
+      "text": "올림픽공원역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.516348,
+      "lng": 127.131315
+    },
+    {
+      "text": "몽촌토성역.한성백제역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.517144,
+      "lng": 127.114539
+    },
+    {
+      "text": "올림픽공원남2문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.51449,
+      "lng": 127.12197
+    },
+    {
+      "text": "신구블레스밸리",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.51126,
+      "lng": 127.12162
+    },
+    {
+      "text": "방이전통시장동문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.510271,
+      "lng": 127.118184
+    },
+    {
+      "text": "신구블레스밸리앞",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.51153,
+      "lng": 127.1216
+    },
+    {
+      "text": "방이전통시장동문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.509607,
+      "lng": 127.117967
+    },
+    {
+      "text": "풍납중학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.524674,
+      "lng": 127.114914
+    },
+    {
+      "text": "올림픽대교남단교차로",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.525017,
+      "lng": 127.116782
+    },
+    {
+      "text": "풍납중학교앞",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.524788,
+      "lng": 127.115138
+    },
+    {
+      "text": "올림픽회관",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.521084,
+      "lng": 127.115097
+    },
+    {
+      "text": "풍성중학교.잠실올림픽아이파크",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.52477,
+      "lng": 127.11275
+    },
+    {
+      "text": "송파나루역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.509653,
+      "lng": 127.113086
+    },
+    {
+      "text": "풍납현대아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.528862,
+      "lng": 127.119623
+    },
+    {
+      "text": "한성백제박물관",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.515426,
+      "lng": 127.119287
+    },
+    {
+      "text": "강동구청역.농협중앙회",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.529151,
+      "lng": 127.119941
+    },
+    {
+      "text": "송파.잠실세무서",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.526651,
+      "lng": 127.115542
+    },
+    {
+      "text": "오륜초등학교.올림픽선수촌아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.510567,
+      "lng": 127.131528
+    },
+    {
+      "text": "오금대림아파트.오금초등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.509752,
+      "lng": 127.132338
+    },
+    {
+      "text": "풍납2동주민센터",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.528845,
+      "lng": 127.1169
+    },
+    {
+      "text": "송파나루역.방이전통시장서문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.511163,
+      "lng": 127.112646
+    },
+    {
+      "text": "방이중학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.514309,
+      "lng": 127.114637
+    },
+    {
+      "text": "성내유수지체육공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.526993,
+      "lng": 127.12182
+    },
+    {
+      "text": "몽촌토성역.세계평화의문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.518551,
+      "lng": 127.113585
     },
     {
       "text": "HUNGRY ZONE",

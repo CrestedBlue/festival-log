@@ -7,6 +7,10 @@ import path from 'node:path'
 const round = ([lat, lng]) => [+lat.toFixed(6), +lng.toFixed(6)]
 /** [[south, west], [north, east]] around the points ([lat, lng]). */
 export const boundsAround = (points) => [[Math.min(...points.map((p) => p[0])), Math.min(...points.map((p) => p[1]))], [Math.max(...points.map((p) => p[0])), Math.max(...points.map((p) => p[1]))]].map(round)
+const inside = ({ lat, lng }, [[south, west], [north, east]]) => lat >= south && lat <= north && lng >= west && lng <= east
+/** City bus stops (OSM `busStops`) on the map (`bounds`) as names the app writes by a bus icon, close in (lowest of the names). */
+export const busStopLabels = (OSM, bounds) => (OSM.busStops ?? []).filter((stop) => stop.name && inside(stop, bounds))
+  .map((stop) => ({ text: stop.name, kind: 'bus', icon: 'bus', minZoom: 16.5, lat: +stop.lat.toFixed(6), lng: +stop.lng.toFixed(6) }))
 /** A layer's bounds from its north-up-bounds.json. */
 export const boundsOf = (file) => JSON.parse(fs.readFileSync(file)).bounds
 
@@ -34,6 +38,8 @@ export function writeAppMap({ root, code, layers, initialView, marks = [], icons
   fs.mkdirSync(path.join(dir, 'icons'), { recursive: true })
   for (const [key, svg] of Object.entries(icons)) fs.writeFileSync(path.join(dir, 'icons', `${key}.svg`), svg)
   const all = layers.flatMap((l) => l.bounds)
+  const outside = labels.filter((label) => !inside(label, boundsAround(all)))
+  if (outside.length) throw new Error(`labels off the map: ${outside.map((l) => l.text).join(', ')}`)
   const meta = { attribution, background, maxZoom, fillOnOpen, zoomOutFills, bounds: boundsAround(all), initialView, layers: layers.map(({ file, bounds }) => ({ file, bounds })),
     icons: Object.fromEntries(Object.keys(icons).map((key) => [key, `icons/${key}.svg`])), labels, marks }
   fs.writeFileSync(path.join(root, 'src/assets/maps', `${code}.json`), `${JSON.stringify(meta, null, 2)}\n`)

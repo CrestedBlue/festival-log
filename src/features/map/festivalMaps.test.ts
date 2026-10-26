@@ -124,9 +124,10 @@ describe('seriesMapFor', () => {
   test('returns the layered Grand Mint map, with the stations it is walked to from', () => {
     const map = expectLayered(GRAND_MINT_SERIES)
     const stations = map?.labels.filter((l) => l.kind === 'station')
-    expect(stations?.map((l) => l.text)).toEqual(['몽촌토성역', '한성백제역', '올림픽공원역'])
+    expect(stations?.map((l) => l.text)).toEqual(['몽촌토성역', '한성백제역', '올림픽공원역', '송파나루역'])
     expect(stations?.[2]?.badges?.map((b) => b.text)).toEqual(['5', '9'])
     expect(map?.labels.filter((l) => l.kind === 'stage').map((l) => l.text)).toEqual(['MINT BREEZE STAGE', 'LOVING FOREST GARDEN', 'CLUB MIDNIGHT SUNSET'])
+    expect(map?.labels.filter((l) => l.kind === 'bus' && l.icon === 'bus').length).toBeGreaterThan(0)
   })
 
   test('returns the layered Pentaport map: the big ground under the venue layers, with its places inside it', () => {

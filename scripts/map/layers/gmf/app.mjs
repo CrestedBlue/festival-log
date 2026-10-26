@@ -13,10 +13,10 @@ import * as SP from './sprites.mjs'
 import { OUT, CACHE, ROOT, SRC } from './paths.mjs'
 import { PIN_R, TYPES, badge } from './pin-design.mjs'
 import { STATIONS } from './stations.mjs'
-import { badgeIcon, exitIcon } from '../lib/app-icons.mjs'
+import { badgeIcon, busIcon, exitIcon } from '../lib/app-icons.mjs'
 import { stationNameAt } from '../lib/big-layer1.mjs'
 import { measureTexts } from '../lib/texts.mjs'
-import { writeAppMap, boundsOf } from '../lib/app.mjs'
+import { writeAppMap, boundsOf, busStopLabels } from '../lib/app.mjs'
 
 const ll = ([lat, lng]) => ({ lat: +lat.toFixed(6), lng: +lng.toFixed(6) })
 const near = (a, b) => Math.hypot(...toM([a.lat, a.lng]).map((v, i) => v - toM([b.lat, b.lng])[i]))
@@ -48,11 +48,12 @@ for (const p of JSON.parse(fs.readFileSync(path.join(OUT, 'layer3-pins.json'))).
   marks.push({ id: marks.length + 1, kind, zone: zoneOf[p.id], lat: p.lat, lng: p.lng, spot }) // numbered in layer 3's order
 }
 
-// Icons the app draws at a fixed size: every badge of layer 3 (the pin's head) and the subway exit numbers.
+// Icons the app draws at a fixed size: every badge of layer 3 (the pin's head), the subway exit numbers, bus stops.
 const icons = Object.fromEntries(Object.keys(TYPES).filter((type) => !MERGED[type]).map((type) => [type, badgeIcon(badge(type), PIN_R)]))
 icons.mintShop = badgeIcon(badge('shop'), PIN_R)
 icons.artistVinyl = badgeIcon(badge('artist'), PIN_R)
 for (const n of [1, 2, 3, 4, 5]) icons[`exit-${n}`] = exitIcon(n)
+icons.bus = busIcon()
 
 // Names the app writes on the map (fixed size, shown from `minZoom` on, fewer when they would overlap).
 const mean = (pts) => [pts.reduce((s, p) => s + p[0], 0) / pts.length, pts.reduce((s, p) => s + p[1], 0) / pts.length]
@@ -69,6 +70,8 @@ const labels = [
   // past the north end of each station box the big map draws, with the lines' badges, as on Korean street maps
   ...STATIONS.map((s) => ({ text: s.name, kind: 'station', badges: s.lines, minZoom: 14, ...ll(stationNameAt(bigFrame, s)) })),
   ...LANDMARKS.map(([text, ids]) => ({ text, kind: 'building', minZoom: 15.5, ...ll(centre(ids)) })),
+  // city bus stops (OSM): the stop's name by a bus icon, close in
+  ...busStopLabels(OSM, boundsOf(path.join(OUT, 'big-north-up-bounds.json'))),
   ...flags.map((it) => ({ text: it.args[0], kind: 'zone', colour: it.args[1], minZoom: 16.5, ...ll(placeOf(it)) })),
   // layer 2's stage names; TICKET BOOTH is what the ticket booth pin says, so it is left out
   ...stageLabels.filter(({ it }) => it.of !== 'ticket').map(({ it, key }) => ({

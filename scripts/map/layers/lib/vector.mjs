@@ -24,11 +24,17 @@ export function simplify(points, tol) {
   }
   return points.filter((_, i) => keep[i])
 }
-const f = (v) => +v.toFixed(2)
-/** Centripetal Catmull–Rom through the points, as cubic Béziers. */
-export function curve(points, closed) {
+const rounder = (digits) => (v) => +v.toFixed(digits)
+/** Straight lines through the points (blocky shapes such as buildings), `digits` decimals. */
+export function polyline(points, closed, digits = 2) {
+  const f = rounder(digits)
+  return `M${points.map((p) => p.map(f).join(',')).join('L')}${closed ? 'Z' : ''}`
+}
+/** Centripetal Catmull–Rom through the points, as cubic Béziers, `digits` decimals. */
+export function curve(points, closed, digits = 2) {
+  const f = rounder(digits)
   const n = points.length
-  if (n < 3) return `M${points.map((p) => p.map(f).join(',')).join('L')}${closed ? 'Z' : ''}`
+  if (n < 3) return polyline(points, closed, digits)
   const P = (i) => (closed ? points[(i + n) % n] : points[Math.max(0, Math.min(n - 1, i))])
   let d = `M${f(points[0][0])},${f(points[0][1])}`
   for (let i = 0; i < (closed ? n : n - 1); i++) {
@@ -42,14 +48,15 @@ export function curve(points, closed) {
 }
 const ringArea = (ring) => { let a = 0; for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) a += (ring[j][0] + ring[i][0]) * (ring[j][1] - ring[i][1]); return Math.abs(a / 2) }
 /** A tracer for one frame: trace(mask) turns a 0/1 mask (Float32Array, W×H) into an SVG path in metres (y down from the
- *  frame's north edge). */
-export const makeTracer = ({ W, H, PPM }) => function trace(mask, { sigma = 1.5, tolerance = 0.2, minAreaM2 = 2 } = {}) {
+ *  frame's north edge) — smooth curves, or straight lines (`straight`), with `digits` decimals (a big area map needs
+ *  fewer). */
+export const makeTracer = ({ W, H, PPM }) => function trace(mask, { sigma = 1.5, tolerance = 0.2, minAreaM2 = 2, straight = false, digits = 2 } = {}) {
   const [mp] = contours().size([W, H]).smooth(true).thresholds([0.5])(gaussianBlur(mask, sigma, W, H))
   let d = ''
   for (const polygon of mp.coordinates) for (const ring of polygon) {
     const m = ring.map(([x, y]) => [x / PPM, y / PPM])
     if (ringArea(m) < minAreaM2) continue
-    d += curve(simplify(m.slice(0, -1), tolerance), true)
+    d += (straight ? polyline : curve)(simplify(m.slice(0, -1), tolerance), true, digits)
   }
   return d
 }

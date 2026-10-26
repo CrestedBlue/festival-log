@@ -41,6 +41,9 @@ const AREA = [ // tag test → class, painted in this order (later wins)
   [(t) => !!t.building, 'building'],
 ]
 const ORDER = ['open', 'park', 'pitch', 'paved', 'water', 'venue']
+// Traced coarser than a venue map (the big map is mostly seen zoomed out): 10 cm figures, straight lines through
+// points at most 30 cm off the outline (curves would be three times the size).
+const TRACE = { digits: 1, tolerance: 0.3, straight: true }
 const LABEL = { open: '공사장·빈터', park: '공원', pitch: '운동장', paved: '주차장', water: '물', venue: '행사장(작은 지도 자리)' }
 
 const same = (a, b) => a[0] === b[0] && a[1] === b[1]
@@ -106,9 +109,9 @@ export async function drawBigLayer1({ frame, smallBox, out, cache, stations }) {
   const road = await closeOpen(Buffer.from(strokes.map((v, i) => (v > 127 && venue[i] <= 127 ? 255 : 0))), (i) => venue[i] <= 127)
   for (let i = 0; i < W * H; i++) if (road[i]) cls[i] = C.road
 
-  const zones = zoneGroups(ORDER, LABEL, cls, C, colour)
-  const roadD = frame.trace(toF((i) => cls[i] === C.road), { sigma: 1.5, tolerance: 0.3 })
-  const buildingD = frame.trace(toF((i) => cls[i] === C.building), { sigma: 1, tolerance: 0.2 })
+  const zones = zoneGroups(ORDER, LABEL, cls, C, colour, TRACE)
+  const roadD = frame.trace(toF((i) => cls[i] === C.road), { ...TRACE, sigma: 1.5 })
+  const buildingD = frame.trace(toF((i) => cls[i] === C.building), { ...TRACE, sigma: 1 })
   const [sx, sy] = STYLE.shadowOffset
   const stationBoxes = stations.map(({ name, near, lines, length = 140, outline }) => {
     const station = findStation(frame, near, { length })
@@ -121,9 +124,10 @@ export async function drawBigLayer1({ frame, smallBox, out, cache, stations }) {
 <path id="roads" data-name="길" d="${roadD}" fill="${colour.road}" fill-rule="evenodd" stroke="${STYLE.kerb}" stroke-width="${STYLE.kerbWidth}" stroke-linejoin="round" paint-order="stroke"/>
 <g id="stations" data-name="역">${stationBoxes.join('')}</g>
 <g id="buildings" data-name="건물" fill-rule="evenodd">
-<path data-name="그림자" d="${buildingD}" fill="${STYLE.shadow}" transform="translate(${sx},${sy})"/>
-<path data-name="벽" d="${buildingD}" fill="${STYLE.wall}"/>
-<path data-name="지붕" d="${buildingD}" fill="${colour.building}" transform="translate(0,${-STYLE.roofLift})"/>
+<defs><path id="building-outline" data-name="건물 윤곽" d="${buildingD}"/></defs>
+<use data-name="그림자" href="#building-outline" fill="${STYLE.shadow}" transform="translate(${sx},${sy})"/>
+<use data-name="벽" href="#building-outline" fill="${STYLE.wall}"/>
+<use data-name="지붕" href="#building-outline" fill="${colour.building}" transform="translate(0,${-STYLE.roofLift})"/>
 </g>
 </g>`
   writeNorthUp({ content, cls, colour, out, cache, prefix: 'big-' })

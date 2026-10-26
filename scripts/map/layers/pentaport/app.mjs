@@ -16,7 +16,7 @@ import { badgeIcon, busIcon, exitIcon, ticketIcon, shuttleIcon } from '../lib/ap
 import { stationNameAt } from '../lib/big-layer1.mjs'
 import { STATIONS } from './stations.mjs'
 import { measureTexts } from '../lib/texts.mjs'
-import { writeAppMap, boundsOf } from '../lib/app.mjs'
+import { writeAppMap, boundsOf, busStopLabels } from '../lib/app.mjs'
 
 const ll = ([lat, lng]) => ({ lat: +lat.toFixed(6), lng: +lng.toFixed(6) })
 
@@ -71,7 +71,7 @@ const labels = [
   { text: '송도 한라웨스턴파크', kind: 'building', minZoom: 15.5, ...ll(way('송도한라웨스턴파크 셀럽하우스 아파트')) },
   { text: '송도 씨워크인테라스 한라', kind: 'building', minZoom: 15.5, ...ll(way('송도씨워크인테라스한라')) },
   // city bus stops (OSM): the stop's name by a bus icon, close in
-  ...(OSM.busStops ?? []).filter((stop) => stop.name).map((stop) => ({ text: stop.name, kind: 'bus', icon: 'bus', minZoom: 16.5, ...ll([stop.lat, stop.lng]) })),
+  ...busStopLabels(OSM, boundsOf(path.join(OUT, 'big-north-up-bounds.json'))),
   // the zone flags' names (피크닉존, 리프레시존, …), written at a readable size in the flag's colour
   ...items.filter((it) => it.kind === 'flag').map((it) => ({ text: it.args[0].replace('&amp;', '&'), kind: 'zone', colour: it.args[1], minZoom: 16.5, ...ll(placeOf(it)) })),
   // layer 2's name labels; the two 입장동선 labels say what the gate pins say, so they are left out

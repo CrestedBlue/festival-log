@@ -1,17 +1,17 @@
 {
   "size": [
     3820,
-    2020
+    4700
   ],
   "pxPerMeter": 2,
   "svgUnits": "1 unit = 1 m, origin at the north-west corner of bounds, y grows southward",
   "bounds": [
     [
-      37.514149,
+      37.508669,
       127.11139
     ],
     [
-      37.523222,
+      37.52978,
       127.133022
     ]
   ],
