@@ -84,6 +84,9 @@ export function usePinHighlight(map: L.Map | null, highlight: PinHighlight | nul
       layer.addTo(map)
       timer = window.setTimeout(() => layer.remove(), PULSE_MS)
     }
+    // The list folds as its row is tapped: measure the map at its new size before framing (and before a resize
+    // later resets the zoom limits, which would stop the flight halfway).
+    map.invalidateSize()
     const spots = highlight.pins.map(spotOf)
     const bounds = L.latLngBounds(spots.map((p) => [p.lat, p.lng] as L.LatLngTuple))
     // frame them all: zoom in up to focusZoom (further if already in), out as far as needed

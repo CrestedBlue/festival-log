@@ -17,7 +17,7 @@ export const boundsOf = (file) => JSON.parse(fs.readFileSync(file)).bounds
  * ({ text, kind, lat, lng, minZoom, icon?, colour? }); marks may carry `spot` ({ lat, lng }: where the map shows the
  * pin). The other fields go into the JSON as they are (see src/features/map/festivalMaps.ts).
  */
-export function writeAppMap({ root, code, layers, initialView, anchors = {}, marks = [], icons = {}, labels = [], attribution, background, maxZoom, fillOnOpen = true }) {
+export function writeAppMap({ root, code, layers, initialView, anchors = {}, marks = [], icons = {}, labels = [], attribution, background, maxZoom, fillOnOpen = true, zoomOutFills = false }) {
   const dir = path.join(root, 'src/assets/maps', code)
   fs.rmSync(dir, { recursive: true, force: true })
   fs.mkdirSync(dir, { recursive: true })
@@ -34,7 +34,7 @@ export function writeAppMap({ root, code, layers, initialView, anchors = {}, mar
   fs.mkdirSync(path.join(dir, 'icons'), { recursive: true })
   for (const [key, svg] of Object.entries(icons)) fs.writeFileSync(path.join(dir, 'icons', `${key}.svg`), svg)
   const all = layers.flatMap((l) => l.bounds)
-  const meta = { attribution, background, maxZoom, fillOnOpen, bounds: boundsAround(all), initialView, layers: layers.map(({ file, bounds }) => ({ file, bounds })),
+  const meta = { attribution, background, maxZoom, fillOnOpen, zoomOutFills, bounds: boundsAround(all), initialView, layers: layers.map(({ file, bounds }) => ({ file, bounds })),
     icons: Object.fromEntries(Object.keys(icons).map((key) => [key, `icons/${key}.svg`])), labels,
     anchors: Object.fromEntries(Object.entries(anchors).map(([k, v]) => [k, round(v)])), marks }
   fs.writeFileSync(path.join(root, 'src/assets/maps', `${code}.json`), `${JSON.stringify(meta, null, 2)}\n`)

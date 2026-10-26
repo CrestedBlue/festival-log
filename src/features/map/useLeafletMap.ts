@@ -22,7 +22,7 @@ interface Options {
 }
 
 /** The festival's own illustrated map when it has one; plain OSM tiles otherwise. */
-function setUpLayers(map: L.Map, { center, image, fitPoints }: Options): () => void {
+function setUpLayers(map: L.Map, { center, image, fitPoints }: Options): void {
   if (image) {
     const bounds = toLatLngBounds(image.bounds)
     // each layer is its own image (map layers are never merged), bottom first
@@ -33,15 +33,18 @@ function setUpLayers(map: L.Map, { center, image, fitPoints }: Options): () => v
     // zooming out further is still allowed.
     const coverZoom = map.getBoundsZoom(bounds, true)
     if (image.fillOnOpen && map.getZoom() < coverZoom) map.setZoom(coverZoom)
-    // Zooming out stops once the whole image (venue + both stations) fits on screen.
-    const syncMinZoom = () => map.setMinZoom(map.getBoundsZoom(bounds, false))
+    // Zooming out stops once the whole image fits on screen — or, for a map that says so, while it still fills the
+    // screen (no empty bands; the rest is a pan away).
+    // Kept in step with the map's size: whoever resizes it (the panel folding, a list row framing its pins) calls
+    // invalidateSize, which fires 'resize' only when the size really changed.
+    const syncMinZoom = () => map.setMinZoom(map.getBoundsZoom(bounds, image.zoomOutFills))
     syncMinZoom()
-    return syncMinZoom
+    map.on('resize', syncMinZoom)
+    return
   }
   L.tileLayer(TILE_URL, { maxZoom: MAX_ZOOM, attribution: ATTRIBUTION, crossOrigin: true }).addTo(map)
   if (fitPoints.length > 0) map.fitBounds(fitPoints.map((p) => [p.lat, p.lng] as L.LatLngTuple), { padding: FIT_PADDING, maxZoom: 17 })
   else map.setView([center.lat, center.lng], DEFAULT_ZOOM)
-  return () => {}
 }
 
 /** Creates a Leaflet map once per mount and tears it down on unmount. */
@@ -62,14 +65,11 @@ export function useLeafletMap(options: Options) {
       // Illustrated maps show their credits behind an ⓘ button (MapCredits); tile maps keep Leaflet's line.
       attributionControl: !image,
     })
-    const onResize = setUpLayers(instance, initialOptions.current)
+    setUpLayers(instance, initialOptions.current)
     instance.attributionControl?.setPrefix(false)
     L.control.zoom({ position: 'bottomright' }).addTo(instance)
     // The bottom panel changes height (collapsed, list, form), so keep Leaflet's size in sync.
-    const resizeObserver = new ResizeObserver(() => {
-      instance.invalidateSize()
-      onResize()
-    })
+    const resizeObserver = new ResizeObserver(() => instance.invalidateSize())
     resizeObserver.observe(el)
     setMap(instance)
     return () => {

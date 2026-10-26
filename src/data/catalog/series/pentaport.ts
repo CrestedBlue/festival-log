@@ -11,16 +11,17 @@ import type { FestivalSeries } from './types'
 // emoji for are "etc".
 interface MarkMeta {
   kind: Pin['kind']
+  rank?: number
   name: string
   /** The list row it belongs to; the name when alone. */
   group?: string
   caption?: string
   detail?: string
 }
-const ENTRANCE = '입장 (티켓부스·게이트)'
+const ENTRANCE = '입장' // ticket booths and gates; first in the list
 const MARK_KINDS: Record<string, MarkMeta> = {
-  gate1: { kind: 'etc', name: 'GATE 1', group: ENTRANCE, caption: 'GATE 1', detail: '제1 입장동선 · 지하철 이용객이 들어오는 문' },
-  gate2: { kind: 'etc', name: 'GATE 2', group: ENTRANCE, caption: 'GATE 2', detail: '제2 입장동선 · 셔틀버스·택시 이용객이 들어오는 문' },
+  gate1: { kind: 'etc', rank: 0, name: 'GATE 1', group: ENTRANCE, caption: 'GATE 1', detail: '제1 입장동선 · 지하철 이용객이 들어오는 문' },
+  gate2: { kind: 'etc', rank: 0, name: 'GATE 2', group: ENTRANCE, caption: 'GATE 2', detail: '제2 입장동선 · 셔틀버스·택시 이용객이 들어오는 문' },
   checkLockers: { kind: 'luggage', name: '물품검색·보관소', detail: 'GATE 1 앞 물품검색존: 물품검색대와 물품보관소' },
   info: { kind: 'info', name: '종합안내소', group: '안내' },
   interpretation: { kind: 'info', name: '통역 안내', group: '안내' },
@@ -51,8 +52,8 @@ const MARK_KINDS: Record<string, MarkMeta> = {
 // Places outside the redrawn venue map, read off the official entrance map ("입장 동선 안내", 2026-07-14) laid onto
 // real coordinates. Roughly placed, so marked (대략).
 const ENTRANCE_PINS: readonly Pin[] = [
-  { id: `${CODE}-place-ticket-booth-1`, name: '제1 티켓부스 (대략)', group: ENTRANCE, caption: '제1 티켓부스', detail: '지하철 이용객 · 손목밴드로 바꾼 뒤 제1 입장동선으로 GATE 1', mapIcon: 'ticket', kind: 'wristband', lat: 37.406334, lng: 126.627492 },
-  { id: `${CODE}-place-ticket-booth-2`, name: '제2 티켓부스 (대략)', group: ENTRANCE, caption: '제2 티켓부스', detail: '셔틀버스·택시 이용객 · 손목밴드로 바꾼 뒤 제2 입장동선으로 GATE 2', mapIcon: 'ticket', kind: 'wristband', lat: 37.403316, lng: 126.633174 },
+  { id: `${CODE}-place-ticket-booth-1`, rank: 0, name: '제1 티켓부스 (대략)', group: ENTRANCE, caption: '제1 티켓부스', detail: '지하철 이용객 · 손목밴드로 바꾼 뒤 제1 입장동선으로 GATE 1', mapIcon: 'ticket', kind: 'wristband', lat: 37.406334, lng: 126.627492 },
+  { id: `${CODE}-place-ticket-booth-2`, rank: 0, name: '제2 티켓부스 (대략)', group: ENTRANCE, caption: '제2 티켓부스', detail: '셔틀버스·택시 이용객 · 손목밴드로 바꾼 뒤 제2 입장동선으로 GATE 2', mapIcon: 'ticket', kind: 'wristband', lat: 37.403316, lng: 126.633174 },
   { id: `${CODE}-place-free-shuttle-pickup`, name: '무료 셔틀버스 승차장 (대략)', group: '셔틀버스', caption: '무료 셔틀 승차', detail: '공연이 끝나고 무료 셔틀버스를 타는 곳', mapIcon: 'shuttle', kind: 'etc', lat: 37.401604, lng: 126.631595 },
   { id: `${CODE}-place-shuttle-drop-off`, name: '셔틀버스 하차장 (대략)', group: '셔틀버스', caption: '셔틀 하차 · 유료 셔틀', detail: '무료 셔틀버스 하차장 · 유료 셔틀버스 승하차장', mapIcon: 'shuttle', kind: 'etc', lat: 37.40193, lng: 126.632502 },
 ]

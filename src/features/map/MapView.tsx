@@ -16,10 +16,12 @@ import { useLeafletMap } from './useLeafletMap'
 import { useMapPick, useMapZoom, useMyLocationLayer, usePinHighlight, type PinHighlight } from './useMapLayers'
 import { useMapContent } from './useMapContent'
 import { groupKeyOf, groupPins, type PinGroup } from './pinGroups'
+import { routeUrl } from './routeLink'
 import './map.css'
 
 const FOCUS_ZOOM = 17
 const PANEL_COLLAPSED_KEY = 'festival-log:pins-collapsed'
+const CARD_CLEARANCE = 24 // px kept between a selected pin and the card about it
 
 async function isLocationAlreadyGranted(): Promise<boolean> {
   try {
@@ -63,6 +65,9 @@ export default function MapView({ festival, userPinIds }: Props) {
   const [activeGroup, setActiveGroup] = useState<string | null>(null)
   const [collapsed, setCollapsed] = useStoredFlag(PANEL_COLLAPSED_KEY, true)
   const flyOnNextFix = useRef(false)
+  const cardRef = useRef<HTMLDivElement>(null)
+  // A pin chosen on the map is nudged up if the card that opens would cover it.
+  const keepAboveCard = useRef(false)
   const me = geo.status === 'ok' ? geo.position : null
   // On an illustrated map a fix outside the image can't be shown, only described.
   const meOffMap = me !== null && festivalMap !== null && !isInsideBounds(me, festivalMap.bounds)
@@ -81,6 +86,7 @@ export default function MapView({ festival, userPinIds }: Props) {
   const selectOnMap = useCallback(
     (id: string) => {
       setSelectedId(id)
+      keepAboveCard.current = true
       const pin = festival.pins.find((p) => p.id === id)
       setActiveGroup((key) => (pin && key === groupKeyOf(pin) ? key : null))
     },
@@ -90,6 +96,17 @@ export default function MapView({ festival, userPinIds }: Props) {
   usePinHighlight(map, highlight, pinSize)
   useMyLocationLayer(map, geo)
   useMapPick(map, picking, onPick)
+
+  useEffect(() => {
+    if (!keepAboveCard.current || !map || !cardRef.current) return
+    keepAboveCard.current = false
+    const pin = festival.pins.find((p) => p.id === selectedId)
+    if (!pin) return
+    const at = pin.spot ?? pin
+    const point = map.latLngToContainerPoint([at.lat, at.lng])
+    const cardTop = cardRef.current.getBoundingClientRect().top - map.getContainer().getBoundingClientRect().top
+    if (point.y > cardTop - CARD_CLEARANCE) map.panBy([0, point.y - cardTop + 3 * CARD_CLEARANCE])
+  }, [map, selectedId, festival.pins])
 
   // Skip the permission prompt dance if the user already allowed location before.
   useEffect(() => {
@@ -117,6 +134,7 @@ export default function MapView({ festival, userPinIds }: Props) {
     const only = group.pins.length === 1 ? group.pins[0] : null
     setSelectedId(only ? only.id : null)
     setActiveGroup(group.key)
+    setCollapsed(true) // fold the list so the map shows them
     setHighlight({ id: Date.now(), pins: group.pins, focusZoom: FOCUS_ZOOM })
   }
 
@@ -194,13 +212,16 @@ export default function MapView({ festival, userPinIds }: Props) {
         {hint}
         {festivalMap && <MapCredits text={festivalMap.attribution} />}
         {selected && collapsed && !draft && (
-          <div className="map-selected" role="status">
+          <div ref={cardRef} className="map-selected" role="status">
             <PinIcon pin={selected} icons={festivalMap?.icons} className="map-selected__icon" />
             <span className="map-selected__text">
               <span className="map-selected__name">{selected.name}</span>
               {selected.detail && <span className="map-selected__detail">{selected.detail}</span>}
             </span>
             {me && <span className="pin-list__dist">{formatDistance(distanceMeters(me, selected))}</span>}
+            <a className="btn btn--small map-selected__route" href={routeUrl(selected)} target="_blank" rel="noopener noreferrer">
+              길찾기
+            </a>
             <button
               type="button"
               className="map-selected__close"

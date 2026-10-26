@@ -26,7 +26,7 @@ export interface MapLayer {
   bounds: LatLngBounds
 }
 
-export const MAP_LABEL_KINDS = ['station', 'building', 'stage', 'place', 'bus'] as const
+export const MAP_LABEL_KINDS = ['station', 'building', 'stage', 'place', 'zone', 'bus'] as const
 export type MapLabelKind = (typeof MAP_LABEL_KINDS)[number]
 
 /** A name the app writes on the map at a fixed size (a station, a big building, a stage, a bus stop), from `minZoom` on. */
@@ -53,6 +53,8 @@ export interface FestivalMap {
   /** Open zoomed in until the map fills the screen (a map whose surroundings are blank); false = open on the whole
    *  initial view (a map whose ground runs on in its background colour). */
   fillOnOpen: boolean
+  /** Zooming out stops while the map still fills the screen (no empty bands); false = at the whole map. */
+  zoomOutFills: boolean
   attribution: string
   /** Shown around the image (it should match the drawing's own background); null = the default paper. */
   background: string | null
@@ -122,6 +124,7 @@ export function parseMapMeta(raw: {
   initialView?: unknown
   maxZoom?: unknown
   fillOnOpen?: unknown
+  zoomOutFills?: unknown
   layers?: unknown
   icons?: unknown
   labels?: unknown
@@ -170,6 +173,7 @@ export function parseMapMeta(raw: {
     initialView,
     maxZoom: typeof raw.maxZoom === 'number' && Number.isFinite(raw.maxZoom) ? raw.maxZoom : null,
     fillOnOpen: raw.fillOnOpen !== false,
+    zoomOutFills: raw.zoomOutFills === true,
     layerFiles,
     iconFiles,
     labels,

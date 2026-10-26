@@ -82,7 +82,7 @@ describe('createPentaport2026', () => {
     expect(festival.pins.some((p) => isMapLabelPin(p))).toBe(false)
     expect(festival.pins.filter((p) => p.spot).every((p) => map && p.spot && isInsideBounds(p.spot, map.bounds))).toBe(true)
     // the list shows broader roles: both ticket booths with both gates; all four exits; toilets on their own
-    expect(festival.pins.filter((p) => p.group === '입장 (티켓부스·게이트)').map((p) => p.caption)).toEqual(
+    expect(festival.pins.filter((p) => p.group === '입장').map((p) => p.caption)).toEqual(
       expect.arrayContaining(['GATE 1', 'GATE 2', '제1 티켓부스', '제2 티켓부스']),
     )
     expect(festival.pins.filter((p) => p.group === '송도달빛축제공원역 출구')).toHaveLength(4)

@@ -3,9 +3,10 @@
   "background": "#f3e9ce",
   "maxZoom": 19.5,
   "fillOnOpen": false,
+  "zoomOutFills": true,
   "bounds": [
     [
-      37.40079,
+      37.392885,
       126.624536
     ],
     [
@@ -28,7 +29,7 @@
       "file": "big-layer1.svg",
       "bounds": [
         [
-          37.40079,
+          37.392885,
           126.624536
         ],
         [
@@ -220,6 +221,78 @@
       "minZoom": 16.5,
       "lat": 37.401825,
       "lng": 126.628859
+    },
+    {
+      "text": "피크닉존",
+      "kind": "zone",
+      "colour": "#ffd23f",
+      "minZoom": 16.5,
+      "lat": 37.405864,
+      "lng": 126.632791
+    },
+    {
+      "text": "피크닉존",
+      "kind": "zone",
+      "colour": "#ffd23f",
+      "minZoom": 16.5,
+      "lat": 37.406536,
+      "lng": 126.63351
+    },
+    {
+      "text": "피크닉존",
+      "kind": "zone",
+      "colour": "#ffd23f",
+      "minZoom": 16.5,
+      "lat": 37.406495,
+      "lng": 126.631843
+    },
+    {
+      "text": "피크닉존",
+      "kind": "zone",
+      "colour": "#ffd23f",
+      "minZoom": 16.5,
+      "lat": 37.407943,
+      "lng": 126.633742
+    },
+    {
+      "text": "F&B",
+      "kind": "zone",
+      "colour": "#ffd23f",
+      "minZoom": 16.5,
+      "lat": 37.407196,
+      "lng": 126.633729
+    },
+    {
+      "text": "키즈존",
+      "kind": "zone",
+      "colour": "#ffd23f",
+      "minZoom": 16.5,
+      "lat": 37.406824,
+      "lng": 126.635274
+    },
+    {
+      "text": "리프레시존",
+      "kind": "zone",
+      "colour": "#ffd23f",
+      "minZoom": 16.5,
+      "lat": 37.407299,
+      "lng": 126.635609
+    },
+    {
+      "text": "공식MD",
+      "kind": "zone",
+      "colour": "#f7b6c6",
+      "minZoom": 16.5,
+      "lat": 37.408087,
+      "lng": 126.632948
+    },
+    {
+      "text": "아티스트MD",
+      "kind": "zone",
+      "colour": "#d3b0ee",
+      "minZoom": 16.5,
+      "lat": 37.408385,
+      "lng": 126.633447
     },
     {
       "text": "MONSTER STAGE",

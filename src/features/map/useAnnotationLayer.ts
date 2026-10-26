@@ -2,6 +2,9 @@ import L from 'leaflet'
 import { useEffect } from 'react'
 import { placeAnnotations, type Annotation } from './annotations'
 
+/** A tappable icon gets at least this much room under a finger, however small it is drawn. */
+const TOUCH_PX = 44
+
 const esc = (text: string) => text.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] ?? c)
 
 /** Markup of one annotation. Icon URLs are the app's own bundled files; texts are escaped. */
@@ -30,11 +33,16 @@ export function useAnnotationLayer(map: L.Map | null, items: readonly Annotation
     const shown = placeAnnotations(items, (item) => map.project([item.lat, item.lng], zoom))
     const layer = L.layerGroup()
     for (const item of items) {
-      if (!shown.has(item.key)) continue
-      const { left, top, width, height } = item.box
+      const offset = shown.get(item.key)
+      if (!offset) continue
+      const { width, height } = item.box
+      const left = item.box.left + offset.dx, top = item.box.top + offset.dy
       const pin = item.view.type === 'pin' ? item.view.pin : null
+      // pins get a bigger, invisible touch area around what is drawn (overlaps between them are fine: the top one wins)
+      const [padX, padY] = pin ? [Math.max(0, (TOUCH_PX - width) / 2), Math.max(0, (TOUCH_PX - height) / 2)] : [0, 0]
+      const body = padX || padY ? `<span class="map-annotation__touch" style="padding:${padY}px ${padX}px">${html(item)}</span>` : html(item)
       const marker = L.marker([item.lat, item.lng], {
-        icon: L.divIcon({ className: 'map-annotation', html: html(item), iconSize: [width, height], iconAnchor: [-left, -top] }),
+        icon: L.divIcon({ className: 'map-annotation', html: body, iconSize: [width + 2 * padX, height + 2 * padY], iconAnchor: [padX - left, padY - top] }),
         interactive: pin !== null && interactive,
         keyboard: false,
         title: pin?.name ?? '',

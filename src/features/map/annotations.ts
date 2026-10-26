@@ -11,13 +11,13 @@ import type { FestivalMap, MapLabel, MapLabelKind } from './festivalMaps'
 export const ICON_FROM_ZOOM = 16
 export const CAPTIONED_FROM_ZOOM = 15
 const CAPTION_FONT = 11
-const LABEL_FONT: Record<MapLabelKind, number> = { station: 13, building: 11, stage: 12, place: 11, bus: 10 }
+const LABEL_FONT: Record<MapLabelKind, number> = { station: 13, building: 11, stage: 12, place: 11, zone: 11, bus: 10 }
 const LABEL_ICON = 18
 const BADGE_FONT = 10
 const GAP = 3 // px kept clear around each one
 
-/** Higher first when two would overlap. */
-const PRIORITY = { selected: 1000, active: 900, station: 100, named: 90, stage: 80, exit: 70, pin: 60, place: 50, building: 40, bus: 35 }
+/** Higher first when two would overlap. Stage names come right after the station, so they never drop out for a pin. */
+const PRIORITY = { selected: 1000, active: 900, station: 100, stage: 95, named: 90, exit: 70, pin: 60, zone: 55, place: 50, building: 40, bus: 35 }
 
 export const iconSize = (zoom: number): number => (zoom < 17 ? 20 : zoom < 18 ? 24 : 30)
 
@@ -25,6 +25,12 @@ export const iconSize = (zoom: number): number => (zoom < 17 ? 20 : zoom < 18 ? 
 export function textWidth(text: string, font: number): number {
   return [...text].reduce((w, ch) => w + (/[ㄱ-힝]/.test(ch) ? font : ch === ' ' ? font * 0.3 : font * 0.62), 0)
 }
+
+export interface Offset {
+  dx: number
+  dy: number
+}
+const NO_NUDGES: readonly Offset[] = []
 
 export type AnnotationView =
   | { type: 'pin'; pin: Pin; iconUrl: string; size: number; caption: string | null; selected: boolean; active: boolean }
@@ -36,6 +42,8 @@ export interface Annotation {
   lng: number
   /** Screen box relative to the point (px). */
   box: { left: number; top: number; width: number; height: number }
+  /** Other places to try (px from the point) when the first would overlap: a name may move just above or below. */
+  nudges: readonly Offset[]
   priority: number
   view: AnnotationView
 }
@@ -54,6 +62,7 @@ function pinAnnotation(pin: Pin, iconUrl: string, zoom: number, selected: boolea
     lat: at.lat,
     lng: at.lng,
     box: { left: -size / 2, top: -size / 2, width, height: size },
+    nudges: NO_NUDGES,
     priority,
     view: { type: 'pin', pin, iconUrl, size, caption, selected, active },
   }
@@ -71,6 +80,8 @@ function labelAnnotation(label: MapLabel, index: number, icons: FestivalMap['ico
     lat: label.lat,
     lng: label.lng,
     box: { left: -width / 2, top: -height / 2, width, height },
+    // stage and other place names may move a line up or down to make room; stations, buildings and stops stay put
+    nudges: label.kind === 'stage' || label.kind === 'place' || label.kind === 'zone' ? [{ dx: 0, dy: -(height + 2) }, { dx: 0, dy: height + 2 }] : NO_NUDGES,
     priority: PRIORITY[label.kind],
     view: { type: 'label', label, iconUrl, font },
   }
@@ -100,16 +111,29 @@ export function buildAnnotations(
   return [...labelItems, ...pinItems]
 }
 
-/** The keys to show: the most important first, then each one that overlaps none shown so far. `at` gives screen points. */
-export function placeAnnotations(items: readonly Annotation[], at: (item: Annotation) => { x: number; y: number }): Set<string> {
+/**
+ * What to show and where: the most important first, each at the first of its places (its own, then its nudges) that
+ * overlaps nothing shown so far; left out if none is free — except the selected and active pins, which always show
+ * (on top of each other if they must). `at` gives screen points. Returns key → offset from the point.
+ */
+export function placeAnnotations(items: readonly Annotation[], at: (item: Annotation) => { x: number; y: number }): Map<string, Offset> {
   const shown: { x0: number; y0: number; x1: number; y1: number }[] = []
-  const keys = new Set<string>()
+  const placed = new Map<string, Offset>()
   for (const item of [...items].sort((a, b) => b.priority - a.priority)) {
     const { x, y } = at(item)
-    const box = { x0: x + item.box.left - GAP, y0: y + item.box.top - GAP, x1: x + item.box.left + item.box.width + GAP, y1: y + item.box.top + item.box.height + GAP }
-    if (shown.some((b) => box.x0 < b.x1 && b.x0 < box.x1 && box.y0 < b.y1 && b.y0 < box.y1)) continue
-    shown.push(box)
-    keys.add(item.key)
+    const boxAt = (offset: Offset) => {
+      const x0 = x + offset.dx + item.box.left, y0 = y + offset.dy + item.box.top
+      return { x0: x0 - GAP, y0: y0 - GAP, x1: x0 + item.box.width + GAP, y1: y0 + item.box.height + GAP }
+    }
+    const offsets = [{ dx: 0, dy: 0 }, ...item.nudges]
+    const free = offsets.find((offset) => {
+      const box = boxAt(offset)
+      return !shown.some((b) => box.x0 < b.x1 && b.x0 < box.x1 && box.y0 < b.y1 && b.y0 < box.y1)
+    })
+    const offset = free ?? (item.priority >= PRIORITY.active ? offsets[0]! : null)
+    if (!offset) continue
+    shown.push(boxAt(offset))
+    placed.set(item.key, offset)
   }
-  return keys
+  return placed
 }

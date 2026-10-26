@@ -77,6 +77,8 @@ const labels = [
   { text: '송도 씨워크인테라스 한라', kind: 'building', minZoom: 15.5, ...ll(way('송도씨워크인테라스한라')) },
   // city bus stops (OSM): the stop's name by a bus icon, close in
   ...(OSM.busStops ?? []).filter((stop) => stop.name).map((stop) => ({ text: stop.name, kind: 'bus', icon: 'bus', minZoom: 16.5, ...ll([stop.lat, stop.lng]) })),
+  // the zone flags' names (피크닉존, 리프레시존, …), written at a readable size in the flag's colour
+  ...items.filter((it) => it.kind === 'flag').map((it) => ({ text: it.args[0].replace('&amp;', '&'), kind: 'zone', colour: it.args[1], minZoom: 16.5, ...ll(placeOf(it)) })),
   // layer 2's name labels; the two 입장동선 labels say what the gate pins say, so they are left out
   ...labelItems.filter(({ it }) => !it.of?.startsWith('gate')).map(({ it, key }) => ({
     text: it.args[0].map(([t]) => t.replace('&amp;', '&')).join(' '), colour: it.args[0][0][1],
@@ -88,11 +90,12 @@ writeAppMap({ root: ROOT, code: 'pentaport',
   layers: [
     { src: path.join(OUT, 'big-layer1-ground-north-up.svg'), file: 'big-layer1.svg', bounds: boundsOf(path.join(OUT, 'big-north-up-bounds.json')) },
     { src: path.join(OUT, 'layer1-ground-north-up.svg'), file: 'layer1.svg', bounds: small },
-    // its name labels are written by the app (fixed size); layer 3's pins are drawn by the app as icons
-    { src: path.join(OUT, 'layer2-operations-north-up.svg'), file: 'layer2.svg', bounds: small, strip: ['l2-labels'] },
+    // its name labels and zone flags are written by the app (fixed size); layer 3's pins are drawn by the app as icons
+    { src: path.join(OUT, 'layer2-operations-north-up.svg'), file: 'layer2.svg', bounds: small, strip: ['l2-labels', 'l2-flags'] },
   ],
   // Opens on the small map (the venue); the big map around it is there to zoom out to the station and shuttle stops.
   initialView: small, anchors, marks, icons, labels, maxZoom: 19.5,
   background: '#f3e9ce', fillOnOpen: false, // the big map's cream ground runs on around it
+  zoomOutFills: true, // zoomed right out the big map still fills the screen; the station or the shuttle stops are a pan away
   attribution: '지도: 2026 인천펜타포트 락 페스티벌 공식 행사장 안내도를 실제 위치에 맞춰 다시 그림 · 지형: © OpenStreetMap 기여자',
 })

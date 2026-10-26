@@ -51,6 +51,8 @@ export const PinSchema = z.object({
   lng: longitude,
   /** The pin's role when a festival has several of it (화장실, 개수대, …): the pin list shows them as one row. */
   group: name.optional(),
+  /** Where its row goes in the pin list when the position is unknown (lower first; else by kind). */
+  rank: z.number().int().min(0).max(999).optional(),
   /** More about the place, shown when the pin is selected (who uses it, what is there). */
   detail: z.string().trim().max(200).optional(),
   // How an illustrated map draws a catalog pin (never set on the user's own pins):

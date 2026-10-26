@@ -17,6 +17,11 @@ describe('groupPins', () => {
     expect(groupPins([pin('t1', '장애인 화장실', 37.5, '장애인 화장실')], null)[0]?.label).toBe('장애인 화장실')
   })
 
+  test('without a position: rows by rank, then by kind (toilets before stages), then by name', () => {
+    const ranked = [pin('s', 'KB STAGE', 37.5), { ...pin('g', 'GATE 1', 37.5, '입장'), kind: 'etc' as const, rank: 0 }, pin('t', '화장실', 37.5, '화장실')]
+    expect(groupPins([{ ...ranked[0]!, kind: 'stage' }, ranked[1]!, ranked[2]!], null).map((r) => r.label)).toEqual(['GATE 1', '화장실', 'KB STAGE'])
+  })
+
   test('sorts by the distance to the nearest pin of each row', () => {
     const rows = groupPins(pins, { lat: 37.5, lng: 127 })
     expect(rows.map((r) => r.label)).toEqual(['화장실 2개', 'KB STAGE', '개수대'])

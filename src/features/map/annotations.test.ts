@@ -47,11 +47,26 @@ describe('placeAnnotations', () => {
     x,
     priority,
     box: { left: -10, top: -10, width: 20, height: 20 },
+    nudges: [],
     view: { type: 'label', label: map.labels[0]!, iconUrl: null, font: 12 },
   })
 
+  const x = (a: Annotation) => ({ x: (a as Annotation & { x: number }).x, y: 0 })
+
   test('leaves out what would overlap something more important', () => {
     const items = [item('low', 40, 0), item('high', 100, 5), item('apart', 40, 100)]
-    expect(placeAnnotations(items, (a) => ({ x: (a as Annotation & { x: number }).x, y: 0 }))).toEqual(new Set(['high', 'apart']))
+    expect([...placeAnnotations(items, x).keys()].sort()).toEqual(['apart', 'high'])
+  })
+
+  test('never leaves out the selected or active pins, even on top of each other', () => {
+    const items = [item('a', 900, 0), item('b', 900, 2), item('c', 1000, 4), item('name', 100, 3)]
+    expect([...placeAnnotations(items, x).keys()].sort()).toEqual(['a', 'b', 'c'])
+  })
+
+  test('moves a name to one of its nudges when its own place is taken', () => {
+    const nudged = { ...item('name', 40, 0), nudges: [{ dx: 0, dy: -30 }] }
+    const placed = placeAnnotations([item('high', 100, 5), nudged], x)
+    expect(placed.get('name')).toEqual({ dx: 0, dy: -30 })
+    expect(placed.get('high')).toEqual({ dx: 0, dy: 0 })
   })
 })
