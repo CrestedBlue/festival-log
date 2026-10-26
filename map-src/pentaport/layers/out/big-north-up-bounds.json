@@ -16,13 +16,13 @@
     ]
   ],
   "colours": {
-    "land": "#ffffff",
-    "open": "#e6dfd2",
-    "park": "#74bc6c",
-    "pitch": "#048444",
-    "water": "#319fd7",
-    "building": "#a9a9ad",
+    "land": "#f3e9ce",
+    "open": "#efe2c2",
+    "park": "#7bc157",
+    "pitch": "#048244",
+    "water": "#3faef3",
+    "building": "#e6e6e9",
     "venue": "#c8c8ca",
-    "road": "#c8c8ca"
+    "road": "#c3c5ca"
   }
 }

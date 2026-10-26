@@ -12,7 +12,7 @@ import * as SP from './sprites.mjs'
 import { OUT, ROOT } from './paths.mjs'
 import { R, GATE_R } from './pin-design.mjs'
 import { measureTexts } from '../lib/texts.mjs'
-import { writeAppMap, boundsOf, boundsAround } from '../lib/app.mjs'
+import { writeAppMap, boundsOf } from '../lib/app.mjs'
 
 await measureTexts(SP, GROUPS)
 const items = GROUPS.flatMap((g) => g.items)
@@ -36,9 +36,8 @@ const pins = JSON.parse(fs.readFileSync(path.join(OUT, 'layer3-pins.json'))).pin
 const badgeRadius = (type) => +((type === 'gate' ? GATE_R : R) * M * 1.2).toFixed(1) // a little over the drawn badge
 const marks = pins.map((p, i) => ({ id: i + 1, kind: p.type, zone: '', lat: p.lat, lng: p.lng, tap: { lat: p.badge[0], lng: p.badge[1], radius: badgeRadius(p.type) } })) // numbered in layer 3's order
 const small = boundsOf(path.join(OUT, 'north-up-bounds.json'))
-// Opens on the walk: 송도달빛축제공원역 (west), the venue and the shuttle stops (south).
-const station = toLL([-560, 120]), shuttles = toLL([-60, -500])
-const initialView = boundsAround([station, shuttles, ...small])
+// Opens on the small map (the venue); the big map around it is there to zoom out to the station and shuttle stops.
+const initialView = small
 
 writeAppMap({ root: ROOT, code: 'pentaport',
   layers: [
@@ -48,6 +47,6 @@ writeAppMap({ root: ROOT, code: 'pentaport',
     { src: path.join(OUT, 'layer3-pins-north-up.svg'), file: 'layer3.svg', bounds: small },
   ],
   initialView, anchors, anchorTaps, marks, maxZoom: 19.5,
-  background: '#ffffff', fillOnOpen: false, // the big map's ground colour runs on around it, so it opens on the whole walk
+  background: '#f3e9ce', fillOnOpen: false, // the big map's cream ground runs on around it
   attribution: '지도: 2026 인천펜타포트 락 페스티벌 공식 행사장 안내도를 실제 위치에 맞춰 다시 그림 · 지형: © OpenStreetMap 기여자',
 })

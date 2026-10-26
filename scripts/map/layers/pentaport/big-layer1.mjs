@@ -1,11 +1,12 @@
 // Layer 1 (ground) of the big area map: the walk from 송도달빛축제공원역 and the shuttle stops to the venue, in real
-// shapes (OSM) — roads at real widths as one shape, parks, pitches, the lake, construction sites, buildings. The venue
-// itself is only its outline here (in the small map's path grey): the small map's layers lie on top of it.
+// shapes (OSM) — roads at real widths as one shape with pale kerbs, parks, pitches, the lake, construction sites, and
+// buildings as light 2.5D blocks (roof lifted over its walls, a soft shadow). The venue itself is only its outline here
+// (in the small map's path grey): the small map's layers lie on top of it.
 //   node scripts/map/layers/pentaport/big-layer1.mjs   (after layer1.mjs) → out/big-layer1-ground-north-up.svg, out/big-north-up-bounds.json
 import fs from 'node:fs'
 import path from 'node:path'
 import { bigFrame as frame, BOX as SMALL_BOX } from './frame.mjs'
-import { BIG_CLASSES as CLASSES } from './big-classes.mjs'
+import { BIG_CLASSES as CLASSES, BIG_STYLE as STYLE } from './big-classes.mjs'
 import { makeGround } from '../lib/ground.mjs'
 import { OUT, CACHE } from './paths.mjs'
 
@@ -51,15 +52,22 @@ const strokes = await maskOf(`<g fill="none" stroke="#000" stroke-linecap="round
 const road = await closeOpen(Buffer.from(strokes.map((v, i) => (v > 127 && venue[i] <= 127 ? 255 : 0))), (i) => venue[i] <= 127)
 for (let i = 0; i < W * H; i++) if (road[i]) cls[i] = C.road
 
-const ORDER = ['open', 'park', 'pitch', 'water', 'building', 'venue']
-const LABEL = { open: '공사장·빈터', park: '공원', pitch: '운동장', water: '호수', building: '건물', venue: '행사장(작은 지도 자리)' }
+const ORDER = ['open', 'park', 'pitch', 'water', 'venue']
+const LABEL = { open: '공사장·빈터', park: '공원', pitch: '운동장', water: '호수', venue: '행사장(작은 지도 자리)' }
 const zones = zoneGroups(ORDER, LABEL, cls, C, colour)
 const roadD = frame.trace(toF((i) => cls[i] === C.road), { sigma: 1.5, tolerance: 0.3 })
+const buildingD = frame.trace(toF((i) => cls[i] === C.building), { sigma: 1, tolerance: 0.2 })
+const [sx, sy] = STYLE.shadowOffset
 const VW = BOX.east - BOX.west, VH = BOX.north - BOX.south
 const content = `<g id="layer1" data-name="레이어 1 · 바닥 (큰 지도)">
 <rect id="land" data-name="땅" width="${VW}" height="${VH}" fill="${colour.land}"/>
 <g id="zones" data-name="구역">${zones}</g>
-<path id="roads" data-name="길" d="${roadD}" fill="${colour.road}" fill-rule="evenodd"/>
+<path id="roads" data-name="길" d="${roadD}" fill="${colour.road}" fill-rule="evenodd" stroke="${STYLE.kerb}" stroke-width="${STYLE.kerbWidth}" stroke-linejoin="round" paint-order="stroke"/>
+<g id="buildings" data-name="건물" fill-rule="evenodd">
+<path data-name="그림자" d="${buildingD}" fill="${STYLE.shadow}" transform="translate(${sx},${sy})"/>
+<path data-name="벽" d="${buildingD}" fill="${STYLE.wall}"/>
+<path data-name="지붕" d="${buildingD}" fill="${colour.building}" transform="translate(0,${-STYLE.roofLift})"/>
+</g>
 </g>`
 writeNorthUp({ content, cls, colour, out: OUT, cache: CACHE, prefix: 'big-' })
 console.log('path ends joined', joined, '| areas m²', areas(cls, CLASSES.map(([n, c]) => [n, c])))

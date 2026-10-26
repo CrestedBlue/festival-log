@@ -1,6 +1,6 @@
 {
   "attribution": "지도: 2026 인천펜타포트 락 페스티벌 공식 행사장 안내도를 실제 위치에 맞춰 다시 그림 · 지형: © OpenStreetMap 기여자",
-  "background": "#ffffff",
+  "background": "#f3e9ce",
   "maxZoom": 19.5,
   "fillOnOpen": false,
   "bounds": [
@@ -15,8 +15,8 @@
   ],
   "initialView": [
     [
-      37.401508,
-      126.625667
+      37.404473,
+      126.629512
     ],
     [
       37.409054,

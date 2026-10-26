@@ -120,5 +120,7 @@ describe('seriesMapFor', () => {
       expect(venue && point && isInsideBounds({ lat: point[0], lng: point[1] }, venue)).toBe(true)
     }
     expect(map?.marks.length).toBeGreaterThan(0)
+    // opens on the small map (the venue); the big map is there to zoom out to
+    expect(map?.initialView).toEqual(map?.layers[1]?.bounds)
   })
 })
