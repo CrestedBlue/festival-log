@@ -1,18 +1,23 @@
-// The Pentaport map for the app (lib/app.mjs): the big area map's layer 1 at the bottom, then the small map's layers
-// 1–3 over the venue — each its own image. Anchors are the drawn places the app lists (stages, gates, the security
-// check: their real places); marks are the layer 3 pins.
+// The Pentaport map for the app (lib/app.mjs): the big area map's layer 1 at the bottom, then the small map's layers 1
+// and 2 over the venue — each its own image. Layer 3's pins become marks the app draws as icons at a fixed size, and
+// layer 2's name labels, the station and big buildings become labels the app writes (both shown by zoom, like a street
+// map). Anchors are the real places of the drawn stages, gates and security check.
 //   node scripts/map/layers/pentaport/app.mjs   (after the layers) → src/assets/maps/pentaport/*.svg, src/assets/maps/pentaport.json
 import fs from 'node:fs'
 import path from 'node:path'
-import { toLL } from './frame.mjs'
+import { toLL, toM, BOX, OSM } from './frame.mjs'
 import { officialToM } from './official-to-m.mjs'
 import { GROUPS } from './objects.mjs'
 import * as geometry from './geometry.mjs'
 import * as SP from './sprites.mjs'
-import { OUT, ROOT } from './paths.mjs'
-import { R, GATE_R } from './pin-design.mjs'
+import { OUT, CACHE, ROOT } from './paths.mjs'
+import { R, GATE_R, TYPES, badge } from './pin-design.mjs'
+import { badgeIcon, exitIcon, stationIcon, ticketIcon, shuttleIcon } from '../lib/app-icons.mjs'
 import { measureTexts } from '../lib/texts.mjs'
 import { writeAppMap, boundsOf } from '../lib/app.mjs'
+
+const INCHEON_LINE_1 = '#7ca8d5' // 인천 1호선 line colour
+const ll = ([lat, lng]) => ({ lat: +lat.toFixed(6), lng: +lng.toFixed(6) })
 
 await measureTexts(SP, GROUPS)
 const items = GROUPS.flatMap((g) => g.items)
@@ -24,29 +29,65 @@ const anchors = {
   kbStage: byId('kbStage'), monsterStage: byId('monsterStage'), stanleyStage: byId('stanleyStage'), gate1: byId('gate1'), gate2: byId('gate2'),
   securityCheck: mean(items.filter((it) => it.tag === '물품검색').map(placeOf)),
 }
-// Tapping the drawing selects the place: within half the sprite's size of a stage or gate, along the row of
-// security-check containers.
-const M = geometry.PX_TO_M
-const half = (it) => (Math.max(...geometry.sizeOf(it)) / 2) * M
-const anchorTaps = Object.fromEntries(['kbStage', 'monsterStage', 'stanleyStage', 'gate1', 'gate2'].map((id) => [id, +half(items.find((i) => i.id === id)).toFixed(1)]))
-const metres = (a, b) => Math.hypot((a[0] - b[0]) * 111_320, (a[1] - b[1]) * 111_320 * Math.cos((a[0] * Math.PI) / 180))
-const checks = items.filter((it) => it.tag === '물품검색')
-anchorTaps.securityCheck = +Math.max(...checks.map((it) => metres(placeOf(it), anchors.securityCheck) + half(it))).toFixed(1)
-const pins = JSON.parse(fs.readFileSync(path.join(OUT, 'layer3-pins.json'))).pins
-const badgeRadius = (type) => +((type === 'gate' ? GATE_R : R) * M * 1.2).toFixed(1) // a little over the drawn badge
-const marks = pins.map((p, i) => ({ id: i + 1, kind: p.type, zone: '', lat: p.lat, lng: p.lng, tap: { lat: p.badge[0], lng: p.badge[1], radius: badgeRadius(p.type) } })) // numbered in layer 3's order
 const small = boundsOf(path.join(OUT, 'north-up-bounds.json'))
-// Opens on the small map (the venue); the big map around it is there to zoom out to the station and shuttle stops.
-const initialView = small
+const northUpLL = ([x, y]) => toLL([x + BOX.west, BOX.north - y]).map((v) => +v.toFixed(6))
+
+// Marks: the layer 3 pins, drawn by the app as icons where layer 3 puts them (`spot`). The security check and the
+// lockers stand side by side, so they are one mark (their badges said nearly the same thing).
+const pins = JSON.parse(fs.readFileSync(path.join(OUT, 'layer3-pins.json'))).pins
+const MERGED = { securityCheck: 'checkLockers', lockers: 'checkLockers' }
+const near = (p, a) => Math.hypot(p.lat - a[0], p.lng - a[1])
+// a gate badge is GATE 1 or GATE 2, whichever arch it stands by
+const gateOf = (p) => (near(p, anchors.gate1) < near(p, anchors.gate2) ? 'gate1' : 'gate2')
+const marks = []
+for (const p of pins) {
+  const kind = MERGED[p.type] ?? (p.type === 'gate' ? gateOf(p) : p.type)
+  const twin = MERGED[p.type] && marks.find((m) => m.kind === kind)
+  if (twin) { // halfway between the two
+    twin.lat = +((twin.lat + p.lat) / 2).toFixed(6); twin.lng = +((twin.lng + p.lng) / 2).toFixed(6)
+    twin.spot = { lat: +((twin.spot.lat + p.badge[0]) / 2).toFixed(6), lng: +((twin.spot.lng + p.badge[1]) / 2).toFixed(6) }
+    continue
+  }
+  marks.push({ id: marks.length + 1, kind, zone: '', lat: p.lat, lng: p.lng, spot: { lat: p.badge[0], lng: p.badge[1] } }) // numbered in layer 3's order
+}
+
+// Icons the app draws at a fixed size: every badge of layer 3, the exits, the station, ticket booths, shuttle stops.
+const icons = Object.fromEntries(Object.keys(TYPES).map((type) => [type, badgeIcon(badge(type), type === 'gate' ? GATE_R : R)]))
+icons.checkLockers = icons.lockers
+icons.gate1 = icons.gate2 = icons.gate
+for (const unused of ['lockers', 'securityCheck', 'gate']) delete icons[unused]
+for (const n of [1, 2, 3, 4]) icons[`exit-${n}`] = exitIcon(n)
+icons.station = stationIcon(INCHEON_LINE_1)
+icons.ticket = ticketIcon()
+icons.shuttle = shuttleIcon()
+
+// Names the app writes on the map (fixed size, shown from `minZoom` on, fewer when they would overlap).
+const exits = OSM.subwayEntrances.filter((x) => Math.hypot(...toM([x.lat, x.lng]).map((v, i) => v - [-540, 115][i])) < 80)
+const way = (name) => { const w = OSM.ways.find((x) => x.tags?.name === name); if (!w) throw new Error(`no OSM ${name}`); return mean(w.pts) }
+const labelItems = GROUPS.flatMap((g) => g.items.map((it, i) => ({ it, key: `${g.id}:${i}` }))).filter(({ it }) => it.kind === 'label')
+const LAYOUT = JSON.parse(fs.readFileSync(path.join(CACHE, 'labels-northup.json')))
+const STAGES = new Set(['kbStage', 'monsterStage', 'stanleyStage'])
+const labels = [
+  { text: '송도달빛축제공원역', kind: 'station', icon: 'station', minZoom: 14, ...ll(mean(exits.map((x) => [x.lat, x.lng]))) },
+  { text: '송도 랜드마크 푸르지오시티', kind: 'building', minZoom: 15.5, ...ll(way('송도랜드마크푸르지오 오피스텔')) },
+  { text: '송도 한라웨스턴파크', kind: 'building', minZoom: 15.5, ...ll(way('송도한라웨스턴파크 셀럽하우스 아파트')) },
+  { text: '송도 씨워크인테라스 한라', kind: 'building', minZoom: 15.5, ...ll(way('송도씨워크인테라스한라')) },
+  // layer 2's name labels; the two 입장동선 labels say what the gate pins say, so they are left out
+  ...labelItems.filter(({ it }) => !it.of?.startsWith('gate')).map(({ it, key }) => ({
+    text: it.args[0].map(([t]) => t.replace('&amp;', '&')).join(' '), colour: it.args[0][0][1],
+    kind: STAGES.has(it.of) ? 'stage' : 'place', minZoom: STAGES.has(it.of) ? 15.3 : 16.5, ...ll(northUpLL(LAYOUT[key])),
+  })),
+]
 
 writeAppMap({ root: ROOT, code: 'pentaport',
   layers: [
     { src: path.join(OUT, 'big-layer1-ground-north-up.svg'), file: 'big-layer1.svg', bounds: boundsOf(path.join(OUT, 'big-north-up-bounds.json')) },
     { src: path.join(OUT, 'layer1-ground-north-up.svg'), file: 'layer1.svg', bounds: small },
-    { src: path.join(OUT, 'layer2-operations-north-up.svg'), file: 'layer2.svg', bounds: small },
-    { src: path.join(OUT, 'layer3-pins-north-up.svg'), file: 'layer3.svg', bounds: small },
+    // its name labels are written by the app (fixed size); layer 3's pins are drawn by the app as icons
+    { src: path.join(OUT, 'layer2-operations-north-up.svg'), file: 'layer2.svg', bounds: small, strip: ['l2-labels'] },
   ],
-  initialView, anchors, anchorTaps, marks, maxZoom: 19.5,
+  // Opens on the small map (the venue); the big map around it is there to zoom out to the station and shuttle stops.
+  initialView: small, anchors, marks, icons, labels, maxZoom: 19.5,
   background: '#f3e9ce', fillOnOpen: false, // the big map's cream ground runs on around it
   attribution: '지도: 2026 인천펜타포트 락 페스티벌 공식 행사장 안내도를 실제 위치에 맞춰 다시 그림 · 지형: © OpenStreetMap 기여자',
 })

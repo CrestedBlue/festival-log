@@ -44,20 +44,25 @@ describe('parseMapMeta', () => {
     expect(parseMapMeta(valid).background).toBeNull()
   })
 
-  test('reads where the map draws its places and marks, to make them tappable', () => {
+  test('reads where the map draws a mark, its icons and the names it writes', () => {
     const meta = parseMapMeta({
       ...valid,
-      anchorTaps: { stage: 30 },
-      marks: [{ id: 1, kind: 'toilet', zone: '', lat: 37.55, lng: 127.15, tap: { lat: 37.551, lng: 127.151, radius: 10 } }],
+      layers: [{ file: 'ground.svg', bounds: valid.bounds }],
+      icons: { station: 'icons/station.svg' },
+      labels: [{ text: '역', kind: 'station', icon: 'station', minZoom: 14, lat: 37.55, lng: 127.15, colour: '#123456' }],
+      marks: [{ id: 1, kind: 'toilet', zone: '', lat: 37.55, lng: 127.15, spot: { lat: 37.551, lng: 127.151 } }],
     })
-    expect(meta.anchorTaps).toEqual({ stage: 30 })
-    expect(meta.marks[0]?.tap).toEqual({ lat: 37.551, lng: 127.151, radius: 10 })
+    expect(meta.marks[0]?.spot).toEqual({ lat: 37.551, lng: 127.151 })
+    expect(meta.labels).toEqual([{ text: '역', kind: 'station', icon: 'station', minZoom: 14, lat: 37.55, lng: 127.15, colour: '#123456' }])
+    expect(withImages(meta, { 'ground.svg': '/g.svg', 'icons/station.svg': '/s.svg' }).icons).toEqual({ station: '/s.svg' })
   })
 
-  test('rejects a tap area without an anchor, without a radius, or outside the image', () => {
-    expect(() => parseMapMeta({ ...valid, anchorTaps: { missing: 30 } })).toThrow()
-    expect(() => parseMapMeta({ ...valid, anchorTaps: { stage: 0 } })).toThrow()
-    expect(() => parseMapMeta({ ...valid, marks: [{ id: 1, kind: 'toilet', zone: '', lat: 37.55, lng: 127.15, tap: { lat: 36, lng: 127, radius: 10 } }] })).toThrow()
+  test('rejects a mark spot or a label outside the map, a label of no known kind or with an unknown icon', () => {
+    const label = { text: '역', kind: 'station', minZoom: 14, lat: 37.55, lng: 127.15 }
+    expect(() => parseMapMeta({ ...valid, marks: [{ id: 1, kind: 'toilet', zone: '', lat: 37.55, lng: 127.15, spot: { lat: 36, lng: 127 } }] })).toThrow()
+    expect(() => parseMapMeta({ ...valid, labels: [{ ...label, lat: 36 }] })).toThrow()
+    expect(() => parseMapMeta({ ...valid, labels: [{ ...label, kind: 'castle' }] })).toThrow()
+    expect(() => parseMapMeta({ ...valid, labels: [{ ...label, icon: 'missing' }] })).toThrow()
   })
 
   test('rejects anchors outside the image', () => {
@@ -111,7 +116,7 @@ describe('seriesMapFor', () => {
 
   test('returns the layered Pentaport map: the big ground under the venue layers, with its places inside it', () => {
     const map = seriesMapFor(PENTAPORT_SERIES)
-    expect(map?.layers).toHaveLength(4)
+    expect(map?.layers).toHaveLength(3) // big map's layer 1, small map's layers 1 and 2; layer 3's pins are drawn by the app
     for (const layer of map?.layers ?? []) expect(layer.url).toBeTruthy()
     for (const key of ['kbStage', 'monsterStage', 'stanleyStage', 'gate1', 'gate2', 'securityCheck']) {
       const point = map?.anchors[key]
@@ -120,6 +125,7 @@ describe('seriesMapFor', () => {
       expect(venue && point && isInsideBounds({ lat: point[0], lng: point[1] }, venue)).toBe(true)
     }
     expect(map?.marks.length).toBeGreaterThan(0)
+    expect(map?.labels.map((l) => l.text)).toEqual(expect.arrayContaining(['송도달빛축제공원역', '송도 랜드마크 푸르지오시티', '송도 한라웨스턴파크', '송도 씨워크인테라스 한라']))
     // opens on the small map (the venue); the big map is there to zoom out to
     expect(map?.initialView).toEqual(map?.layers[1]?.bounds)
   })

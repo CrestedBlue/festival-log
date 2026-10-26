@@ -43,18 +43,23 @@ export const PIN_KINDS = [
   'artist',
   'vinyl',
 ] as const
-/** Where an illustrated map draws a catalog pin (a badge, a stage): tapping within `radius` metres selects it. */
-export const TapAreaSchema = z.object({ lat: latitude, lng: longitude, radius: z.number().positive().max(200) })
-
 export const PinSchema = z.object({
   id,
   name,
   kind: z.enum(PIN_KINDS),
   lat: latitude,
   lng: longitude,
-  tap: TapAreaSchema.optional(),
   /** The pin's role when a festival has several of it (화장실, 개수대, …): the pin list shows them as one row. */
   group: name.optional(),
+  /** More about the place, shown when the pin is selected (who uses it, what is there). */
+  detail: z.string().trim().max(200).optional(),
+  // How an illustrated map draws a catalog pin (never set on the user's own pins):
+  /** The map's icon for it (a key into the bundled map's icons); without one it is a plain pin. */
+  mapIcon: z.string().max(40).optional(),
+  /** A short name written beside the icon. */
+  caption: z.string().trim().max(40).optional(),
+  /** Where the map draws it, when not at the place itself (a badge set beside its booth). */
+  spot: z.object({ lat: latitude, lng: longitude }).optional(),
 })
 
 export const VenueSchema = z.object({ name: z.string().trim().max(MAX_NAME_LENGTH), lat: latitude, lng: longitude })
@@ -119,7 +124,6 @@ export type Stage = z.infer<typeof StageSchema>
 export type Performance = z.infer<typeof PerformanceSchema>
 export type PinKind = (typeof PIN_KINDS)[number]
 export type Pin = z.infer<typeof PinSchema>
-export type TapArea = z.infer<typeof TapAreaSchema>
 export type Venue = z.infer<typeof VenueSchema>
 export type Festival = z.infer<typeof FestivalSchema>
 export type LegacyAppData = z.infer<typeof LegacyAppDataSchema>

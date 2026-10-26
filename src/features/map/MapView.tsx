@@ -1,25 +1,24 @@
 import 'leaflet/dist/leaflet.css'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { addUserPin, removeUserPin } from '../../data/userData'
-import { PinSchema, type Festival, type PinKind } from '../../data/schema'
+import { PinSchema, type Festival, type Pin, type PinKind } from '../../data/schema'
 import { showNotice, updateData } from '../../data/store'
 import { LocateIcon, PlusIcon } from '../../components/icons'
 import { useGeolocation } from '../../hooks/useGeolocation'
 import { useStoredFlag } from '../../hooks/useStoredFlag'
 import { distanceMeters, formatDistance, isInsideBounds, type LatLng } from '../../lib/geo'
 import { makeId } from '../../lib/id'
-import { festivalMapFor, isMapLabelPin } from '../../data/catalog'
+import { festivalMapFor } from '../../data/catalog'
 import { MapCredits } from './MapCredits'
 import { PinForm } from './PinForm'
 import { PIN_META } from './pinMeta'
 import { useLeafletMap } from './useLeafletMap'
-import { pinSizeForZoom } from './pinSize'
-import { useMapPick, useMapZoom, useMyLocationLayer, usePinHighlight, usePinLayer, useTapLayer, type PinHighlight } from './useMapLayers'
+import { useMapPick, useMapZoom, useMyLocationLayer, usePinHighlight, type PinHighlight } from './useMapLayers'
+import { useMapContent } from './useMapContent'
 import { groupPins, type PinGroup } from './pinGroups'
 import './map.css'
 
 const FOCUS_ZOOM = 17
-const TILE_MAP_PIN = { size: 38, showIcon: true }
 const PANEL_COLLAPSED_KEY = 'festival-log:pins-collapsed'
 
 async function isLocationAlreadyGranted(): Promise<boolean> {
@@ -30,6 +29,18 @@ async function isLocationAlreadyGranted(): Promise<boolean> {
     console.warn('[festival-log] permissions API unavailable', error)
     return false
   }
+}
+
+/** The map's own icon for a pin it draws (the same as on the map), else the kind's emoji. */
+function PinIcon({ pin, icons, className }: { pin: Pin; icons: Readonly<Record<string, string>> | undefined; className: string }) {
+  const url = pin.mapIcon ? icons?.[pin.mapIcon] : undefined
+  return url ? (
+    <img className={`${className} ${className}--image`} src={url} alt="" width={32} height={32} />
+  ) : (
+    <span className={`${className} map-pin--${pin.kind}`} aria-hidden="true">
+      {PIN_META[pin.kind].emoji}
+    </span>
+  )
 }
 
 interface Props {
@@ -62,14 +73,8 @@ export default function MapView({ festival, userPinIds }: Props) {
   }, [])
 
   const zoom = useMapZoom(map)
-  // The illustrated map already labels stages, exits, … so only the other pins are drawn on it.
-  const mapPins = festivalMap ? festival.pins.filter((pin) => !isMapLabelPin(pin)) : festival.pins
-  // …but where the map draws one itself (a badge, a stage), tapping the drawing selects it.
-  const drawnPins = festivalMap ? festival.pins.filter((pin) => isMapLabelPin(pin) && pin.tap) : []
-  const pinLook = festivalMap ? pinSizeForZoom(zoom ?? 0) : TILE_MAP_PIN
-  usePinLayer(map, mapPins, selectedId, setSelectedId, pinLook)
-  useTapLayer(map, drawnPins, selectedId, setSelectedId, !picking)
-  usePinHighlight(map, highlight, pinLook.size)
+  const pinSize = useMapContent(map, festivalMap, festival.pins, zoom, selectedId, setSelectedId, !picking)
+  usePinHighlight(map, highlight, pinSize)
   useMyLocationLayer(map, geo)
   useMapPick(map, picking, onPick)
 
@@ -123,6 +128,7 @@ export default function MapView({ festival, userPinIds }: Props) {
   const selected = festival.pins.find((pin) => pin.id === selectedId) ?? null
 
   const rows = groupPins(festival.pins, me)
+
   const isActive = (group: PinGroup) =>
     selectedId !== null ? group.pins.some((pin) => pin.id === selectedId) : activeGroup === group.key
 
@@ -176,10 +182,11 @@ export default function MapView({ festival, userPinIds }: Props) {
         {festivalMap && <MapCredits text={festivalMap.attribution} />}
         {selected && collapsed && !draft && (
           <div className="map-selected" role="status">
-            <span className={`map-selected__icon map-pin--${selected.kind}`} aria-hidden="true">
-              {PIN_META[selected.kind].emoji}
+            <PinIcon pin={selected} icons={festivalMap?.icons} className="map-selected__icon" />
+            <span className="map-selected__text">
+              <span className="map-selected__name">{selected.name}</span>
+              {selected.detail && <span className="map-selected__detail">{selected.detail}</span>}
             </span>
-            <span className="map-selected__name">{selected.name}</span>
             {me && <span className="pin-list__dist">{formatDistance(distanceMeters(me, selected))}</span>}
             <button
               type="button"
@@ -208,7 +215,7 @@ export default function MapView({ festival, userPinIds }: Props) {
               aria-controls="pin-list"
               onClick={() => setCollapsed(!collapsed)}
             >
-              <span className="map-panel__title">핀 {festival.pins.length}개</span>
+              <span className="map-panel__title">핀 목록</span>
               <span className="map-panel__chevron" aria-hidden="true" />
             </button>
             {!collapsed && (
@@ -222,9 +229,7 @@ export default function MapView({ festival, userPinIds }: Props) {
                       return (
                         <li key={group.key} className={isActive(group) ? 'is-selected' : undefined}>
                           <button type="button" className="pin-list__main" onClick={() => showGroup(group)}>
-                            <span className={`pin-list__icon map-pin--${group.kind}`} aria-hidden="true">
-                              {PIN_META[group.kind].emoji}
-                            </span>
+                            <PinIcon pin={group.pins[0]!} icons={festivalMap?.icons} className="pin-list__icon" />
                             <span className="pin-list__name">{group.label}</span>
                             {group.distance !== null && (
                               <span className="pin-list__dist">

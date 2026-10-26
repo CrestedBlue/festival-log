@@ -1,15 +1,13 @@
 import 'leaflet/dist/leaflet.css'
 import { useState } from 'react'
-import { festivalMapFor, isMapLabelPin } from '../../data/catalog'
+import { festivalMapFor } from '../../data/catalog'
 import type { Festival } from '../../data/schema'
 import { MapCredits } from '../map/MapCredits'
 import { PIN_META } from '../map/pinMeta'
-import { pinSizeForZoom } from '../map/pinSize'
 import { useLeafletMap } from '../map/useLeafletMap'
-import { useMapZoom, usePinLayer } from '../map/useMapLayers'
+import { useMapContent } from '../map/useMapContent'
+import { useMapZoom } from '../map/useMapLayers'
 import '../map/map.css'
-
-const TILE_MAP_PIN = { size: 38, showIcon: true }
 
 /** Read-only festival map: the same map and pins users see, without location or pin editing. */
 export default function AdminMap({ festival }: { festival: Festival }) {
@@ -17,8 +15,7 @@ export default function AdminMap({ festival }: { festival: Festival }) {
   const { containerRef, map } = useLeafletMap({ center: festival.venue, image: festivalMap, fitPoints: festival.pins })
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const zoom = useMapZoom(map)
-  const pins = festivalMap ? festival.pins.filter((pin) => !isMapLabelPin(pin)) : festival.pins
-  usePinLayer(map, pins, selectedId, setSelectedId, festivalMap ? pinSizeForZoom(zoom ?? 0) : TILE_MAP_PIN)
+  useMapContent(map, festivalMap, festival.pins, zoom, selectedId, setSelectedId)
   const selected = festival.pins.find((pin) => pin.id === selectedId) ?? null
 
   return (

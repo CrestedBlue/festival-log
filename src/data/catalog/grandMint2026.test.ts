@@ -53,9 +53,9 @@ describe('createGrandMint2026', () => {
     expect(marks.find((pin) => pin.kind === 'wristband')?.name).toContain('(대략)')
   })
 
-  test('keeps zone pins (stages, exits, …) separate from marker pins', () => {
+  test('keeps zone pins (hungry zones, exits, …) separate from marker pins, and lists no stages (the map names them)', () => {
     const zones = festival.pins.filter((pin) => pin.id.startsWith(`${GRAND_MINT_SERIES}-zone-`))
-    expect(zones.filter((pin) => pin.kind === 'stage')).toHaveLength(3)
+    expect(festival.pins.filter((pin) => pin.kind === 'stage')).toHaveLength(0)
     expect(zones.length + 34).toBe(festival.pins.length)
   })
 

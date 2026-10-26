@@ -41,42 +41,6 @@ export function usePinLayer(
   }, [map, pins, selectedId, onSelect, pinSize, showIcon])
 }
 
-/**
- * Catalog pins the illustrated map draws itself (a pin badge, a stage): an invisible circle over each drawing makes it
- * tappable, and the selected one gets a ring. Circles are in metres, so they grow and shrink with the drawing.
- * `active` is off while a new pin's place is being picked, so taps reach the map.
- */
-export function useTapLayer(
-  map: L.Map | null,
-  pins: readonly Pin[],
-  selectedId: string | null,
-  onSelect: (id: string) => void,
-  active: boolean,
-) {
-  useEffect(() => {
-    if (!map) return
-    const layer = L.layerGroup().addTo(map)
-    pins.forEach((pin) => {
-      if (!pin.tap) return
-      const selected = pin.id === selectedId
-      L.circle([pin.tap.lat, pin.tap.lng], {
-        radius: pin.tap.radius,
-        className: `map-tap${selected ? ' is-selected' : ''}`,
-        interactive: active,
-        bubblingMouseEvents: false,
-        stroke: selected,
-        weight: 3,
-        fillOpacity: selected ? 0.15 : 0,
-      })
-        .on('click', () => onSelect(pin.id))
-        .addTo(layer)
-    })
-    return () => {
-      layer.remove()
-    }
-  }, [map, pins, selectedId, onSelect, active])
-}
-
 /** Pins to make stand out on the map for a moment (a pin-list row was tapped); a new id replays it. */
 export interface PinHighlight {
   id: number
@@ -89,9 +53,8 @@ const PULSE_MS = 3300 // three pulses (map.css .map-pulse)
 const PULSE_MIN_PX = 48 // a pulse is at least this wide on screen, however far out the map is
 const HIGHLIGHT_PANE = 'pinHighlight'
 const HIGHLIGHT_PADDING: L.PointTuple = [48, 48]
-const EARTH_CIRCUMFERENCE_M = 40_075_016.686
-/** Where the map shows a pin: its drawing when the map draws it itself, else the pin. */
-const spotOf = (pin: Pin): LatLng => pin.tap ?? pin
+/** Where the map shows a pin: its icon's spot when the map draws it beside the place, else the pin. */
+const spotOf = (pin: Pin): LatLng => pin.spot ?? pin
 
 /**
  * A short pulse behind every pin of the highlight (all the toilets, …), after moving the map so they are in view.
@@ -108,11 +71,9 @@ export function usePinHighlight(map: L.Map | null, highlight: PinHighlight | nul
     const layer = L.layerGroup()
     let timer = 0
     const pulse = () => {
-      const zoom = map.getZoom()
       highlight.pins.forEach((pin) => {
         const at = spotOf(pin)
-        const metresPerPx = (EARTH_CIRCUMFERENCE_M * Math.cos((at.lat * Math.PI) / 180)) / 2 ** (zoom + 8)
-        const size = Math.round(Math.max(PULSE_MIN_PX, Math.max(pinSize, pin.tap ? (2 * pin.tap.radius) / metresPerPx : 0) * 1.8))
+        const size = Math.round(Math.max(PULSE_MIN_PX, pinSize * 1.8))
         L.marker([at.lat, at.lng], {
           pane: HIGHLIGHT_PANE,
           interactive: false,

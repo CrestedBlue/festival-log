@@ -11,7 +11,7 @@ import type { FestivalSeries } from './types'
 
 // Pins sit on the bundled festival map (scripts/map/build-gmf.mjs). Zone pins mark places the map
 // already labels (listed, not drawn); mark pins are the official map's icons (toilets, info, …) moved onto
-// the redrawn zones. Exits are OSM subway entrances.
+// the redrawn zones. Exits are OSM subway entrances. Stages are named on the map and not listed.
 const gmfMap = () => {
   const map = seriesMapFor(CODE)
   if (!map) throw new Error('GMF map metadata is missing')
@@ -25,9 +25,6 @@ const anchor = (key: string): { lat: number; lng: number } => {
 }
 
 const ZONE_PINS: ReadonlyArray<readonly [key: string, pin: Omit<Pin, 'id' | 'lat' | 'lng'>, anchorKey: string]> = [
-  ['mint-breeze', { name: 'Mint Breeze · 88잔디마당', kind: 'stage' }, 'mintBreezeStage'],
-  ['club-midnight', { name: 'Club Midnight Sunset · KSPO DOME', kind: 'stage' }, 'clubMidnightStage'],
-  ['loving-forest', { name: 'Loving Forest Garden · 88호수 수변무대', kind: 'stage' }, 'lovingForestStage'],
   ['hungry-east', { name: 'Hungry Zone · 체조경기장–수영장 사이', kind: 'food' }, 'hungryZoneEast'],
   ['hungry-lawn', { name: 'Hungry Zone · 88잔디마당 안', kind: 'food' }, 'hungryZoneLawn'],
   ['art-zone', { name: 'Art Zone · 한얼광장', kind: 'etc' }, 'artZone'],

@@ -11,22 +11,32 @@ export const boundsAround = (points) => [[Math.min(...points.map((p) => p[0])), 
 export const boundsOf = (file) => JSON.parse(fs.readFileSync(file)).bounds
 
 /**
- * root: repository root; code: festival code; layers: [{ src: SVG path, file: name in the app, bounds }], bottom first;
- * anchorTaps: anchor key → radius (m) to tap the drawn place at its anchor; marks may carry `tap` ({ lat, lng, radius }:
- * where the pin is drawn). The other fields go into the JSON as they are (see src/features/map/festivalMaps.ts).
+ * root: repository root; code: festival code; layers: [{ src: SVG path, file: name in the app, bounds, strip? }], bottom
+ * first — `strip` lists group ids left out of the app's copy (drawn by the app instead, e.g. layer 2's name labels);
+ * icons: key → SVG text of the markers the app draws (icons/<key>.svg); labels: names the app writes on the map
+ * ({ text, kind, lat, lng, minZoom, icon?, colour? }); marks may carry `spot` ({ lat, lng }: where the map shows the
+ * pin). The other fields go into the JSON as they are (see src/features/map/festivalMaps.ts).
  */
-export function writeAppMap({ root, code, layers, initialView, anchors = {}, anchorTaps = {}, marks = [], attribution, background, maxZoom, fillOnOpen = true }) {
+export function writeAppMap({ root, code, layers, initialView, anchors = {}, marks = [], icons = {}, labels = [], attribution, background, maxZoom, fillOnOpen = true }) {
   const dir = path.join(root, 'src/assets/maps', code)
   fs.rmSync(dir, { recursive: true, force: true })
   fs.mkdirSync(dir, { recursive: true })
-  for (const { src, file } of layers) {
+  for (const { src, file, strip = [] } of layers) {
     // the image is stretched onto its bounds, so it must not keep its own aspect ratio
-    const svg = fs.readFileSync(src, 'utf8').replace(/<svg /, '<svg preserveAspectRatio="none" ')
+    let svg = fs.readFileSync(src, 'utf8').replace(/<svg /, '<svg preserveAspectRatio="none" ')
+    for (const id of strip) {
+      const before = svg
+      svg = svg.replace(new RegExp(`<g id="${id}"[^\\n]*\\n`), '')
+      if (svg === before) throw new Error(`${file}: no group ${id} to leave out`)
+    }
     fs.writeFileSync(path.join(dir, file), svg)
   }
+  fs.mkdirSync(path.join(dir, 'icons'), { recursive: true })
+  for (const [key, svg] of Object.entries(icons)) fs.writeFileSync(path.join(dir, 'icons', `${key}.svg`), svg)
   const all = layers.flatMap((l) => l.bounds)
   const meta = { attribution, background, maxZoom, fillOnOpen, bounds: boundsAround(all), initialView, layers: layers.map(({ file, bounds }) => ({ file, bounds })),
-    anchors: Object.fromEntries(Object.entries(anchors).map(([k, v]) => [k, round(v)])), anchorTaps, marks }
+    icons: Object.fromEntries(Object.keys(icons).map((key) => [key, `icons/${key}.svg`])), labels,
+    anchors: Object.fromEntries(Object.entries(anchors).map(([k, v]) => [k, round(v)])), marks }
   fs.writeFileSync(path.join(root, 'src/assets/maps', `${code}.json`), `${JSON.stringify(meta, null, 2)}\n`)
-  console.log('app map', code, '| layers', layers.map((l) => l.file).join(', '), '| anchors', Object.keys(anchors).length, '| marks', marks.length)
+  console.log('app map', code, '| layers', layers.map((l) => l.file).join(', '), '| icons', Object.keys(icons).length, '| labels', labels.length, '| marks', marks.length)
 }

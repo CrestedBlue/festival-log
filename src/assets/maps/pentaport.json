@@ -62,19 +62,121 @@
           126.636523
         ]
       ]
+    }
+  ],
+  "icons": {
+    "info": "icons/info.svg",
+    "barrierFreePass": "icons/barrierFreePass.svg",
+    "pentaDreamer": "icons/pentaDreamer.svg",
+    "promotionBooth": "icons/promotionBooth.svg",
+    "vendorBooth": "icons/vendorBooth.svg",
+    "fnb": "icons/fnb.svg",
+    "bar": "icons/bar.svg",
+    "waterBar": "icons/waterBar.svg",
+    "kiosk": "icons/kiosk.svg",
+    "medical": "icons/medical.svg",
+    "coolZone": "icons/coolZone.svg",
+    "mainCoolZone": "icons/mainCoolZone.svg",
+    "officialMd": "icons/officialMd.svg",
+    "artistMd": "icons/artistMd.svg",
+    "charging": "icons/charging.svg",
+    "toilet": "icons/toilet.svg",
+    "accessibleToilet": "icons/accessibleToilet.svg",
+    "washStation": "icons/washStation.svg",
+    "nursingRoom": "icons/nursingRoom.svg",
+    "barrierFreeZone": "icons/barrierFreeZone.svg",
+    "police": "icons/police.svg",
+    "fireStation": "icons/fireStation.svg",
+    "interpretation": "icons/interpretation.svg",
+    "smoking": "icons/smoking.svg",
+    "checkLockers": "icons/checkLockers.svg",
+    "gate2": "icons/gate2.svg",
+    "gate1": "icons/gate1.svg",
+    "exit-1": "icons/exit-1.svg",
+    "exit-2": "icons/exit-2.svg",
+    "exit-3": "icons/exit-3.svg",
+    "exit-4": "icons/exit-4.svg",
+    "station": "icons/station.svg",
+    "ticket": "icons/ticket.svg",
+    "shuttle": "icons/shuttle.svg"
+  },
+  "labels": [
+    {
+      "text": "송도달빛축제공원역",
+      "kind": "station",
+      "icon": "station",
+      "minZoom": 14,
+      "lat": 37.407036,
+      "lng": 126.625937
     },
     {
-      "file": "layer3.svg",
-      "bounds": [
-        [
-          37.404473,
-          126.629512
-        ],
-        [
-          37.409054,
-          126.636523
-        ]
-      ]
+      "text": "송도 랜드마크 푸르지오시티",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.405098,
+      "lng": 126.627987
+    },
+    {
+      "text": "송도 한라웨스턴파크",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.405094,
+      "lng": 126.629206
+    },
+    {
+      "text": "송도 씨워크인테라스 한라",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.401793,
+      "lng": 126.631463
+    },
+    {
+      "text": "MONSTER STAGE",
+      "colour": "#4f9a1f",
+      "kind": "stage",
+      "minZoom": 15.3,
+      "lat": 37.405859,
+      "lng": 126.633644
+    },
+    {
+      "text": "KB국민카드 STAGE",
+      "colour": "#6f6450",
+      "kind": "stage",
+      "minZoom": 15.3,
+      "lat": 37.405795,
+      "lng": 126.631847
+    },
+    {
+      "text": "STANLEY STAGE",
+      "colour": "#2b2b2b",
+      "kind": "stage",
+      "minZoom": 15.3,
+      "lat": 37.406549,
+      "lng": 126.634677
+    },
+    {
+      "text": "KB국민카드 LOUNGE",
+      "colour": "#6f6450",
+      "kind": "place",
+      "minZoom": 16.5,
+      "lat": 37.406771,
+      "lng": 126.63197
+    },
+    {
+      "text": "MONSTER ENERGY",
+      "colour": "#4f9a1f",
+      "kind": "place",
+      "minZoom": 16.5,
+      "lat": 37.407213,
+      "lng": 126.632296
+    },
+    {
+      "text": "LUSH",
+      "colour": "#2b2b2b",
+      "kind": "place",
+      "minZoom": 16.5,
+      "lat": 37.405542,
+      "lng": 126.632956
     }
   ],
   "anchors": {
@@ -103,14 +205,6 @@
       126.631972
     ]
   },
-  "anchorTaps": {
-    "kbStage": 48.6,
-    "monsterStage": 36,
-    "stanleyStage": 23.4,
-    "gate1": 17.8,
-    "gate2": 17.8,
-    "securityCheck": 30.8
-  },
   "marks": [
     {
       "id": 1,
@@ -118,10 +212,9 @@
       "zone": "",
       "lat": 37.40556,
       "lng": 126.633217,
-      "tap": {
+      "spot": {
         "lat": 37.405708,
-        "lng": 126.633225,
-        "radius": 10.5
+        "lng": 126.633225
       }
     },
     {
@@ -130,10 +223,9 @@
       "zone": "",
       "lat": 37.405536,
       "lng": 126.632709,
-      "tap": {
+      "spot": {
         "lat": 37.40569,
-        "lng": 126.632516,
-        "radius": 10.5
+        "lng": 126.632516
       }
     },
     {
@@ -142,22 +234,20 @@
       "zone": "",
       "lat": 37.405543,
       "lng": 126.632491,
-      "tap": {
+      "spot": {
         "lat": 37.405886,
-        "lng": 126.632491,
-        "radius": 10.5
+        "lng": 126.632491
       }
     },
     {
       "id": 4,
-      "kind": "gate",
+      "kind": "gate2",
       "zone": "",
       "lat": 37.405535,
       "lng": 126.63474,
-      "tap": {
+      "spot": {
         "lat": 37.405463,
-        "lng": 126.63474,
-        "radius": 13.2
+        "lng": 126.63474
       }
     },
     {
@@ -166,10 +256,9 @@
       "zone": "",
       "lat": 37.405747,
       "lng": 126.633276,
-      "tap": {
+      "spot": {
         "lat": 37.405896,
-        "lng": 126.633116,
-        "radius": 10.5
+        "lng": 126.633116
       }
     },
     {
@@ -178,10 +267,9 @@
       "zone": "",
       "lat": 37.405749,
       "lng": 126.633073,
-      "tap": {
+      "spot": {
         "lat": 37.406038,
-        "lng": 126.633457,
-        "radius": 10.5
+        "lng": 126.633457
       }
     },
     {
@@ -190,10 +278,9 @@
       "zone": "",
       "lat": 37.40576,
       "lng": 126.632854,
-      "tap": {
+      "spot": {
         "lat": 37.406038,
-        "lng": 126.632854,
-        "radius": 10.5
+        "lng": 126.632854
       }
     },
     {
@@ -202,10 +289,9 @@
       "zone": "",
       "lat": 37.405729,
       "lng": 126.632641,
-      "tap": {
+      "spot": {
         "lat": 37.406037,
-        "lng": 126.632247,
-        "radius": 10.5
+        "lng": 126.632247
       }
     },
     {
@@ -214,10 +300,9 @@
       "zone": "",
       "lat": 37.405762,
       "lng": 126.631125,
-      "tap": {
+      "spot": {
         "lat": 37.405924,
-        "lng": 126.631125,
-        "radius": 10.5
+        "lng": 126.631125
       }
     },
     {
@@ -226,10 +311,9 @@
       "zone": "",
       "lat": 37.406084,
       "lng": 126.634726,
-      "tap": {
+      "spot": {
         "lat": 37.406283,
-        "lng": 126.634729,
-        "radius": 10.5
+        "lng": 126.634729
       }
     },
     {
@@ -238,10 +322,9 @@
       "zone": "",
       "lat": 37.405952,
       "lng": 126.632432,
-      "tap": {
+      "spot": {
         "lat": 37.406243,
-        "lng": 126.632432,
-        "radius": 10.5
+        "lng": 126.632432
       }
     },
     {
@@ -250,10 +333,9 @@
       "zone": "",
       "lat": 37.406061,
       "lng": 126.631066,
-      "tap": {
+      "spot": {
         "lat": 37.406136,
-        "lng": 126.631236,
-        "radius": 10.5
+        "lng": 126.631236
       }
     },
     {
@@ -262,10 +344,9 @@
       "zone": "",
       "lat": 37.406042,
       "lng": 126.634279,
-      "tap": {
+      "spot": {
         "lat": 37.405992,
-        "lng": 126.634373,
-        "radius": 10.5
+        "lng": 126.634373
       }
     },
     {
@@ -274,10 +355,9 @@
       "zone": "",
       "lat": 37.406239,
       "lng": 126.631023,
-      "tap": {
+      "spot": {
         "lat": 37.406388,
-        "lng": 126.631023,
-        "radius": 10.5
+        "lng": 126.631023
       }
     },
     {
@@ -286,10 +366,9 @@
       "zone": "",
       "lat": 37.406286,
       "lng": 126.634317,
-      "tap": {
+      "spot": {
         "lat": 37.406272,
-        "lng": 126.634508,
-        "radius": 10.5
+        "lng": 126.634508
       }
     },
     {
@@ -298,10 +377,9 @@
       "zone": "",
       "lat": 37.40632,
       "lng": 126.635062,
-      "tap": {
+      "spot": {
         "lat": 37.406298,
-        "lng": 126.635173,
-        "radius": 10.5
+        "lng": 126.635173
       }
     },
     {
@@ -310,10 +388,9 @@
       "zone": "",
       "lat": 37.406374,
       "lng": 126.632971,
-      "tap": {
+      "spot": {
         "lat": 37.406374,
-        "lng": 126.632971,
-        "radius": 10.5
+        "lng": 126.632971
       }
     },
     {
@@ -322,10 +399,9 @@
       "zone": "",
       "lat": 37.406373,
       "lng": 126.630996,
-      "tap": {
+      "spot": {
         "lat": 37.406373,
-        "lng": 126.630775,
-        "radius": 10.5
+        "lng": 126.630775
       }
     },
     {
@@ -334,10 +410,9 @@
       "zone": "",
       "lat": 37.4067,
       "lng": 126.635065,
-      "tap": {
+      "spot": {
         "lat": 37.406538,
-        "lng": 126.635276,
-        "radius": 10.5
+        "lng": 126.635276
       }
     },
     {
@@ -346,10 +421,9 @@
       "zone": "",
       "lat": 37.406659,
       "lng": 126.633052,
-      "tap": {
+      "spot": {
         "lat": 37.406721,
-        "lng": 126.633011,
-        "radius": 10.5
+        "lng": 126.633011
       }
     },
     {
@@ -358,10 +432,9 @@
       "zone": "",
       "lat": 37.406639,
       "lng": 126.630983,
-      "tap": {
+      "spot": {
         "lat": 37.406694,
-        "lng": 126.631174,
-        "radius": 10.5
+        "lng": 126.631174
       }
     },
     {
@@ -370,10 +443,9 @@
       "zone": "",
       "lat": 37.406659,
       "lng": 126.633052,
-      "tap": {
+      "spot": {
         "lat": 37.406655,
-        "lng": 126.633232,
-        "radius": 10.5
+        "lng": 126.633232
       }
     },
     {
@@ -382,10 +454,9 @@
       "zone": "",
       "lat": 37.406953,
       "lng": 126.635255,
-      "tap": {
+      "spot": {
         "lat": 37.407199,
-        "lng": 126.635253,
-        "radius": 10.5
+        "lng": 126.635253
       }
     },
     {
@@ -394,10 +465,9 @@
       "zone": "",
       "lat": 37.406861,
       "lng": 126.633217,
-      "tap": {
+      "spot": {
         "lat": 37.406952,
-        "lng": 126.63323,
-        "radius": 10.5
+        "lng": 126.63323
       }
     },
     {
@@ -406,10 +476,9 @@
       "zone": "",
       "lat": 37.406882,
       "lng": 126.634219,
-      "tap": {
+      "spot": {
         "lat": 37.406958,
-        "lng": 126.634155,
-        "radius": 10.5
+        "lng": 126.634155
       }
     },
     {
@@ -418,10 +487,9 @@
       "zone": "",
       "lat": 37.4068,
       "lng": 126.630966,
-      "tap": {
+      "spot": {
         "lat": 37.406965,
-        "lng": 126.630966,
-        "radius": 10.5
+        "lng": 126.630966
       }
     },
     {
@@ -430,10 +498,9 @@
       "zone": "",
       "lat": 37.406861,
       "lng": 126.633217,
-      "tap": {
+      "spot": {
         "lat": 37.406861,
-        "lng": 126.633464,
-        "radius": 10.5
+        "lng": 126.633464
       }
     },
     {
@@ -442,10 +509,9 @@
       "zone": "",
       "lat": 37.407066,
       "lng": 126.633098,
-      "tap": {
+      "spot": {
         "lat": 37.407171,
-        "lng": 126.633106,
-        "radius": 10.5
+        "lng": 126.633106
       }
     },
     {
@@ -454,10 +520,9 @@
       "zone": "",
       "lat": 37.40697,
       "lng": 126.630974,
-      "tap": {
+      "spot": {
         "lat": 37.40697,
-        "lng": 126.63119,
-        "radius": 10.5
+        "lng": 126.63119
       }
     },
     {
@@ -466,10 +531,9 @@
       "zone": "",
       "lat": 37.407149,
       "lng": 126.635614,
-      "tap": {
+      "spot": {
         "lat": 37.407149,
-        "lng": 126.635815,
-        "radius": 10.5
+        "lng": 126.635815
       }
     },
     {
@@ -478,10 +542,9 @@
       "zone": "",
       "lat": 37.407072,
       "lng": 126.634191,
-      "tap": {
+      "spot": {
         "lat": 37.40724,
-        "lng": 126.634191,
-        "radius": 10.5
+        "lng": 126.634191
       }
     },
     {
@@ -490,10 +553,9 @@
       "zone": "",
       "lat": 37.406957,
       "lng": 126.633414,
-      "tap": {
+      "spot": {
         "lat": 37.407173,
-        "lng": 126.633414,
-        "radius": 10.5
+        "lng": 126.633414
       }
     },
     {
@@ -502,10 +564,9 @@
       "zone": "",
       "lat": 37.407182,
       "lng": 126.631378,
-      "tap": {
+      "spot": {
         "lat": 37.407318,
-        "lng": 126.63149,
-        "radius": 10.5
+        "lng": 126.63149
       }
     },
     {
@@ -514,10 +575,9 @@
       "zone": "",
       "lat": 37.407162,
       "lng": 126.630972,
-      "tap": {
+      "spot": {
         "lat": 37.407172,
-        "lng": 126.631152,
-        "radius": 10.5
+        "lng": 126.631152
       }
     },
     {
@@ -526,10 +586,9 @@
       "zone": "",
       "lat": 37.4072,
       "lng": 126.635166,
-      "tap": {
+      "spot": {
         "lat": 37.4072,
-        "lng": 126.634983,
-        "radius": 10.5
+        "lng": 126.634983
       }
     },
     {
@@ -538,10 +597,9 @@
       "zone": "",
       "lat": 37.407379,
       "lng": 126.632306,
-      "tap": {
+      "spot": {
         "lat": 37.407555,
-        "lng": 126.632322,
-        "radius": 10.5
+        "lng": 126.632322
       }
     },
     {
@@ -550,22 +608,20 @@
       "zone": "",
       "lat": 37.407397,
       "lng": 126.633119,
-      "tap": {
+      "spot": {
         "lat": 37.407551,
-        "lng": 126.633119,
-        "radius": 10.5
+        "lng": 126.633119
       }
     },
     {
       "id": 38,
-      "kind": "securityCheck",
+      "kind": "checkLockers",
       "zone": "",
-      "lat": 37.407735,
-      "lng": 126.632118,
-      "tap": {
-        "lat": 37.407735,
-        "lng": 126.631932,
-        "radius": 10.5
+      "lat": 37.407787,
+      "lng": 126.631947,
+      "spot": {
+        "lat": 37.407853,
+        "lng": 126.631855
       }
     },
     {
@@ -574,10 +630,9 @@
       "zone": "",
       "lat": 37.407855,
       "lng": 126.634894,
-      "tap": {
+      "spot": {
         "lat": 37.407974,
-        "lng": 126.63485,
-        "radius": 10.5
+        "lng": 126.63485
       }
     },
     {
@@ -586,118 +641,97 @@
       "zone": "",
       "lat": 37.407753,
       "lng": 126.632416,
-      "tap": {
+      "spot": {
         "lat": 37.407754,
-        "lng": 126.632325,
-        "radius": 10.5
+        "lng": 126.632325
       }
     },
     {
       "id": 41,
-      "kind": "lockers",
-      "zone": "",
-      "lat": 37.407838,
-      "lng": 126.631777,
-      "tap": {
-        "lat": 37.407971,
-        "lng": 126.631777,
-        "radius": 10.5
-      }
-    },
-    {
-      "id": 42,
       "kind": "kiosk",
       "zone": "",
       "lat": 37.407864,
       "lng": 126.632951,
-      "tap": {
+      "spot": {
         "lat": 37.407858,
-        "lng": 126.633091,
-        "radius": 10.5
+        "lng": 126.633091
       }
     },
     {
-      "id": 43,
+      "id": 42,
       "kind": "washStation",
       "zone": "",
       "lat": 37.408002,
       "lng": 126.63239,
-      "tap": {
+      "spot": {
         "lat": 37.408086,
-        "lng": 126.632469,
-        "radius": 10.5
+        "lng": 126.632469
+      }
+    },
+    {
+      "id": 43,
+      "kind": "gate1",
+      "zone": "",
+      "lat": 37.408227,
+      "lng": 126.631676,
+      "spot": {
+        "lat": 37.408227,
+        "lng": 126.631676
       }
     },
     {
       "id": 44,
-      "kind": "gate",
-      "zone": "",
-      "lat": 37.408227,
-      "lng": 126.631676,
-      "tap": {
-        "lat": 37.408227,
-        "lng": 126.631676,
-        "radius": 13.2
-      }
-    },
-    {
-      "id": 45,
       "kind": "officialMd",
       "zone": "",
       "lat": 37.408433,
       "lng": 126.632802,
-      "tap": {
+      "spot": {
         "lat": 37.408629,
-        "lng": 126.632698,
-        "radius": 10.5
+        "lng": 126.632698
       }
     },
     {
-      "id": 46,
+      "id": 45,
       "kind": "artistMd",
       "zone": "",
       "lat": 37.408566,
       "lng": 126.633782,
-      "tap": {
+      "spot": {
         "lat": 37.408572,
-        "lng": 126.634105,
-        "radius": 10.5
+        "lng": 126.634105
       }
     },
     {
-      "id": 47,
+      "id": 46,
       "kind": "smoking",
       "zone": "",
       "lat": 37.408664,
       "lng": 126.632916,
-      "tap": {
+      "spot": {
         "lat": 37.408819,
-        "lng": 126.632916,
-        "radius": 10.5
+        "lng": 126.632916
       }
     },
     {
-      "id": 48,
+      "id": 47,
       "kind": "barrierFreePass",
       "zone": "",
       "lat": 37.407319,
       "lng": 126.631144,
-      "tap": {
+      "spot": {
         "lat": 37.407391,
-        "lng": 126.631144,
-        "radius": 10.5
+        "lng": 126.631144
       }
     },
     {
-      "id": 49,
+      "id": 48,
       "kind": "mainCoolZone",
       "zone": "",
       "lat": 37.407486,
       "lng": 126.63261,
-      "tap": {
+      "spot": {
         "lat": 37.407642,
-        "lng": 126.632621,
-        "radius": 10.5
+        "lng": 126.632621
       }
     }
   ]
