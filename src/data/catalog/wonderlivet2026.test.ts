@@ -54,7 +54,11 @@ describe('createWonderlivet2026', () => {
   })
 
   test('pins the halls and the stations the official directions name, drawn as the big map\'s icons', () => {
-    expect(festival.pins.map((p) => p.name)).toEqual(['킨텍스 제2전시장 7–10홀 · 공연장', '킨텍스역 (GTX-A)', '대화역 (3호선)'])
+    expect(festival.pins.filter((p) => !p.group).map((p) => p.name)).toEqual(['킨텍스 제2전시장 7–10홀 · 공연장', '킨텍스역 (GTX-A)', '대화역 (3호선)'])
+    const exits = (group: string) => festival.pins.filter((p) => p.group === group).map((p) => p.name)
+    expect(exits('킨텍스역 출구')).toHaveLength(5) // the numbered ones (one entrance has no number in OSM)
+    expect(exits('대화역 출구')).toHaveLength(6)
+    expect(exits('킨텍스역 출구')).toContain('킨텍스역 5번 출구')
     const map = festivalMapFor(WONDERLIVET_2026_ID)
     expect(map?.layers).toHaveLength(1)
     expect(festival.pins.every((p) => p.mapIcon && map?.icons[p.mapIcon])).toBe(true)

@@ -114,7 +114,12 @@ describe('seriesMapFor', () => {
   ])('returns the big area map of %s with its venue and stations', (series, stations) => {
     const map = seriesMapFor(series)
     expect(map?.layers).toHaveLength(1)
-    expect(map?.marks.map((m) => m.kind)).toEqual(['venue', ...stations.map(() => expect.stringMatching(/^station-/))])
+    const kinds = map?.marks.map((m) => m.kind) ?? []
+    expect(kinds.filter((k) => !k.startsWith('exit-'))).toEqual(['venue', ...stations.map(() => expect.stringMatching(/^station-/))])
+    // the stations' numbered exits, each with the key of its station
+    const exits = map?.marks.filter((m) => m.kind.startsWith('exit-')) ?? []
+    expect(exits.length).toBeGreaterThan(stations.length)
+    expect(new Set(exits.map((m) => `station-${m.zone}`))).toEqual(new Set(kinds.filter((k) => k.startsWith('station-'))))
     for (const mark of map?.marks ?? []) expect(map?.icons[mark.kind], mark.kind).toBeTruthy()
     expect(map?.labels.filter((l) => l.kind === 'station').map((l) => l.text)).toEqual(stations)
     expect(map?.labels.filter((l) => l.kind === 'building').length).toBeGreaterThan(2)

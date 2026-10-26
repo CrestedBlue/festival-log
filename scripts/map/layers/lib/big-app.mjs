@@ -1,10 +1,11 @@
 // The app's copy of a festival map that is a big area map alone (a festival with no venue map yet): the big map's
-// layer 1, and what the app draws on it — the venue and the stations as icons (marks, which the catalog turns into
-// pins), the stations' names with their lines, big landmarks and bus stops (labels).
+// layer 1, and what the app draws on it — the venue, the stations and their numbered exits as icons (marks, which the
+// catalog turns into pins), the stations' names with their lines, big landmarks and bus stops (labels).
 import path from 'node:path'
 import { writeAppMap, boundsOf, busStopLabels } from './app.mjs'
-import { busIcon, stationIcon, venueIcon } from './app-icons.mjs'
+import { busIcon, exitIcon, stationIcon, venueIcon } from './app-icons.mjs'
 import { stationCentre, stationNameAt } from './big-layer1.mjs'
+import { findStation } from './station.mjs'
 
 const ll = ([lat, lng]) => ({ lat: +lat.toFixed(6), lng: +lng.toFixed(6) })
 const mean = (pts) => [pts.reduce((s, p) => s + p[0], 0) / pts.length, pts.reduce((s, p) => s + p[1], 0) / pts.length]
@@ -28,11 +29,22 @@ export function writeBigOnlyAppMap({ root, code, frame, out, venue, stations, la
   const bounds = boundsOf(path.join(out, 'big-north-up-bounds.json'))
   const venueAt = osmCentre(OSM, venue.osm)
   const centreOf = Object.fromEntries(stations.map((s) => [s.key, stationCentre(frame, s)]))
+  // each station's numbered exits (OSM subway entrances by it): kind = the exit's icon, zone = the station's key
+  // (one per number: OSM sometimes has the same exit twice)
+  const exits = stations.flatMap((s) => findStation(frame, s.near, { length: s.length, track: s.track, radius: s.radius }).exits
+    .filter((x, i, all) => /^\d+$/.test(x.ref) && all.findIndex((y) => y.ref === x.ref) === i)
+    .sort((a, b) => Number(a.ref) - Number(b.ref))
+    .map((x) => ({ kind: `exit-${x.ref}`, zone: s.key, ...ll([x.lat, x.lng]) })))
   const marks = [
-    { id: 1, kind: 'venue', zone: '', ...ll(venueAt) },
-    ...stations.map((s, i) => ({ id: i + 2, kind: `station-${s.key}`, zone: '', ...ll(centreOf[s.key]) })),
-  ]
-  const icons = { venue: venueIcon(venue.colour), bus: busIcon(), ...Object.fromEntries(stations.map((s) => [`station-${s.key}`, stationIcon(s.lines[0].colour)])) }
+    { kind: 'venue', zone: '', ...ll(venueAt) },
+    ...stations.map((s) => ({ kind: `station-${s.key}`, zone: '', ...ll(centreOf[s.key]) })),
+    ...exits,
+  ].map((mark, i) => ({ id: i + 1, ...mark }))
+  const icons = {
+    venue: venueIcon(venue.colour), bus: busIcon(),
+    ...Object.fromEntries(stations.map((s) => [`station-${s.key}`, stationIcon(s.lines[0].colour)])),
+    ...Object.fromEntries(exits.map((x) => [x.kind, exitIcon(x.kind.slice('exit-'.length))])),
+  }
   const labels = [
     // past the north end of each station box, with the lines' badges, as on Korean street maps
     ...stations.map((s) => ({ text: s.name, kind: 'station', badges: s.lines, minZoom: 14, ...ll(stationNameAt(frame, s)) })),

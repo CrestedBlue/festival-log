@@ -16,12 +16,12 @@
   ],
   "initialView": [
     [
-      37.385076,
-      126.638802
+      37.385317,
+      126.63862
     ],
     [
-      37.393035,
-      126.654965
+      37.392793,
+      126.655147
     ]
   ],
   "layers": [
@@ -44,7 +44,12 @@
     "bus": "icons/bus.svg",
     "station-incheonUniv": "icons/station-incheonUniv.svg",
     "station-centralPark": "icons/station-centralPark.svg",
-    "station-knowledgeInfo": "icons/station-knowledgeInfo.svg"
+    "station-knowledgeInfo": "icons/station-knowledgeInfo.svg",
+    "exit-1": "icons/exit-1.svg",
+    "exit-2": "icons/exit-2.svg",
+    "exit-3": "icons/exit-3.svg",
+    "exit-4": "icons/exit-4.svg",
+    "exit-5": "icons/exit-5.svg"
   },
   "labels": [
     {
@@ -57,8 +62,8 @@
         }
       ],
       "minZoom": 14,
-      "lat": 37.386507,
-      "lng": 126.639081
+      "lat": 37.386783,
+      "lng": 126.638973
     },
     {
       "text": "센트럴파크역",
@@ -1141,8 +1146,8 @@
       "id": 2,
       "kind": "station-incheonUniv",
       "zone": "",
-      "lat": 37.385876,
-      "lng": 126.639602
+      "lat": 37.386117,
+      "lng": 126.63942
     },
     {
       "id": 3,
@@ -1157,6 +1162,90 @@
       "zone": "",
       "lat": 37.378291,
       "lng": 126.645438
+    },
+    {
+      "id": 5,
+      "kind": "exit-1",
+      "zone": "incheonUniv",
+      "lat": 37.385195,
+      "lng": 126.639032
+    },
+    {
+      "id": 6,
+      "kind": "exit-2",
+      "zone": "incheonUniv",
+      "lat": 37.385621,
+      "lng": 126.638776
+    },
+    {
+      "id": 7,
+      "kind": "exit-3",
+      "zone": "incheonUniv",
+      "lat": 37.386424,
+      "lng": 126.637028
+    },
+    {
+      "id": 8,
+      "kind": "exit-4",
+      "zone": "incheonUniv",
+      "lat": 37.386899,
+      "lng": 126.639884
+    },
+    {
+      "id": 9,
+      "kind": "exit-5",
+      "zone": "incheonUniv",
+      "lat": 37.385545,
+      "lng": 126.640248
+    },
+    {
+      "id": 10,
+      "kind": "exit-1",
+      "zone": "centralPark",
+      "lat": 37.393054,
+      "lng": 126.634102
+    },
+    {
+      "id": 11,
+      "kind": "exit-2",
+      "zone": "centralPark",
+      "lat": 37.393445,
+      "lng": 126.633481
+    },
+    {
+      "id": 12,
+      "kind": "exit-3",
+      "zone": "centralPark",
+      "lat": 37.393397,
+      "lng": 126.634971
+    },
+    {
+      "id": 13,
+      "kind": "exit-4",
+      "zone": "centralPark",
+      "lat": 37.3934,
+      "lng": 126.634946
+    },
+    {
+      "id": 14,
+      "kind": "exit-2",
+      "zone": "knowledgeInfo",
+      "lat": 37.378309,
+      "lng": 126.644982
+    },
+    {
+      "id": 15,
+      "kind": "exit-3",
+      "zone": "knowledgeInfo",
+      "lat": 37.378493,
+      "lng": 126.645592
+    },
+    {
+      "id": 16,
+      "kind": "exit-4",
+      "zone": "knowledgeInfo",
+      "lat": 37.378216,
+      "lng": 126.64603
     }
   ]
 }

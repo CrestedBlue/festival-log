@@ -1,5 +1,5 @@
 // Layer 1 (ground) of a festival's big area map: the walk from the stations (and stops) to the venue, in real shapes
-// (OSM) — roads at real widths as one shape with pale kerbs, parks, pitches, water, car parks, construction sites, the
+// (OSM) — roads at real widths as one shape, parks, pitches, water, car parks, construction sites, the
 // stations as boxes in their line's colour along the track (lib/station.mjs), and buildings as light 2.5D blocks (roof
 // lifted over its walls, a soft shadow). The venue is either only its outline (in the small map's path grey, the small
 // map's layers lying on top of it), or — for a festival with no venue map — its building as a block in the festival's
@@ -22,8 +22,8 @@ export const BIG_CLASSES = [
   ['road', '#c3c5ca'],
 ]
 // How roads and buildings are drawn (metres).
+// No edge along the roads: the pale kerb the first look had was too much (the user, 2026-10-27).
 const STYLE = {
-  kerb: '#f8f0d9', kerbWidth: 2.4, // a pale pavement edge along every road (half shows outside)
   wall: '#c4c6cc', roofLift: 2.2, // a building's roof sits this far up its walls (looking from the south)
   shadow: '#c0bcb4', shadowOffset: [1.4, 1.2],
 }
@@ -92,8 +92,9 @@ async function venueMask({ frame, maskOf, rings, out, venue }) {
  * frame: the big map's frame (lib/frame.mjs); venue: { small: the small map's box (same origin) } when the small
  * map's layers go on top (its layer 1 must be in out/: its `venue` outline), or { osm: [way or relation ids], roof,
  * wall } for a festival with no venue map: that building drawn as a block in those colours; out/cache: where the
- * festival's layers go; stations: [{ name, near: [e, n], lines: [{ text, colour }], length?, outline?, track? }] (the
- * box takes the first line's colour; `track`: the OSM name of the line's track when it is not tagged subway).
+ * festival's layers go; stations: [{ name, near: [e, n], lines: [{ text, colour }], length?, outline?, track?, radius? }]
+ * (the box takes the first line's colour; `track`: the OSM name of the line's track when it is not tagged subway;
+ * `radius`: how far its exits spread, when more than 120 m).
  * Writes out/big-layer1-ground-north-up.svg and out/big-north-up-bounds.json.
  */
 export async function drawBigLayer1({ frame, venue: where, out, cache, stations }) {
@@ -125,15 +126,15 @@ export async function drawBigLayer1({ frame, venue: where, out, cache, stations 
   const roadD = frame.trace(toF((i) => cls[i] === C.road), { ...TRACE, sigma: 1.5 })
   const buildingD = frame.trace(toF((i) => cls[i] === C.building), { ...TRACE, sigma: 1 })
   const [sx, sy] = STYLE.shadowOffset
-  const stationBoxes = stations.map(({ name, near, lines, length = 140, outline, track }) => {
-    const station = findStation(frame, near, { length, track })
+  const stationBoxes = stations.map(({ name, near, lines, length = 140, outline, track, radius }) => {
+    const station = findStation(frame, near, { length, track, radius })
     return `<g data-name="${name}">${stationBoxSvg(station, BOX, { length, fill: lines[0].colour, outline: outline ?? darker(lines[0].colour) })}</g>`
   })
   const VW = BOX.east - BOX.west, VH = BOX.north - BOX.south
   const content = `<g id="layer1" data-name="레이어 1 · 바닥 (큰 지도)">
 <rect id="land" data-name="땅" width="${VW}" height="${VH}" fill="${colour.land}"/>
 <g id="zones" data-name="구역">${zones}</g>
-<path id="roads" data-name="길" d="${roadD}" fill="${colour.road}" fill-rule="evenodd" stroke="${STYLE.kerb}" stroke-width="${STYLE.kerbWidth}" stroke-linejoin="round" paint-order="stroke"/>
+<path id="roads" data-name="길" d="${roadD}" fill="${colour.road}" fill-rule="evenodd"/>
 <g id="stations" data-name="역">${stationBoxes.join('')}</g>
 <g id="buildings" data-name="건물" fill-rule="evenodd">
 <defs><path id="building-outline" data-name="건물 윤곽" d="${buildingD}"/></defs>
@@ -164,11 +165,11 @@ function darker(hex) {
 }
 
 /** Where the app writes a station's name (past the northern end of its box), [lat, lng]. */
-export function stationNameAt(frame, { near, length = 140, track }) {
-  return frame.toLL(findStation(frame, near, { length, track }).nameAt)
+export function stationNameAt(frame, { near, length = 140, track, radius }) {
+  return frame.toLL(findStation(frame, near, { length, track, radius }).nameAt)
 }
 
 /** The middle of a station's box on its track, [lat, lng]. */
-export function stationCentre(frame, { near, length = 140, track }) {
-  return frame.toLL(findStation(frame, near, { length, track }).centre)
+export function stationCentre(frame, { near, length = 140, track, radius }) {
+  return frame.toLL(findStation(frame, near, { length, track, radius }).centre)
 }

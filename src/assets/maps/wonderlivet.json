@@ -43,7 +43,13 @@
     "venue": "icons/venue.svg",
     "bus": "icons/bus.svg",
     "station-kintex": "icons/station-kintex.svg",
-    "station-daehwa": "icons/station-daehwa.svg"
+    "station-daehwa": "icons/station-daehwa.svg",
+    "exit-1": "icons/exit-1.svg",
+    "exit-2": "icons/exit-2.svg",
+    "exit-3": "icons/exit-3.svg",
+    "exit-4": "icons/exit-4.svg",
+    "exit-5": "icons/exit-5.svg",
+    "exit-6": "icons/exit-6.svg"
   },
   "labels": [
     {
@@ -881,6 +887,83 @@
       "zone": "",
       "lat": 37.676161,
       "lng": 126.747428
+    },
+    {
+      "id": 4,
+      "kind": "exit-1",
+      "zone": "kintex",
+      "lat": 37.665601,
+      "lng": 126.747951
+    },
+    {
+      "id": 5,
+      "kind": "exit-2",
+      "zone": "kintex",
+      "lat": 37.665228,
+      "lng": 126.748938
+    },
+    {
+      "id": 6,
+      "kind": "exit-3",
+      "zone": "kintex",
+      "lat": 37.664713,
+      "lng": 126.748438
+    },
+    {
+      "id": 7,
+      "kind": "exit-4",
+      "zone": "kintex",
+      "lat": 37.664745,
+      "lng": 126.747493
+    },
+    {
+      "id": 8,
+      "kind": "exit-5",
+      "zone": "kintex",
+      "lat": 37.665142,
+      "lng": 126.747475
+    },
+    {
+      "id": 9,
+      "kind": "exit-1",
+      "zone": "daehwa",
+      "lat": 37.675906,
+      "lng": 126.747635
+    },
+    {
+      "id": 10,
+      "kind": "exit-2",
+      "zone": "daehwa",
+      "lat": 37.675748,
+      "lng": 126.747192
+    },
+    {
+      "id": 11,
+      "kind": "exit-3",
+      "zone": "daehwa",
+      "lat": 37.676209,
+      "lng": 126.74699
+    },
+    {
+      "id": 12,
+      "kind": "exit-4",
+      "zone": "daehwa",
+      "lat": 37.676473,
+      "lng": 126.747215
+    },
+    {
+      "id": 13,
+      "kind": "exit-5",
+      "zone": "daehwa",
+      "lat": 37.676497,
+      "lng": 126.747697
+    },
+    {
+      "id": 14,
+      "kind": "exit-6",
+      "zone": "daehwa",
+      "lat": 37.67619,
+      "lng": 126.747876
     }
   ]
 }

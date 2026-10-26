@@ -24,7 +24,7 @@ describe('createHeroRock2026', () => {
   })
 
   test('pins only what is announced: the venue, and the stations near it as one row, drawn as the map\'s icons', () => {
-    expect(festival.pins.map((p) => [p.name, p.group ?? null])).toEqual([
+    expect(festival.pins.filter((p) => !p.group?.endsWith(' 출구')).map((p) => [p.name, p.group ?? null])).toEqual([
       ['송도컨벤시아', null],
       ['인천대입구역 (인천 1호선)', '가까운 역'],
       ['센트럴파크역 (인천 1호선)', '가까운 역'],
@@ -34,6 +34,14 @@ describe('createHeroRock2026', () => {
     const map = festivalMapFor(HERO_ROCK_2026_ID)
     expect(festival.pins.every((p) => p.mapIcon && map?.icons[p.mapIcon])).toBe(true)
     expect(festival.pins.every((p) => p.id.startsWith(`${HERO_ROCK_SERIES}-`))).toBe(true)
+  })
+
+  test('pins every numbered exit of the stations (OpenStreetMap), one list row per station', () => {
+    const exits = festival.pins.filter((p) => p.group?.endsWith(' 출구'))
+    const count = (group: string) => exits.filter((p) => p.group === group).length
+    expect([count('인천대입구역 출구'), count('센트럴파크역 출구'), count('지식정보단지역 출구')]).toEqual([5, 4, 3])
+    expect(exits.find((p) => p.name === '인천대입구역 4번 출구')).toMatchObject({ mapIcon: 'exit-4', detail: '인천 1호선' })
+    expect(new Set(exits.map((p) => p.id)).size).toBe(exits.length)
   })
 
   test('has notices from the ticket page', () => {
