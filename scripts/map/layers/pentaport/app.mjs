@@ -12,7 +12,7 @@ import * as geometry from './geometry.mjs'
 import * as SP from './sprites.mjs'
 import { OUT, CACHE, ROOT } from './paths.mjs'
 import { R, GATE_R, TYPES, badge } from './pin-design.mjs'
-import { badgeIcon, exitIcon, stationIcon, ticketIcon, shuttleIcon } from '../lib/app-icons.mjs'
+import { badgeIcon, busIcon, exitIcon, stationIcon, ticketIcon, shuttleIcon } from '../lib/app-icons.mjs'
 import { measureTexts } from '../lib/texts.mjs'
 import { writeAppMap, boundsOf } from '../lib/app.mjs'
 
@@ -60,6 +60,7 @@ for (const n of [1, 2, 3, 4]) icons[`exit-${n}`] = exitIcon(n)
 icons.station = stationIcon(INCHEON_LINE_1)
 icons.ticket = ticketIcon()
 icons.shuttle = shuttleIcon()
+icons.bus = busIcon()
 
 // Names the app writes on the map (fixed size, shown from `minZoom` on, fewer when they would overlap).
 const exits = OSM.subwayEntrances.filter((x) => Math.hypot(...toM([x.lat, x.lng]).map((v, i) => v - [-540, 115][i])) < 80)
@@ -72,6 +73,8 @@ const labels = [
   { text: '송도 랜드마크 푸르지오시티', kind: 'building', minZoom: 15.5, ...ll(way('송도랜드마크푸르지오 오피스텔')) },
   { text: '송도 한라웨스턴파크', kind: 'building', minZoom: 15.5, ...ll(way('송도한라웨스턴파크 셀럽하우스 아파트')) },
   { text: '송도 씨워크인테라스 한라', kind: 'building', minZoom: 15.5, ...ll(way('송도씨워크인테라스한라')) },
+  // city bus stops (OSM): the stop's name by a bus icon, close in
+  ...(OSM.busStops ?? []).filter((stop) => stop.name).map((stop) => ({ text: stop.name, kind: 'bus', icon: 'bus', minZoom: 16.5, ...ll([stop.lat, stop.lng]) })),
   // layer 2's name labels; the two 입장동선 labels say what the gate pins say, so they are left out
   ...labelItems.filter(({ it }) => !it.of?.startsWith('gate')).map(({ it, key }) => ({
     text: it.args[0].map(([t]) => t.replace('&amp;', '&')).join(' '), colour: it.args[0][0][1],

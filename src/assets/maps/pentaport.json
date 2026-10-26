@@ -98,7 +98,8 @@
     "exit-4": "icons/exit-4.svg",
     "station": "icons/station.svg",
     "ticket": "icons/ticket.svg",
-    "shuttle": "icons/shuttle.svg"
+    "shuttle": "icons/shuttle.svg",
+    "bus": "icons/bus.svg"
   },
   "labels": [
     {
@@ -129,6 +130,94 @@
       "minZoom": 15.5,
       "lat": 37.401793,
       "lng": 126.631463
+    },
+    {
+      "text": "송도달빛축제공원역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.406991,
+      "lng": 126.625273
+    },
+    {
+      "text": "송도달빛축제공원역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.407315,
+      "lng": 126.625134
+    },
+    {
+      "text": "달빛축제공원대공연장",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.406332,
+      "lng": 126.629627
+    },
+    {
+      "text": "달빛축제공원대공연장",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.405535,
+      "lng": 126.62975
+    },
+    {
+      "text": "달빛축제공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.403346,
+      "lng": 126.631106
+    },
+    {
+      "text": "달빛축제공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.40337,
+      "lng": 126.631453
+    },
+    {
+      "text": "송도랜드마크푸르지오시티",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.404533,
+      "lng": 126.627846
+    },
+    {
+      "text": "한라웨스턴파크송도",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.406317,
+      "lng": 126.62778
+    },
+    {
+      "text": "송도국제도시디에트르시그니처뷰",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.403393,
+      "lng": 126.627878
+    },
+    {
+      "text": "송도달빛축제공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.402978,
+      "lng": 126.628816
+    },
+    {
+      "text": "힐스테이트송도더스카이",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.401825,
+      "lng": 126.628859
     },
     {
       "text": "MONSTER STAGE",

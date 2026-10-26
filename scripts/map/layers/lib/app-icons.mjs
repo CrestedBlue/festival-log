@@ -10,8 +10,10 @@ const TICKET = '<path d="M-7,-4.5 H7 V-1.6 A1.6,1.6 0 0 0 7,1.6 V4.5 H-7 V1.6 A1
 
 /** A subway station: the line's colour with a train. */
 export const stationIcon = (lineColour) => tile(lineColour, TRAIN.replaceAll('currentColor', lineColour))
-/** A shuttle-bus stop. */
-export const shuttleIcon = (fill = '#f08c00') => tile(fill, BUS.replaceAll('currentColor', fill))
+/** A city bus stop. */
+export const busIcon = (fill = '#2f7fd8') => tile(fill, BUS.replaceAll('currentColor', fill))
+/** A shuttle-bus stop: the bus in orange. */
+export const shuttleIcon = (fill = '#f08c00') => busIcon(fill)
 /** A ticket booth. */
 export const ticketIcon = (fill = '#e8455a') => tile(fill, TICKET.replaceAll('currentColor', fill))
 /** A subway exit number, yellow as on Korean street maps. */

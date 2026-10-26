@@ -11,12 +11,12 @@ import type { FestivalMap, MapLabel, MapLabelKind } from './festivalMaps'
 export const ICON_FROM_ZOOM = 16
 export const CAPTIONED_FROM_ZOOM = 15
 const CAPTION_FONT = 11
-const LABEL_FONT: Record<MapLabelKind, number> = { station: 13, building: 11, stage: 12, place: 11 }
+const LABEL_FONT: Record<MapLabelKind, number> = { station: 13, building: 11, stage: 12, place: 11, bus: 10 }
 const LABEL_ICON = 18
 const GAP = 3 // px kept clear around each one
 
 /** Higher first when two would overlap. */
-const PRIORITY = { selected: 1000, station: 100, named: 90, stage: 80, exit: 70, pin: 60, place: 50, building: 40 }
+const PRIORITY = { selected: 1000, station: 100, named: 90, stage: 80, exit: 70, pin: 60, place: 50, building: 40, bus: 35 }
 
 export const iconSize = (zoom: number): number => (zoom < 17 ? 20 : zoom < 18 ? 24 : 30)
 
@@ -60,7 +60,7 @@ function pinAnnotation(pin: Pin, iconUrl: string, zoom: number, selected: boolea
 
 function labelAnnotation(label: MapLabel, index: number, icons: FestivalMap['icons'], zoom: number): Annotation | null {
   if (zoom < label.minZoom) return null
-  const font = LABEL_FONT[label.kind] + (zoom >= 17.5 && label.kind !== 'building' ? 1 : 0)
+  const font = LABEL_FONT[label.kind] + (zoom >= 17.5 && label.kind !== 'building' && label.kind !== 'bus' ? 1 : 0)
   const iconUrl = label.icon ? (icons[label.icon] ?? null) : null
   const width = (iconUrl ? LABEL_ICON + 4 : 0) + textWidth(label.text, font) + 12
   const height = Math.max(font + 10, iconUrl ? LABEL_ICON + 4 : 0)

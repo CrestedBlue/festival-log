@@ -218,6 +218,11 @@
   font-weight: 600;
 }
 
+.map-label--bus {
+  color: #2465ad;
+  font-weight: 600;
+}
+
 /* stage names: a white pill in the stage's colour, as on the official map */
 .map-label--stage,
 .map-label--place {

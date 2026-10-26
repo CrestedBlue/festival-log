@@ -126,6 +126,8 @@ describe('seriesMapFor', () => {
     }
     expect(map?.marks.length).toBeGreaterThan(0)
     expect(map?.labels.map((l) => l.text)).toEqual(expect.arrayContaining(['송도달빛축제공원역', '송도 랜드마크 푸르지오시티', '송도 한라웨스턴파크', '송도 씨워크인테라스 한라']))
+    // city bus stops from OpenStreetMap, with a bus icon
+    expect(map?.labels.filter((l) => l.kind === 'bus' && l.icon === 'bus').length).toBeGreaterThan(0)
     // opens on the small map (the venue); the big map is there to zoom out to
     expect(map?.initialView).toEqual(map?.layers[1]?.bounds)
   })

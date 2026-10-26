@@ -26,10 +26,10 @@ export interface MapLayer {
   bounds: LatLngBounds
 }
 
-export const MAP_LABEL_KINDS = ['station', 'building', 'stage', 'place'] as const
+export const MAP_LABEL_KINDS = ['station', 'building', 'stage', 'place', 'bus'] as const
 export type MapLabelKind = (typeof MAP_LABEL_KINDS)[number]
 
-/** A name the app writes on the map at a fixed size (a station, a big building, a stage), from `minZoom` on. */
+/** A name the app writes on the map at a fixed size (a station, a big building, a stage, a bus stop), from `minZoom` on. */
 export interface MapLabel {
   text: string
   kind: MapLabelKind
