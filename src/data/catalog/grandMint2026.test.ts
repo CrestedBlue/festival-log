@@ -38,25 +38,29 @@ describe('createGrandMint2026', () => {
     expect(music.filter((p) => p.day === '2026-10-18')).toHaveLength(24)
   })
 
-  test('puts every pin on the bundled map image, including both subway exits', () => {
+  test('puts every pin on the bundled map, with the exits of the three nearby stations', () => {
     const map = festivalMapFor(GRAND_MINT_2026_ID)
     expect(map).not.toBeNull()
     expect(festival.pins.every((pin) => map && isInsideBounds(pin, map.bounds))).toBe(true)
-    expect(festival.pins.filter((pin) => pin.name.includes('출구'))).toHaveLength(2)
+    const exits = festival.pins.filter((pin) => pin.name.includes('출구'))
+    expect(exits).toHaveLength(13)
+    expect([...new Set(exits.map((pin) => pin.group))]).toEqual(['몽촌토성역 출구', '한성백제역 출구', '올림픽공원역 출구'])
+    expect(exits.every((pin) => pin.mapIcon && map?.icons[pin.mapIcon])).toBe(true)
   })
 
-  test('turns every official map marker into a pin of the matching kind', () => {
-    const marks = festival.pins.filter((pin) => pin.id.startsWith(`${GRAND_MINT_SERIES}-mark-`))
-    expect(marks).toHaveLength(34)
-    expect(marks.filter((pin) => pin.kind === 'toilet').length).toBeGreaterThanOrEqual(10)
-    expect(marks.map((pin) => pin.kind)).toEqual(expect.arrayContaining(['info', 'firstaid', 'luggage', 'water', 'wristband', 'food', 'eating']))
-    expect(marks.find((pin) => pin.kind === 'wristband')?.name).toContain('(대략)')
+  test('turns every official map pin into a pin the map draws as its own icon, booths that do two things as one', () => {
+    const marks = festival.pins.filter((pin) => pin.id.startsWith(`${GRAND_MINT_SERIES}-pin-`))
+    expect(marks).toHaveLength(32) // 34 official pins; the Mint Shop and Artist & Label booths each had two
+    expect(marks.filter((pin) => pin.kind === 'toilet')).toHaveLength(11)
+    expect(marks.map((pin) => pin.kind)).toEqual(expect.arrayContaining(['info', 'firstaid', 'luggage', 'water', 'wristband', 'food', 'eating', 'shop', 'artist']))
+    expect(marks.every((pin) => pin.mapIcon && pin.spot)).toBe(true)
+    expect(marks.find((pin) => pin.kind === 'wristband')).toMatchObject({ name: '티켓 부스 (대략)', rank: 0, caption: '티켓 부스' })
+    expect(marks.find((pin) => pin.kind === 'toilet')?.detail).toBe('Mint Breeze')
   })
 
-  test('keeps zone pins (hungry zones, exits, …) separate from marker pins, and lists no stages (the map names them)', () => {
-    const zones = festival.pins.filter((pin) => pin.id.startsWith(`${GRAND_MINT_SERIES}-zone-`))
+  test('lists no stages (the map names them): only the official pins and the subway exits', () => {
     expect(festival.pins.filter((pin) => pin.kind === 'stage')).toHaveLength(0)
-    expect(zones.length + 34).toBe(festival.pins.length)
+    expect(festival.pins).toHaveLength(32 + 13)
   })
 
   test('uses stable ids so re-adding replaces instead of duplicating', () => {

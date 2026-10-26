@@ -36,7 +36,7 @@ export interface FestivalTheme {
 /**
  * What a festival keeps from year to year: where it is held, its map pins (venue, zones, official
  * markers, subway exits) and its design. Each year's catalog entry adds only its own dates, stage names,
- * timetable, notices and line-up. Map pin ids are prefixed with the festival code (e.g. "gmf-zone-…").
+ * timetable, notices and line-up. Map pin ids are prefixed with the festival code (e.g. "gmf-pin-…").
  */
 export interface FestivalSeries {
   /** Festival code, the same every year (e.g. "gmf"). */

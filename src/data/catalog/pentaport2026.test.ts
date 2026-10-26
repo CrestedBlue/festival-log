@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest'
 import { FestivalSchema } from '../schema'
 import { PENTAPORT_2026_ID, PENTAPORT_2026_KEY, PENTAPORT_SERIES } from './ids'
 import { PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
-import { catalogEntry, festivalMapFor, isMapLabelPin } from './index'
+import { catalogEntry, festivalMapFor } from './index'
 import { isInsideBounds } from '../../lib/geo'
 
 describe('createPentaport2026', () => {
@@ -79,7 +79,6 @@ describe('createPentaport2026', () => {
     expect(festival.pins.every((pin) => map && isInsideBounds(pin, map.bounds))).toBe(true)
     // the app draws every one with the map's own icon (where the map puts it), none is listed only
     expect(festival.pins.every((p) => p.mapIcon && map && p.mapIcon in map.icons)).toBe(true)
-    expect(festival.pins.some((p) => isMapLabelPin(p))).toBe(false)
     expect(festival.pins.filter((p) => p.spot).every((p) => map && p.spot && isInsideBounds(p.spot, map.bounds))).toBe(true)
     // the list shows broader roles: both ticket booths with both gates; all four exits; toilets on their own
     expect(festival.pins.filter((p) => p.group === '입장').map((p) => p.caption)).toEqual(

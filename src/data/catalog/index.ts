@@ -1,8 +1,7 @@
 import { seriesMapFor, type FestivalMap } from '../../features/map/festivalMaps'
-import type { Festival, Pin } from '../schema'
+import type { Festival } from '../schema'
 import type { GuideSet } from './guide'
 import type { LineupImage } from './lineup'
-import { SERIES } from './series'
 import { GRAND_MINT_2026_NOTICES, createGrandMint2026 } from './grandMint2026'
 import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICES, createHeroRock2026 } from './heroRock2026'
 import { JUMF_2026_GUIDES, JUMF_2026_NOTICES, createJumf2026 } from './jumf2026'
@@ -96,7 +95,3 @@ export const festivalMapFor = (festivalId: string): FestivalMap | null => {
   const entry = catalogEntry(festivalId)
   return entry ? seriesMapFor(entry.series) : null
 }
-
-/** Catalog pins for places the illustrated map already labels (stages, exits, …): listed, but not drawn on it. */
-export const isMapLabelPin = (pin: Pick<Pin, 'id'>): boolean =>
-  Object.keys(SERIES).some((code) => pin.id.startsWith(`${code}-zone-`))

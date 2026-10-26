@@ -8,5 +8,5 @@ export const SRC = path.join(ROOT, 'map-src/gmf/layers') // official map, contro
 export const OUT = path.join(SRC, 'out') // layer SVGs (one file per layer and frame — never merged)
 export const CACHE = path.join(ROOT, 'node_modules/.cache/festival-map/gmf')
 export const OSM_JSON = path.join(ROOT, 'map-src/gmf/osm.json')
-export const OFFICIAL_MAP = path.join(ROOT, 'map-src/gmf/official-map.png') // 2026 GMF FESTIVAL MAP (840×840), shared with the app map (build-gmf.mjs)
+export const OFFICIAL_MAP = path.join(ROOT, 'map-src/gmf/official-map.png') // 2026 GMF FESTIVAL MAP (840×840)
 export const ICONS = path.join(ROOT, 'map-src/icons/tabler') // the Tabler icons the pins use (MIT)

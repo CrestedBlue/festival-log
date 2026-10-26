@@ -1,6 +1,5 @@
 import type L from 'leaflet'
 import { useMemo } from 'react'
-import { isMapLabelPin } from '../../data/catalog'
 import type { Pin } from '../../data/schema'
 import { buildAnnotations, iconSize } from './annotations'
 import type { FestivalMap } from './festivalMaps'
@@ -13,8 +12,7 @@ const NO_PINS: ReadonlySet<string> = new Set()
 
 /**
  * What a festival map shows over its images. On an illustrated map the pins it has icons for are drawn with them,
- * with its names, by zoom (annotations.ts); places its drawing already labels are listed only; the rest (the user's
- * own pins, …) are plain pins. On the tile map every pin is a plain pin. `activeIds`: the pins of the list row last
+ * with its names, by zoom (annotations.ts); the rest (the user's own pins, …) are plain pins. On the tile map every pin is a plain pin. `activeIds`: the pins of the list row last
  * tapped, all kept on the map. Returns the pin size on screen (for pulses).
  */
 export function useMapContent(
@@ -28,7 +26,7 @@ export function useMapContent(
   activeIds: ReadonlySet<string> = NO_PINS,
 ): number {
   const plainPins = useMemo(
-    () => (festivalMap ? pins.filter((pin) => !isMapLabelPin(pin) && !(pin.mapIcon && pin.mapIcon in festivalMap.icons)) : pins),
+    () => (festivalMap ? pins.filter((pin) => !(pin.mapIcon && pin.mapIcon in festivalMap.icons)) : pins),
     [festivalMap, pins],
   )
   const look = festivalMap ? pinSizeForZoom(zoom ?? 0) : TILE_MAP_PIN

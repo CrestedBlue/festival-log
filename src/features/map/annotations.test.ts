@@ -34,6 +34,11 @@ describe('buildAnnotations', () => {
     expect(Math.max(...items.filter((a) => a !== wc).map((a) => a.priority))).toBeLessThan(wc.priority)
   })
 
+  test('names that may make room move a line up or down; buildings and stops stay put', () => {
+    const nudges = (zoom: number) => Object.fromEntries(buildAnnotations(map, pins, zoom, null).map((a) => [a.key, a.nudges.length]))
+    expect(nudges(16.5)).toMatchObject({ 'label:0': 3, 'label:1': 0 })
+  })
+
   test('icons grow a step at a time as the map zooms in', () => {
     expect([iconSize(16.5), iconSize(17.2), iconSize(18.5)]).toEqual([20, 24, 30])
   })

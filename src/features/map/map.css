@@ -253,6 +253,10 @@
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.2);
 }
 
+.map-label--zone.is-dark {
+  color: #ffffff;
+}
+
 /* stage names: a white pill in the stage's colour, as on the official map */
 .map-label--stage,
 .map-label--place {

@@ -1,6 +1,5 @@
 import { GRAND_MINT_SERIES, PENTAPORT_SERIES } from '../../data/catalog/ids'
 import { isInsideBounds, type LatLng, type LatLngBounds } from '../../lib/geo'
-import gmfImage from '../../assets/maps/gmf.webp'
 import gmfMeta from '../../assets/maps/gmf.json'
 import pentaportMeta from '../../assets/maps/pentaport.json'
 
@@ -38,8 +37,8 @@ export interface MapLabel {
   minZoom: number
   /** An icon of the map's (a key of `icons`) before the text. */
   icon?: string
-  /** A small coloured tag before the text (a subway line: "인천1"). */
-  badge?: { text: string; colour: string }
+  /** Small coloured tags before the text (a station's lines: "인천1", or "5" and "9"). */
+  badges?: readonly { text: string; colour: string }[]
   colour?: string
 }
 
@@ -58,7 +57,6 @@ export interface FestivalMap {
   attribution: string
   /** Shown around the image (it should match the drawing's own background); null = the default paper. */
   background: string | null
-  anchors: Record<string, readonly [number, number]>
   marks: readonly MapMark[]
   /** Icons the app draws on the map at a fixed size (key → bundled image URL): catalog pins name one in `mapIcon`. */
   icons: Readonly<Record<string, string>>
@@ -102,8 +100,8 @@ function toLabel(value: unknown, bounds: LatLngBounds, icons: Readonly<Record<st
     typeof l.lng === 'number' &&
     isInsideBounds({ lat: l.lat, lng: l.lng }, bounds) &&
     (l.icon === undefined || l.icon in icons) &&
-    (l.badge === undefined || (typeof l.badge.text === 'string' && l.badge.text.length > 0 && isColour(l.badge.colour)))
-  if (!ok) throw new Error(`map metadata: label ${String(l.text)} needs text, a kind, minZoom, a known icon and badge and a lat/lng inside the map`)
+    (l.badges === undefined || (Array.isArray(l.badges) && l.badges.every((b) => typeof b.text === 'string' && b.text.length > 0 && isColour(b.colour))))
+  if (!ok) throw new Error(`map metadata: label ${String(l.text)} needs text, a kind, minZoom, a known icon and badges and a lat/lng inside the map`)
   return {
     text: l.text!,
     kind: l.kind!,
@@ -111,7 +109,7 @@ function toLabel(value: unknown, bounds: LatLngBounds, icons: Readonly<Record<st
     lng: l.lng!,
     minZoom: l.minZoom!,
     ...(l.icon ? { icon: l.icon } : {}),
-    ...(l.badge ? { badge: { text: l.badge.text, colour: l.badge.colour } } : {}),
+    ...(l.badges ? { badges: l.badges.map(({ text, colour }) => ({ text, colour })) } : {}),
     ...(isColour(l.colour) ? { colour: l.colour } : {}),
   }
 }
@@ -128,7 +126,6 @@ export function parseMapMeta(raw: {
   layers?: unknown
   icons?: unknown
   labels?: unknown
-  anchors?: unknown
   marks?: unknown
 }): MapMeta {
   const bounds = toBounds(raw.bounds, 'bounds')
@@ -148,12 +145,6 @@ export function parseMapMeta(raw: {
     }),
   )
   const labels = (Array.isArray(raw.labels) ? raw.labels : []).map((value: unknown) => toLabel(value, bounds, iconFiles))
-  const anchors = Object.entries(raw.anchors ?? {}).map(([key, value]) => {
-    if (!isPair(value) || !isInsideBounds({ lat: value[0], lng: value[1] }, bounds)) {
-      throw new Error(`map metadata: anchor ${key} must be a [lat, lng] inside the image`)
-    }
-    return [key, value] as const
-  })
   const marks = (Array.isArray(raw.marks) ? raw.marks : []).map((value: unknown): MapMark => {
     const m = value as Partial<MapMark>
     const spot = m.spot === undefined ? undefined : toSpot(m.spot, bounds)
@@ -180,13 +171,11 @@ export function parseMapMeta(raw: {
     marks,
     attribution: typeof raw.attribution === 'string' ? raw.attribution : '',
     background: isColour(raw.background) ? raw.background : null,
-    anchors: Object.fromEntries(anchors),
   }
 }
 
-/** The map's images: the layers and icons the metadata lists (by file name), or one image covering the whole map. */
-export function withImages({ layerFiles, iconFiles, ...meta }: MapMeta, images: string | Readonly<Record<string, string>>): FestivalMap {
-  if (typeof images === 'string') return { ...meta, layers: [{ url: images, bounds: meta.bounds }], icons: {} }
+/** The map's images: the layers and icons the metadata lists (by file name). */
+export function withImages({ layerFiles, iconFiles, ...meta }: MapMeta, images: Readonly<Record<string, string>>): FestivalMap {
   if (layerFiles.length === 0) throw new Error('map metadata: no layers listed')
   const bundled = (file: string) => {
     const url = images[file]
@@ -202,10 +191,13 @@ export function withImages({ layerFiles, iconFiles, ...meta }: MapMeta, images: 
 const folder = (prefix: string, files: Record<string, string>) =>
   Object.fromEntries(Object.entries(files).map(([path, url]) => [path.slice(prefix.length), url]))
 
+// The layered maps redrawn from the official site maps (scripts/map/layers/<code>/): the big area map's ground under the
+// venue map's ground and operations; their pins, names and the stations are drawn by the app.
 const MAPS: Record<string, FestivalMap> = {
-  [GRAND_MINT_SERIES]: withImages(parseMapMeta(gmfMeta), gmfImage),
-  // The layered map redrawn from the official site map (scripts/map/layers/pentaport/): the big area map's ground
-  // under the venue map's ground and operations; its pins, names and the station are drawn by the app.
+  [GRAND_MINT_SERIES]: withImages(
+    parseMapMeta(gmfMeta),
+    folder('../../assets/maps/gmf/', import.meta.glob<string>('../../assets/maps/gmf/**/*.svg', { eager: true, query: '?url', import: 'default' })),
+  ),
   [PENTAPORT_SERIES]: withImages(
     parseMapMeta(pentaportMeta),
     folder('../../assets/maps/pentaport/', import.meta.glob<string>('../../assets/maps/pentaport/**/*.svg', { eager: true, query: '?url', import: 'default' })),

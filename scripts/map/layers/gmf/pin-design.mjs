@@ -40,3 +40,6 @@ const TIP = R + TAIL, SIN = Math.sqrt(1 - (R / TIP) ** 2), TX = +(R * SIN).toFix
 const DROP = `M0,${TIP} L${-TX},${TY} A${R},${R} 0 1 1 ${TX},${TY} Z`
 export const pin = (type) => `<ellipse cx="0" cy="${TIP}" rx="4.5" ry="1.7" fill="#000000" opacity="0.22"/>`
   + `<path d="${DROP}" fill="#ffffff" stroke="#d6d6d6" stroke-width="0.8" stroke-linejoin="round"/>${TYPES[type].art()}`
+// the head alone, centred on (0,0): what the app draws (a round badge at a fixed size, like street-map POI icons)
+export const badge = (type) => `<ellipse cx="0" cy="${R + 1.6}" rx="${R * 0.75}" ry="1.6" fill="#000000" opacity="0.18"/>`
+  + `<circle r="${R}" fill="#ffffff" stroke="#d6d6d6" stroke-width="0.8"/>${TYPES[type].art()}`

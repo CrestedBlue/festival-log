@@ -1,7 +1,7 @@
 // Official-map pixel → local metres for GMF. The GMF FESTIVAL MAP is a schematic, not a plan: one rotation + scale
 // fits it badly (check-fit.mjs: average error ~73 m, a meaningless 55° turn — 88호수 is drawn east of the lawn but lies
 // north of it). So each zone gets its own least-squares affine fit from landmarks it shares with the official art
-// (stage, gates, …), as the earlier app map did (scripts/map/marks.mjs); things between zones use a fit over all zones.
+// (stage, gates, …), as the earlier app map did; things between zones use a fit over all zones.
 import fs from 'node:fs'
 import path from 'node:path'
 import { toM } from './frame.mjs'
@@ -9,7 +9,7 @@ import { SRC } from './paths.mjs'
 
 export const CONTROL_POINTS = JSON.parse(fs.readFileSync(path.join(SRC, 'control-points.json'))) // whole-map pairs, for check-fit only
 // Real places (lat, lng) of the zones' landmarks: 88잔디마당·KSPO DOME from OSM, the rest where the official map puts them
-// relative to those footprints (same values as the earlier app map, scripts/map/zones.mjs SPOTS).
+// relative to those footprints (same values as the earlier app map).
 export const SPOTS = {
   mbStage: [37.51987, 127.125545], mbStanding: [37.519421, 127.12551], picnicMain: [37.518927, 127.124405], mainGate: [37.517861, 127.124844], subGate: [37.518781, 127.126019],
   lfgStage: [37.521127, 127.125453], lfgArea: [37.520925, 127.125453], lfgGate: [37.520645, 127.125453],

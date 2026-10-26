@@ -1,4 +1,4 @@
-// Official pins (map-src/gmf/markers.json, read off the official map earlier; their zones as in scripts/map/marks.mjs)
+// Official pins (map-src pins-official.json, first read off the official map into map-src/gmf/markers.json, with the zone each stands in)
 // → local metres (of the spot each pin points at) with the fit of each pin's zone.
 //   node scripts/map/layers/gmf/pins-place.mjs   → cache pins-placed.json
 import fs from 'node:fs'

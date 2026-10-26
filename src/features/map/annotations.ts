@@ -31,6 +31,7 @@ export interface Offset {
   dy: number
 }
 const NO_NUDGES: readonly Offset[] = []
+const NUDGING: ReadonlySet<MapLabelKind> = new Set(['station', 'stage', 'place', 'zone'])
 
 export type AnnotationView =
   | { type: 'pin'; pin: Pin; iconUrl: string; size: number; caption: string | null; selected: boolean; active: boolean }
@@ -72,16 +73,17 @@ function labelAnnotation(label: MapLabel, index: number, icons: FestivalMap['ico
   if (zoom < label.minZoom) return null
   const font = LABEL_FONT[label.kind] + (zoom >= 17.5 && label.kind !== 'building' && label.kind !== 'bus' ? 1 : 0)
   const iconUrl = label.icon ? (icons[label.icon] ?? null) : null
-  const badge = label.badge ? textWidth(label.badge.text, BADGE_FONT) + 10 : 0
-  const width = (iconUrl ? LABEL_ICON + 4 : 0) + (badge ? badge + 4 : 0) + textWidth(label.text, font) + 12
+  const badges = (label.badges ?? []).reduce((w, b) => w + textWidth(b.text, BADGE_FONT) + 10 + 4, 0)
+  const width = (iconUrl ? LABEL_ICON + 4 : 0) + badges + textWidth(label.text, font) + 12
   const height = Math.max(font + 10, iconUrl ? LABEL_ICON + 4 : 0)
   return {
     key: `label:${index}`,
     lat: label.lat,
     lng: label.lng,
     box: { left: -width / 2, top: -height / 2, width, height },
-    // stage and other place names may move a line up or down to make room; stations, buildings and stops stay put
-    nudges: label.kind === 'stage' || label.kind === 'place' || label.kind === 'zone' ? [{ dx: 0, dy: -(height + 2) }, { dx: 0, dy: height + 2 }] : NO_NUDGES,
+    // names may move a line up or down to make room (a station's name two lines up, clear of its exits); buildings and
+    // stops stay put
+    nudges: NUDGING.has(label.kind) ? [{ dx: 0, dy: -(height + 2) }, { dx: 0, dy: height + 2 }, ...(label.kind === 'station' ? [{ dx: 0, dy: -2 * (height + 2) }] : [])] : NO_NUDGES,
     priority: PRIORITY[label.kind],
     view: { type: 'label', label, iconUrl, font },
   }

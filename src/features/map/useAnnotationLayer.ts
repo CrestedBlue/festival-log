@@ -5,6 +5,12 @@ import { placeAnnotations, type Annotation } from './annotations'
 /** A tappable icon gets at least this much room under a finger, however small it is drawn. */
 const TOUCH_PX = 44
 
+/** A colour dark enough to want white text on it (a zone flag's tag). */
+const isDark = (hex: string) => {
+  const v = parseInt(hex.slice(1), 16)
+  return 0.299 * ((v >> 16) & 255) + 0.587 * ((v >> 8) & 255) + 0.114 * (v & 255) < 140
+}
+
 const esc = (text: string) => text.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] ?? c)
 
 /** Markup of one annotation. Icon URLs are the app's own bundled files; texts are escaped. */
@@ -16,9 +22,10 @@ function html({ view }: Annotation): string {
   }
   const { label, iconUrl, font } = view
   const icon = iconUrl ? `<img src="${iconUrl}" width="18" height="18" alt="">` : ''
-  const badge = label.badge ? `<span class="map-label__badge" style="background:${label.badge.colour}">${esc(label.badge.text)}</span>` : ''
+  const badges = (label.badges ?? []).map((b) => `<span class="map-label__badge" style="background:${b.colour}">${esc(b.text)}</span>`).join('')
   const colour = label.colour ? `;--label-colour:${label.colour}` : ''
-  return `<span class="map-label map-label--${label.kind}" style="font-size:${font}px${colour}">${icon}${badge}<span>${esc(label.text)}</span></span>`
+  const dark = label.kind === 'zone' && label.colour && isDark(label.colour) ? ' is-dark' : ''
+  return `<span class="map-label map-label--${label.kind}${dark}" style="font-size:${font}px${colour}">${icon}${badges}<span>${esc(label.text)}</span></span>`
 }
 
 /**

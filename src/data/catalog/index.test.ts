@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { FestivalSchema } from '../schema'
 import { seriesMapFor } from '../../features/map/festivalMaps'
-import { CATALOG, catalogEntry, catalogEntryForLegacyId, festivalMapFor, isMapLabelPin } from './index'
+import { CATALOG, catalogEntry, catalogEntryForLegacyId, festivalMapFor } from './index'
 import { GRAND_MINT_2026_ID, GRAND_MINT_2026_KEY, GRAND_MINT_SERIES, HERO_ROCK_2026_ID } from './ids'
 import { SERIES } from './series'
 
@@ -88,16 +88,5 @@ describe('festivalMapFor', () => {
     expect(festivalMapFor(GRAND_MINT_2026_ID)).toBe(seriesMapFor(GRAND_MINT_SERIES))
     expect(festivalMapFor(HERO_ROCK_2026_ID)).toBeNull()
     expect(festivalMapFor('someone-else')).toBeNull()
-  })
-})
-
-describe('isMapLabelPin', () => {
-  test('is true only for catalog zone pins, which the illustrated map already labels', () => {
-    const pins = catalogEntry(GRAND_MINT_2026_ID)?.create().pins ?? []
-    const zone = pins.find((p) => p.id.startsWith(`${GRAND_MINT_SERIES}-zone-`))
-    const mark = pins.find((p) => p.id.startsWith(`${GRAND_MINT_SERIES}-mark-`))
-    expect(zone && isMapLabelPin(zone)).toBe(true)
-    expect(mark && isMapLabelPin(mark)).toBe(false)
-    expect(isMapLabelPin({ id: 'b9f5c3a0-user-pin' })).toBe(false)
   })
 })

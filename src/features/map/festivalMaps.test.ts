@@ -14,7 +14,6 @@ describe('parseMapMeta', () => {
       [37.52, 127.12],
       [37.58, 127.18],
     ],
-    anchors: { stage: [37.55, 127.15] },
   }
 
   test('accepts well-formed metadata', () => {
@@ -63,12 +62,9 @@ describe('parseMapMeta', () => {
     expect(() => parseMapMeta({ ...valid, labels: [{ ...label, lat: 36 }] })).toThrow()
     expect(() => parseMapMeta({ ...valid, labels: [{ ...label, kind: 'castle' }] })).toThrow()
     expect(() => parseMapMeta({ ...valid, labels: [{ ...label, icon: 'missing' }] })).toThrow()
-    expect(() => parseMapMeta({ ...valid, labels: [{ ...label, badge: { text: '인천1', colour: 'blue' } }] })).toThrow()
-    expect(parseMapMeta({ ...valid, labels: [{ ...label, badge: { text: '인천1', colour: '#7ca8d5' } }] }).labels[0]).toMatchObject({ badge: { text: '인천1', colour: '#7ca8d5' } })
-  })
-
-  test('rejects anchors outside the image', () => {
-    expect(() => parseMapMeta({ ...valid, anchors: { far: [36, 127] } })).toThrow()
+    expect(() => parseMapMeta({ ...valid, labels: [{ ...label, badges: [{ text: '인천1', colour: 'blue' }] }] })).toThrow()
+    const lines = [{ text: '5', colour: '#996cac' }, { text: '9', colour: '#bdb092' }]
+    expect(parseMapMeta({ ...valid, labels: [{ ...label, badges: lines }] }).labels[0]).toMatchObject({ badges: lines })
   })
 })
 
@@ -104,33 +100,39 @@ describe('withImages', () => {
   test('rejects a layer reaching outside the map', () => {
     expect(() => parseMapMeta({ bounds: [[37.5, 127.1], [37.6, 127.2]], initialView: [[37.52, 127.12], [37.58, 127.18]], layers: [{ file: 'x.svg', bounds: [[37.4, 127.1], [37.6, 127.2]] }] })).toThrow()
   })
-
-  test('one image covers the whole map', () => {
-    expect(withImages(meta, '/one.webp').layers).toEqual([{ url: '/one.webp', bounds: meta.bounds }])
-  })
 })
 
 describe('seriesMapFor', () => {
-  test('returns the bundled Grand Mint map by festival code, and nothing for festivals without one', () => {
-    expect(seriesMapFor(GRAND_MINT_SERIES)?.layers[0]?.url).toBeTruthy()
+  test('returns nothing for festivals without a map', () => {
     expect(seriesMapFor(HERO_ROCK_SERIES)).toBeNull()
   })
 
-  test('returns the layered Pentaport map: the big ground under the venue layers, with its places inside it', () => {
-    const map = seriesMapFor(PENTAPORT_SERIES)
-    expect(map?.layers).toHaveLength(3) // big map's layer 1, small map's layers 1 and 2; layer 3's pins are drawn by the app
+  // big map's layer 1, small map's layers 1 and 2 (layer 3's pins are drawn by the app as icons, inside the venue);
+  // opens on the small map (the venue), the big map is there to zoom out to
+  const expectLayered = (series: string) => {
+    const map = seriesMapFor(series)
+    expect(map?.layers).toHaveLength(3)
     for (const layer of map?.layers ?? []) expect(layer.url).toBeTruthy()
-    for (const key of ['kbStage', 'monsterStage', 'stanleyStage', 'gate1', 'gate2', 'securityCheck']) {
-      const point = map?.anchors[key]
-      expect(point, key).toBeDefined()
-      const venue = map?.layers[1]?.bounds
-      expect(venue && point && isInsideBounds({ lat: point[0], lng: point[1] }, venue)).toBe(true)
-    }
+    const venue = map?.layers[1]?.bounds
     expect(map?.marks.length).toBeGreaterThan(0)
+    for (const mark of map?.marks ?? []) expect(venue && isInsideBounds(mark.spot ?? mark, venue), `mark ${mark.id}`).toBe(true)
+    for (const mark of map?.marks ?? []) expect(map?.icons[mark.kind], `icon for ${mark.kind}`).toBeTruthy()
+    expect(map?.initialView).toEqual(venue)
+    return map
+  }
+
+  test('returns the layered Grand Mint map, with the stations it is walked to from', () => {
+    const map = expectLayered(GRAND_MINT_SERIES)
+    const stations = map?.labels.filter((l) => l.kind === 'station')
+    expect(stations?.map((l) => l.text)).toEqual(['몽촌토성역', '한성백제역', '올림픽공원역'])
+    expect(stations?.[2]?.badges?.map((b) => b.text)).toEqual(['5', '9'])
+    expect(map?.labels.filter((l) => l.kind === 'stage').map((l) => l.text)).toEqual(['MINT BREEZE STAGE', 'LOVING FOREST GARDEN', 'CLUB MIDNIGHT SUNSET'])
+  })
+
+  test('returns the layered Pentaport map: the big ground under the venue layers, with its places inside it', () => {
+    const map = expectLayered(PENTAPORT_SERIES)
     expect(map?.labels.map((l) => l.text)).toEqual(expect.arrayContaining(['송도달빛축제공원역', '송도 랜드마크 푸르지오시티', '송도 한라웨스턴파크', '송도 씨워크인테라스 한라']))
     // city bus stops from OpenStreetMap, with a bus icon
     expect(map?.labels.filter((l) => l.kind === 'bus' && l.icon === 'bus').length).toBeGreaterThan(0)
-    // opens on the small map (the venue); the big map is there to zoom out to
-    expect(map?.initialView).toEqual(map?.layers[1]?.bounds)
   })
 })

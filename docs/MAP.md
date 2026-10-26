@@ -15,8 +15,8 @@
 
 ## 코드 구조
 
-- `lib/` (공통, 페스티벌 이름을 모른다): `frame.mjs`(좌표 틀·OSM·위성), `vector.mjs`(마스크 → 매끈한 SVG 윤곽), `faces.mjs`(길로 칸 나누기), `ground.mjs`(레이어 1 부품: 길 끝 잇기·길 한 도형·구역 윤곽·저장), `sprites.mjs`(스타일 B 부품), `geometry.mjs`(부품의 중심·크기), `texts.mjs`(글자 폭 재기), `layer2.mjs`, `layout.mjs`(북쪽 위 배치), `pins.mjs`(Tabler 아이콘·레이어 3 쓰기), `preview.mjs`, `run.mjs`, 확인 도구 `read-official-grid.mjs`·`read-osm-ways.mjs`(`node scripts/map/layers/lib/read-osm-ways.mjs <코드>`).
-- `<코드>/` (페스티벌마다): `paths.mjs`, `frame.mjs`(기준 위경도·범위만), `official-to-m.mjs`(공식 px → 실제 m), `check-fit.mjs`, `classes.mjs`(구역 색), `layer1.mjs`(바닥 만드는 방법), `objects.mjs`, `sprites.mjs`(그 페스티벌만의 무대 등 + 공통 부품 다시 내보내기), `geometry.mjs`(무대 크기), `pin-design.mjs`(핀 모양), `layout-north-up.mjs`(핀 ↔ 물체 짝 `MARKS`), `layer2.mjs`·`layer3.mjs`·`preview.mjs`·`build.mjs`(얇은 호출).
+- `lib/` (공통, 페스티벌 이름을 모른다): `frame.mjs`(좌표 틀·OSM·위성), `vector.mjs`(마스크 → 매끈한 SVG 윤곽), `faces.mjs`(길로 칸 나누기), `ground.mjs`(레이어 1 부품: 길 끝 잇기·길 한 도형·구역 윤곽·저장), `sprites.mjs`(스타일 B 부품), `geometry.mjs`(부품의 중심·크기), `texts.mjs`(글자 폭 재기), `layer2.mjs`, `layout.mjs`(북쪽 위 배치), `pins.mjs`(Tabler 아이콘·레이어 3 쓰기), `preview.mjs`, `run.mjs`, 큰 지도 `big-layer1.mjs`(거리 지도 모양·역 상자)·`station.mjs`(OSM 출구·선로로 역 찾기), 앱 내보내기 `app.mjs`·`app-icons.mjs`, 확인 도구 `read-official-grid.mjs`·`read-osm-ways.mjs`(`node scripts/map/layers/lib/read-osm-ways.mjs <코드>`).
+- `<코드>/` (페스티벌마다): `paths.mjs`, `frame.mjs`(기준 위경도·범위만), `official-to-m.mjs`(공식 px → 실제 m), `check-fit.mjs`, `classes.mjs`(구역 색), `layer1.mjs`(바닥 만드는 방법), `objects.mjs`, `sprites.mjs`(그 페스티벌만의 무대 등 + 공통 부품 다시 내보내기), `geometry.mjs`(무대 크기), `pin-design.mjs`(핀 모양), `layout-north-up.mjs`(핀 ↔ 물체 짝 `MARKS`), `layer2.mjs`·`layer3.mjs`·`preview.mjs`·`build.mjs`(얇은 호출), 큰 지도 `stations.mjs`(역 위치·노선)·`big-layer1.mjs`(얇은 호출), `app.mjs`(앱에 넣을 표시·이름·합칠 것).
 - `lib/` 를 고치면 **두 페스티벌을 다 다시 만들고** `git diff map-src/*/layers/out` 이 비었거나 의도한 차이뿐인지 본다(공통화 때 펜타포트 결과는 바이트 단위로 같았다).
 
 ## 정한 것 (사용자 결정)
@@ -105,12 +105,13 @@
 
 ## 5-1. 큰 지도 — 역·셔틀 정류장까지 (레이어 1만)
 
-행사장 안내도(작은 지도)는 행사장만 덮는다. 지하철역에서 걸어오는 길을 보이려고 **넓은 범위의 레이어 1만** 따로 만든다(사용자 지시, 2026-10-23: "지하철까지의 경로를 Layer1 작업만 해서 큰지도까지"). 펜타포트: `big-layer1.mjs`.
+행사장 안내도(작은 지도)는 행사장만 덮는다. 지하철역에서 걸어오는 길을 보이려고 **넓은 범위의 레이어 1만** 따로 만든다(사용자 지시, 2026-10-23: "지하철까지의 경로를 Layer1 작업만 해서 큰지도까지"). 그리는 법은 공통(`lib/big-layer1.mjs`), 페스티벌마다 범위(`frame.mjs` 의 `bigFrame`)와 역(`stations.mjs`)만 정한다.
 
-- 틀: 같은 기준점에 범위만 넓힌 두 번째 틀(`frame.mjs` 의 `bigFrame`, 2 px/m). 송도달빛축제공원역 출구와 셔틀 정류장이 들어가게 잡는다. 확인 도구: `node scripts/map/layers/lib/read-osm-ways.mjs pentaport bigFrame`.
-- 범위는 **세로로 길게**: 앱은 축소해도 지도가 화면을 채운 채 멈추므로(빈 띠 없음), 세로 화면에서 걸어오는 길(역~행사장) 전체까지 축소하려면 지도가 화면보다 세로로 길어야 한다. 펜타포트는 북쪽·동쪽이 바다(OSM 에 해안선만 있어 그릴 수 없음)라 남쪽 송도 시가지로 늘렸다(1090 × 1860 m).
-- 실제 모양(OSM)만 쓴다: 길(차로 한 줄 = OSM 길 하나, 폭은 위성으로 잼 — 큰길은 양방향이 길 두 개라 반씩), 공원, 운동장, 호수, 공사장·빈터, 건물. 행사장 자리는 작은 지도의 바깥선을 옮겨 길 회색으로 칠만 한다(작은 지도가 위에 놓인다).
-- 모양(`big-classes.mjs`): 밝은 거리 지도 느낌(사용자가 고른 참고 이미지, 2026-10-26) — 크림색 땅 `#f3e9ce`, 회색 길 `#c3c5ca` 와 옅은 보도 가장자리, 밝은 회색 2.5D 건물(지붕을 벽 위로 2.2 m 띄우고 옅은 그림자), 공원 `#7bc157`, 운동장 `#048444`, 호수 `#3faef3`. 모양은 OSM 그대로다. **네이버 등 지도 서비스 화면은 앱·저장소에 넣지 않는다**(재배포 권리 문제) — 눈으로 보는 참고(장소 이름·구역 위치)로만 쓴다.
+- 틀: 같은 기준점에 범위만 넓힌 두 번째 틀(2 px/m). 역 출구와 셔틀 정류장이 들어가게 잡는다. 확인 도구: `node scripts/map/layers/lib/read-osm-ways.mjs <코드> bigFrame`. 펜타포트 1090 × 1860 m(송도달빛축제공원역·셔틀 정류장), GMF 1910 × 1010 m(몽촌토성역·한성백제역·올림픽공원역).
+- 범위는 **세로로 길게**: 앱은 축소해도 지도가 화면을 채운 채 멈추므로(빈 띠 없음), 세로 화면에서 걸어오는 길(역~행사장) 전체까지 축소하려면 지도가 화면보다 세로로 길어야 한다. 펜타포트는 북쪽·동쪽이 바다(OSM 에 해안선만 있어 그릴 수 없음)라 남쪽 송도 시가지로 늘렸다. GMF 는 받아 둔 OSM 추출본이 남북 1 km 뿐이라 가로로 길다 — 세로 화면에서는 처음 화면보다 거의 축소되지 않고, 역은 옆으로 밀어서 본다(더 넓히려면 OSM 을 새로 받아야 함).
+- 실제 모양(OSM)만 쓴다: 길(차로 한 줄 = OSM 길 하나, 폭은 위성으로 잼 — 큰길은 양방향이 길 두 개라 반씩), 공원(풀밭·덤불 포함), 운동장, 주차장, 물, 공사장·빈터, 건물. 여러 길로 된 면(OSM 관계: 올림픽공원, 몽촌호)도 바깥 고리를 이어 그린다. 면은 하나씩 따로 칠한다(한 경로로 묶으면 안쪽 면이 구멍이 된다). 행사장 자리는 작은 지도의 바깥선을 옮겨 길 회색으로 칠만 한다(작은 지도가 위에 놓인다).
+- 역: 노선 색의 둥근 상자를 선로 방향으로(`lib/station.mjs` 가 OSM 출구와 지하철 선로로 위치·방향을 찾음). 상자 색은 `stations.mjs` 의 첫 노선 색, 테두리는 그보다 어둡게.
+- 모양(`lib/big-layer1.mjs`): 밝은 거리 지도 느낌(사용자가 고른 참고 이미지, 2026-10-26) — 크림색 땅 `#f3e9ce`, 회색 길 `#c3c5ca` 와 옅은 보도 가장자리, 밝은 회색 2.5D 건물(지붕을 벽 위로 2.2 m 띄우고 옅은 그림자), 공원 `#7bc157`, 운동장 `#048444`, 호수 `#3faef3`. 모양은 OSM 그대로다. **네이버 등 지도 서비스 화면은 앱·저장소에 넣지 않는다**(재배포 권리 문제) — 눈으로 보는 참고(장소 이름·구역 위치)로만 쓴다.
 - 운영 표시(동선·정류장 그림)는 그리지 않는다. 티켓부스·셔틀 정류장·역 출구는 앱의 핀으로 보인다.
 - 결과: `out/big-layer1-ground-north-up.svg`, `out/big-north-up-bounds.json`. 미리보기 `preview-big.jpg`(작은 지도를 위에 겹친 확인용).
 
@@ -118,15 +119,16 @@
 
 - **그림(이미지)**: 땅처럼 지도와 같이 커지고 작아지는 것만 SVG 로 깐다 — 큰 지도 레이어 1 → 작은 지도 레이어 1 → 레이어 2(이름표 그룹 `l2-labels` 를 뺀 사본). 레이어 파일은 한 장씩 따로 둔다(합치지 않음).
 - **글자·아이콘은 앱이 그린다**(사용자 지시 2026-10-26: "텍스트/아이콘이 지도 확대에 따라서 달라지게, 크기는 네이버지도 참고"): 화면에서 늘 같은 크기이고, 확대 단계에 따라 보이고, 겹치면 덜 중요한 것을 뺀다(`src/features/map/annotations.ts`).
-  - 역은 네이버 지도처럼: 큰 지도 레이어 1 에 노선 색 역사(선로 방향으로 놓인 둥근 상자, `lib/station.mjs` 가 OSM 출구와 지하철 선로로 위치·방향을 찾음), 이름표는 그 북쪽 끝 너머에 노선 표시("인천1")와 함께, 출구는 노란 번호.
-  - 지도 JSON 의 `labels`: 역(`station`, 노선 표시 `badge`), 큰 건물(`building`), 무대 이름(`stage`, 레이어 2 이름표를 옮김), 그 밖의 이름(`place`), 시내버스 정류장(`bus`, 파란 버스 아이콘, OSM `busStops`). 각자 `minZoom` 부터 보인다.
+  - 역은 네이버 지도처럼: 큰 지도 레이어 1 에 노선 색 역사, 이름표는 그 북쪽 끝 너머에 노선 표시("인천1", 올림픽공원역은 "5" "9" 둘)와 함께, 출구는 노란 번호. 이름표 자리에 출구가 있으면 한두 줄 위(또는 아래)로 비켜 선다.
+  - 지도 JSON 의 `labels`: 역(`station`, 노선 표시 `badges`), 큰 건물(`building`), 무대 이름(`stage`, 레이어 2 이름표를 옮김), 그 밖의 이름(`place`), 시내버스 정류장(`bus`, 파란 버스 아이콘, OSM `busStops`). 각자 `minZoom` 부터 보인다.
   - 버스 정류장처럼 처음 받은 OSM 추출본에 없는 것은 같은 범위를 다시 받아 그 부분만 더한다: `node scripts/map/extract-osm.mjs <받은.osm> map-src/<코드>/osm.json --only=busStops` — 길·건물 모양(`ways`)은 그대로 두어 그려 둔 지도가 움직이지 않게 한다.
-  - 지도 JSON 의 `icons`: 레이어 3 배지(종류마다 SVG), 역 출구 번호, 티켓부스, 셔틀 정류장. 카탈로그 핀이 `mapIcon` 으로 고르고, `spot`(레이어 3 배지 자리)이 있으면 그 자리에 그린다. 이름 있는 곳(`caption`: GATE, 티켓부스, 셔틀)은 더 멀리서도 보인다.
+  - 지도 JSON 의 `icons`: 레이어 3 배지(종류마다 SVG — GMF 는 물방울 핀의 머리만 둥근 배지로), 역 출구 번호, 티켓부스, 셔틀 정류장. 카탈로그 핀이 `mapIcon` 으로 고르고, `spot`(레이어 3 배지 자리)이 있으면 그 자리에 그린다. 이름 있는 곳(`caption`: GATE, 티켓부스, 셔틀)은 더 멀리서도 보인다.
   - 중요도: 선택한 핀 > 목록에서 누른 묶음의 핀 > 역 > 무대 이름 > 이름 있는 곳 > 역 출구 > 핀 > 구역 깃발 > 기타 이름 > 건물 > 버스 정류장. 선택한 핀과 누른 묶음의 핀은 확대 단계·겹침과 상관없이 모두 보인다(서로 겹쳐도). 무대·구역·기타 이름은 자리가 막히면 한 줄 위나 아래로 비켜 선다. 목록에서 누른 묶음은 다른 묶음의 핀을 누르면 풀린다. 처음 열면 작은 지도(행사장)로 열리고, 핀은 확대 16 부터, 건물 이름은 15.5 부터.
   - 구역 깃발 글자(레이어 2 `l2-flags`)도 앱 사본에서 빼고 앱이 깃발 색 글자(`zone`)로 쓴다 — 그림에 박힌 글자는 축소하면 읽을 수 없어서.
   - 누르는 핀은 그림이 작아도 손가락 자리 44 px 를 둔다.
   - 지도 JSON 의 `zoomOutFills: true`: 축소는 지도가 화면을 채우는 데까지만(빈 띠 없음). 지도 크기가 바뀌면(목록 접힘 등) 그 한계를 다시 맞춘다.
-- **비슷한 것은 하나로**(사용자 지시): 물품검색대와 물품보관소(옆에 붙어 있음)는 한 표시 "물품검색·보관소", 게이트 배지와 레이어 2 의 "입장동선" 이름표는 게이트 하나("GATE 1", 상세에 입장동선). 화장실은 묶지 않는다.
+- **비슷한 것은 하나로**(사용자 지시): 펜타포트 — 물품검색대와 물품보관소(옆에 붙어 있음)는 한 표시 "물품검색·보관소", 게이트 배지와 레이어 2 의 "입장동선" 이름표는 게이트 하나("GATE 1", 상세에 입장동선). GMF — 한 부스의 두 배지(민트샵 = 공식 MD + 슬로건 전시, Artist & Label + Vinyl)는 하나로, "TICKET BOOTH" 이름표는 티켓 부스 핀 이름("티켓 부스")으로, 핀이 있는 깃발(RADAR, Mint Shop)은 핀 이름으로. 화장실은 묶지 않는다.
+- GMF 핀의 상세에는 서 있는 구역(Mint Breeze, Club Midnight Sunset …)을 쓴다(공식 핀의 구역, `pins-official.json`).
 - **핀 목록**: 역할(`group`)로 넓게 묶는다 — 입장(티켓부스·게이트), 쿨존(메인쿨존 포함), 배리어 프리, MD 부스, 경찰·소방, 안내, 홍보·벤더 부스, 셔틀버스, 역 출구. 무대는 지도에 이름이 있어 목록에 넣지 않는다. 핀을 누르면 이름과 상세(`detail`)가 나온다. 목록 줄을 누르면 목록이 접히고, 지도가 그 역할의 핀을 모두 담게 움직여 함께 반짝인다.
   - 순서: 내 위치를 알면 가까운 순. 모르면 핀의 `rank`(입장 = 0, 맨 위) → 종류 순(화장실·의료·안내…) → 이름.
   - 지도에서 핀을 누르면 아래 카드(이름·상세·거리·길찾기)가 핀을 가리지 않게 지도를 조금 올린다. 길찾기는 카카오맵 길찾기 링크(도착지만 넣음, 이름의 "(대략)"은 뺌).
@@ -147,11 +149,11 @@ node scripts/map/layers/gmf/build.mjs --preview
 | 4    | `layout-north-up.mjs` | 캐시: 북쪽 위 이름표·핀 자리                                                                     |
 | 5    | `layer2.mjs`          | `out/layer2-operations-{official-view,north-up}.svg`                                  |
 | 6    | `layer3.mjs`          | `out/layer3-pins-{official-view,north-up}.svg`, `out/layer3-pins.json`                |
-| (펜타포트) | `big-layer1.mjs` (2 다음), `app.mjs` (마지막) | `out/big-layer1-ground-north-up.svg` / `src/assets/maps/pentaport/*.svg`, `src/assets/maps/pentaport.json` |
+| (큰 지도·앱) | `big-layer1.mjs` (2 다음), `app.mjs` (마지막) | `out/big-layer1-ground-north-up.svg` / `src/assets/maps/<코드>/*.svg`, `src/assets/maps/<코드>.json` |
 | (확인) | `preview.mjs`         | 캐시: `preview-vs-official.jpg`, `preview-official-view@2x.png`, `preview-north-up.jpg`, `preview-big.jpg` |
 
 
-- GMF 는 1번(`official-frame.mjs`)이 없고, 결과는 북쪽 위(`*-north-up.svg`)만 있다. 미리보기는 `preview-vs-official.jpg`(공식 안내도와 나란히), `preview-north-up@3x.png`.
+- GMF 는 1번(`official-frame.mjs`)이 없고, 결과는 북쪽 위(`*-north-up.svg`)만 있다. 미리보기는 `preview-vs-official.jpg`(공식 안내도와 나란히), `preview-north-up@3x.png`, `preview-big.jpg`.
 - 공식 방향 SVG 는 1080×1350(공식 안내도와 같은 틀)이라 공식 안내도 위에 그대로 겹쳐 볼 수 있다. 북쪽 위 SVG 는 1 단위 = 1 m, 위경도 범위는 `north-up-bounds.json`.
 - 그림을 바꿀 때는 SVG 를 직접 고치지 않고 스크립트를 고쳐 다시 만든다.
 
