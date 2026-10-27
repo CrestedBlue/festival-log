@@ -22,8 +22,10 @@ export const BIG_CLASSES = [
   ['road', '#c3c5ca'],
 ]
 // How roads and buildings are drawn (metres).
-// No edge along the roads: the pale kerb the first look had was too much (the user, 2026-10-27).
+// Roads get an edge in their own grey: it closes the thin gaps the tracing leaves between a road and the water or park
+// beside it (a pale kerb was too much, and none at all showed the gaps — the user, 2026-10-27).
 const STYLE = {
+  edgeWidth: 2.4, // metres, half of it outside the road
   wall: '#c4c6cc', roofLift: 2.2, // a building's roof sits this far up its walls (looking from the south)
   shadow: '#c0bcb4', shadowOffset: [1.4, 1.2],
 }
@@ -134,7 +136,7 @@ export async function drawBigLayer1({ frame, venue: where, out, cache, stations 
   const content = `<g id="layer1" data-name="레이어 1 · 바닥 (큰 지도)">
 <rect id="land" data-name="땅" width="${VW}" height="${VH}" fill="${colour.land}"/>
 <g id="zones" data-name="구역">${zones}</g>
-<path id="roads" data-name="길" d="${roadD}" fill="${colour.road}" fill-rule="evenodd"/>
+<path id="roads" data-name="길" d="${roadD}" fill="${colour.road}" fill-rule="evenodd" stroke="${colour.road}" stroke-width="${STYLE.edgeWidth}" stroke-linejoin="round"/>
 <g id="stations" data-name="역">${stationBoxes.join('')}</g>
 <g id="buildings" data-name="건물" fill-rule="evenodd">
 <defs><path id="building-outline" data-name="건물 윤곽" d="${buildingD}"/></defs>
