@@ -1,8 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 -60 120 120">
-  <!-- The festival's round pink badge, as on its Instagram profile (@grandmintfestival, 2026-10-27): dates and place
-       round the top, a mint leaf over "GRAND MINT FESTIVAL", a white band, a ring of dots below. The year on the white
-       band ("2·0·2·6") is left out (the user's call, 2026-10-27: the mark stays the same every year). Drawn by hand
-       (read off the 150px profile picture); redraw it when the badge changes. -->
+  <!-- The festival's round pink badge, as on its Instagram profile (@grandmintfestival, 2026-10-27): the place round
+       the top, a mint leaf over "GRAND MINT FESTIVAL", a white band, a ring of dots below. What changes every year is
+       left out (the user's call, 2026-10-27: the mark stays the same every year): the dates before the place
+       ("10.17-18 •") and the year on the white band ("2·0·2·6"). Drawn by hand (read off the 150px profile picture);
+       redraw it when the badge changes. -->
   <defs>
     <path id="top" d="M-49 0A49 49 0 0 1 49 0" />
   </defs>
@@ -10,7 +11,7 @@
   <circle r="41" fill="none" stroke="#fff" stroke-width="1.8" />
   <path d="M-37.7 16A41 41 0 0 0 37.7 16Z" fill="#fff" />
   <g fill="#fff" font-family="'Arial Rounded MT Bold', 'Helvetica Neue', Arial, sans-serif" font-weight="900" text-anchor="middle">
-    <text font-size="7.4" letter-spacing="0.4" dy="2.6"><textPath href="#top" startOffset="50%">10.17-18 • OLYMPIC PARK</textPath></text>
+    <text font-size="7.4" letter-spacing="0.4" dy="2.6"><textPath href="#top" startOffset="50%">OLYMPIC PARK</textPath></text>
     <path d="M0 0C15-10 15-38 0-54C-15-38-15-10 0 0Z" transform="translate(-6 -23) rotate(40) scale(0.17)" />
     <text y="-12" font-size="11" textLength="44" lengthAdjust="spacingAndGlyphs">GRAND</text>
     <text y="0" font-size="11" textLength="30" lengthAdjust="spacingAndGlyphs">MINT</text>
