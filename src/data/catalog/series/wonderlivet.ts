@@ -1,4 +1,5 @@
 import wonderlivetArt from '../../../assets/art/wonderlivet.svg'
+import wonderlivetMark from '../../../assets/mark/wonderlivet.svg'
 import { WONDERLIVET_SERIES as CODE } from '../ids'
 import { bigMapPins, type Place, type StationPlace } from './bigMapPins'
 import type { FestivalSeries } from './types'
@@ -32,6 +33,7 @@ export const WONDERLIVET: FestivalSeries = {
   theme: {
     accent: '#a84300',
     art: wonderlivetArt,
+    mark: wonderlivetMark,
     stages: {
       wonder: { color: '#ff6800', icon: 'star' },
       livet: { color: '#9c3d00', icon: 'radar' },

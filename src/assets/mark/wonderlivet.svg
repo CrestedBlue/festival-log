@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="96 12 128 128">
+  <!-- The festival's pixel robot on a black circle, as on its Instagram profile (a 17 × 17 grid, read off the
+       profile picture); the lower right stays empty for the "my plan" switch. -->
+  <circle cx="160" cy="76" r="64" fill="#0b0b0b" />
+  <g fill="#ff6800" transform="translate(123.45 39.45) scale(4.3)" shape-rendering="crispEdges">
+    <path d="M6 0h1v4H6zM10 0h1v4h-1zM5 4h7v1H5zM4 5h2v1H4zM11 5h2v1h-2zM3 6h2v1H3zM12 6h2v1h-2zM3 7h1v5H3zM13 7h1v5h-1zM3 12h2v1H3zM12 12h2v1h-2zM4 13h9v1H4z" />
+    <path d="M0 6h1v2H0zM0 8h4v1H0zM16 6h1v2h-1zM13 8h4v1h-4z" />
+    <path d="M6 7h1v1H6zM10 7h1v1h-1zM7 9h3v1H7z" />
+    <path d="M5 14h1v3H5zM7 14h1v3H7zM9 14h1v3H9zM11 14h1v3h-1z" />
+  </g>
+</svg>

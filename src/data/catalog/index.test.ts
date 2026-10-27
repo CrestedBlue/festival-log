@@ -30,6 +30,10 @@ describe('catalog', () => {
     }
   })
 
+  test('every festival has its logo as a mark for the festival lists', () => {
+    for (const entry of CATALOG) expect(SERIES[entry.series]?.theme.mark, entry.series).toBeTruthy()
+  })
+
   test('every festival has a festival code, and its yearly code is that code plus the year it starts in', () => {
     for (const entry of CATALOG) {
       expect(entry.series).toMatch(/^[a-z0-9]+$/)

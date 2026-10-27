@@ -1,4 +1,5 @@
 import heroRockArt from '../../../assets/art/herorock.webp'
+import heroRockMark from '../../../assets/mark/herorock.webp'
 import { HERO_ROCK_SERIES as CODE } from '../ids'
 import { bigMapPins, type Place, type StationPlace } from './bigMapPins'
 import type { FestivalSeries } from './types'
@@ -28,5 +29,5 @@ export const HERO_ROCK: FestivalSeries = {
   sources: [{ method: '인스타', value: '@herorockfestival', lastScrapedPostDate: null }],
   // From its Instagram and the 2026 poster (2026-10-21): bronze gold from the logo and dates, the logo on a black
   // circle as on the profile picture (scripts/art/build-herorock.mjs). Stage icons and colors wait for the timetable.
-  theme: { accent: '#7d5a1c', art: heroRockArt, stages: {} },
+  theme: { accent: '#7d5a1c', art: heroRockArt, mark: heroRockMark, stages: {} },
 }

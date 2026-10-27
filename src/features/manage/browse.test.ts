@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { makeFestival } from '../../data/testFixtures'
-import { artistHit, calendarTile, groupByMonth, hasEnded, matchesQuery } from './browse'
+import { artistHit, groupByMonth, hasEnded, matchesQuery, nameInitial } from './browse'
 
 const hero = makeFestival({
   id: 'hero',
@@ -84,14 +84,15 @@ describe('groupByMonth', () => {
   })
 })
 
-describe('calendarTile', () => {
-  test('shows the first day and its weekday', () => {
-    expect(calendarTile(hero)).toEqual({ weekday: '금', day: '18' })
-    expect(calendarTile(gmf)).toEqual({ weekday: '토', day: '17' })
+describe('nameInitial', () => {
+  test("is the name's first letter, past a leading year", () => {
+    expect(nameInitial('그랜드 민트 페스티벌 2026')).toBe('그')
+    expect(nameInitial('2026 히어로 락 페스티벌 - 인천')).toBe('히')
+    expect(nameInitial("'26 winter mint")).toBe('W')
   })
 
-  test('marks dates that are not announced', () => {
-    expect(calendarTile(tbd)).toEqual({ weekday: '미정', day: '–' })
+  test('has something to show for a name of digits only', () => {
+    expect(nameInitial('2026')).toBe('?')
   })
 })
 

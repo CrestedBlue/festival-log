@@ -31,6 +31,12 @@ export const catalogFestival = (id: string): Festival | null => {
   return built.get(id) ?? null
 }
 
+/** The festival's logo for the festival lists; null for festivals saved from older versions (no design of their own). */
+export const festivalMark = (festivalId: string): string | null => {
+  const entry = catalogEntry(festivalId)
+  return (entry && SERIES[entry.series]?.theme.mark) ?? null
+}
+
 export function resolveFestival(data: UserData, festivalId: string): ResolvedFestival | null {
   const fromCatalog = catalogFestival(festivalId)
   const entry = catalogEntry(festivalId)

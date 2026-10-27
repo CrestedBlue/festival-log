@@ -1,4 +1,5 @@
 import jumfArt from '../../../assets/art/jumf.webp'
+import jumfMark from '../../../assets/mark/jumf.webp'
 import type { Pin } from '../../schema'
 import { JUMF_SERIES as CODE } from '../ids'
 import type { FestivalSeries } from './types'
@@ -33,6 +34,7 @@ export const JUMF: FestivalSeries = {
   theme: {
     accent: '#0a5cc2',
     art: jumfArt,
+    mark: jumfMark,
     stages: {
       maru: { color: '#d650bd', icon: 'roof' },
       neoul: { color: '#9251d6', icon: 'wave' },

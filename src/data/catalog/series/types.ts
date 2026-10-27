@@ -30,6 +30,9 @@ export interface FestivalTheme {
   accent: string | null
   /** Picture to the right of the title (an imported image URL), null for none. */
   art: string | null
+  /** Its logo alone, square, beside the festival in the lists (an imported image URL, made from `art` by
+   * scripts/art/build-marks.mjs), null for none. */
+  mark: string | null
   stages: Readonly<Record<string, StageLook>>
 }
 

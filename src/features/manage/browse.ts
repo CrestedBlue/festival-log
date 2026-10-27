@@ -1,6 +1,5 @@
 import { ARTIST_NAMES } from '../../data/catalog/artists'
 import type { Festival } from '../../data/schema'
-import { weekdayLabel } from '../../lib/time'
 
 const normalize = (text: string) => text.replace(/\s+/g, '').toLowerCase()
 
@@ -86,10 +85,7 @@ export function groupByMonth(festivals: readonly Festival[], { withYear = false 
   ]
 }
 
-/** The small calendar square in a festival row: weekday on top, first day below. */
-export function calendarTile(festival: Festival): { weekday: string; day: string } {
-  if (festival.datesTbd) return { weekday: '미정', day: '–' }
-  return { weekday: weekdayLabel(festival.startDate), day: String(Number(festival.startDate.slice(8, 10))) }
-}
+/** The letter standing in for a festival's mark when it has none: its name's first, past a leading year. */
+export const nameInitial = (name: string): string => name.replace(/^[\d\s.'’-]+/, '').charAt(0).toUpperCase() || '?'
 
 export const hasEnded = (festival: Festival, today: string): boolean => !festival.datesTbd && festival.endDate < today

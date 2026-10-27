@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { GRAND_MINT_2026_ID, HERO_ROCK_2026_ID, PENTAPORT_2026_ID } from './catalog/ids'
-import { activeFestival, resolveFestival } from './resolve'
+import { SERIES } from './catalog/series'
+import { activeFestival, festivalMark, resolveFestival } from './resolve'
 import { makeFestival, makePin, makeUserData } from './testFixtures'
 
 describe('resolveFestival', () => {
@@ -60,5 +61,14 @@ describe('activeFestival', () => {
   test('falls back to the first festival in my list, then to nothing', () => {
     expect(activeFestival(makeUserData({ myFestivalIds: [GRAND_MINT_2026_ID], activeFestivalId: 'gone' }))?.festival.id).toBe(GRAND_MINT_2026_ID)
     expect(activeFestival(makeUserData({ myFestivalIds: [], activeFestivalId: null }))).toBeNull()
+  })
+})
+
+describe('festivalMark', () => {
+  test("is the festival's own logo for catalog festivals, none for the ones saved from older versions", () => {
+    expect(festivalMark(GRAND_MINT_2026_ID)).toBe(SERIES.gmf?.theme.mark)
+    expect(festivalMark(HERO_ROCK_2026_ID)).toBe(SERIES.herorock?.theme.mark)
+    expect(festivalMark(GRAND_MINT_2026_ID)).not.toBe(festivalMark(HERO_ROCK_2026_ID))
+    expect(festivalMark('old')).toBeNull()
   })
 })

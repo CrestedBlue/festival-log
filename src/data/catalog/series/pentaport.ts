@@ -1,4 +1,5 @@
 import pentaportArt from '../../../assets/art/pentaport.svg'
+import pentaportMark from '../../../assets/mark/pentaport.svg'
 import { seriesMapFor } from '../../../features/map/festivalMaps'
 import { RANK } from '../../../features/map/pinGroups'
 import type { Pin } from '../../schema'
@@ -113,6 +114,7 @@ export const PENTAPORT: FestivalSeries = {
   theme: {
     accent: '#432a73',
     art: pentaportArt,
+    mark: pentaportMark,
     stages: {
       kb: { color: '#e09a00', icon: 'star' },
       monster: { color: '#4f9a1f', icon: 'bolt' },

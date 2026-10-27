@@ -1,4 +1,5 @@
 import gmfArt from '../../../assets/art/gmf.svg'
+import gmfMark from '../../../assets/mark/gmf.svg'
 import { seriesMapFor } from '../../../features/map/festivalMaps'
 import type { Pin } from '../../schema'
 import { GRAND_MINT_SERIES as CODE } from '../ids'
@@ -104,6 +105,7 @@ export const GRAND_MINT: FestivalSeries = {
   theme: {
     accent: '#0f352f',
     art: gmfArt,
+    mark: gmfMark,
     stages: {
       mint: { color: '#2f8f62', icon: 'leaf' },
       sunset: { color: '#e2603f', icon: 'sunset' },

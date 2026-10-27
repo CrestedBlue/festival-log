@@ -33,4 +33,5 @@
 - **레이어 지도(공식 행사장 안내도를 실제 좌표로 다시 그리기)**: 절차는 [MAP.md](MAP.md) — 새 지도도 이 절차로 만든다. 공통 코드 `scripts/map/layers/lib/`, 페스티벌별 `scripts/map/layers/<코드>/`. 펜타포트: `node scripts/map/layers/pentaport/build.mjs --preview` → `map-src/pentaport/layers/out/`(레이어 1 바닥 · 2 운영 표시 · 3 핀, 공식 방향·북쪽 위 각각). 그랜드민트: `node scripts/map/layers/gmf/build.mjs --preview` → `map-src/gmf/layers/out/`(북쪽 위만). `lib/` 를 고치면 두 지도를 다 다시 만들어 결과가 그대로인지 본다
 - 공식 안내 이미지(체크리스트, 행사장 안내도)는 `src/assets/guides/guide-*.webp` 로 넣고 카탈로그의 `guides` 에 등록한다. 용량이 커서 설치 때 미리 받지 않고(서비스워커 globIgnores) 처음 볼 때 캐시한다 **지도 그림은 스크립트로만 바꾼다**(SVG 를 직접 고치지 않는다). 지형 출처 OSM 은 ODbL 이라 지도에 출처 표기를 유지한다
 - 제목 오른쪽 그림(페스티벌 디자인 테마): `src/assets/art/<코드>.*`. GMF·펜타포트는 손으로 쓴 SVG, 히어로 락·JUMF 는 공식 로고 이미지로 만드는 스크립트(`node scripts/art/build-<코드>.mjs`, 원본은 `art-src/<코드>/` 또는 저장소 안 포스터). 그림을 바꿀 때는 스크립트를 고쳐 다시 만든다
+- 페스티벌 목록의 마크(로고만, 정사각): `src/assets/mark/<코드>.*`. 제목 그림에서 로고만 잘라 만든다(`node scripts/art/build-marks.mjs` — 제목 그림을 바꾸면 다시 돌린다). GMF 는 제목 그림이 앱 디자인이라 인스타 프로필의 분홍 배지를 손으로 그린 SVG(`src/assets/mark/gmf.svg`). 새 페스티벌은 테마의 `mark` 를 채운다
 - 화면 확인: Claude 앱 미리보기 서버는 `~/Documents` 를 못 읽는다 → 로컬 사본에서 `npm run build` 후 `dist/` 를 세션 폴더로 복사해 미리보기
