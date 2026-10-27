@@ -84,10 +84,10 @@
   pointer-events: none;
 }
 
-/* With the day tickets, the picture spans both rows and the "my plan" star sits in its empty corner. */
+/* With the day tickets, the picture spans both rows and the "my plan" star sits in its empty corner. It keeps the
+   other tabs' width: a wider one left the title a few pixels short, so it broke onto two lines on the timetable only. */
 .app-header--with-controls .app-header__art {
   grid-row: 1 / span 2;
-  width: 96px;
 }
 
 .app-header__controls {
