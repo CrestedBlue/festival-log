@@ -5,6 +5,7 @@ import type { LineupImage } from './lineup'
 import { GRAND_MINT_2026_NOTICES, createGrandMint2026 } from './grandMint2026'
 import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICES, createHeroRock2026 } from './heroRock2026'
 import { JUMF_2026_GUIDES, JUMF_2026_NOTICES, createJumf2026 } from './jumf2026'
+import { PENTAPORT_2025_NOTICES, createPentaport2025 } from './pentaport2025'
 import { PENTAPORT_2026_GUIDES, PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
 import { WONDERLIVET_2026_GUIDES, WONDERLIVET_2026_NOTICES, createWonderlivet2026 } from './wonderlivet2026'
 import {
@@ -19,6 +20,8 @@ import {
   JUMF_SERIES,
   PENTAPORT_2026_ID,
   PENTAPORT_2026_KEY,
+  PENTAPORT_2025_ID,
+  PENTAPORT_2025_KEY,
   PENTAPORT_SERIES,
   WONDERLIVET_2026_ID,
   WONDERLIVET_2026_KEY,
@@ -82,6 +85,17 @@ export const CATALOG: readonly CatalogEntry[] = [
     lineup: [],
     guides: PENTAPORT_2026_GUIDES,
     updatedAt: '2026-10-26',
+  },
+  {
+    id: PENTAPORT_2025_ID,
+    legacyIds: [],
+    series: PENTAPORT_SERIES,
+    key: PENTAPORT_2025_KEY,
+    create: createPentaport2025,
+    notices: PENTAPORT_2025_NOTICES,
+    lineup: [],
+    guides: [],
+    updatedAt: '2026-10-27',
   },
   {
     id: JUMF_2026_ID,

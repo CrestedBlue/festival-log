@@ -105,12 +105,14 @@ export const PENTAPORT: FestivalSeries = {
   sources: [
     // Only the timetable post (2026-07-09) was read here; without logging in the account shows its newest 12 posts.
     { method: '인스타', value: '@pentaportrf', lastScrapedPostDate: '2026-07-09' },
-    // Mirrors the Instagram posts; every 2026 notice up to 2026-08-06 was checked (2026-10-20).
+    // Mirrors the Instagram posts; every 2026 notice up to 2026-08-06 was checked (2026-10-20), and the 2025 ones
+    // from 7/14 to 7/31 for the 2025 edition (2026-10-27).
     { method: '공홈', value: 'https://www.pentaport.co.kr/Notice', lastScrapedPostDate: '2026-08-06' },
   ],
   // The user's pick from the second mockup (2026-10-21): deep purple from the 2026 official guide art, the red
   // star logo alone as the title picture, a star for KB (yellow), a bolt for Monster Energy (green), a tumbler
-  // for Stanley (dark green).
+  // for Stanley (dark green). 2025's own stages (Claude's pick, 2026-10-27, from the 2025 timetable's stage colours):
+  // INCHEON sky blue with a wave (a port city), INCHEON AIRPORT periwinkle with a radar.
   theme: {
     accent: '#432a73',
     art: pentaportArt,
@@ -119,6 +121,8 @@ export const PENTAPORT: FestivalSeries = {
       kb: { color: '#e09a00', icon: 'star' },
       monster: { color: '#4f9a1f', icon: 'bolt' },
       stanley: { color: '#3f6b52', icon: 'cup' },
+      incheon: { color: '#1f8fbf', icon: 'wave' },
+      airport: { color: '#4f6fc4', icon: 'radar' },
     },
   },
 }
