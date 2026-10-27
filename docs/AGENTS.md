@@ -26,7 +26,7 @@
 - 저장소: https://github.com/CrestedBlue/festival-log
 - 배포: https://crestedblue.github.io/festival-log/
 - 배포 워크플로: `.github/workflows/deploy.yml` (push to `main` → test → build → deploy-pages)
-- 공식 정보 수집 절차(주 1회 예약 작업): [COLLECT.md](COLLECT.md)
+- 공식 정보 수집 절차(매일 예약 작업): [COLLECT.md](COLLECT.md)
 - 로컬 작업 사본: `~/Documents/workspace/festival-log` (커밋 작성자 로컬 설정 완료). 다른 컴퓨터에서 새로 clone 하면 작성자 설정부터 다시 건다
 - 프리셋: `src/data/presets/` (GMF 2026 = `grandMint2026.ts`)
 - 지도(펜타포트·GMF; 히어로 락·원더리벳은 공식 안내도가 없어 큰 지도만): 레이어 지도(아래)를 앱에 그대로 쓴다 — `node scripts/map/layers/<코드>/build.mjs` 가 큰 지도(역·셔틀 정류장까지, 레이어 1만)와 작은 지도(행사장, 레이어 1~3)를 만들고 `app.mjs` 가 레이어별 SVG 를 `src/assets/maps/<코드>/` 로, 위치·아이콘·이름표를 `src/assets/maps/<코드>.json` 으로 낸다. 지도·장소·지도 핀은 연도가 아니라 페스티벌 코드 단위다(`src/data/catalog/series/`). GMF 의 예전 그림 지도(`build-gmf.mjs`, `gmf.webp`)는 2026-10-26 에 걷어냈다. 앱은 레이어를 따로 겹쳐 깐다(합치지 않음). 예전 입장 동선 안내 지도(TPS)는 2026-10-23 에 걷어냈다. OSM 원본은 `node scripts/map/extract-osm.mjs <받은.osm> map-src/<코드>/osm.json` 으로 만든다
