@@ -23,6 +23,15 @@ export function parseHash(hash: string, home: Tab = 'timetable'): Route {
 export const homeTab = (festival: Pick<Festival, 'performances'> | null, lineupCount = 0): Tab =>
   festival && festival.performances.length === 0 && lineupCount === 0 ? 'map' : 'timetable'
 
+/** The tabs about one festival: locked while there is none on my list. */
+export const FESTIVAL_TABS: readonly Tab[] = ['timetable', 'map', 'info']
+
+/**
+ * The tab to show: as asked, except that with no festival to show the festival tabs are locked and the catalog (관리 >
+ * 둘러보기) shows instead (the user's call, 2026-10-27).
+ */
+export const shownTab = (tab: Tab, hasFestival: boolean): Tab => (hasFestival || !FESTIVAL_TABS.includes(tab) ? tab : 'manage')
+
 export function buildHash(tab: Tab, params: Record<string, string | undefined> = {}): string {
   const entries = Object.entries(params).filter((entry): entry is [string, string] => Boolean(entry[1]))
   const query = new URLSearchParams(entries).toString()

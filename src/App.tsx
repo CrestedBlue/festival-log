@@ -1,7 +1,6 @@
-import { Suspense, lazy, type CSSProperties } from 'react'
+import { Suspense, lazy, useEffect, type CSSProperties } from 'react'
 import { AppHeader } from './components/AppHeader'
 import { BottomNav } from './components/BottomNav'
-import { EmptyState } from './components/EmptyState'
 import { NoticeBanner } from './components/NoticeBanner'
 import { NowStrip } from './components/NowStrip'
 import { dismissNotice, selectActiveFestival, useAppState } from './data/store'
@@ -13,7 +12,7 @@ import { TimetableControls } from './features/timetable/TimetableControls'
 import { TimetableView } from './features/timetable/TimetableView'
 import { useHashRoute } from './hooks/useHashRoute'
 import { useNow } from './hooks/useNow'
-import { homeTab } from './lib/route'
+import { FESTIVAL_TABS, homeTab, shownTab } from './lib/route'
 import { festivalMoment } from './lib/time'
 
 // Leaflet is the heaviest dependency, so it only loads when the map tab opens.
@@ -25,13 +24,20 @@ export default function App() {
   const festival = resolved?.festival ?? null
   const lineup = resolved?.lineup ?? []
   const route = useHashRoute(homeTab(festival, lineup.length))
+  // With no festival on my list the festival tabs are locked and the catalog shows instead.
+  const tab = shownTab(route.tab, festival !== null)
+  const { setParams } = route
+  useEffect(() => {
+    // the address follows, without a history entry (a link to a locked tab, the first launch)
+    if (tab !== route.tab) setParams('manage', { view: 'browse' })
+  }, [tab, route.tab, setParams])
   const now = useNow()
   const today = festivalMoment(now).day
   const selection = festival ? timetableSelection(festival, route.params, today) : null
   const accent = resolved?.theme?.accent ?? null
 
   const renderView = () => {
-    if (route.tab === 'manage') {
+    if (tab === 'manage' || !festival) {
       return (
         <ManageView
           data={data}
@@ -41,8 +47,7 @@ export default function App() {
         />
       )
     }
-    if (!festival) return <EmptyState onOpenList={() => route.go('manage')} />
-    if (route.tab === 'info') {
+    if (tab === 'info') {
       return (
         <InfoView
           festivalId={festival.id}
@@ -53,7 +58,7 @@ export default function App() {
         />
       )
     }
-    if (route.tab === 'map') {
+    if (tab === 'map') {
       return (
         <Suspense fallback={<p className="timetable__empty">지도 불러오는 중…</p>}>
           <MapView
@@ -76,7 +81,7 @@ export default function App() {
     )
   }
 
-  const showControls = route.tab === 'timetable' && festival !== null && festival.performances.length > 0
+  const showControls = tab === 'timetable' && festival !== null && festival.performances.length > 0
 
   return (
     // The festival's main color drives the selected day, the selected tab and the "my plan" switch.
@@ -100,12 +105,17 @@ export default function App() {
         )}
       </AppHeader>
       {/* The timetable shows what is on in its own sets; the strip covers the other tabs. */}
-      {festival && route.tab !== 'timetable' && <NowStrip festival={festival} favorites={data.favorites} now={now} />}
+      {festival && tab !== 'timetable' && <NowStrip festival={festival} favorites={data.favorites} now={now} />}
       <main className="app-main">
         {notice && <NoticeBanner key={notice.id} notice={notice} onDismiss={dismissNotice} />}
         {renderView()}
       </main>
-      <BottomNav active={route.tab} onSelect={route.go} news={{ manage: newContentAnywhere(data) }} />
+      <BottomNav
+        active={tab}
+        onSelect={route.go}
+        locked={festival ? [] : FESTIVAL_TABS}
+        news={{ manage: newContentAnywhere(data) }}
+      />
     </div>
   )
 }

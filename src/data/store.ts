@@ -1,9 +1,7 @@
 import { useSyncExternalStore } from 'react'
-import { DEFAULT_FESTIVAL_ID } from './catalog'
 import { activeFestival, type ResolvedFestival } from './resolve'
 import { EMPTY_USER_DATA, type UserData } from './schema'
 import { STORAGE_KEY, loadUserData, saveUserData } from './storage'
-import { addMyFestival } from './userData'
 
 export interface Notice {
   id: number
@@ -50,21 +48,19 @@ function initialState(): StoreState {
       notice: persistent ? null : makeNotice('error', '이 브라우저에서는 기록이 저장되지 않아요.'),
     }
   }
-  const seeded = addMyFestival(EMPTY_USER_DATA, DEFAULT_FESTIVAL_ID)
+  // A first launch starts with an empty list: the app opens on the catalog (관리 > 둘러보기) to pick from.
+  const fresh = EMPTY_USER_DATA
   if (loaded.status === 'corrupted' && !loaded.backedUp) {
     // Couldn't copy the unreadable data aside, so don't overwrite it: run this session in memory only.
     storage = memoryStorage()
     return {
-      data: seeded,
+      data: fresh,
       notice: makeNotice('error', '저장된 기록을 읽지 못했어요. 원래 데이터를 지키려고 이번에는 저장하지 않고 실행해요.'),
     }
   }
-  saveUserData(storage, seeded)
-  const notice =
-    loaded.status === 'corrupted'
-      ? makeNotice('error', '저장된 기록을 읽지 못해서 따로 백업해 두고 새로 시작했어요.')
-      : makeNotice('info', '그랜드 민트 페스티벌 2026을 넣어뒀어요. 보고 싶은 공연을 눌러 찜해 보세요.')
-  return { data: seeded, notice }
+  saveUserData(storage, fresh)
+  const notice = loaded.status === 'corrupted' ? makeNotice('error', '저장된 기록을 읽지 못해서 따로 백업해 두고 새로 시작했어요.') : null
+  return { data: fresh, notice }
 }
 
 let state: StoreState = initialState()

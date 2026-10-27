@@ -270,6 +270,14 @@
   color: var(--color-warn);
 }
 
+/* while my list is empty, over the catalog: why the other tabs are locked */
+.manage__hint {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-ink-soft);
+}
+
 .manage__empty {
   display: grid;
   justify-items: start;

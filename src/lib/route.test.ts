@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { makeFestival } from '../data/testFixtures'
-import { buildHash, homeTab, isAdminPath, parseHash } from './route'
+import { FESTIVAL_TABS, buildHash, homeTab, isAdminPath, parseHash, shownTab } from './route'
 
 describe('parseHash', () => {
   test('reads the tab and query params', () => {
@@ -58,5 +58,17 @@ describe('isAdminPath', () => {
     expect(isAdminPath('/festival-log/', '/festival-log/')).toBe(false)
     expect(isAdminPath('/festival-log/managers', '/festival-log/')).toBe(false)
     expect(isAdminPath('/manage/', '/festival-log/')).toBe(false)
+  })
+})
+
+describe('shownTab', () => {
+  test('with a festival to show, every tab opens as asked', () => {
+    for (const tab of ['timetable', 'map', 'info', 'manage'] as const) expect(shownTab(tab, true)).toBe(tab)
+  })
+
+  test('with none, the festival tabs are locked and the catalog shows instead', () => {
+    expect(FESTIVAL_TABS).toEqual(['timetable', 'map', 'info'])
+    for (const tab of FESTIVAL_TABS) expect(shownTab(tab, false)).toBe('manage')
+    expect(shownTab('manage', false)).toBe('manage')
   })
 })

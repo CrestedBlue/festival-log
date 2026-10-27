@@ -42,6 +42,7 @@ export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: P
 
   return (
     <>
+      {data.myFestivalIds.length === 0 && <p className="manage__hint">페스티벌을 추가하면 타임테이블·지도·정보가 열려요.</p>}
       <label className="search">
         <SearchIcon />
         <span className="visually-hidden">페스티벌 찾기</span>

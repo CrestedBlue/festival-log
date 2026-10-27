@@ -107,9 +107,6 @@ export const CATALOG: readonly CatalogEntry[] = [
   },
 ]
 
-/** Opened on first launch. */
-export const DEFAULT_FESTIVAL_ID = GRAND_MINT_2026_ID
-
 export const catalogEntry = (festivalId: string): CatalogEntry | undefined => CATALOG.find((e) => e.id === festivalId)
 
 export const catalogEntryForLegacyId = (legacyId: string): CatalogEntry | undefined =>
