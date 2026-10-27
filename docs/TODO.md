@@ -34,6 +34,7 @@ v0.1 배포 — https://crestedblue.github.io/festival-log/ (최신 앱 커밋: 
 ### 공식 정보 자동 수집
 
 - 절차는 [COLLECT.md](COLLECT.md) 에 있다(예약 작업 `festival-weekly-collect` 가 매일 오전 6시쯤 그 문서를 읽고 따른다).
+- [ ] **예약 작업이 실행되지 않음(2026-10-27 확인)**: `festival-weekly-collect` 의 작업 폴더가 이 저장소가 아니라 2026-10-16 첫 세션의 임시 폴더(`…/Claude/scratch-workspaces/…/scratch-2026-10-16-2c6a1b`, 이미 지워짐)로 저장돼 있다. 그래서 10/26 06:09 실행이 "cwd no longer exists" 로 건너뛰어졌다(앱 로그 `~/Library/Logs/Claude/main1.log`). 등록 뒤 한 번도 돌지 않았다. 예약 작업 도구로는 작업 폴더를 바꿀 수 없어서 이 폴더에서 다시 만들어야 하는데, 새로 만들기가 자동 모드 안전 검사에 막혀 사용자 확인을 기다린다
 
 ### 관리 탭
 
