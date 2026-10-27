@@ -25,8 +25,8 @@ export const HERO_ROCK: FestivalSeries = {
   name: '히어로 락 페스티벌 - 인천',
   venue: { name: '송도컨벤시아', lat: 37.388776, lng: 126.646738 },
   pins: () => bigMapPins(CODE, VENUE, STATIONS),
-  // 2026 data came from Melon Ticket and a poster the user sent: nothing scraped from this account yet.
-  sources: [{ method: '인스타', value: '@herorockfestival', lastScrapedPostDate: null }],
+  // 2026 data came from Melon Ticket and a poster the user sent. The newest 12 posts were read on 2026-10-27: the 2nd line-up (10/26) and the ticket posts; the rest are artist clips.
+  sources: [{ method: '인스타', value: '@herorockfestival', lastScrapedPostDate: '2026-10-26' }],
   // From its Instagram and the 2026 poster (2026-10-21): bronze gold from the logo and dates, the logo on a black
   // circle as on the profile picture (scripts/art/build-herorock.mjs). Stage icons and colors wait for the timetable.
   theme: { accent: '#7d5a1c', art: heroRockArt, mark: heroRockMark, stages: {} },

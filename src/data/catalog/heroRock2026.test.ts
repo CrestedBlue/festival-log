@@ -48,11 +48,14 @@ describe('createHeroRock2026', () => {
     expect(HERO_ROCK_2026_NOTICES.length).toBeGreaterThan(0)
   })
 
-  test('has the first line-up poster, described for screen readers', () => {
-    expect(HERO_ROCK_2026_LINEUP).toHaveLength(1)
-    const [first] = HERO_ROCK_2026_LINEUP
-    expect(first).toMatchObject({ label: '1차 라인업', width: 700, height: 880 })
+  test('has the line-up posters in announcement order, described for screen readers', () => {
+    expect(HERO_ROCK_2026_LINEUP.map((l) => l.label)).toEqual(['1차 라인업', '2차 라인업'])
+    const [first, second] = HERO_ROCK_2026_LINEUP
+    expect(first).toMatchObject({ width: 700, height: 880 })
     expect(first?.alt).toContain('YB')
     expect(first?.alt).toContain('극동아시아타이거즈')
+    expect(second).toMatchObject({ width: 700, height: 875 })
+    expect(second?.alt).toContain('12월 18일(금): 부활')
+    expect(second?.alt).toContain('아디오스오디오')
   })
 })

@@ -99,8 +99,9 @@ export const GRAND_MINT: FestivalSeries = {
   name: '그랜드 민트 페스티벌',
   venue: { name: '올림픽공원', lat: 37.5195, lng: 127.1265 },
   pins: () => [...markPins(), ...EXIT_PINS],
-  // 2026 data came from the NOL ticket page, not from this account: nothing scraped from it yet.
-  sources: [{ method: '인스타', value: '@grandmintfestival', lastScrapedPostDate: null }],
+  // 2026 data came from the NOL ticket page. The account's newest 12 posts were read on 2026-10-27 (after the festival:
+  // the 10/18 cancellation and refund, lost and found, stage clips).
+  sources: [{ method: '인스타', value: '@grandmintfestival', lastScrapedPostDate: '2026-10-20' }],
   // From the design the user drew for the app (2026-10-21): deep green, leaves, a sun and a flower.
   theme: {
     accent: '#0f352f',

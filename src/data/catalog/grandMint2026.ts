@@ -12,13 +12,21 @@ import { stageLook } from './series/theme'
  */
 export { GRAND_MINT_2026_ID }
 
-/** Admin notices, summarised from the NOL ticket page's notices (2026). */
+/**
+ * Admin notices, summarised from the NOL ticket page's notices (2026), then the after-festival posts on Instagram
+ * (@grandmintfestival: the 10/18 refund post instagram.com/p/Dep0HZQgUC-, the 10/20 lost-and-found post
+ * instagram.com/p/Detcyb-h33E).
+ */
 export const GRAND_MINT_2026_NOTICES: readonly string[] = [
   '모바일 티켓은 관람 전날 NOL 앱에서 발급돼요. 캡처본·사본은 안 되고, 예매자 본인 신분증 원본을 꼭 챙기세요.',
   '티켓 부스는 우선입장 10:50, 일반 11:00에 열려요(이틀 모두).',
   '손목밴드 돌려쓰기를 포함한 양도·재판매는 불법이에요. 적발되면 바로 퇴장돼요.',
   '캠핑형이 아닌 도심형 페스티벌이라, 꼭 필요한 물건만 담은 작은 가방만 들고 들어갈 수 있어요.',
   '우선입장권은 1인 1매이고 별도 부스에서 입장해요. 일행과 같이 들어갈 수 없어요.',
+  '10월 18일(일) 공연이 취소됐어요. 그날 유효한 티켓(우선입장권 포함)은 관람 여부와 관계없이 전액 환불돼요. ' +
+    '결제 수단별 환불 절차는 공식 인스타의 10/18 환불 안내 카드뉴스를 보세요.',
+  '현장 분실물 목록은 민트페이퍼 홈페이지(GMF2026 분실물 공지)에 있어요. 내 물건이 있으면 날짜와 목록 번호, ' +
+    '내 물건임을 보여 주는 사진을 공식 인스타 10/20 글에 적힌 메일로 보내요.',
 ]
 
 // Stage colors and icons belong to the festival's design (series/grandMint.ts), keyed the same way.

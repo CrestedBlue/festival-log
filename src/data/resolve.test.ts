@@ -39,7 +39,7 @@ describe('resolveFestival', () => {
   })
 
   test('carries the line-up images of a catalog festival', () => {
-    expect(resolveFestival(makeUserData(), HERO_ROCK_2026_ID)?.lineup.map((image) => image.label)).toEqual(['1차 라인업'])
+    expect(resolveFestival(makeUserData(), HERO_ROCK_2026_ID)?.lineup.map((image) => image.label)).toEqual(['1차 라인업', '2차 라인업'])
     expect(resolveFestival(makeUserData(), GRAND_MINT_2026_ID)?.lineup).toEqual([])
   })
 

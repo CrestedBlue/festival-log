@@ -62,7 +62,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     notices: GRAND_MINT_2026_NOTICES,
     lineup: [],
     guides: [],
-    updatedAt: '2026-10-26',
+    updatedAt: '2026-10-27',
   },
   {
     id: HERO_ROCK_2026_ID,

@@ -168,4 +168,14 @@ export const ARTIST_NAMES: readonly (readonly string[])[] = [
   ['크라잉넛', 'Crying Nut'],
   ['마티 프리드먼', 'MARTY FRIEDMAN'],
   ['하나비에', 'HANABIE.'],
+  // 히어로 락 페스티벌 (2차 라인업, 한글·영문 포스터)
+  ['노브레인', 'No Brain'],
+  ['크랙샷', 'CRACKSHOT'],
+  ['더 픽스', 'THE FIX'],
+  ['크래쉬', 'CRASH'],
+  ['디아블로', 'DIABLO'],
+  ['소란', 'SORAN'],
+  ['해리빅버튼', 'HarryBigButton'],
+  ['아시안체어샷', 'ASIAN CHAIRSHOT'],
+  ['아디오스오디오', 'Adios Audio'],
 ]
