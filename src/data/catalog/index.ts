@@ -207,7 +207,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     lineup: [],
     guides: [],
     tickets: BUSAN_ROCK_2026_TICKETS,
-    updatedAt: '2026-10-28',
+    updatedAt: '2026-10-29',
   },
 ]
 

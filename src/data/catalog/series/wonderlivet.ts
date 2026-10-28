@@ -22,9 +22,9 @@ export const WONDERLIVET: FestivalSeries = {
   venue: { name: '킨텍스 제2전시장 7–10홀', lat: 37.664738, lng: 126.74187 },
   pins: () => bigMapPins(CODE, VENUE, STATIONS),
   sources: [
-    // The timetable (2026-09-29) and full line-up (08-27) posts were read; the newer ones are artist videos. The
+    // The timetable (2026-09-29) and full line-up (08-27) posts were read; the newer ones (to 10/28, read 2026-10-29) are artist videos. The
     // official site (wonderli.vet: FAQ, directions) is one page with no dated posts, read in full on 2026-10-27.
-    { method: '인스타', value: '@wonderlivet', lastScrapedPostDate: '2026-09-29' },
+    { method: '인스타', value: '@wonderlivet', lastScrapedPostDate: '2026-10-28' },
   ],
   // From its Instagram and the 2026 timetable (2026-10-27): the pixel robot on a black circle as on the profile, the
   // timetable's orange darkened for the main color (cream text on it). The timetable draws WONDER STAGE in solid

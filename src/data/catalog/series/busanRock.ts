@@ -26,8 +26,8 @@ export const BUSAN_ROCK: FestivalSeries = {
   venue: { name: '삼락생태공원', lat: 35.165725, lng: 128.97382 },
   pins: () => [...PINS],
   sources: [
-    // Only the profile was looked at (2026-10-28): the daily collection starts it.
-    { method: '인스타', value: '@busanrockfest', lastScrapedPostDate: null },
+    // The newest 12 posts were read on 2026-10-29: the 10/12 lost-and-found post is the only one the site lacks.
+    { method: '인스타', value: '@busanrockfest', lastScrapedPostDate: '2026-10-12' },
     // The 2026 notices were gone through by title up to the DAY3 post of 2026-10-05 (2026-10-28).
     { method: '공홈', value: 'https://busanrockfestival.com/notice/', lastScrapedPostDate: '2026-10-05' },
   ],

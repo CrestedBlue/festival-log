@@ -17,12 +17,16 @@ import { SELLERS, type TicketSeller } from './tickets'
  */
 export { BUSAN_ROCK_2026_ID }
 
-/** Admin notices, summarised from the official site's timetable, line-up change and ticket pages (2026). */
+/**
+ * Admin notices, summarised from the official site's timetable, line-up change and ticket pages, and the Instagram
+ * lost-and-found post of 2026-10-12.
+ */
 export const BUSAN_ROCK_2026_NOTICES: readonly string[] = [
   '게이트는 사흘 모두 10:00에 열려요. 무대는 SAMROCK·GREEN·RIVER·WAVE·HIDDEN 5곳이고, HIDDEN 스테이지는 무료예요.',
   '10월 2일(금) 삼락 스테이지 헤드라이너가 MEGADETH로 바뀌었어요(최종 라인업 발표 뒤 변동). 정확한 시작 시간은 현장에서 안내되고, MEGADETH는 10/2·10/3 이틀 모두 공연해요.',
   'HIDDEN 스테이지에서는 저녁에 부락 대운동회, 부락 노래자랑, 루키 시상식 같은 HIDDEN EVENT가 열려요.',
   '정규 티켓(1·2·3일권)은 YES24 티켓에서 팔아요. 셔틀버스(카카오 T, k.ride)와 캠핑 안내는 공식 홈페이지에 있어요.',
+  '분실물은 10/12–10/18에 네이버 폼으로 접수받아 10/23까지 착불로 보냈어요. 찾아가지 않은 분실물과 카드류(신분증·카드·학생증 등)는 사상경찰서로 넘어갔으니 경찰민원24에서 찾아보세요.',
 ]
 
 /** Official ticket seller: the YES24 page the official site's TICKET menu links. */

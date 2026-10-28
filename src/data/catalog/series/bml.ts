@@ -28,8 +28,8 @@ export const BML: FestivalSeries = {
   venue: { name: '문화비축기지', lat: 37.5708, lng: 126.8942 },
   pins: () => [...PINS],
   // 2026 data came from the Mint Paper site (mintpaper.co.kr/festivals/170: the notices of 2026-02-12 to 06-04). The
-  // Instagram account has not been read yet: the daily collection starts it.
-  sources: [{ method: '인스타', value: '@beautifulmintlife_', lastScrapedPostDate: null }],
+  // newest 12 Instagram posts were read on 2026-10-29: 2026 highlight clips and a Chuseok greeting (09/23), nothing to add.
+  sources: [{ method: '인스타', value: '@beautifulmintlife_', lastScrapedPostDate: '2026-09-23' }],
   // From the 2026 timetable and notice pages (2026-10-28): its name in green serif with the butterfly on a pale mint
   // circle (scripts/art/build-bml.mjs), the timetable's green darkened for the main color. Stage colors from the
   // official map's legend (Mint Breeze green, Loving Forest pink, Flood blue), Breeze a teal beside Mint's green.
