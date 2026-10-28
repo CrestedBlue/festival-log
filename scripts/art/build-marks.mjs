@@ -13,7 +13,7 @@ const SVG_MARKS = {
   pentaport: { viewBox: '96 12 128 128' },
   wonderlivet: { viewBox: '96 12 128 128' },
 }
-const IMAGE_MARKS = ['herorock', 'jumf', 'cdf', 'bml', 'sjf']
+const IMAGE_MARKS = ['herorock', 'jumf', 'cdf', 'bml', 'sjf', 'letsrock']
 // 44px in the list, three times over for sharp phone screens
 const SIZE = 132
 

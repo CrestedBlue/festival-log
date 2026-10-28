@@ -236,4 +236,6 @@ export const ARTIST_NAMES: readonly (readonly string[])[] = [
   ['웨이브투어스', 'wave to earth'],
   ['고상지', 'SANGJI KOH'],
   ['대니 구', 'DANNY KOO'],
+  // 렛츠락 페스티벌 2026 (타임테이블 표기)
+  ['PITTA (강형호)', '강형호', 'PITTA'],
 ]

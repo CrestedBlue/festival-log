@@ -39,3 +39,7 @@ export const BML_2026_KEY = `${BML_SERIES}2026`
 export const SJF_SERIES = 'sjf'
 export const SJF_2026_ID = '681b3da1-ab63-4a63-b986-aa369d7f6b7f'
 export const SJF_2026_KEY = `${SJF_SERIES}2026`
+
+export const LETS_ROCK_SERIES = 'letsrock'
+export const LETS_ROCK_2026_ID = 'f17b6c80-c82a-4aeb-9423-183f45272a7c'
+export const LETS_ROCK_2026_KEY = `${LETS_ROCK_SERIES}2026`
