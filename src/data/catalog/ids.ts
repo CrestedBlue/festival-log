@@ -29,3 +29,8 @@ export const WONDERLIVET_2026_KEY = `${WONDERLIVET_SERIES}2026`
 export const CDF_SERIES = 'cdf'
 export const CDF_2026_ID = '7c1f8165-c40f-46ea-ae4e-2f0bfef85c7f'
 export const CDF_2026_KEY = `${CDF_SERIES}2026`
+
+/** Beautiful Mint Life: its own short name (BML2026). */
+export const BML_SERIES = 'bml'
+export const BML_2026_ID = '8c665337-cb67-4307-a2e0-576179fed0f7'
+export const BML_2026_KEY = `${BML_SERIES}2026`

@@ -3,6 +3,7 @@ import type { Festival } from '../schema'
 import type { GuideSet } from './guide'
 import type { LineupImage } from './lineup'
 import type { TicketSeller } from './tickets'
+import { BML_2026_GUIDES, BML_2026_NOTICES, BML_2026_TICKETS, createBml2026 } from './bml2026'
 import { CDF_2026_LINEUP, CDF_2026_NOTICES, CDF_2026_TICKETS, createCdf2026 } from './cdf2026'
 import { GRAND_MINT_2026_NOTICES, GRAND_MINT_2026_TICKETS, createGrandMint2026 } from './grandMint2026'
 import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICES, HERO_ROCK_2026_TICKETS, createHeroRock2026 } from './heroRock2026'
@@ -11,6 +12,9 @@ import { PENTAPORT_2025_NOTICES, createPentaport2025 } from './pentaport2025'
 import { PENTAPORT_2026_GUIDES, PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
 import { WONDERLIVET_2026_GUIDES, WONDERLIVET_2026_NOTICES, WONDERLIVET_2026_TICKETS, createWonderlivet2026 } from './wonderlivet2026'
 import {
+  BML_2026_ID,
+  BML_2026_KEY,
+  BML_SERIES,
   CDF_2026_ID,
   CDF_2026_KEY,
   CDF_SERIES,
@@ -143,6 +147,18 @@ export const CATALOG: readonly CatalogEntry[] = [
     lineup: CDF_2026_LINEUP,
     guides: [],
     tickets: CDF_2026_TICKETS,
+    updatedAt: '2026-10-28',
+  },
+  {
+    id: BML_2026_ID,
+    legacyIds: [],
+    series: BML_SERIES,
+    key: BML_2026_KEY,
+    create: createBml2026,
+    notices: BML_2026_NOTICES,
+    lineup: [],
+    guides: BML_2026_GUIDES,
+    tickets: BML_2026_TICKETS,
     updatedAt: '2026-10-28',
   },
 ]
