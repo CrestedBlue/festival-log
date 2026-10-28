@@ -31,17 +31,9 @@
   border-color: color-mix(in oklab, var(--accent-fill) 45%, var(--color-line));
   color: var(--accent-text);
   text-decoration: none;
-  transition:
-    background-color var(--duration-fast),
-    color var(--duration-fast);
 }
 
-.ticket-seller:hover,
-.ticket-seller:focus-visible {
-  background: var(--accent-fill);
-  color: var(--accent-on);
-}
-
+/* No fill on hover or press (the user's call): just a small push down. Keyboard focus gets the app's outline. */
 .ticket-seller:active {
   transform: translateY(1px);
 }
