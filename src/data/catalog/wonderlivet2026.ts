@@ -3,6 +3,7 @@ import type { GuideSet } from './guide'
 import { WONDERLIVET_2026_ID, WONDERLIVET_2026_KEY as KEY } from './ids'
 import { WONDERLIVET } from './series/wonderlivet'
 import { stageLook } from './series/theme'
+import { SELLERS, type TicketSeller } from './tickets'
 
 /**
  * 원더리벳 2026 (WONDERLIVET 2026, 2026-11-20 – 11-22, KINTEX halls 7–10, Goyang).
@@ -26,6 +27,9 @@ export const WONDERLIVET_2026_NOTICES: readonly string[] = [
   '오는 길: 킨텍스역(GTX-A) 4·5번 출구, 대화역(3호선) 2번 출구에서 버스나 걸어서, 버스는 킨텍스·킨텍스 제2전시장 정류장. 차는 내비에 "킨텍스 제2전시장"(관람 주차 할인 없음).',
   '현장 판매는 예매가 끝난 뒤 남은 표만, 관람 당일 10:30부터 해요(진행 여부는 공식 SNS에서 공지). 예매·취소 마감은 관람 전날 11:00예요.',
 ]
+
+/** Official ticket sellers, in the order the official site's TICKET section links them (wonderli.vet). */
+export const WONDERLIVET_2026_TICKETS: readonly TicketSeller[] = [SELLERS.melon(213793), SELLERS.yes24(59840), SELLERS.ticketlink(65048)]
 
 /** No official guide pages yet: the FAQ is text (in the notices); the festival map is still to come. */
 export const WONDERLIVET_2026_GUIDES: readonly GuideSet[] = []

@@ -55,6 +55,7 @@ export default function App() {
           notices={resolved?.notices ?? []}
           guides={resolved?.guides ?? []}
           sources={resolved?.sources ?? []}
+          tickets={resolved?.tickets ?? []}
         />
       )
     }

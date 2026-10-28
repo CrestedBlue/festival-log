@@ -3,6 +3,7 @@ import { EditIcon } from '../../components/icons'
 import type { GuideSet } from '../../data/catalog/guide'
 import { sourceHref, sourceLabel } from '../../data/catalog/series/sources'
 import type { CollectionSource } from '../../data/catalog/series/types'
+import type { TicketSeller } from '../../data/catalog/tickets'
 import { updateData } from '../../data/store'
 import { setTicketLink } from '../../data/userData'
 import { linkLabel, parseTicketLink } from '../../lib/ticketLink'
@@ -13,12 +14,14 @@ interface Props {
   festivalId: string
   /** Saved on this device by the user. */
   ticketLink: string | null
-  /** From the festival catalog (admin). */
+  /** Things to know before going, from the festival catalog (admin). */
   notices: readonly string[]
   /** Official guide pages (checklist, venue map, …) from the catalog (admin). */
   guides: readonly GuideSet[]
   /** Official channels (Instagram, website) from the catalog (admin). */
   sources: readonly CollectionSource[]
+  /** Official ticket sellers of this edition from the catalog (admin). */
+  tickets: readonly TicketSeller[]
 }
 
 const CHANNEL_NAMES: Record<CollectionSource['method'], string> = { 인스타: '인스타그램', 공홈: '공식 홈페이지' }
@@ -98,13 +101,26 @@ function TicketLink({ festivalId, ticketLink }: Pick<Props, 'festivalId' | 'tick
   )
 }
 
-export function InfoView({ festivalId, ticketLink, notices, guides, sources }: Props) {
+export function InfoView({ festivalId, ticketLink, notices, guides, sources, tickets }: Props) {
   return (
     <div className="info">
       <section className="panel" aria-labelledby="info-ticket">
-        <h2 id="info-ticket" className="panel__title">
-          티켓
-        </h2>
+        <div className="ticket-head">
+          <h2 id="info-ticket" className="panel__title">
+            티켓
+          </h2>
+          {tickets.length > 0 && (
+            <ul className="ticket-sellers" aria-label="공식 예매처">
+              {tickets.map((seller) => (
+                <li key={seller.url}>
+                  <a className="chip chip--compact ticket-seller" href={seller.url} target="_blank" rel="noopener noreferrer">
+                    {seller.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
         <TicketLink key={festivalId} festivalId={festivalId} ticketLink={ticketLink} />
       </section>
       {sources.length > 0 && (
@@ -126,7 +142,7 @@ export function InfoView({ festivalId, ticketLink, notices, guides, sources }: P
       )}
       <section className="panel" aria-labelledby="info-notices">
         <h2 id="info-notices" className="panel__title">
-          주의사항
+          안내
         </h2>
         {notices.length > 0 ? (
           <ul className="notice-list">
@@ -135,7 +151,7 @@ export function InfoView({ festivalId, ticketLink, notices, guides, sources }: P
             ))}
           </ul>
         ) : (
-          <p className="hint">아직 등록된 주의사항이 없어요.</p>
+          <p className="hint">아직 등록된 안내가 없어요.</p>
         )}
       </section>
       {guides.map((guide, i) => (

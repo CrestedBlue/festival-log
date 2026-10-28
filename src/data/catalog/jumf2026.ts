@@ -9,6 +9,7 @@ import type { GuideImage, GuideSet } from './guide'
 import { JUMF_2026_ID, JUMF_2026_KEY as KEY } from './ids'
 import { JUMF } from './series/jumf'
 import { stageLook } from './series/theme'
+import { SELLERS, type TicketSeller } from './tickets'
 
 /**
  * 2026 전주얼티밋뮤직페스티벌 (JUMF, 2026-08-14 – 08-16, Jeonju University artificial-turf fields, Jeonju).
@@ -29,6 +30,9 @@ export const JUMF_2026_NOTICES: readonly string[] = [
   '전주대 안 주차는 무료지만(통제구역 제외) 많이 막혀요. 대중교통을 권해요.',
   '셔틀버스(전주역 ↔ 전주대)는 11:50 전주역 첫차부터 24:00 전주대 막차까지 선착순이에요. 전주대 정류장은 교수연구동 주차장(티켓부스 근처)이고, 돌아가는 차는 전북도청·한옥마을을 거쳐요.',
 ]
+
+/** Official ticket seller: the YES24 page the official homepage links in its TICKET section. */
+export const JUMF_2026_TICKETS: readonly TicketSeller[] = [SELLERS.yes24(58283)]
 
 const OFFICIAL = '출처: 전주얼티밋뮤직페스티벌 공식 홈페이지 (2026)'
 const page = (src: string, alt: string): GuideImage => ({ src, alt, width: 1080, height: 1350 })

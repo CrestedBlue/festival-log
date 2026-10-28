@@ -4,6 +4,7 @@ import type { Festival } from '../schema'
 import { HERO_ROCK_2026_ID } from './ids'
 import type { LineupImage } from './lineup'
 import { HERO_ROCK } from './series/heroRock'
+import { SELLERS, type TicketSeller } from './tickets'
 
 /**
  * 2026 히어로 락 페스티벌 - 인천 (2026-12-18/20, Songdo Convensia, Incheon).
@@ -24,6 +25,9 @@ export const HERO_ROCK_2026_NOTICES: readonly string[] = [
   '일반 티켓은 10월 28일(수) 오후 2시 멜론티켓에서 열려요. 3일권 129,000원, 2일권(금토·토일·금일) 119,000원, ' +
     '1일권 77,000원이고 1인 4매까지예요. 매진되면 취소표로만 살 수 있어요.',
 ]
+
+/** Official ticket seller: Melon Ticket, as the Instagram ticket posts say. */
+export const HERO_ROCK_2026_TICKETS: readonly TicketSeller[] = [SELLERS.melon(214033)]
 
 /** Official line-up posters in the order they were announced (add each new one at the end). */
 export const HERO_ROCK_2026_LINEUP: readonly LineupImage[] = [

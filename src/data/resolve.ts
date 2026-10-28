@@ -3,6 +3,7 @@ import type { GuideSet } from './catalog/guide'
 import type { LineupImage } from './catalog/lineup'
 import { SERIES } from './catalog/series'
 import type { CollectionSource, FestivalTheme } from './catalog/series/types'
+import type { TicketSeller } from './catalog/tickets'
 import type { Festival, UserData } from './schema'
 
 export interface ResolvedFestival {
@@ -16,6 +17,8 @@ export interface ResolvedFestival {
   guides: readonly GuideSet[]
   /** The festival's official channels (Instagram, website), shown on the info tab (catalog only). */
   sources: readonly CollectionSource[]
+  /** This edition's official ticket sellers, chips by the info tab's ticket title (catalog only). */
+  tickets: readonly TicketSeller[]
   /** The festival's own design: main color, title picture, stage looks (catalog only). */
   theme: FestivalTheme | null
   /** Festival code and year, shown above the title as "GMF 2026" (catalog only). */
@@ -50,6 +53,7 @@ export function resolveFestival(data: UserData, festivalId: string): ResolvedFes
       lineup: entry.lineup,
       guides: entry.guides,
       sources: series?.sources ?? [],
+      tickets: entry.tickets,
       theme: series?.theme ?? null,
       // The yearly code is the festival code plus the year ("gmf2026").
       edition: { series: entry.series, year: entry.key.slice(entry.series.length) },
@@ -57,7 +61,7 @@ export function resolveFestival(data: UserData, festivalId: string): ResolvedFes
   }
   const archived = data.archivedFestivals.find((f) => f.id === festivalId)
   return archived
-    ? { source: 'archived', festival: archived, notices: [], lineup: [], guides: [], sources: [], theme: null, edition: null }
+    ? { source: 'archived', festival: archived, notices: [], lineup: [], guides: [], sources: [], tickets: [], theme: null, edition: null }
     : null
 }
 

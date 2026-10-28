@@ -2,6 +2,7 @@ import type { Festival } from '../schema'
 import { GRAND_MINT_2026_ID, GRAND_MINT_2026_KEY as KEY } from './ids'
 import { GRAND_MINT } from './series/grandMint'
 import { stageLook } from './series/theme'
+import { SELLERS, type TicketSeller } from './tickets'
 
 /**
  * Grand Mint Festival 2026 (2026-10-17/18, Olympic Park, Seoul).
@@ -28,6 +29,9 @@ export const GRAND_MINT_2026_NOTICES: readonly string[] = [
   '현장 분실물 목록은 민트페이퍼 홈페이지(GMF2026 분실물 공지)에 있어요. 내 물건이 있으면 날짜와 목록 번호, ' +
     '내 물건임을 보여 주는 사진을 공식 인스타 10/20 글에 적힌 메일로 보내요.',
 ]
+
+/** Official ticket seller: the NOL ticket page the timetable and notices come from. */
+export const GRAND_MINT_2026_TICKETS: readonly TicketSeller[] = [SELLERS.nol(26010721)]
 
 // Stage colors and icons belong to the festival's design (series/grandMint.ts), keyed the same way.
 const STAGES = {
