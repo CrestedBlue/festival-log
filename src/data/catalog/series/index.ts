@@ -1,4 +1,5 @@
 import { BML } from './bml'
+import { BUSAN_ROCK } from './busanRock'
 import { CDF } from './cdf'
 import { GRAND_MINT } from './grandMint'
 import { HERO_ROCK } from './heroRock'
@@ -22,4 +23,5 @@ export const SERIES: Readonly<Record<string, FestivalSeries>> = {
   [BML.code]: BML,
   [SJF.code]: SJF,
   [LETS_ROCK.code]: LETS_ROCK,
+  [BUSAN_ROCK.code]: BUSAN_ROCK,
 }

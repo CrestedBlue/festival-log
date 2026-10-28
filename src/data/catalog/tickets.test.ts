@@ -7,6 +7,7 @@ describe('SELLERS', () => {
   test("builds each seller's product page from its product number", () => {
     expect(SELLERS.melon(214033)).toEqual({ name: '멜론티켓', url: 'https://ticket.melon.com/performance/index.htm?prodId=214033' })
     expect(SELLERS.yes24(58283)).toEqual({ name: 'YES24', url: 'https://ticket.yes24.com/Perf/58283' })
+    expect(SELLERS.yes24Special(58933)).toEqual({ name: 'YES24', url: 'https://ticket.yes24.com/Special/58933' })
     expect(SELLERS.ticketlink(65048)).toEqual({ name: '티켓링크', url: 'https://www.ticketlink.co.kr/product/65048' })
     expect(SELLERS.nol(26010721)).toEqual({ name: 'NOL 티켓', url: 'https://nol.yanolja.com/ticket/products/26010721' })
     expect(SELLERS.naver(1754451, 8124828)).toEqual({ name: '네이버 예약', url: 'https://booking.naver.com/booking/12/bizes/1754451/items/8124828' })

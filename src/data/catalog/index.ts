@@ -4,6 +4,7 @@ import type { GuideSet } from './guide'
 import type { LineupImage } from './lineup'
 import type { TicketSeller } from './tickets'
 import { BML_2026_GUIDES, BML_2026_NOTICES, BML_2026_TICKETS, createBml2026 } from './bml2026'
+import { BUSAN_ROCK_2026_NOTICES, BUSAN_ROCK_2026_TICKETS, createBusanRock2026 } from './busanRock2026'
 import { CDF_2026_LINEUP, CDF_2026_NOTICES, CDF_2026_TICKETS, createCdf2026 } from './cdf2026'
 import { GRAND_MINT_2026_NOTICES, GRAND_MINT_2026_TICKETS, createGrandMint2026 } from './grandMint2026'
 import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICES, HERO_ROCK_2026_TICKETS, createHeroRock2026 } from './heroRock2026'
@@ -17,6 +18,9 @@ import {
   BML_2026_ID,
   BML_2026_KEY,
   BML_SERIES,
+  BUSAN_ROCK_2026_ID,
+  BUSAN_ROCK_2026_KEY,
+  BUSAN_ROCK_SERIES,
   CDF_2026_ID,
   CDF_2026_KEY,
   CDF_SERIES,
@@ -191,6 +195,18 @@ export const CATALOG: readonly CatalogEntry[] = [
     lineup: [],
     guides: [],
     tickets: LETS_ROCK_2026_TICKETS,
+    updatedAt: '2026-10-28',
+  },
+  {
+    id: BUSAN_ROCK_2026_ID,
+    legacyIds: [],
+    series: BUSAN_ROCK_SERIES,
+    key: BUSAN_ROCK_2026_KEY,
+    create: createBusanRock2026,
+    notices: BUSAN_ROCK_2026_NOTICES,
+    lineup: [],
+    guides: [],
+    tickets: BUSAN_ROCK_2026_TICKETS,
     updatedAt: '2026-10-28',
   },
 ]
