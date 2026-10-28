@@ -10,7 +10,7 @@ import type { FestivalSeries } from './types'
  * its big area map (scripts/map/layers/wonderlivet/), and the places come from it — the exhibition centre, the
  * middle of each station of the official directions on its track, and their numbered exits (OpenStreetMap).
  */
-const VENUE: Place = { id: 'zone-venue', name: '킨텍스 제2전시장 7–10홀 · 공연장', caption: '킨텍스 제2전시장', kind: 'stage', detail: '손목밴드 부스에서 밴드를 차고 들어가요' } // named on the map: it shows from further out
+const VENUE: Place = { id: 'zone-venue', name: '킨텍스 제2전시장 7–10홀 · 공연장', caption: '킨텍스 제2전시장', kind: 'stage', detail: '티켓부스에서 손목밴드를 차고 들어가요' } // named on the map: it shows from further out
 const STATIONS: Record<string, StationPlace> = {
   kintex: { id: 'zone-kintex-station', name: '킨텍스역 (GTX-A)', kind: 'etc', detail: '4·5번 출구로 나와요 · 행사장까지 직선 약 500 m', station: '킨텍스역', line: 'GTX-A' },
   daehwa: { id: 'zone-daehwa-station', name: '대화역 (3호선)', kind: 'etc', detail: '2번 출구로 나와 킨텍스 방면 버스나 걸어서 · 직선 약 1.3 km', station: '대화역', line: '3호선' },
