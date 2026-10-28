@@ -178,4 +178,10 @@ export const ARTIST_NAMES: readonly (readonly string[])[] = [
   ['해리빅버튼', 'HarryBigButton'],
   ['아시안체어샷', 'ASIAN CHAIRSHOT'],
   ['아디오스오디오', 'Adios Audio'],
+  // 카운트다운 판타지 2026-2027 (1차 라인업 포스터의 한글·영문 표기)
+  ['로우하이로우', 'LOW HIGH LOW'],
+  ['에이엠피', 'AxMxP'],
+  ['FT아일랜드', 'FTISLAND'],
+  ['오이스터즈', 'OYSTERS'],
+  ['포져군단', 'POSER'],
 ]

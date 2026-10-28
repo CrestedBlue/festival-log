@@ -1,4 +1,4 @@
-import { GRAND_MINT_SERIES, HERO_ROCK_SERIES, PENTAPORT_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
+import { CDF_SERIES, GRAND_MINT_SERIES, HERO_ROCK_SERIES, PENTAPORT_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
 import { isInsideBounds, type LatLng, type LatLngBounds } from '../../lib/geo'
 import gmfMeta from '../../assets/maps/gmf.json'
 import heroRockMeta from '../../assets/maps/herorock.json'
@@ -196,6 +196,10 @@ const folder = (prefix: string, files: Record<string, string>) =>
 // The layered maps redrawn from the official site maps (scripts/map/layers/<code>/): the big area map's ground under the
 // venue map's ground and operations; their pins, names and the stations are drawn by the app. A festival with no
 // official site map yet has the big area map alone, its venue and stations drawn by the app.
+const KINTEX_MAP = withImages(
+  parseMapMeta(wonderlivetMeta),
+  folder('../../assets/maps/wonderlivet/', import.meta.glob<string>('../../assets/maps/wonderlivet/**/*.svg', { eager: true, query: '?url', import: 'default' })),
+)
 const MAPS: Record<string, FestivalMap> = {
   [GRAND_MINT_SERIES]: withImages(
     parseMapMeta(gmfMeta),
@@ -209,10 +213,9 @@ const MAPS: Record<string, FestivalMap> = {
     parseMapMeta(heroRockMeta),
     folder('../../assets/maps/herorock/', import.meta.glob<string>('../../assets/maps/herorock/**/*.svg', { eager: true, query: '?url', import: 'default' })),
   ),
-  [WONDERLIVET_SERIES]: withImages(
-    parseMapMeta(wonderlivetMeta),
-    folder('../../assets/maps/wonderlivet/', import.meta.glob<string>('../../assets/maps/wonderlivet/**/*.svg', { eager: true, query: '?url', import: 'default' })),
-  ),
+  [WONDERLIVET_SERIES]: KINTEX_MAP,
+  // Same halls of KINTEX's second exhibition centre as Wonderlivet: its area map (drawn for Wonderlivet), naming CDF.
+  [CDF_SERIES]: { ...KINTEX_MAP, attribution: KINTEX_MAP.attribution.replace('원더리벳 2026', '카운트다운 판타지') },
 }
 
 /** The map of a festival code; use festivalMapFor (data/catalog) to go from a festival id. */

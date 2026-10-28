@@ -24,3 +24,8 @@ export const JUMF_2026_KEY = `${JUMF_SERIES}2026`
 export const WONDERLIVET_SERIES = 'wonderlivet'
 export const WONDERLIVET_2026_ID = '3c7a3dfb-02b0-4721-a49c-f7c04d2009f9'
 export const WONDERLIVET_2026_KEY = `${WONDERLIVET_SERIES}2026`
+
+/** Countdown Fantasy: its own short name (#CDF20262027). An edition runs over New Year: its year is the one it starts in. */
+export const CDF_SERIES = 'cdf'
+export const CDF_2026_ID = '7c1f8165-c40f-46ea-ae4e-2f0bfef85c7f'
+export const CDF_2026_KEY = `${CDF_SERIES}2026`

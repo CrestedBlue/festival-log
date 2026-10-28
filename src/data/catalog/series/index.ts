@@ -1,3 +1,4 @@
+import { CDF } from './cdf'
 import { GRAND_MINT } from './grandMint'
 import { HERO_ROCK } from './heroRock'
 import { JUMF } from './jumf'
@@ -14,4 +15,5 @@ export const SERIES: Readonly<Record<string, FestivalSeries>> = {
   [PENTAPORT.code]: PENTAPORT,
   [JUMF.code]: JUMF,
   [WONDERLIVET.code]: WONDERLIVET,
+  [CDF.code]: CDF,
 }

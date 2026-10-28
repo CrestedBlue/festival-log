@@ -30,8 +30,12 @@ export const GRAND_MINT_2026_NOTICES: readonly string[] = [
     '내 물건임을 보여 주는 사진을 공식 인스타 10/20 글에 적힌 메일로 보내요.',
 ]
 
-/** Official ticket seller: the NOL ticket page the timetable and notices come from. */
-export const GRAND_MINT_2026_TICKETS: readonly TicketSeller[] = [SELLERS.nol(26010721)]
+/**
+ * Official ticket sellers: the NOL ticket page the timetable and notices come from, and the YES24 and Ticketlink pages
+ * Mint Paper's link page (linktr.ee/mintpaper) lists with it. The Naver booking it also lists no longer names the
+ * festival, so it is left out.
+ */
+export const GRAND_MINT_2026_TICKETS: readonly TicketSeller[] = [SELLERS.nol(26010721), SELLERS.yes24(59339), SELLERS.ticketlink(64509)]
 
 // Stage colors and icons belong to the festival's design (series/grandMint.ts), keyed the same way.
 const STAGES = {

@@ -6,10 +6,12 @@ export interface TicketSeller {
   url: string
 }
 
-/** The sellers festivals use, each building its product page from the number in that page's address. */
+/** The sellers festivals use, each building its product page from the numbers in that page's address. */
 export const SELLERS = {
   melon: (prodId: number): TicketSeller => ({ name: '멜론티켓', url: `https://ticket.melon.com/performance/index.htm?prodId=${prodId}` }),
   yes24: (perfId: number): TicketSeller => ({ name: 'YES24', url: `https://ticket.yes24.com/Perf/${perfId}` }),
   ticketlink: (productId: number): TicketSeller => ({ name: '티켓링크', url: `https://www.ticketlink.co.kr/product/${productId}` }),
   nol: (productId: number): TicketSeller => ({ name: 'NOL 티켓', url: `https://nol.yanolja.com/ticket/products/${productId}` }),
+  naver: (bizId: number, itemId: number): TicketSeller => ({ name: '네이버 예약', url: `https://booking.naver.com/booking/12/bizes/${bizId}/items/${itemId}` }),
+  twoTm: (ticketId: number): TicketSeller => ({ name: '2TM', url: `https://www.2tm.co.kr/ticket/${ticketId}` }),
 }

@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { GRAND_MINT_SERIES, HERO_ROCK_SERIES, JUMF_SERIES, PENTAPORT_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
+import { CDF_SERIES, GRAND_MINT_SERIES, HERO_ROCK_SERIES, JUMF_SERIES, PENTAPORT_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
 import { isInsideBounds } from '../../lib/geo'
 import { parseMapMeta, seriesMapFor, withImages } from './festivalMaps'
 
@@ -111,6 +111,7 @@ describe('seriesMapFor', () => {
   test.each([
     [HERO_ROCK_SERIES, ['인천대입구역', '센트럴파크역', '지식정보단지역']],
     [WONDERLIVET_SERIES, ['킨텍스역', '대화역']],
+    [CDF_SERIES, ['킨텍스역', '대화역']],
   ])('returns the big area map of %s with its venue and stations', (series, stations) => {
     const map = seriesMapFor(series)
     expect(map?.layers).toHaveLength(1)
@@ -125,6 +126,13 @@ describe('seriesMapFor', () => {
     expect(map?.labels.filter((l) => l.kind === 'building').length).toBeGreaterThan(2)
     const venue = map?.marks[0]
     expect(venue && map && isInsideBounds(venue, map.initialView)).toBe(true)
+  })
+
+  test('gives the two KINTEX festivals one area map, each naming its own festival', () => {
+    expect(seriesMapFor(CDF_SERIES)?.layers).toEqual(seriesMapFor(WONDERLIVET_SERIES)?.layers)
+    expect(seriesMapFor(WONDERLIVET_SERIES)?.attribution).toContain('원더리벳')
+    expect(seriesMapFor(CDF_SERIES)?.attribution).toContain('카운트다운 판타지')
+    expect(seriesMapFor(CDF_SERIES)?.attribution).not.toContain('원더리벳')
   })
 
   // big map's layer 1, small map's layers 1 and 2 (layer 3's pins are drawn by the app as icons, inside the venue);
