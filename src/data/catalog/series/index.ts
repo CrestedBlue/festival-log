@@ -4,6 +4,7 @@ import { GRAND_MINT } from './grandMint'
 import { HERO_ROCK } from './heroRock'
 import { JUMF } from './jumf'
 import { PENTAPORT } from './pentaport'
+import { SJF } from './sjf'
 import { WONDERLIVET } from './wonderlivet'
 import type { FestivalSeries } from './types'
 
@@ -18,4 +19,5 @@ export const SERIES: Readonly<Record<string, FestivalSeries>> = {
   [WONDERLIVET.code]: WONDERLIVET,
   [CDF.code]: CDF,
   [BML.code]: BML,
+  [SJF.code]: SJF,
 }

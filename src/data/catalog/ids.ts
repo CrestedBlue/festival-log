@@ -34,3 +34,8 @@ export const CDF_2026_KEY = `${CDF_SERIES}2026`
 export const BML_SERIES = 'bml'
 export const BML_2026_ID = '8c665337-cb67-4307-a2e0-576179fed0f7'
 export const BML_2026_KEY = `${BML_SERIES}2026`
+
+/** Seoul Jazz Festival: its own short name (#SJF26). */
+export const SJF_SERIES = 'sjf'
+export const SJF_2026_ID = '681b3da1-ab63-4a63-b986-aa369d7f6b7f'
+export const SJF_2026_KEY = `${SJF_SERIES}2026`

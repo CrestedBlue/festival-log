@@ -10,6 +10,7 @@ import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICES, HERO_ROCK_2026_TICKETS, 
 import { JUMF_2026_GUIDES, JUMF_2026_NOTICES, JUMF_2026_TICKETS, createJumf2026 } from './jumf2026'
 import { PENTAPORT_2025_NOTICES, createPentaport2025 } from './pentaport2025'
 import { PENTAPORT_2026_GUIDES, PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
+import { SJF_2026_NOTICES, SJF_2026_TICKETS, createSjf2026 } from './sjf2026'
 import { WONDERLIVET_2026_GUIDES, WONDERLIVET_2026_NOTICES, WONDERLIVET_2026_TICKETS, createWonderlivet2026 } from './wonderlivet2026'
 import {
   BML_2026_ID,
@@ -32,6 +33,9 @@ import {
   PENTAPORT_2025_ID,
   PENTAPORT_2025_KEY,
   PENTAPORT_SERIES,
+  SJF_2026_ID,
+  SJF_2026_KEY,
+  SJF_SERIES,
   WONDERLIVET_2026_ID,
   WONDERLIVET_2026_KEY,
   WONDERLIVET_SERIES,
@@ -159,6 +163,18 @@ export const CATALOG: readonly CatalogEntry[] = [
     lineup: [],
     guides: BML_2026_GUIDES,
     tickets: BML_2026_TICKETS,
+    updatedAt: '2026-10-28',
+  },
+  {
+    id: SJF_2026_ID,
+    legacyIds: [],
+    series: SJF_SERIES,
+    key: SJF_2026_KEY,
+    create: createSjf2026,
+    notices: SJF_2026_NOTICES,
+    lineup: [],
+    guides: [],
+    tickets: SJF_2026_TICKETS,
     updatedAt: '2026-10-28',
   },
 ]
