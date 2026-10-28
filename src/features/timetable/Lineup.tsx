@@ -1,10 +1,10 @@
-import type { LineupImage } from '../../data/catalog/lineup'
+import { newestFirst, type LineupImage } from '../../data/catalog/lineup'
 
-/** Before the timetable is out: the line-up posters, one under another in the order they were announced. */
+/** Before the timetable is out: the line-up posters, one under another, the latest announcement on top. */
 export function Lineup({ images }: { images: readonly LineupImage[] }) {
   return (
     <div className="lineup">
-      {images.map((image, i) => (
+      {newestFirst(images).map((image, i) => (
         <figure key={image.src} className="lineup__item">
           <figcaption className="lineup__label">{image.label}</figcaption>
           <img

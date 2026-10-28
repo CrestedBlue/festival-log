@@ -9,3 +9,6 @@ export interface LineupImage {
   width: number
   height: number
 }
+
+/** The catalog keeps posters in the order they were announced; the app shows the latest one on top. */
+export const newestFirst = (images: readonly LineupImage[]): LineupImage[] => [...images].reverse()
