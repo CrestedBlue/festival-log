@@ -24,8 +24,8 @@ export const CDF: FestivalSeries = {
   venue: { name: '킨텍스 제2전시장 7·8홀', lat: 37.664738, lng: 126.74187 },
   pins: () => bigMapPins(CODE, VENUE, STATIONS),
   // Every 2026-2027 post up to the show-times post of 2026-10-21 was read (2026-10-28); the ones before 9/22 are the
-  // last edition's.
-  sources: [{ method: '인스타', value: '@countdownfantasy', lastScrapedPostDate: '2026-10-21' }],
+  // last edition's. The 10/29 posts (group tickets, sponsor and MD calls; read 2026-10-30) add nothing for visitors.
+  sources: [{ method: '인스타', value: '@countdownfantasy', lastScrapedPostDate: '2026-10-29' }],
   // From the 2026-2027 line-up poster (2026-10-28): its logo on the night sky, lifted onto a night-blue circle
   // (scripts/art/build-cdf.mjs), and the poster's neon green darkened for the main color (cream text on it).
   // Stage icons and colors wait for the timetable.
