@@ -101,7 +101,7 @@ export const GRAND_MINT: FestivalSeries = {
   pins: () => [...markPins(), ...EXIT_PINS],
   // 2026 data came from the NOL ticket page. The account's newest 12 posts were read on 2026-10-27 (after the festival:
   // the 10/18 cancellation and refund, lost and found, stage clips).
-  sources: [{ method: '인스타', value: '@grandmintfestival', lastScrapedPostDate: '2026-10-20' }],
+  sources: [{ method: '인스타', value: '@grandmintfestival', lastScrapedPostDate: '2026-10-30' }],
   // From the design the user drew for the app (2026-10-21): deep green, leaves, a sun and a flower.
   theme: {
     accent: '#0f352f',

@@ -23,8 +23,8 @@ export const JUMF: FestivalSeries = {
   venue: { name: '전주대학교 인조잔디구장', lat: 35.81149, lng: 127.08738 },
   pins: () => [...PINS],
   sources: [
-    // The newest 12 posts were read on 2026-10-29: after the site's notices only MD and photo-sketch posts.
-    { method: '인스타', value: '@jumfesta', lastScrapedPostDate: '2026-10-05' },
+    // The newest 12 posts were read on 2026-10-31: after the site's notices only MD and photo-sketch posts.
+    { method: '인스타', value: '@jumfesta', lastScrapedPostDate: '2026-10-06' },
     // Every 2026 notice was gone through by title up to the lost-and-found post of 2026-08-19 (2026-10-22).
     { method: '공홈', value: 'https://www.jumf.co.kr/24', lastScrapedPostDate: '2026-08-19' },
   ],
