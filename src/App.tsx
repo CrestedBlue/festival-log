@@ -12,11 +12,13 @@ import { TimetableControls } from './features/timetable/TimetableControls'
 import { TimetableView } from './features/timetable/TimetableView'
 import { useHashRoute } from './hooks/useHashRoute'
 import { useNow } from './hooks/useNow'
+import { loadChunk } from './lib/chunkReload'
 import { FESTIVAL_TABS, homeTab, shownTab } from './lib/route'
 import { festivalMoment } from './lib/time'
 
-// Leaflet is the heaviest dependency, so it only loads when the map tab opens.
-const MapView = lazy(() => import('./features/map/MapView'))
+// Leaflet is the heaviest dependency, so it only loads when the map tab opens (after an update the old file can be
+// gone: see lib/chunkReload).
+const MapView = lazy(() => loadChunk(() => import('./features/map/MapView')))
 
 export default function App() {
   const { data, notice } = useAppState()

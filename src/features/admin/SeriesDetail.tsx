@@ -1,12 +1,13 @@
 import { Suspense, lazy, type KeyboardEvent } from 'react'
 import { sourceHref, sourceLabel } from '../../data/catalog/series/sources'
+import { loadChunk } from '../../lib/chunkReload'
 import type { CollectionSource } from '../../data/catalog/series/types'
 import { AdminTimetable } from './AdminTimetable'
 import type { FestivalOverview, SeriesOverview } from './overview'
 import { ADMIN_VIEWS, type AdminView } from './selection'
 
 // Leaflet is the heaviest dependency: load it when the map view opens.
-const AdminMap = lazy(() => import('./AdminMap'))
+const AdminMap = lazy(() => loadChunk(() => import('./AdminMap')))
 
 const VIEW_LABELS: Record<AdminView, string> = { timetable: '타임테이블', map: '지도', notices: '주의사항' }
 
