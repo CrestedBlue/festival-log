@@ -40,11 +40,13 @@ describe('createCdf2026', () => {
     expect(CDF_2026_NOTICES.join(' ')).toContain('13:30')
   })
 
-  test('has the first line-up poster, every act named for screen readers', () => {
-    expect(CDF_2026_LINEUP.map((l) => l.label)).toEqual(['1차 라인업'])
-    const [first] = CDF_2026_LINEUP
+  test('has the line-up posters in announcement order, every act named for screen readers', () => {
+    expect(CDF_2026_LINEUP.map((l) => l.label)).toEqual(['1차 라인업', '2차 라인업'])
+    const [first, second] = CDF_2026_LINEUP
     expect(first).toMatchObject({ width: 700, height: 875 })
     for (const act of ['극동아시아타이거즈', 'LOW HIGH LOW', 'FTISLAND', '포져군단', '혁오']) expect(first?.alt).toContain(act)
+    expect(second).toMatchObject({ width: 700, height: 875 })
+    for (const act of ['까치산', 'Dragon Pony', 'CNBLUE', '지소쿠리클럽', '캔트비블루', '터치드', '혁오']) expect(second?.alt).toContain(act)
   })
 
   test('is sold by the four sellers the official posts name', () => {

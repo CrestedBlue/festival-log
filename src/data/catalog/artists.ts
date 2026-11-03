@@ -184,6 +184,8 @@ export const ARTIST_NAMES: readonly (readonly string[])[] = [
   ['FT아일랜드', 'FTISLAND'],
   ['오이스터즈', 'OYSTERS'],
   ['포져군단', 'POSER'],
+  // 카운트다운 판타지 2026-2027 (2차 라인업 포스터의 한글·영문 표기)
+  ['지소쿠리클럽', 'jisokuryClub'],
   // 뷰티풀 민트 라이프 2026 (타임테이블의 한글·영문 표기)
   ['찬민', 'CHANMIN'],
   ['이츠', "IT'S"],

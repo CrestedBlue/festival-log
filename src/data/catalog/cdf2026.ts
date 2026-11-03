@@ -1,4 +1,5 @@
 import lineup1 from '../../assets/lineups/cdf2026-1.webp'
+import lineup2 from '../../assets/lineups/cdf2026-2.webp'
 import type { Festival } from '../schema'
 import { CDF_2026_ID } from './ids'
 import type { LineupImage } from './lineup'
@@ -7,7 +8,7 @@ import { SELLERS, type TicketSeller } from './tickets'
 
 /**
  * 카운트다운 판타지 2026-2027 (COUNTDOWN FANTASY 2026-2027, 2026-12-31 13:30 – 2027-01-01 05:00, KINTEX halls 7–8).
- * Source: the official Instagram (@countdownfantasy): the first line-up post (2026-10-06), the ticket posts
+ * Source: the official Instagram (@countdownfantasy): the first line-up post (2026-10-06), the second (2026-11-03), the ticket posts
  * (10-12, 10-13) and the show-times post (10-21); the notices on the NOL ticket page (nol.yanolja.com/ticket/products/26014568).
  * One day on the official posts ("12월 31일 단 하루") though it runs past midnight, so it starts and ends on 12-31.
  * The line-up is out but the timetable is not, so there are no stages or performances yet (three stages are announced).
@@ -18,7 +19,7 @@ export { CDF_2026_ID }
 /** Admin notices, summarised from the official Instagram posts and the NOL ticket page (2026). */
 export const CDF_2026_NOTICES: readonly string[] = [
   '12월 31일(목) 하루, 13:30부터 다음 날 1월 1일 새벽 5:00까지 이어져요. 무대는 3개예요.',
-  '티켓부스 여는 시간과 공연 시간은 나중에 나오는 타임테이블에서 안내돼요. 2차 라인업은 11월 3일(화)에 발표돼요.',
+  '티켓부스 여는 시간과 공연 시간은 나중에 나오는 타임테이블에서 안내돼요. 최종 라인업은 12월 1일(화)에 발표돼요.',
   '1일권 121,000원이고 1인 2매까지예요. 예매는 12월 30일(수) 오후 5시에 마감돼요.',
   '모바일 티켓은 관람 전날 예매처 앱에서 발급돼요. 캡처본·사본은 안 되고, 예매자 본인 신분증 원본을 꼭 챙기세요.',
   '밤샘 대기를 막으려고 우선입장권을 NOL에서만 따로 팔 예정이에요. NOL에서 공연 티켓을 산 사람만 1인 1매 살 수 있고, ' +
@@ -38,6 +39,16 @@ export const CDF_2026_LINEUP: readonly LineupImage[] = [
     alt:
       '카운트다운 판타지 2026-2027 1차 라인업 포스터: 극동아시아타이거즈, LOW HIGH LOW, THE SOLUTIONS, 실리카겔, AxMxP, ' +
       'FTISLAND, OYSTERS, ONEWE, IDIOTAPE, KARDI, 포져군단, 혁오 외. 2026년 12월 31일, 킨텍스 7·8홀',
+    width: 700,
+    height: 875,
+  },
+  {
+    src: lineup2,
+    label: '2차 라인업',
+    alt:
+      '카운트다운 판타지 2026-2027 2차 라인업 포스터: 극동아시아타이거즈, 까치산, Dragon Pony, Lacuna, LOW HIGH LOW, Redoor, ' +
+      'THE SOLUTIONS, 실리카겔, CNBLUE, AxMxP, FTISLAND, OYSTERS, ONEWE, IDIOTAPE, 지소쿠리클럽, KARDI, 캔트비블루, 터치드, ' +
+      '포져군단, 혁오 외. 2026년 12월 31일, 킨텍스 7·8홀. 최종 라인업은 12월 1일 발표',
     width: 700,
     height: 875,
   },

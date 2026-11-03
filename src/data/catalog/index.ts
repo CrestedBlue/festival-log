@@ -159,7 +159,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     lineup: CDF_2026_LINEUP,
     guides: [],
     tickets: CDF_2026_TICKETS,
-    updatedAt: '2026-10-28',
+    updatedAt: '2026-11-04',
   },
   {
     id: BML_2026_ID,
