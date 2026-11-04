@@ -3,6 +3,7 @@ import type { Pin } from '../../data/schema'
 import { buildAnnotations, iconSize, placeAnnotations, type Annotation } from './annotations'
 import type { FestivalMap } from './festivalMaps'
 import { RANK } from './pinGroups'
+import { PIN_ICONS } from './pinIcons'
 
 const map = {
   icons: { toilet: '/toilet.svg', ticket: '/ticket.svg', station: '/station.svg' },
@@ -20,8 +21,19 @@ describe('buildAnnotations', () => {
     expect(keys(15)).toEqual(['label:0', 'pin:booth'])
   })
 
-  test('closer in: buildings and every pin the map has an icon for', () => {
-    expect(keys(16.5)).toEqual(['label:0', 'label:1', 'pin:wc', 'pin:booth'])
+  test('closer in: buildings and every pin, one the map has no icon for drawn with the app icon of its kind', () => {
+    expect(keys(16.5)).toEqual(['label:0', 'label:1', 'pin:wc', 'pin:booth', 'pin:mine'])
+    const mine = buildAnnotations(map, pins, 16.5, null).find((a) => a.key === 'pin:mine')!
+    expect(mine.view.type === 'pin' && mine.view.iconUrl).toBe(PIN_ICONS.etc)
+  })
+
+  test("a stage's name gets its icon in its colour (the festival's theme), and room for it", () => {
+    const stageMap = { ...map, labels: [{ text: 'MINT', kind: 'stage', stage: 'mint', minZoom: 15, lat: 37.4, lng: 126.6 }] } as unknown as FestivalMap
+    const [plain] = buildAnnotations(stageMap, [], 16, null)
+    const [marked] = buildAnnotations(stageMap, [], 16, null, new Set(), { mint: { color: '#2f8f62', icon: 'leaf' } })
+    expect(plain!.view.type === 'label' && plain!.view.stage).toBeNull()
+    expect(marked!.view.type === 'label' && marked!.view.stage).toEqual({ color: '#2f8f62', icon: 'leaf' })
+    expect(marked!.box.width).toBeGreaterThan(plain!.box.width)
   })
 
   test('a venue (a stage pin the map has an icon for) shows from much further out than other pins', () => {
@@ -75,7 +87,7 @@ describe('placeAnnotations', () => {
     priority,
     box: { left: -10, top: -10, width: 20, height: 20 },
     nudges: [],
-    view: { type: 'label', label: map.labels[0]!, iconUrl: null, font: 12 },
+    view: { type: 'label', label: map.labels[0]!, iconUrl: null, stage: null, font: 12 },
   })
 
   const x = (a: Annotation) => ({ x: (a as Annotation & { x: number }).x, y: 0 })

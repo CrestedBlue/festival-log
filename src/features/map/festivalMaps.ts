@@ -1,8 +1,13 @@
-import { CDF_SERIES, GRAND_MINT_SERIES, HERO_ROCK_SERIES, PENTAPORT_SERIES, SJF_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
+import { BML_SERIES, BUSAN_ROCK_SERIES, CDF_SERIES, GRAND_MINT_SERIES, HERO_ROCK_SERIES, JUMF_SERIES, LETS_ROCK_SERIES, PENTAPORT_SERIES, SJF_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
 import { isInsideBounds, type LatLng, type LatLngBounds } from '../../lib/geo'
+import bmlMeta from '../../assets/maps/bml.json'
+import busanRockMeta from '../../assets/maps/busanrock.json'
 import gmfMeta from '../../assets/maps/gmf.json'
 import heroRockMeta from '../../assets/maps/herorock.json'
+import jumfMeta from '../../assets/maps/jumf.json'
+import letsRockMeta from '../../assets/maps/letsrock.json'
 import pentaportMeta from '../../assets/maps/pentaport.json'
+import sjfMeta from '../../assets/maps/sjf.json'
 import wonderlivetMeta from '../../assets/maps/wonderlivet.json'
 
 /**
@@ -42,6 +47,9 @@ export interface MapLabel {
   /** Small coloured tags before the text (a station's lines: "인천1", or "5" and "9"). */
   badges?: readonly { text: string; colour: string }[]
   colour?: string
+  /** A stage's key in its festival's theme (the part of a stage id after the yearly code): the map draws that stage's
+   *  icon in its colour before the name, as the timetable does. */
+  stage?: string
 }
 
 export interface FestivalMap {
@@ -102,8 +110,9 @@ function toLabel(value: unknown, bounds: LatLngBounds, icons: Readonly<Record<st
     typeof l.lng === 'number' &&
     isInsideBounds({ lat: l.lat, lng: l.lng }, bounds) &&
     (l.icon === undefined || l.icon in icons) &&
+    (l.stage === undefined || (typeof l.stage === 'string' && /^[a-z0-9]+$/i.test(l.stage))) &&
     (l.badges === undefined || (Array.isArray(l.badges) && l.badges.every((b) => typeof b.text === 'string' && b.text.length > 0 && isColour(b.colour))))
-  if (!ok) throw new Error(`map metadata: label ${String(l.text)} needs text, a kind, minZoom, a known icon and badges and a lat/lng inside the map`)
+  if (!ok) throw new Error(`map metadata: label ${String(l.text)} needs text, a kind, minZoom, a known icon, badges, a stage key and a lat/lng inside the map`)
   return {
     text: l.text!,
     kind: l.kind!,
@@ -113,6 +122,7 @@ function toLabel(value: unknown, bounds: LatLngBounds, icons: Readonly<Record<st
     ...(l.icon ? { icon: l.icon } : {}),
     ...(l.badges ? { badges: l.badges.map(({ text, colour }) => ({ text, colour })) } : {}),
     ...(isColour(l.colour) ? { colour: l.colour } : {}),
+    ...(l.stage ? { stage: l.stage } : {}),
   }
 }
 
@@ -196,42 +206,17 @@ const folder = (prefix: string, files: Record<string, string>) =>
 // The layered maps redrawn from the official site maps (scripts/map/layers/<code>/): the big area map's ground under the
 // venue map's ground and operations; their pins, names and the stations are drawn by the app. A festival with no
 // official site map yet has the big area map alone, its venue and stations drawn by the app.
+// Every bundled map file, by folder ("jumf/layer1.svg") — import.meta.glob takes literal patterns only.
+const MAP_FILES = import.meta.glob<string>('../../assets/maps/*/**/*.svg', { eager: true, query: '?url', import: 'default' })
+const filesOf = (code: string) => folder(`../../assets/maps/${code}/`, Object.fromEntries(Object.entries(MAP_FILES).filter(([path]) => path.startsWith(`../../assets/maps/${code}/`))))
 const KINTEX_MAP = withImages(
   parseMapMeta(wonderlivetMeta),
   folder('../../assets/maps/wonderlivet/', import.meta.glob<string>('../../assets/maps/wonderlivet/**/*.svg', { eager: true, query: '?url', import: 'default' })),
 )
 const GMF_META = parseMapMeta(gmfMeta)
 const GMF_IMAGES = folder('../../assets/maps/gmf/', import.meta.glob<string>('../../assets/maps/gmf/**/*.svg', { eager: true, query: '?url', import: 'default' }))
-// Olympic Park's area map, drawn for the Grand Mint Festival: its big ground alone, with the stations, buildings and bus
-// stops, for another festival in the park to write its own stages on (none of GMF's venue layers, marks, stages, zones).
-const OLYMPIC_PARK_AREA = withImages(
-  {
-    ...GMF_META,
-    layerFiles: GMF_META.layerFiles.filter(({ file }) => file === 'big-layer1.svg'),
-    marks: [],
-    labels: GMF_META.labels.filter(({ kind }) => kind === 'station' || kind === 'building' || kind === 'bus'),
-  },
-  GMF_IMAGES,
-)
-// The Seoul Jazz Festival's stages, where its 2026 festival map puts them (colors as in series/sjf.ts).
-const SJF_STAGES: readonly MapLabel[] = [
-  { text: 'MAY FOREST', kind: 'stage', colour: '#e2557a', minZoom: 15.3, lat: 37.5197, lng: 127.1244 },
-  { text: 'SPARKLING DOME', kind: 'stage', colour: '#4f5a7a', minZoom: 15.3, lat: 37.5193, lng: 127.1272 },
-  { text: 'PINK AVENUE', kind: 'stage', colour: '#6e6e64', minZoom: 15.3, lat: 37.5176, lng: 127.12635 },
-  { text: 'SPRING GARDEN', kind: 'stage', colour: '#4f9a62', minZoom: 15.3, lat: 37.521426, lng: 127.125532 },
-]
 const MAPS: Record<string, FestivalMap> = {
   [GRAND_MINT_SERIES]: withImages(GMF_META, GMF_IMAGES),
-  [SJF_SERIES]: {
-    ...OLYMPIC_PARK_AREA,
-    labels: [...OLYMPIC_PARK_AREA.labels, ...SJF_STAGES],
-    // from 88잔디마당 to the arena and the smoking area south of it, the dome and the east gate
-    initialView: [
-      [37.5162, 127.123],
-      [37.5218, 127.1293],
-    ],
-    attribution: '지도: 서울재즈페스티벌 2026 페스티벌 맵의 무대·시설 위치를 실제 지도에 옮겨 표시함 · 지형: © OpenStreetMap 기여자',
-  },
   [PENTAPORT_SERIES]: withImages(
     parseMapMeta(pentaportMeta),
     folder('../../assets/maps/pentaport/', import.meta.glob<string>('../../assets/maps/pentaport/**/*.svg', { eager: true, query: '?url', import: 'default' })),
@@ -240,6 +225,13 @@ const MAPS: Record<string, FestivalMap> = {
     parseMapMeta(heroRockMeta),
     folder('../../assets/maps/herorock/', import.meta.glob<string>('../../assets/maps/herorock/**/*.svg', { eager: true, query: '?url', import: 'default' })),
   ),
+  // Maps drawn from the official map's zones (scripts/map/layers/lib/venue-map.mjs)
+  [JUMF_SERIES]: withImages(parseMapMeta(jumfMeta), filesOf('jumf')),
+  [BML_SERIES]: withImages(parseMapMeta(bmlMeta), filesOf('bml')),
+  [LETS_ROCK_SERIES]: withImages(parseMapMeta(letsRockMeta), filesOf('letsrock')),
+  [BUSAN_ROCK_SERIES]: withImages(parseMapMeta(busanRockMeta), filesOf('busanrock')),
+  // Olympic Park, on the OSM extract of the Grand Mint Festival map
+  [SJF_SERIES]: withImages(parseMapMeta(sjfMeta), filesOf('sjf')),
   [WONDERLIVET_SERIES]: KINTEX_MAP,
   // Same halls of KINTEX's second exhibition centre as Wonderlivet: its area map (drawn for Wonderlivet), naming CDF.
   [CDF_SERIES]: { ...KINTEX_MAP, attribution: KINTEX_MAP.attribution.replace('원더리벳 2026', '카운트다운 판타지') },

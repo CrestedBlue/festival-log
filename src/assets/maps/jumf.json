@@ -1,0 +1,206 @@
+{
+  "attribution": "지도: 2026 JUMF 메인 스테이지 사이트맵의 구역을 실제 구장에 맞춰 다시 그림 · 지형: © OpenStreetMap 기여자",
+  "background": "#f3e9ce",
+  "maxZoom": 19.5,
+  "fillOnOpen": false,
+  "zoomOutFills": true,
+  "bounds": [
+    [
+      35.805741,
+      127.081177
+    ],
+    [
+      35.817599,
+      127.094469
+    ]
+  ],
+  "initialView": [
+    [
+      35.810277,
+      127.085718
+    ],
+    [
+      35.812613,
+      127.088599
+    ]
+  ],
+  "layers": [
+    {
+      "file": "big-layer1.svg",
+      "bounds": [
+        [
+          35.805741,
+          127.081177
+        ],
+        [
+          35.817599,
+          127.094469
+        ]
+      ]
+    },
+    {
+      "file": "layer1.svg",
+      "bounds": [
+        [
+          35.810277,
+          127.085718
+        ],
+        [
+          35.812613,
+          127.088599
+        ]
+      ]
+    }
+  ],
+  "icons": {
+    "bus": "icons/bus.svg"
+  },
+  "labels": [
+    {
+      "text": "전주대학교 대학본관",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 35.809561,
+      "lng": 127.087311
+    },
+    {
+      "text": "학생회관",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 35.813328,
+      "lng": 127.088508
+    },
+    {
+      "text": "전주대학교셔틀버스승강장",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 35.81465,
+      "lng": 127.087841
+    },
+    {
+      "text": "비전대학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 35.807655,
+      "lng": 127.093085
+    },
+    {
+      "text": "전주대캠퍼스",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 35.81424,
+      "lng": 127.087458
+    },
+    {
+      "text": "전주대캠퍼스",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 35.814269,
+      "lng": 127.087359
+    },
+    {
+      "text": "전주대학교정문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 35.813334,
+      "lng": 127.094176
+    },
+    {
+      "text": "전주대학교정문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 35.81313,
+      "lng": 127.094379
+    },
+    {
+      "text": "동암차돌학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 35.810933,
+      "lng": 127.09376
+    },
+    {
+      "text": "동암차돌학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 35.811064,
+      "lng": 127.094082
+    },
+    {
+      "text": "스탠딩존",
+      "kind": "zone",
+      "colour": "#8cc63e",
+      "minZoom": 16.5,
+      "lat": 35.811938,
+      "lng": 127.08714
+    },
+    {
+      "text": "피크닉존",
+      "kind": "zone",
+      "colour": "#8cc63e",
+      "minZoom": 16.5,
+      "lat": 35.81127,
+      "lng": 127.087437
+    },
+    {
+      "text": "캠핑존",
+      "kind": "zone",
+      "colour": "#8cc63e",
+      "minZoom": 16.5,
+      "lat": 35.81078,
+      "lng": 127.087575
+    },
+    {
+      "text": "파트너존",
+      "kind": "zone",
+      "colour": "#8cc63e",
+      "minZoom": 16.5,
+      "lat": 35.811172,
+      "lng": 127.08808
+    },
+    {
+      "text": "F&B · 쿨존",
+      "kind": "zone",
+      "colour": "#a5a3ee",
+      "minZoom": 16.5,
+      "lat": 35.811652,
+      "lng": 127.086405
+    },
+    {
+      "text": "마루 MARU",
+      "kind": "stage",
+      "stage": "maru",
+      "colour": "#d650bd",
+      "minZoom": 15.3,
+      "lat": 35.81205,
+      "lng": 127.08695
+    },
+    {
+      "text": "너울 NEOUL",
+      "kind": "stage",
+      "stage": "neoul",
+      "colour": "#9251d6",
+      "minZoom": 15.3,
+      "lat": 35.81216,
+      "lng": 127.08752
+    },
+    {
+      "text": "숨 SOOM",
+      "kind": "stage",
+      "stage": "soom",
+      "colour": "#007396",
+      "minZoom": 15.3,
+      "lat": 35.81227,
+      "lng": 127.09169
+    }
+  ],
+  "marks": []
+}

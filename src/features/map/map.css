@@ -111,31 +111,32 @@
   color: #fff;
 }
 
-/* Markers */
+/* Markers: the one pin design (pinIcons.ts — Pentaport's badges) */
 .map-pin {
-  display: grid;
-  place-items: center;
-  box-sizing: border-box;
+  display: block;
   width: 100%;
   height: 100%;
-  border: 3px solid var(--color-ink);
-  border-radius: 50% 50% 50% 6px;
-  background: var(--color-surface);
-  box-shadow: var(--shadow-ticket);
   transition: transform var(--duration-fast) var(--ease-out-expo);
+}
+
+.map-pin img {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* Zoomed-out illustrated map: pins shrink to dots so zone labels stay readable. */
 .map-pin--dot {
-  border-width: 2px;
+  box-sizing: border-box;
+  border: 2px solid #ffffff;
   border-radius: 50%;
   background: var(--color-accent);
-  border-color: #ffffff;
+  box-shadow: 0 1px 0 #111;
 }
 
 .map-pin.is-selected {
   transform: scale(1.25);
-  border-color: var(--color-accent);
+  filter: drop-shadow(0 0 3px var(--color-accent));
 }
 
 /* A pin-list row was tapped: every pin of it pulses for a moment, behind the pin markers. */
@@ -287,6 +288,29 @@
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
 }
 
+/* a stage's own icon (the timetable's) before its name: white on a round badge of its colour, with the pins' dark
+   drop shadow */
+.map-label__stage {
+  display: grid;
+  flex: none;
+  place-items: center;
+  box-sizing: border-box;
+  width: 22px;
+  height: 22px;
+  margin-left: -4px;
+  border: 1.5px solid #ffffff;
+  border-radius: 50%;
+  color: #ffffff;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.35),
+    0 1.5px 0 1px #111;
+}
+
+.map-label__stage svg {
+  width: 14px;
+  height: 14px;
+}
+
 .map-selected__route {
   flex: none;
   text-decoration: none;
@@ -304,18 +328,6 @@
 }
 
 
-.map-pin--stage {
-  background: #ffe1d9;
-}
-.map-pin--food {
-  background: #fff1c7;
-}
-.map-pin--toilet {
-  background: #dbe4ff;
-}
-.map-pin--meet {
-  background: #e7ffb3;
-}
 
 .map-me {
   display: block;
@@ -475,6 +487,12 @@
 .pin-form {
   display: grid;
   gap: var(--space-3);
+}
+
+.chip__pin {
+  flex: none;
+  margin-right: 4px;
+  vertical-align: middle;
 }
 
 .pin-form__actions {

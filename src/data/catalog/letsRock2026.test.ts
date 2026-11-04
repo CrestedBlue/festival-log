@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { FestivalSchema } from '../schema'
 import { LETS_ROCK_2026_ID, LETS_ROCK_2026_KEY, LETS_ROCK_SERIES } from './ids'
-import { catalogEntry } from './index'
+import { catalogEntry, festivalMapFor } from './index'
 import { LETS_ROCK_2026_NOTICES, LETS_ROCK_2026_TICKETS, createLetsRock2026 } from './letsRock2026'
 
 describe('createLetsRock2026', () => {
@@ -45,7 +45,9 @@ describe('createLetsRock2026', () => {
     const guides = catalogEntry(LETS_ROCK_2026_ID)?.guides ?? []
     expect(guides.map((g) => [g.title, g.images.length])).toEqual([['사이트맵', 1]])
     expect(guides[0]?.images[0]?.alt).toContain('메인 게이트')
-    expect(festival.pins.map((p) => p.name)).toEqual(['난지한강공원 젊음의광장 (대략)'])
+    // the map draws 젊음의광장 and names the stage on it; no booth is placed
+    expect(festival.pins).toEqual([])
+    expect(festivalMapFor(LETS_ROCK_2026_ID)?.labels.filter((l) => l.kind === 'stage').map((l) => l.stage)).toEqual(['main'])
   })
 
   test('has notices and NOL ticket as its only seller', () => {

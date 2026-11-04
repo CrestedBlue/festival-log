@@ -2,7 +2,8 @@ import { describe, expect, test } from 'vitest'
 import { FestivalSchema } from '../schema'
 import { BUSAN_ROCK_2026_NOTICES, BUSAN_ROCK_2026_TICKETS, createBusanRock2026 } from './busanRock2026'
 import { BUSAN_ROCK_2026_ID, BUSAN_ROCK_2026_KEY, BUSAN_ROCK_SERIES } from './ids'
-import { catalogEntry } from './index'
+import { catalogEntry, festivalMapFor } from './index'
+import { isInsideBounds } from '../../lib/geo'
 
 describe('createBusanRock2026', () => {
   const festival = createBusanRock2026()
@@ -57,6 +58,14 @@ describe('createBusanRock2026', () => {
         sets.slice(1).forEach((set, i) => expect(set.start >= (sets[i]?.end ?? '')).toBe(true))
       }
     }
+  })
+
+  test('pins the places of the official app map and names the five stages on its map', () => {
+    const map = festivalMapFor(BUSAN_ROCK_2026_ID)
+    expect(map?.labels.filter((l) => l.kind === 'stage').map((l) => l.stage)).toEqual(['samrock', 'green', 'wave', 'river', 'hidden'])
+    expect(festival.pins.filter((p) => p.rank === 0).map((p) => p.name)).toEqual(['티켓부스 (대략)', 'MAIN GATE (대략)'])
+    expect(festival.pins.filter((p) => p.group === '사상역 출구').length).toBeGreaterThan(0)
+    for (const pin of festival.pins) expect(map && isInsideBounds(pin, map.bounds), pin.name).toBe(true)
   })
 
   test('uses its own yearly code for timetable ids and the festival code for map pins', () => {

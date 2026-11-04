@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20.5 -20.5 41 44"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-9,-15) scale(0.75)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+  <path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M19 17a3 3 0 0 0 -3 -3h-3.4" />
+  <path d="M3 3h1a2 2 0 0 1 2 2v6" />
+  <path d="M6 8h11" />
+  <path d="M15 8v6" /></g><g stroke="#00a8a8" stroke-width="2"><path d="M3 16a5 5 0 1 0 10 0a5 5 0 1 0 -10 0" />
+  <path d="M17 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M19 17a3 3 0 0 0 -3 -3h-3.4" />
+  <path d="M3 3h1a2 2 0 0 1 2 2v6" />
+  <path d="M6 8h11" />
+  <path d="M15 8v6" /></g></g><text x="0" y="8" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="5.2" fill="#2b2b2b">Barrier Free</text><text x="0" y="13.6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="5.2" fill="#2b2b2b">Zone</text></svg>

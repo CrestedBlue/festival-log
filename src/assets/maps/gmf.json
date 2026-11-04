@@ -670,6 +670,7 @@
       "text": "MINT BREEZE STAGE",
       "colour": "#1d8a76",
       "kind": "stage",
+      "stage": "mint",
       "minZoom": 15.3,
       "lat": 37.52031,
       "lng": 127.125623
@@ -678,6 +679,7 @@
       "text": "LOVING FOREST GARDEN",
       "colour": "#d6577f",
       "kind": "stage",
+      "stage": "forest",
       "minZoom": 15.3,
       "lat": 37.521426,
       "lng": 127.125532
@@ -686,6 +688,7 @@
       "text": "CLUB MIDNIGHT SUNSET",
       "colour": "#d94a3f",
       "kind": "stage",
+      "stage": "sunset",
       "minZoom": 15.3,
       "lat": 37.51974,
       "lng": 127.127661

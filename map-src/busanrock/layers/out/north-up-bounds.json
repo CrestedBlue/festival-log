@@ -1,0 +1,28 @@
+{
+  "size": [
+    1500,
+    2550
+  ],
+  "pxPerMeter": 3,
+  "svgUnits": "1 unit = 1 m, origin at the north-west corner of bounds, y grows southward",
+  "bounds": [
+    [
+      35.165351,
+      128.970203
+    ],
+    [
+      35.172987,
+      128.975698
+    ]
+  ],
+  "colours": {
+    "ground": "#7ccab0",
+    "track": "#9fd8c4",
+    "samrock": "#f7ec7a",
+    "green": "#d6ec6e",
+    "wave": "#a9d3f2",
+    "river": "#f7b6d2",
+    "lounge1": "#f6b26b",
+    "lounge2": "#f6b26b"
+  }
+}

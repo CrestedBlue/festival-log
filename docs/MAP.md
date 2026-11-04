@@ -16,6 +16,7 @@
 
 ## 코드 구조
 
+- 앱 핀: `app-pins.mjs`(공통 핀 → `src/assets/pins/`), 디자인 `lib/pin-design.mjs`. 구역만 그리는 지도: `lib/venue-map.mjs`(5-1-2).
 - `lib/` (공통, 페스티벌 이름을 모른다): `frame.mjs`(좌표 틀·OSM·위성), `vector.mjs`(마스크 → 매끈한 SVG 윤곽), `faces.mjs`(길로 칸 나누기), `ground.mjs`(레이어 1 부품: 길 끝 잇기·길 한 도형·구역 윤곽·저장), `sprites.mjs`(스타일 B 부품), `geometry.mjs`(부품의 중심·크기), `texts.mjs`(글자 폭 재기), `layer2.mjs`, `layout.mjs`(북쪽 위 배치), `pins.mjs`(Tabler 아이콘·레이어 3 쓰기), `preview.mjs`, `run.mjs`, 큰 지도 `big-layer1.mjs`(거리 지도 모양·역 상자)·`station.mjs`(OSM 출구·선로로 역 찾기), 앱 내보내기 `app.mjs`·`app-icons.mjs`, 확인 도구 `read-official-grid.mjs`·`read-osm-ways.mjs`(`node scripts/map/layers/lib/read-osm-ways.mjs <코드>`).
 - `<코드>/` (페스티벌마다): `paths.mjs`, `frame.mjs`(기준 위경도·범위만), `official-to-m.mjs`(공식 px → 실제 m), `check-fit.mjs`, `classes.mjs`(구역 색), `layer1.mjs`(바닥 만드는 방법), `objects.mjs`, `sprites.mjs`(그 페스티벌만의 무대 등 + 공통 부품 다시 내보내기), `geometry.mjs`(무대 크기), `pin-design.mjs`(핀 모양), `layout-north-up.mjs`(핀 ↔ 물체 짝 `MARKS`), `layer2.mjs`·`layer3.mjs`·`preview.mjs`·`build.mjs`(얇은 호출), 큰 지도 `stations.mjs`(역 위치·노선)·`big-layer1.mjs`(얇은 호출), `app.mjs`(앱에 넣을 표시·이름·합칠 것).
 - `lib/` 를 고치면 **두 페스티벌을 다 다시 만들고** `git diff map-src/*/layers/out` 이 비었거나 의도한 차이뿐인지 본다(공통화 때 펜타포트 결과는 바이트 단위로 같았다).
@@ -81,7 +82,9 @@
 
 ## 3. 레이어 3 — 핀 (레이어 2보다 먼저 해도 된다)
 
-핀 모양은 페스티벌마다 `pin-design.mjs` 에 공식 핀을 따라 그린다(펜타포트: 흰 원 배지 + 공식 색 아이콘, GMF: 흰 물방울 핀 + 검은 아이콘). 핀 크기도 공식 안내도의 그림 대비 크기를 따른다(GMF 는 펜타포트보다 작다).
+레이어 3 파일의 핀 모양은 페스티벌마다 `pin-design.mjs` 에 공식 핀을 따라 그린다(펜타포트: 흰 원 배지 + 공식 색 아이콘, GMF: 흰 물방울 핀 + 검은 아이콘). 핀 크기도 공식 안내도의 그림 대비 크기를 따른다(GMF 는 펜타포트보다 작다).
+
+**앱에 그리는 핀은 모든 페스티벌이 펜타포트 배지 하나로 같다**(사용자 지시 2026-11-04: "핀모양은 펜타포트 디자인으로 싹다 고정"). 디자인은 `lib/pin-design.mjs`(펜타포트 범례 + GMF 범례·앱 핀 종류를 같은 방식으로 그린 것)가 정본이고, `node scripts/map/layers/app-pins.mjs` 가 `src/assets/pins/<종류>.svg` 를 쓴다. 앱은 핀을 지도의 아이콘(`mapIcon`, 출구·역·공연장 등) → 공통 핀(`mapIcon` 이 공통 핀 종류일 때: `gate`, `coolZone`, `charging` …) → 핀 종류(`kind`)의 공통 핀 순서로 그린다(`src/features/map/pinIcons.ts`). 사용자가 꽂은 핀도 같은 배지다. 티켓부스·셔틀 정류장·버스는 펜타포트처럼 둥근 네모 타일이다.
 
 1. `pins-detect.mjs`: 흰 원(지름 30–60 px, 둘레가 거의 한 바퀴 흰색이 아님)을 찾아 번호를 매긴다 → 캐시 `candidates.jpg` 를 눈으로 본다.
 2. `pins-classify.mjs`: 범례 배지를 **지도 핀 크기로 줄여**(범례 50 px, 지도 39 px) 정규화 상관으로 비교해 종류를 정한다. 흰색이 아닌 핀(초록·파랑)은 색으로 찾아 더한다. 캐시 `pins-official.jpg` 로 전부 눈으로 확인한 뒤 `pins-official.json` 을 커밋한다.
@@ -126,6 +129,18 @@
 - 앱 내보내기는 `lib/big-app.mjs`(`writeBigOnlyAppMap`): 공연장·역·역의 번호 있는 출구를 지도 표시(marks: `venue`, `station-<key>`, `exit-<번호>` — 출구는 zone 에 역 key)로 내보내고 카탈로그가 그 자리로 핀을 만든다(`src/data/catalog/series/bigMapPins.ts` — 공연장은 음표 아이콘, 역은 노선 색 기차 아이콘, 출구는 노란 번호이고 목록에 역마다 한 줄). 출구는 OSM 지하철 출구 중 역 근처(`radius`, 기본 120 m)이고 같은 번호가 두 번 있으면 하나만. 역 이름(노선 표시), 큰 건물 이름, 시내버스 정류장은 이름표. 처음 화면은 공연장 가운데, 가장 가까운 역까지 보이게.
 - 앱에서 공연장 핀(종류 stage)은 확대 13 부터 보이고, 겹치면 역 이름보다 먼저 남는다.
 - OSM 은 Overpass 로 그 범위만 받는다(사용자 확인 후).
+
+### 5-1-2. 공식 지도의 구역만 그리는 페스티벌 — `lib/venue-map.mjs`
+
+공식 지도가 물체 하나하나를 옮겨 그리기엔 너무 대충이거나(서재페·뷰민라·JUMF), 방향이 없거나(렛츠락), 공식 앱 화면 그림뿐인(부산록) 페스티벌은 **작은 지도의 레이어 1(구역)만** 그린다(사용자 지시 2026-11-04: "다른것들도 디자인 펜타포트처럼 영역 예쁘게 꾸며주시고 스테이지 아이콘 넣어주세요"). 레이어 2(천막·무대 물체)와 레이어 3 파일은 없다.
+
+- 폴더 `scripts/map/layers/<코드>/`: `paths`·`frame`(작은 지도 `frame` + 큰 지도 `bigFrame`, 같은 기준점)·`map.mjs` 하나. `map.mjs` 가 `buildVenueMap` 으로 작은 지도 레이어 1 → 큰 지도 레이어 1(행사장 자리는 작은 지도 바깥선) → 앱 사본을 한 번에 만든다.
+- **행사장**(`venue`): OSM 면(`osm`) 또는 위성에서 읽은 바깥선(`ll`, 여러 조각이면 `parts`)과 바탕색. **구역**(`zones`): 공식 지도의 구역을 그 이름이 가리키는 실제 장소(OSM 면 — 구장·돔·잔디마당 — 이나 위성에서 읽은 바깥선)에 공식 색으로 칠한다. 같은 색 구역 사이에는 `edge`(흰 선), 길이 지나가면 안 되는 곳(무대·건물·스탠딩존)은 `solid`. 실제 OSM 길을 그 위에 그린다(`venue.path` 색).
+- 바깥선은 꺾인 그대로 쓴다(곡선으로 이으면 네모난 구장이 둥근 덩어리가 된다).
+- **무대 이름**(`stages`): `{ text, stage, colour, at }` — `stage` 는 그 페스티벌 테마의 무대 키(`series/<코드>.ts` 의 `theme.stages`)이고, 앱이 이름 앞에 그 무대의 아이콘(타임테이블과 같은 모양)을 무대 색 동그라미로 그린다. 펜타포트·GMF 의 무대 이름도 키를 단다. 무대는 지도에 이름이 있으니 핀으로 넣지 않는다.
+- 구역 이름은 `label` 로 깃발 색 글자(`zone`)가 되고, `unnamed` 면 쓰지 않는다. 역은 큰 지도처럼 `stations` 에 `key` 와 함께(카탈로그는 `stationPins` 로 역·출구 핀을 만든다).
+- 위성에서 좌표를 읽을 때: 브라우저 스크린샷 좌표는 실제 화면보다 줄어 있을 수 있다(800 px 스크린샷, 1024 px 화면). `containerPointToLatLng` 에 넣기 전에 배율(`innerWidth / 800`)을 곱한다.
+- 페스티벌별: 서재페(그민페 OSM 을 같이 씀 — 잔디마당·KSPO DOME·핸드볼경기장·수변무대), 뷰민라(문화비축기지 공원 + 위성에서 딴 문화마당·스탠딩존·레저존·무대, 탱크 T1·T2·T6 둘레 원), JUMF(A·B구장, 희망홀 에어돔), 렛츠락(젊음의광장 잔디만 — 무대 방향을 몰라 무대 이름은 잔디 전체에), 부산록(공식 앱 안내 이미지의 배치가 남쪽이 위인 그림이라, 가운데 광장·마름모 길·타원 트랙을 맞춰 반 바퀴 돌리고 0.85 m/px 로 옮김 — `map.mjs` 의 `app()`).
 
 ## 5-2. 앱에 넣기 (`app.mjs`, `lib/app.mjs`, `lib/app-icons.mjs`)
 

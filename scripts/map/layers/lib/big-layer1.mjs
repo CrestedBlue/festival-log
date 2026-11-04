@@ -52,7 +52,7 @@ const same = (a, b) => a[0] === b[0] && a[1] === b[1]
 const closed = (pts) => pts.length > 3 && same(pts[0], pts[pts.length - 1])
 
 /** The closed outlines of an OSM area: a closed way, or a multipolygon relation's outer ways joined end to end. */
-function areaRings(OSM) {
+export function areaRings(OSM) {
   const byId = new Map(OSM.ways.map((w) => [w.id, w]))
   const rings = OSM.ways.filter((w) => closed(w.pts)).map((w) => ({ id: w.id, tags: w.tags || {}, pts: w.pts }))
   for (const rel of OSM.relations ?? []) {

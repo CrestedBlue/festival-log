@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { festivalMapFor } from '../../data/catalog'
 import type { Festival } from '../../data/schema'
 import { MapCredits } from '../map/MapCredits'
-import { PIN_META } from '../map/pinMeta'
+import { festivalStageLooks } from '../../data/resolve'
+import { pinIconUrl } from '../map/pinIcons'
 import { useLeafletMap } from '../map/useLeafletMap'
 import { useMapContent } from '../map/useMapContent'
 import { useMapZoom } from '../map/useMapLayers'
@@ -15,7 +16,7 @@ export default function AdminMap({ festival }: { festival: Festival }) {
   const { containerRef, map } = useLeafletMap({ center: festival.venue, image: festivalMap, fitPoints: festival.pins })
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const zoom = useMapZoom(map)
-  useMapContent(map, festivalMap, festival.pins, zoom, selectedId, setSelectedId)
+  useMapContent(map, festivalMap, festival.pins, zoom, selectedId, setSelectedId, { stages: festivalStageLooks(festival.id) })
   const selected = festival.pins.find((pin) => pin.id === selectedId) ?? null
 
   return (
@@ -26,9 +27,7 @@ export default function AdminMap({ festival }: { festival: Festival }) {
       {festivalMap && <MapCredits text={festivalMap.attribution} />}
       {selected && (
         <div className="map-selected" role="status">
-          <span className={`map-selected__icon map-pin--${selected.kind}`} aria-hidden="true">
-            {PIN_META[selected.kind].emoji}
-          </span>
+          <img className="map-selected__icon map-selected__icon--image" src={pinIconUrl(selected, festivalMap?.icons)} alt="" width={32} height={32} />
           <span className="map-selected__name">{selected.name}</span>
           <button type="button" className="map-selected__close" aria-label="선택 닫기" onClick={() => setSelectedId(null)}>
             ✕

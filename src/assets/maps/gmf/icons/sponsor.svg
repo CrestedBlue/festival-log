@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-13 -13 26 29"><ellipse cx="0" cy="13.6" rx="9" ry="1.6" fill="#000000" opacity="0.18"/><circle r="12" fill="#ffffff" stroke="#d6d6d6" stroke-width="0.8"/><text x="0" y="-0.8" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="4.4" fill="#1f1f24">SPONSOR</text><text x="0" y="3.820000000000001" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="4.4" fill="#1f1f24">ZONE</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20.5 -20.5 41 44"><circle cx="0" cy="2.6" r="19.5" fill="#111"/><circle cx="0" cy="0" r="19.5" fill="#ffffff" stroke="#7a7a7a" stroke-width="1"/><g transform="translate(-13,-13) scale(1.0833333333333333)" fill="none" stroke-linecap="round" stroke-linejoin="round"><g stroke="#2b2b2b" stroke-width="3.6"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+  <path d="M12 12l8 -4.5" />
+  <path d="M12 12l0 9" />
+  <path d="M12 12l-8 -4.5" />
+  <path d="M16 5.25l-8 4.5" /></g><g stroke="#ffd830" stroke-width="2"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+  <path d="M12 12l8 -4.5" />
+  <path d="M12 12l0 9" />
+  <path d="M12 12l-8 -4.5" />
+  <path d="M16 5.25l-8 4.5" /></g></g></svg>

@@ -11,9 +11,10 @@ import { GROUPS } from './objects.mjs'
 import * as geometry from './geometry.mjs'
 import * as SP from './sprites.mjs'
 import { OUT, CACHE, ROOT, SRC } from './paths.mjs'
-import { PIN_R, TYPES, badge } from './pin-design.mjs'
+import { TYPES } from './pin-design.mjs'
+import { badge as appBadge, radiusOf } from '../lib/pin-design.mjs'
 import { STATIONS } from './stations.mjs'
-import { badgeIcon, busIcon, exitIcon } from '../lib/app-icons.mjs'
+import { badgeIcon, busIcon, exitIcon, ticketIcon } from '../lib/app-icons.mjs'
 import { stationNameAt } from '../lib/big-layer1.mjs'
 import { measureTexts } from '../lib/texts.mjs'
 import { writeAppMap, boundsOf, busStopLabels } from '../lib/app.mjs'
@@ -48,10 +49,14 @@ for (const p of JSON.parse(fs.readFileSync(path.join(OUT, 'layer3-pins.json'))).
   marks.push({ id: marks.length + 1, kind, zone: zoneOf[p.id], lat: p.lat, lng: p.lng, spot }) // numbered in layer 3's order
 }
 
-// Icons the app draws at a fixed size: every badge of layer 3 (the pin's head), the subway exit numbers, bus stops.
-const icons = Object.fromEntries(Object.keys(TYPES).filter((type) => !MERGED[type]).map((type) => [type, badgeIcon(badge(type), PIN_R)]))
-icons.mintShop = badgeIcon(badge('shop'), PIN_R)
-icons.artistVinyl = badgeIcon(badge('artist'), PIN_R)
+// Icons the app draws at a fixed size: every mark of layer 3 in the app's one pin design (Pentaport's badges, the user
+// 2026-11-04 — layer 3 itself keeps GMF's official teardrops), the subway exit numbers, bus stops.
+const APP_PIN = { firstaid: 'medical', water: 'waterBar', luggage: 'lockers', mintShop: 'officialMd' } // GMF kind → pin design type
+const icons = Object.fromEntries([...Object.keys(TYPES).filter((type) => !MERGED[type]), 'mintShop', 'artistVinyl'].map((kind) => {
+  if (kind === 'wristband') return [kind, ticketIcon()] // a ticket booth, as Pentaport's
+  const type = APP_PIN[kind] ?? kind
+  return [kind, badgeIcon(appBadge(type), radiusOf(type))]
+}))
 for (const n of [1, 2, 3, 4, 5]) icons[`exit-${n}`] = exitIcon(n)
 icons.bus = busIcon()
 
@@ -62,6 +67,7 @@ const LANDMARKS = [ // [name, OSM ways]: big places on the walks from the statio
   ['평화의광장', ['473971980']], ['몽촌호', OSM.relations.find((r) => r.tags.name === '몽촌호').outer], ['한성백제박물관', ['415026027']],
   ['올림픽홀', ['75956846']], ['핸드볼경기장', ['75956853']], ['올림픽수영경기장', ['75956856']],
 ]
+const STAGE_KEYS = { mintStage: 'mint', lfgStage: 'forest', cmsStage: 'sunset' } // layer 2 stage → the theme's stage key
 const LAYOUT = JSON.parse(fs.readFileSync(path.join(CACHE, 'labels-northup.json')))
 const stageLabels = GROUPS.find((g) => g.id === 'labels').items.map((it, i) => ({ it, key: `labels:${i}` }))
 // zone flags with a pin of their own (RADAR, Mint Shop) are named by the pin
@@ -74,8 +80,9 @@ const labels = [
   ...busStopLabels(OSM, boundsOf(path.join(OUT, 'big-north-up-bounds.json'))),
   ...flags.map((it) => ({ text: it.args[0], kind: 'zone', colour: it.args[1], minZoom: 16.5, ...ll(placeOf(it)) })),
   // layer 2's stage names; TICKET BOOTH is what the ticket booth pin says, so it is left out
+  // (each with its stage's key in the festival's theme, series/grandMint.ts: the app draws the stage's icon before it)
   ...stageLabels.filter(({ it }) => it.of !== 'ticket').map(({ it, key }) => ({
-    text: it.args[0].map(([t]) => t).join(' '), colour: it.args[0][0][1], kind: 'stage', minZoom: 15.3, ...ll(northUpLL(LAYOUT[key])),
+    text: it.args[0].map(([t]) => t).join(' '), colour: it.args[0][0][1], kind: 'stage', stage: STAGE_KEYS[it.of], minZoom: 15.3, ...ll(northUpLL(LAYOUT[key])),
   })),
 ]
 

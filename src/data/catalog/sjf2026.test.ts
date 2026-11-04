@@ -4,6 +4,7 @@ import { FestivalSchema } from '../schema'
 import { SJF_2026_ID, SJF_2026_KEY, SJF_SERIES } from './ids'
 import { catalogEntry, festivalMapFor } from './index'
 import { SJF_2026_NOTICES, SJF_2026_TICKETS, createSjf2026 } from './sjf2026'
+import { PIN_ICONS } from '../../features/map/pinIcons'
 
 describe('createSjf2026', () => {
   const festival = createSjf2026()
@@ -67,10 +68,10 @@ describe('createSjf2026', () => {
     expect(festival.pins.every((p) => p.id.startsWith(`${SJF_SERIES}-`))).toBe(true)
   })
 
-  test('pins the festival map: gates, ticket booth, booths and facilities, drawn with the icons of the area map', () => {
+  test('pins the festival map: gates, ticket booth, booths and facilities, drawn with the map icons or the app pin designs', () => {
     const map = festivalMapFor(SJF_2026_ID)
     const group = (name: string) => festival.pins.filter((p) => p.group === name).map((p) => p.name)
-    expect(festival.pins.filter((p) => p.kind === 'wristband')).toMatchObject([{ name: '티켓 부스', rank: 0, mapIcon: 'wristband' }])
+    expect(festival.pins.filter((p) => p.kind === 'wristband')).toMatchObject([{ name: '티켓 부스', rank: 0, mapIcon: 'ticket' }])
     expect(group('게이트')).toEqual(['GATE 1 (MAY FOREST)', 'GATE 2', 'GATE 3', 'GATE 1 (SPRING GARDEN)', 'EAST GATE 1 (동문)'])
     expect(group('SPARKLING DOME 게이트')).toEqual(['2-1 GATE', '2-2 GATE', '2-3 GATE'])
     expect(group('PINK AVENUE 게이트')).toEqual(['2-2 GATE', '2-3 GATE', '2-4 GATE'])
@@ -79,7 +80,7 @@ describe('createSjf2026', () => {
     // the stations around the park, every numbered exit as on the Grand Mint map
     expect(festival.pins.filter((p) => p.mapIcon?.startsWith('exit-'))).toHaveLength(13)
     for (const pin of festival.pins) {
-      if (pin.mapIcon) expect(map?.icons[pin.mapIcon], pin.name).toBeTruthy()
+      if (pin.mapIcon) expect(map?.icons[pin.mapIcon] ?? PIN_ICONS[pin.mapIcon], pin.name).toBeTruthy()
       expect(map && isInsideBounds(pin, map.bounds), pin.name).toBe(true)
     }
   })

@@ -86,7 +86,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     lineup: [],
     guides: [],
     tickets: GRAND_MINT_2026_TICKETS,
-    updatedAt: '2026-10-27',
+    updatedAt: '2026-11-04',
   },
   {
     id: HERO_ROCK_2026_ID,
@@ -111,7 +111,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     guides: PENTAPORT_2026_GUIDES,
     // The official site's ticket page was emptied after the festival: no seller confirmed yet.
     tickets: [],
-    updatedAt: '2026-10-26',
+    updatedAt: '2026-11-04',
   },
   {
     id: PENTAPORT_2025_ID,
@@ -123,7 +123,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     lineup: [],
     guides: [],
     tickets: [],
-    updatedAt: '2026-10-27',
+    updatedAt: '2026-11-04',
   },
   {
     id: JUMF_2026_ID,
@@ -207,7 +207,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     lineup: [],
     guides: [],
     tickets: BUSAN_ROCK_2026_TICKETS,
-    updatedAt: '2026-10-29',
+    updatedAt: '2026-11-04',
   },
 ]
 

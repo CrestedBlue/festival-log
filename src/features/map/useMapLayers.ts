@@ -3,12 +3,13 @@ import { useEffect, useRef, useState } from 'react'
 import type { Pin } from '../../data/schema'
 import type { GeoState } from '../../hooks/useGeolocation'
 import type { LatLng } from '../../lib/geo'
-import { PIN_META } from './pinMeta'
+import { pinIconUrl } from './pinIcons'
 import type { PinHighlight } from './selection'
 
 const ME_SIZE = 22
 
-/** Pin markers. Only enum-derived values go into the icon HTML; names use the title attribute. */
+/** Pin markers, in the one pin design (pinIcons.ts). Only enum-derived values and the app's own icon URLs go into the
+ *  icon HTML; names use the title attribute. */
 export interface PinLook {
   size: number
   /** Without the icon a pin is a small dot (used when zoomed out over an illustrated map). */
@@ -28,7 +29,9 @@ export function usePinLayer(
     pins.forEach((pin) => {
       const icon = L.divIcon({
         className: '',
-        html: `<span class="map-pin map-pin--${pin.kind}${showIcon ? '' : ' map-pin--dot'}${pin.id === selectedId ? ' is-selected' : ''}" style="font-size:${Math.round(pinSize * 0.5)}px">${showIcon ? PIN_META[pin.kind].emoji : ''}</span>`,
+        html: showIcon
+          ? `<span class="map-pin${pin.id === selectedId ? ' is-selected' : ''}"><img src="${pinIconUrl(pin)}" width="${pinSize}" height="${pinSize}" alt=""></span>`
+          : `<span class="map-pin map-pin--dot${pin.id === selectedId ? ' is-selected' : ''}"></span>`,
         iconSize: [pinSize, pinSize],
         iconAnchor: [pinSize / 2, pinSize / 2],
       })

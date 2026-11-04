@@ -63,7 +63,8 @@ icons.bus = busIcon()
 const way = (name) => { const w = OSM.ways.find((x) => x.tags?.name === name); if (!w) throw new Error(`no OSM ${name}`); return mean(w.pts) }
 const labelItems = GROUPS.flatMap((g) => g.items.map((it, i) => ({ it, key: `${g.id}:${i}` }))).filter(({ it }) => it.kind === 'label')
 const LAYOUT = JSON.parse(fs.readFileSync(path.join(CACHE, 'labels-northup.json')))
-const STAGES = new Set(['kbStage', 'monsterStage', 'stanleyStage'])
+// layer 2's stages → their keys in the festival's theme (series/pentaport.ts): the app draws the stage's icon before its name
+const STAGES = { kbStage: 'kb', monsterStage: 'monster', stanleyStage: 'stanley' }
 const labels = [
   // past the north end of the station box the big map draws, with the lines' badges, as on Korean street maps
   ...STATIONS.map((s) => ({ text: s.name, kind: 'station', badges: s.lines, minZoom: 14, ...ll(stationNameAt(bigFrame, s)) })),
@@ -77,7 +78,7 @@ const labels = [
   // layer 2's name labels; the two 입장동선 labels say what the gate pins say, so they are left out
   ...labelItems.filter(({ it }) => !it.of?.startsWith('gate')).map(({ it, key }) => ({
     text: it.args[0].map(([t]) => t.replace('&amp;', '&')).join(' '), colour: it.args[0][0][1],
-    kind: STAGES.has(it.of) ? 'stage' : 'place', minZoom: STAGES.has(it.of) ? 15.3 : 16.5, ...ll(northUpLL(LAYOUT[key])),
+    ...(STAGES[it.of] ? { kind: 'stage', stage: STAGES[it.of], minZoom: 15.3 } : { kind: 'place', minZoom: 16.5 }), ...ll(northUpLL(LAYOUT[key])),
   })),
 ]
 

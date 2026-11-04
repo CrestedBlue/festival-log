@@ -1,19 +1,21 @@
 import type L from 'leaflet'
 import { useMemo } from 'react'
 import type { Pin } from '../../data/schema'
-import { buildAnnotations, iconSize } from './annotations'
+import { buildAnnotations, iconSize, type StageLooks } from './annotations'
 import type { FestivalMap } from './festivalMaps'
 import { pinSizeForZoom } from './pinSize'
 import { useAnnotationLayer } from './useAnnotationLayer'
 import { usePinLayer } from './useMapLayers'
 
-const TILE_MAP_PIN = { size: 38, showIcon: true }
+const TILE_MAP_PIN = { size: 34, showIcon: true }
 const NO_PINS: ReadonlySet<string> = new Set()
+const NO_STAGES: StageLooks = {}
 
 /**
- * What a festival map shows over its images. On an illustrated map the pins it has icons for are drawn with them,
- * with its names, by zoom (annotations.ts); the rest (the user's own pins, …) are plain pins. On the tile map every pin is a plain pin. `activeIds`: the pins of the list row last
- * tapped, all kept on the map. Returns the pin size on screen (for pulses).
+ * What a festival map shows over its images. On an illustrated map the festival's pins are drawn with their icons, with
+ * its names (a stage's with its icon, from `stages`), by zoom (annotations.ts); the user's own pins (`userPinIds`) are
+ * plain pins, always shown. On the tile map every pin is a plain pin. Every pin has the one design (pinIcons.ts).
+ * `activeIds`: the pins of the list row last tapped, all kept on the map. Returns the pin size on screen (for pulses).
  */
 export function useMapContent(
   map: L.Map | null,
@@ -22,17 +24,21 @@ export function useMapContent(
   zoom: number | null,
   selectedId: string | null,
   onSelect: (id: string) => void,
-  interactive = true,
-  activeIds: ReadonlySet<string> = NO_PINS,
+  { interactive = true, activeIds = NO_PINS, userPinIds = NO_PINS, stages = NO_STAGES }: {
+    interactive?: boolean
+    activeIds?: ReadonlySet<string>
+    userPinIds?: ReadonlySet<string>
+    stages?: StageLooks
+  } = {},
 ): number {
-  const plainPins = useMemo(
-    () => (festivalMap ? pins.filter((pin) => !(pin.mapIcon && pin.mapIcon in festivalMap.icons)) : pins),
-    [festivalMap, pins],
+  const [plainPins, mapPins] = useMemo(
+    () => (festivalMap ? [pins.filter((pin) => userPinIds.has(pin.id)), pins.filter((pin) => !userPinIds.has(pin.id))] : [pins, []]),
+    [festivalMap, pins, userPinIds],
   )
   const look = festivalMap ? pinSizeForZoom(zoom ?? 0) : TILE_MAP_PIN
   const annotations = useMemo(
-    () => (festivalMap && zoom !== null ? buildAnnotations(festivalMap, pins, zoom, selectedId, activeIds) : []),
-    [festivalMap, pins, zoom, selectedId, activeIds],
+    () => (festivalMap && zoom !== null ? buildAnnotations(festivalMap, mapPins, zoom, selectedId, activeIds, stages) : []),
+    [festivalMap, mapPins, zoom, selectedId, activeIds, stages],
   )
   usePinLayer(map, plainPins, selectedId, onSelect, look)
   useAnnotationLayer(map, annotations, onSelect, interactive)

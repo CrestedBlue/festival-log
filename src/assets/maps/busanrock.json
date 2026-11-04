@@ -1,0 +1,210 @@
+{
+  "attribution": "지도: 2026 부산국제록페스티벌 공식 앱 안내 이미지의 행사장 배치를 삼락생태공원 실제 모양에 맞춰 다시 그림 · 지형: © OpenStreetMap 기여자",
+  "background": "#f3e9ce",
+  "maxZoom": 19.5,
+  "fillOnOpen": false,
+  "zoomOutFills": true,
+  "bounds": [
+    [
+      35.16068,
+      128.966357
+    ],
+    [
+      35.174604,
+      128.986137
+    ]
+  ],
+  "initialView": [
+    [
+      35.165351,
+      128.970203
+    ],
+    [
+      35.172987,
+      128.975698
+    ]
+  ],
+  "layers": [
+    {
+      "file": "big-layer1.svg",
+      "bounds": [
+        [
+          35.16068,
+          128.966357
+        ],
+        [
+          35.174604,
+          128.986137
+        ]
+      ]
+    },
+    {
+      "file": "layer1.svg",
+      "bounds": [
+        [
+          35.165351,
+          128.970203
+        ],
+        [
+          35.172987,
+          128.975698
+        ]
+      ]
+    }
+  ],
+  "icons": {
+    "bus": "icons/bus.svg",
+    "station-sasang": "icons/station-sasang.svg",
+    "exit-1": "icons/exit-1.svg",
+    "exit-2": "icons/exit-2.svg",
+    "exit-3": "icons/exit-3.svg",
+    "exit-4": "icons/exit-4.svg",
+    "exit-5": "icons/exit-5.svg",
+    "exit-6": "icons/exit-6.svg"
+  },
+  "labels": [
+    {
+      "text": "사상역",
+      "kind": "station",
+      "badges": [
+        {
+          "text": "2",
+          "colour": "#81bf48"
+        },
+        {
+          "text": "경전철",
+          "colour": "#8652a1"
+        }
+      ],
+      "minZoom": 14,
+      "lat": 35.163117,
+      "lng": 128.984205
+    },
+    {
+      "text": "르네시떼",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 35.164135,
+      "lng": 128.977746
+    },
+    {
+      "text": "이마트",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 35.164122,
+      "lng": 128.978769
+    },
+    {
+      "text": "FOOD LOUNGE",
+      "kind": "zone",
+      "colour": "#f6b26b",
+      "minZoom": 16.5,
+      "lat": 35.168269,
+      "lng": 128.971188
+    },
+    {
+      "text": "FOOD LOUNGE",
+      "kind": "zone",
+      "colour": "#f6b26b",
+      "minZoom": 16.5,
+      "lat": 35.169529,
+      "lng": 128.971212
+    },
+    {
+      "text": "SAMROCK",
+      "kind": "stage",
+      "stage": "samrock",
+      "colour": "#c9a100",
+      "minZoom": 15.3,
+      "lat": 35.166818,
+      "lng": 128.972473
+    },
+    {
+      "text": "GREEN",
+      "kind": "stage",
+      "stage": "green",
+      "colour": "#4fae3a",
+      "minZoom": 15.3,
+      "lat": 35.165673,
+      "lng": 128.970885
+    },
+    {
+      "text": "WAVE",
+      "kind": "stage",
+      "stage": "wave",
+      "colour": "#1d9fb0",
+      "minZoom": 15.3,
+      "lat": 35.166589,
+      "lng": 128.974313
+    },
+    {
+      "text": "RIVER",
+      "kind": "stage",
+      "stage": "river",
+      "colour": "#e0679a",
+      "minZoom": 15.3,
+      "lat": 35.172048,
+      "lng": 128.974808
+    },
+    {
+      "text": "HIDDEN",
+      "kind": "stage",
+      "stage": "hidden",
+      "colour": "#8a6fd6",
+      "minZoom": 15.3,
+      "lat": 35.17014,
+      "lng": 128.97408
+    }
+  ],
+  "marks": [
+    {
+      "id": 1,
+      "kind": "station-sasang",
+      "zone": "",
+      "lat": 35.162421,
+      "lng": 128.984562
+    },
+    {
+      "id": 2,
+      "kind": "exit-1",
+      "zone": "sasang",
+      "lat": 35.161779,
+      "lng": 128.984627
+    },
+    {
+      "id": 3,
+      "kind": "exit-2",
+      "zone": "sasang",
+      "lat": 35.161761,
+      "lng": 128.985719
+    },
+    {
+      "id": 4,
+      "kind": "exit-3",
+      "zone": "sasang",
+      "lat": 35.162436,
+      "lng": 128.984142
+    },
+    {
+      "id": 5,
+      "kind": "exit-4",
+      "zone": "sasang",
+      "lat": 35.162408,
+      "lng": 128.985086
+    },
+    {
+      "id": 6,
+      "kind": "exit-5",
+      "zone": "sasang",
+      "lat": 35.16365,
+      "lng": 128.983734
+    },
+    {
+      "id": 7,
+      "kind": "exit-6",
+      "zone": "sasang",
+      "lat": 35.163744,
+      "lng": 128.984074
+    }
+  ]
+}

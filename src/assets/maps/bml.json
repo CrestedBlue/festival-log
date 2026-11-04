@@ -1,0 +1,445 @@
+{
+  "attribution": "지도: 뷰티풀 민트 라이프 2026 페스티벌 맵의 구역을 문화비축기지 실제 모양에 맞춰 다시 그림 · 지형: © OpenStreetMap 기여자",
+  "background": "#f3e9ce",
+  "maxZoom": 19.5,
+  "fillOnOpen": false,
+  "zoomOutFills": true,
+  "bounds": [
+    [
+      37.564063,
+      126.886833
+    ],
+    [
+      37.577088,
+      126.901567
+    ]
+  ],
+  "initialView": [
+    [
+      37.569273,
+      126.891253
+    ],
+    [
+      37.572956,
+      126.896467
+    ]
+  ],
+  "layers": [
+    {
+      "file": "big-layer1.svg",
+      "bounds": [
+        [
+          37.564063,
+          126.886833
+        ],
+        [
+          37.577088,
+          126.901567
+        ]
+      ]
+    },
+    {
+      "file": "layer1.svg",
+      "bounds": [
+        [
+          37.569273,
+          126.891253
+        ],
+        [
+          37.572956,
+          126.896467
+        ]
+      ]
+    }
+  ],
+  "icons": {
+    "bus": "icons/bus.svg",
+    "station-worldCupStadium": "icons/station-worldCupStadium.svg",
+    "exit-1": "icons/exit-1.svg",
+    "exit-2": "icons/exit-2.svg",
+    "exit-3": "icons/exit-3.svg"
+  },
+  "labels": [
+    {
+      "text": "월드컵경기장역",
+      "kind": "station",
+      "badges": [
+        {
+          "text": "6",
+          "colour": "#cd7c2f"
+        }
+      ],
+      "minZoom": 14,
+      "lat": 37.570272,
+      "lng": 126.899288
+    },
+    {
+      "text": "서울월드컵경기장",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.568259,
+      "lng": 126.897289
+    },
+    {
+      "text": "난지천공원",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.571708,
+      "lng": 126.886834
+    },
+    {
+      "text": "월드컵파크2단지.에스플렉스센터",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.575212,
+      "lng": 126.890286
+    },
+    {
+      "text": "성산아파트",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.571418,
+      "lng": 126.901486
+    },
+    {
+      "text": "DMC상암센트럴파크",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.57509,
+      "lng": 126.89608
+    },
+    {
+      "text": "월드컵파크2단지.에스플렉스센터",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.575228,
+      "lng": 126.890562
+    },
+    {
+      "text": "월드컵파크3단지.난지천공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.573344,
+      "lng": 126.887859
+    },
+    {
+      "text": "월드컵파크3단지후문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.571177,
+      "lng": 126.889702
+    },
+    {
+      "text": "월드컵공원입구.문화비축기지입구",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.568424,
+      "lng": 126.892727
+    },
+    {
+      "text": "DMC상암센트럴파크",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.575224,
+      "lng": 126.895359
+    },
+    {
+      "text": "월드컵파크3단지정문",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.573776,
+      "lng": 126.889055
+    },
+    {
+      "text": "상암사거리.월드컵경기장북측",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.573891,
+      "lng": 126.898172
+    },
+    {
+      "text": "마포농수산물시장.월드컵공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.566146,
+      "lng": 126.89747
+    },
+    {
+      "text": "디지털미디어시티역2번출구",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.57514,
+      "lng": 126.89973
+    },
+    {
+      "text": "월드컵경기장북측",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.572926,
+      "lng": 126.899382
+    },
+    {
+      "text": "월드컵경기장서측.문화비축기지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.569243,
+      "lng": 126.894824
+    },
+    {
+      "text": "월드컵파크3단지.난지천공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.572514,
+      "lng": 126.888454
+    },
+    {
+      "text": "월드컵경기장남측.월드컵공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.566615,
+      "lng": 126.896002
+    },
+    {
+      "text": "월드컵경기장서측.문화비축기지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.569084,
+      "lng": 126.895192
+    },
+    {
+      "text": "월드컵파크3단지",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.572686,
+      "lng": 126.888319
+    },
+    {
+      "text": "월드컵경기장역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.569657,
+      "lng": 126.900207
+    },
+    {
+      "text": "월드컵경기장역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.569533,
+      "lng": 126.900313
+    },
+    {
+      "text": "마포구청.농수산물시장;마포구청.마포구청역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.566243,
+      "lng": 126.899622
+    },
+    {
+      "text": "마포농수산물시장.월드컵경기장",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.566163,
+      "lng": 126.897291
+    },
+    {
+      "text": "공항철도디지털미디어시티역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.577014,
+      "lng": 126.898122
+    },
+    {
+      "text": "공항철도디지털미디어시티역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.576707,
+      "lng": 126.898876
+    },
+    {
+      "text": "디지털미디어시티역3번출구A",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.575353,
+      "lng": 126.900476
+    },
+    {
+      "text": "디지털미디어시티역3번출구",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.575646,
+      "lng": 126.900522
+    },
+    {
+      "text": "디지털미디어시티역",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.574931,
+      "lng": 126.900504
+    },
+    {
+      "text": "상암동입구",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.573793,
+      "lng": 126.899397
+    },
+    {
+      "text": "상암사거리.월드컵경기장북측",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.573723,
+      "lng": 126.897943
+    },
+    {
+      "text": "상암초등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.576608,
+      "lng": 126.893432
+    },
+    {
+      "text": "상암초등학교",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.576446,
+      "lng": 126.893308
+    },
+    {
+      "text": "KBS미디어센터",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.576329,
+      "lng": 126.891404
+    },
+    {
+      "text": "월드컵공원입구.문화비축기지입구",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.568267,
+      "lng": 126.892619
+    },
+    {
+      "text": "플리마켓 (T1)",
+      "kind": "zone",
+      "colour": "#bdbdbf",
+      "minZoom": 16.5,
+      "lat": 37.57145,
+      "lng": 126.8922
+    },
+    {
+      "text": "스탠딩존",
+      "kind": "zone",
+      "colour": "#cdb78f",
+      "minZoom": 16.5,
+      "lat": 37.570685,
+      "lng": 126.894235
+    },
+    {
+      "text": "레저존",
+      "kind": "zone",
+      "colour": "#9a9a9c",
+      "minZoom": 16.5,
+      "lat": 37.570258,
+      "lng": 126.894574
+    },
+    {
+      "text": "Mint Stage",
+      "kind": "stage",
+      "stage": "mint",
+      "colour": "#23966a",
+      "minZoom": 15.3,
+      "lat": 37.57112,
+      "lng": 126.89395
+    },
+    {
+      "text": "Breeze Stage",
+      "kind": "stage",
+      "stage": "breeze",
+      "colour": "#2d9bb0",
+      "minZoom": 15.3,
+      "lat": 37.57099,
+      "lng": 126.8946
+    },
+    {
+      "text": "Loving Forest Garden",
+      "kind": "stage",
+      "stage": "forest",
+      "colour": "#e0607f",
+      "minZoom": 15.3,
+      "lat": 37.5722,
+      "lng": 126.8924
+    },
+    {
+      "text": "Flood in the Cave",
+      "kind": "stage",
+      "stage": "cave",
+      "colour": "#3f7fd9",
+      "minZoom": 15.3,
+      "lat": 37.57196,
+      "lng": 126.89272
+    }
+  ],
+  "marks": [
+    {
+      "id": 1,
+      "kind": "station-worldCupStadium",
+      "zone": "",
+      "lat": 37.569518,
+      "lng": 126.899327
+    },
+    {
+      "id": 2,
+      "kind": "exit-1",
+      "zone": "worldCupStadium",
+      "lat": 37.5682,
+      "lng": 126.899072
+    },
+    {
+      "id": 3,
+      "kind": "exit-2",
+      "zone": "worldCupStadium",
+      "lat": 37.569708,
+      "lng": 126.899019
+    },
+    {
+      "id": 4,
+      "kind": "exit-3",
+      "zone": "worldCupStadium",
+      "lat": 37.570616,
+      "lng": 126.898967
+    }
+  ]
+}

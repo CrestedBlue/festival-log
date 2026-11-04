@@ -2,7 +2,7 @@ import { catalogEntry } from './catalog'
 import type { GuideSet } from './catalog/guide'
 import type { LineupImage } from './catalog/lineup'
 import { SERIES } from './catalog/series'
-import type { CollectionSource, FestivalTheme } from './catalog/series/types'
+import type { CollectionSource, FestivalTheme, StageLook } from './catalog/series/types'
 import type { TicketSeller } from './catalog/tickets'
 import type { Festival, UserData } from './schema'
 
@@ -32,6 +32,13 @@ export const catalogFestival = (id: string): Festival | null => {
   if (!entry) return null
   if (!built.has(id)) built.set(id, entry.create())
   return built.get(id) ?? null
+}
+
+const NO_STAGES: Readonly<Record<string, StageLook>> = {}
+/** How a catalog festival's stages look (colour and icon, by stage key), for the map's stage names; none for others. */
+export const festivalStageLooks = (festivalId: string): Readonly<Record<string, StageLook>> => {
+  const entry = catalogEntry(festivalId)
+  return (entry && SERIES[entry.series]?.theme.stages) ?? NO_STAGES
 }
 
 /** The festival's logo for the festival lists; null for festivals saved from older versions (no design of their own). */

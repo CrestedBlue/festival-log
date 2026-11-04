@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { USER_PIN_KINDS, type PinKind } from '../../data/schema'
 import { PIN_META } from './pinMeta'
+import { pinIconUrl } from './pinIcons'
 
 interface Props {
   onSave: (name: string, kind: PinKind) => void
@@ -23,7 +24,8 @@ export function PinForm({ onSave, onCancel }: Props) {
       <div className="chip-row" role="group" aria-label="핀 종류">
         {USER_PIN_KINDS.map((k) => (
           <button key={k} type="button" className="chip" aria-pressed={kind === k} onClick={() => setKind(k)}>
-            {PIN_META[k].emoji} {PIN_META[k].label}
+            <img className="chip__pin" src={pinIconUrl({ kind: k })} alt="" width={20} height={20} />
+            {PIN_META[k].label}
           </button>
         ))}
       </div>

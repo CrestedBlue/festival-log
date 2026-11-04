@@ -11,7 +11,8 @@ import { makeId } from '../../lib/id'
 import { festivalMapFor } from '../../data/catalog'
 import { MapCredits } from './MapCredits'
 import { PinForm } from './PinForm'
-import { PIN_META } from './pinMeta'
+import { festivalStageLooks } from '../../data/resolve'
+import { pinIconUrl } from './pinIcons'
 import { useLeafletMap } from './useLeafletMap'
 import { useMapPick, useMapZoom, useMyLocationLayer, usePinHighlight } from './useMapLayers'
 import { useMapContent } from './useMapContent'
@@ -34,16 +35,9 @@ async function isLocationAlreadyGranted(): Promise<boolean> {
   }
 }
 
-/** The map's own icon for a pin it draws (the same as on the map), else the kind's emoji. */
+/** A pin's icon, the same as on the map (pinIcons.ts). */
 function PinIcon({ pin, icons, className }: { pin: Pin; icons: Readonly<Record<string, string>> | undefined; className: string }) {
-  const url = pin.mapIcon ? icons?.[pin.mapIcon] : undefined
-  return url ? (
-    <img className={`${className} ${className}--image`} src={url} alt="" width={32} height={32} />
-  ) : (
-    <span className={`${className} map-pin--${pin.kind}`} aria-hidden="true">
-      {PIN_META[pin.kind].emoji}
-    </span>
-  )
+  return <img className={`${className} ${className}--image`} src={pinIconUrl(pin, icons)} alt="" width={32} height={32} />
 }
 
 interface Props {
@@ -92,7 +86,8 @@ export default function MapView({ festival, userPinIds }: Props) {
     },
     [festival.pins],
   )
-  const pinSize = useMapContent(map, festivalMap, festival.pins, zoom, selectedId, selectOnMap, !picking, activeIds)
+  const stages = festivalStageLooks(festival.id)
+  const pinSize = useMapContent(map, festivalMap, festival.pins, zoom, selectedId, selectOnMap, { interactive: !picking, activeIds, userPinIds, stages })
   usePinHighlight(map, highlight, pinSize)
   useMyLocationLayer(map, geo)
   useMapPick(map, picking, onPick)

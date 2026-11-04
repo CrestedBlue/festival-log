@@ -3,7 +3,7 @@ import { distanceMeters } from '../../lib/geo'
 import { FestivalSchema } from '../schema'
 import { BML_2026_GUIDES, BML_2026_NOTICES, BML_2026_TICKETS, createBml2026 } from './bml2026'
 import { BML_2026_ID, BML_2026_KEY, BML_SERIES } from './ids'
-import { catalogEntry } from './index'
+import { catalogEntry, festivalMapFor } from './index'
 
 describe('createBml2026', () => {
   const festival = createBml2026()
@@ -58,14 +58,18 @@ describe('createBml2026', () => {
     expect(festival.pins.every((p) => p.id.startsWith(`${BML_SERIES}-`))).toBe(true)
   })
 
-  test('pins the official festival map: the three stages, the gates, the ticket booth and the facilities', () => {
+  test('pins the official festival map: the gates, the ticket booth and the facilities; the map names the stages', () => {
     const named = (kind: string) => festival.pins.filter((p) => p.kind === kind).map((p) => p.name)
-    expect(named('stage')).toEqual(['Mint Breeze Stage · 문화마당', 'Loving Forest Garden · T2 야외 무대', 'Flood in the Cave · T2 실내 공연장'])
+    expect(named('stage')).toEqual([])
+    const stages = festivalMapFor(BML_2026_ID)?.labels.filter((l) => l.kind === 'stage').map((l) => [l.text, l.stage])
+    expect(stages).toEqual([['Mint Stage', 'mint'], ['Breeze Stage', 'breeze'], ['Loving Forest Garden', 'forest'], ['Flood in the Cave', 'cave']])
     expect(festival.pins.filter((p) => p.group === '게이트').map((p) => p.name)).toEqual(['메인 게이트', '서브 게이트 (대략)'])
     expect(festival.pins.filter((p) => p.kind === 'wristband')).toMatchObject([{ name: '티켓 & 손목밴드 · 난지천공원 주차장 (대략)', rank: 0 }])
     expect(named('toilet')).toHaveLength(5)
-    // inside the park, or in the car park beside it
-    for (const pin of festival.pins) expect(distanceMeters(pin, festival.venue), pin.name).toBeLessThan(500)
+    // inside the park, or in the car park beside it; the station and its exits a walk away
+    const station = (p: { group?: string }) => p.group === '가까운 역' || p.group === '월드컵경기장역 출구'
+    expect(festival.pins.filter(station).map((p) => p.name)).toEqual(['월드컵경기장역 (6호선)', '월드컵경기장역 1번 출구', '월드컵경기장역 2번 출구', '월드컵경기장역 3번 출구'])
+    for (const pin of festival.pins.filter((p) => !station(p))) expect(distanceMeters(pin, festival.venue), pin.name).toBeLessThan(500)
   })
 
   test('has notices, the two official notice pages and the three ticket sellers', () => {

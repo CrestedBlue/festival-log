@@ -1,6 +1,7 @@
-import type { Pin } from '../../data/schema'
+import type { Pin, StageIconName } from '../../data/schema'
 import type { FestivalMap, MapLabel, MapLabelKind } from './festivalMaps'
 import { pinRank, standingOf } from './pinGroups'
+import { pinIconUrl } from './pinIcons'
 
 /*
  * What an illustrated map writes and draws on top of its images, the way a street map does: names and icons keep
@@ -16,6 +17,7 @@ export const VENUE_FROM_ZOOM = 13
 const CAPTION_FONT = 11
 const LABEL_FONT: Record<MapLabelKind, number> = { station: 13, building: 11, stage: 12, place: 11, zone: 11, bus: 10 }
 const LABEL_ICON = 18
+const STAGE_ICON = 22 // a stage's icon badge before its name
 const BADGE_FONT = 10
 const GAP = 3 // px kept clear around each one
 
@@ -39,9 +41,17 @@ export interface Offset {
 const NO_NUDGES: readonly Offset[] = []
 const NUDGING: ReadonlySet<MapLabelKind> = new Set(['station', 'stage', 'place', 'zone'])
 
+/** How a stage looks (its festival's theme): the colour and icon the timetable gives it. */
+export interface StageMark {
+  color: string
+  icon: StageIconName
+}
+export type StageLooks = Readonly<Record<string, StageMark>>
+const NO_STAGES: StageLooks = {}
+
 export type AnnotationView =
   | { type: 'pin'; pin: Pin; iconUrl: string; size: number; caption: string | null; selected: boolean; active: boolean }
-  | { type: 'label'; label: MapLabel; iconUrl: string | null; font: number }
+  | { type: 'label'; label: MapLabel; iconUrl: string | null; stage: StageMark | null; font: number }
 
 export interface Annotation {
   key: string
@@ -75,13 +85,14 @@ function pinAnnotation(pin: Pin, iconUrl: string, zoom: number, selected: boolea
   }
 }
 
-function labelAnnotation(label: MapLabel, index: number, icons: FestivalMap['icons'], zoom: number): Annotation | null {
+function labelAnnotation(label: MapLabel, index: number, icons: FestivalMap['icons'], zoom: number, stages: StageLooks): Annotation | null {
   if (zoom < label.minZoom) return null
   const font = LABEL_FONT[label.kind] + (zoom >= 17.5 && label.kind !== 'building' && label.kind !== 'bus' ? 1 : 0)
   const iconUrl = label.icon ? (icons[label.icon] ?? null) : null
+  const stage = label.stage && Object.hasOwn(stages, label.stage) ? stages[label.stage]! : null
   const badges = (label.badges ?? []).reduce((w, b) => w + textWidth(b.text, BADGE_FONT) + 10 + 4, 0)
-  const width = (iconUrl ? LABEL_ICON + 4 : 0) + badges + textWidth(label.text, font) + 12
-  const height = Math.max(font + 10, iconUrl ? LABEL_ICON + 4 : 0)
+  const width = (iconUrl ? LABEL_ICON + 4 : 0) + (stage ? STAGE_ICON + 4 : 0) + badges + textWidth(label.text, font) + 12
+  const height = Math.max(font + 10, iconUrl ? LABEL_ICON + 4 : 0, stage ? STAGE_ICON + 4 : 0)
   return {
     key: `label:${index}`,
     lat: label.lat,
@@ -91,14 +102,14 @@ function labelAnnotation(label: MapLabel, index: number, icons: FestivalMap['ico
     // stops stay put
     nudges: NUDGING.has(label.kind) ? [{ dx: 0, dy: -(height + 2) }, { dx: 0, dy: height + 2 }, ...(label.kind === 'station' ? [{ dx: 0, dy: -2 * (height + 2) }] : [])] : NO_NUDGES,
     priority: PRIORITY[label.kind],
-    view: { type: 'label', label, iconUrl, font },
+    view: { type: 'label', label, iconUrl, stage, font },
   }
 }
 
 /**
- * Everything the map would show at this zoom (before leaving out overlaps): its labels and the pins it has icons for.
- * The selected pin and the active ones (a pin-list row tapped) show at any zoom and before everything else, so a row's
- * pins are all on the map.
+ * Everything the map would show at this zoom (before leaving out overlaps): its labels (a stage's with its icon, from
+ * `stages`) and the pins, each drawn with its icon (pinIcons.ts). The selected pin and the active ones (a pin-list row
+ * tapped) show at any zoom and before everything else, so a row's pins are all on the map.
  */
 export function buildAnnotations(
   map: FestivalMap,
@@ -106,14 +117,14 @@ export function buildAnnotations(
   zoom: number,
   selectedId: string | null,
   activeIds: ReadonlySet<string> = new Set(),
+  stages: StageLooks = NO_STAGES,
 ): Annotation[] {
   const pinItems = pins.flatMap((pin) => {
-    const iconUrl = pin.mapIcon ? map.icons[pin.mapIcon] : undefined
-    const item = iconUrl ? pinAnnotation(pin, iconUrl, zoom, pin.id === selectedId, activeIds.has(pin.id)) : null
+    const item = pinAnnotation(pin, pinIconUrl(pin, map.icons), zoom, pin.id === selectedId, activeIds.has(pin.id))
     return item ? [item] : []
   })
   const labelItems = map.labels.flatMap((label, i) => {
-    const item = labelAnnotation(label, i, map.icons, zoom)
+    const item = labelAnnotation(label, i, map.icons, zoom, stages)
     return item ? [item] : []
   })
   return [...labelItems, ...pinItems]

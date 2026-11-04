@@ -13,11 +13,24 @@ export type StationPlace = Place & { station: string; line: string }
  * `stations` is keyed by the station's key on the map.
  */
 export function bigMapPins(code: string, venue: Place, stations: Readonly<Record<string, StationPlace>>): Pin[] {
+  return markPins(code, stations, venue)
+}
+
+/**
+ * The stations a festival map draws (scripts/map/layers/lib/venue-map.mjs) and every numbered exit of them, one list
+ * row per station, keyed as in bigMapPins.
+ */
+export const stationPins = (code: string, stations: Readonly<Record<string, StationPlace>>): Pin[] => markPins(code, stations, null)
+
+function markPins(code: string, stations: Readonly<Record<string, StationPlace>>, venue: Place | null): Pin[] {
   const map = seriesMapFor(code)
   if (!map) throw new Error(`${code} map metadata is missing`)
   return map.marks.map((mark): Pin => {
     const spot = { mapIcon: mark.kind, lat: mark.lat, lng: mark.lng }
-    if (mark.kind === 'venue') return { ...venue, id: `${code}-${venue.id}`, ...spot }
+    if (mark.kind === 'venue') {
+      if (!venue) throw new Error(`${code} map has a venue mark but no venue pin`)
+      return { ...venue, id: `${code}-${venue.id}`, ...spot }
+    }
     const stationKey = mark.kind.startsWith('station-') ? mark.kind.slice('station-'.length) : mark.zone
     const station = stations[stationKey]
     if (!station) throw new Error(`${code} map mark ${mark.id} (${mark.kind}) is of no known station`)

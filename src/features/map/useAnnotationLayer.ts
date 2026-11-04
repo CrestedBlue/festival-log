@@ -1,5 +1,6 @@
 import L from 'leaflet'
 import { useEffect } from 'react'
+import { stageIconMarkup } from '../../components/stageIconShapes'
 import { placeAnnotations, type Annotation } from './annotations'
 
 /** A tappable icon gets at least this much room under a finger, however small it is drawn. */
@@ -20,8 +21,12 @@ function html({ view }: Annotation): string {
     const state = view.selected ? ' is-selected' : view.active ? ' is-active' : ''
     return `<span class="map-icon-pin${state}"><img src="${view.iconUrl}" width="${view.size}" height="${view.size}" alt="">${caption}</span>`
   }
-  const { label, iconUrl, font } = view
-  const icon = iconUrl ? `<img src="${iconUrl}" width="18" height="18" alt="">` : ''
+  const { label, iconUrl, stage, font } = view
+  // a stage's own icon (the timetable's) in white on a badge of its colour (theme colours are #rrggbb constants)
+  const stageIcon = stage
+    ? `<span class="map-label__stage" style="background:${stage.color}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">${stageIconMarkup(stage.icon)}</svg></span>`
+    : ''
+  const icon = iconUrl ? `<img src="${iconUrl}" width="18" height="18" alt="">` : stageIcon
   const badges = (label.badges ?? []).map((b) => `<span class="map-label__badge" style="background:${b.colour}">${esc(b.text)}</span>`).join('')
   const colour = label.colour ? `;--label-colour:${label.colour}` : ''
   const dark = label.kind === 'zone' && label.colour && isDark(label.colour) ? ' is-dark' : ''

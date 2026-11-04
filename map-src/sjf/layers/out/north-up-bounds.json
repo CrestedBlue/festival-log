@@ -1,0 +1,27 @@
+{
+  "size": [
+    1680,
+    1875
+  ],
+  "pxPerMeter": 3,
+  "svgUnits": "1 unit = 1 m, origin at the north-west corner of bounds, y grows southward",
+  "bounds": [
+    [
+      37.516619,
+      127.123055
+    ],
+    [
+      37.522234,
+      127.129398
+    ]
+  ],
+  "colours": {
+    "ground": "#abcd82",
+    "lawn": "#62b45e",
+    "standing": "#f4a9bb",
+    "forest": "#e2557a",
+    "garden": "#8fcc9a",
+    "dome": "#9aa3c8",
+    "avenue": "#b4b0a2"
+  }
+}

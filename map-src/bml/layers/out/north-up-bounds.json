@@ -1,0 +1,28 @@
+{
+  "size": [
+    1380,
+    1230
+  ],
+  "pxPerMeter": 3,
+  "svgUnits": "1 unit = 1 m, origin at the north-west corner of bounds, y grows southward",
+  "bounds": [
+    [
+      37.569273,
+      126.891253
+    ],
+    [
+      37.572956,
+      126.896467
+    ]
+  ],
+  "colours": {
+    "ground": "#6cc644",
+    "t2": "#bdbdbf",
+    "t1": "#bdbdbf",
+    "t6": "#bdbdbf",
+    "plaza": "#bdbdbf",
+    "standing": "#cdb78f",
+    "leisure": "#9a9a9c",
+    "stage": "#3c3c40"
+  }
+}

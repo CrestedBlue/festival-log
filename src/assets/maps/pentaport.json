@@ -300,6 +300,7 @@
       "text": "MONSTER STAGE",
       "colour": "#4f9a1f",
       "kind": "stage",
+      "stage": "monster",
       "minZoom": 15.3,
       "lat": 37.405859,
       "lng": 126.633644
@@ -308,6 +309,7 @@
       "text": "KB국민카드 STAGE",
       "colour": "#6f6450",
       "kind": "stage",
+      "stage": "kb",
       "minZoom": 15.3,
       "lat": 37.405795,
       "lng": 126.631847
@@ -316,6 +318,7 @@
       "text": "STANLEY STAGE",
       "colour": "#2b2b2b",
       "kind": "stage",
+      "stage": "stanley",
       "minZoom": 15.3,
       "lat": 37.406549,
       "lng": 126.634677

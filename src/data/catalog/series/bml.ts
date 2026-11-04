@@ -2,13 +2,15 @@ import bmlArt from '../../../assets/art/bml.webp'
 import bmlMark from '../../../assets/mark/bml.webp'
 import type { Pin } from '../../schema'
 import { BML_SERIES as CODE } from '../ids'
+import { stationPins, type StationPlace } from './bigMapPins'
 import type { FestivalSeries } from './types'
 
 /**
  * Beautiful Mint Life (뷰티풀 민트 라이프): Mint Paper's spring festival. Held at Olympic Park until 2025, at the Oil
  * Tank Culture Park (문화비축기지, Mapo) from 2026: Mint Breeze Stage on its 문화마당 (two stages side by side, Mint and
  * Breeze, taking turns), Loving Forest Garden on T2's outdoor stage and Flood in the Cave in T2's indoor hall.
- * No illustrated map yet, so the app shows OpenStreetMap tiles. The pins come from the official 2026 festival map
+ * The map (scripts/map/layers/bml/) draws the official map's zones on the real park and names the stages with their
+ * icons, so the stages are not listed as pins. The pins come from the official 2026 festival map
  * (map-src/bml/official-map-2026.jpg): it is drawn north up but not to scale, so each place is set by the tank, the
  * plaza edge or the road it is drawn beside, on the satellite and OpenStreetMap views (2026-11-04). The ticket booth
  * stands in the 난지천공원 car park across 월드컵로, the main gate toward 월드컵경기장역 (line 6) exit 2.
@@ -24,21 +26,18 @@ const SMOKING: Place = { name: '흡연구역', group: '흡연구역', kind: 'smo
 const SPONSOR: Place = { name: '스폰서 존', group: '스폰서 존', kind: 'sponsor' }
 
 const PINS: readonly Pin[] = [
-  at('stage-mint-breeze', { name: 'Mint Breeze Stage · 문화마당', kind: 'stage', detail: 'Mint·Breeze 두 무대가 번갈아 · 스탠딩 존과 레저 존' }, 37.5711, 126.8943),
-  at('stage-forest', { name: 'Loving Forest Garden · T2 야외 무대', kind: 'stage', detail: '앉아서 보는 무대' }, 37.5722, 126.8924),
-  at('stage-cave', { name: 'Flood in the Cave · T2 실내 공연장', kind: 'stage', detail: '스탠딩 · 사람이 많으면 입장 제한' }, 37.572, 126.8926),
   at('ticket', { name: '티켓 & 손목밴드 · 난지천공원 주차장 (대략)', kind: 'wristband', rank: 0, detail: '메인 게이트에서 월드컵로 건너 남서쪽' }, 37.5689, 126.8913),
-  at('gate-main', { name: '메인 게이트', group: '게이트', kind: 'etc', rank: 0, detail: '문화마당 남쪽 · 월드컵경기장역(6호선) 2번 출구 쪽' }, 37.5699, 126.8943),
-  at('gate-sub', { name: '서브 게이트 (대략)', group: '게이트', kind: 'etc', rank: 0, detail: '월드컵 지하차도 쪽' }, 37.57, 126.8954),
+  at('gate-main', { name: '메인 게이트', group: '게이트', kind: 'etc', mapIcon: 'gate', rank: 0, detail: '문화마당 남쪽 · 월드컵경기장역(6호선) 2번 출구 쪽' }, 37.5699, 126.8943),
+  at('gate-sub', { name: '서브 게이트 (대략)', group: '게이트', kind: 'etc', mapIcon: 'gate', rank: 0, detail: '월드컵 지하차도 쪽' }, 37.57, 126.8954),
   at('info', { name: '인포메이션', kind: 'info', detail: '메인 게이트 동쪽 · 현장 판매' }, 37.5699, 126.8948),
   at('luggage', { name: '물품보관소', kind: 'luggage' }, 37.57, 126.895),
-  at('charger', { name: '보조배터리 대여', kind: 'etc' }, 37.5701, 126.8951),
+  at('charger', { name: '보조배터리 대여', kind: 'etc', mapIcon: 'charging' }, 37.5701, 126.8951),
   at('water', { name: '프리워터존', kind: 'water', detail: '텀블러를 챙기세요' }, 37.5702, 126.8951),
   at('rest', { name: '휴식존', kind: 'eating' }, 37.5707, 126.8951),
   at('photo', { name: '포토존', kind: 'photo' }, 37.571, 126.895),
   at('md', { name: '민트샵', kind: 'shop', detail: '공식 MD' }, 37.5711, 126.8931),
   at('mint-center', { name: '민트문화체육센터', kind: 'sponsor', detail: 'T6 옆 부스' }, 37.5714, 126.893),
-  at('flea', { name: '플리마켓', kind: 'etc', detail: 'T1' }, 37.5715, 126.8922),
+  at('flea', { name: '플리마켓', kind: 'etc', mapIcon: 'vendorBooth', detail: 'T1' }, 37.5715, 126.8922),
   at('toilet-t2', { ...TOILET, detail: 'T2 앞' }, 37.5719, 126.8924),
   at('toilet-t1', { ...TOILET, detail: 'T1 옆' }, 37.5716, 126.8923),
   at('toilet-stage', { ...TOILET, detail: 'Mint Breeze Stage 오른쪽' }, 37.5712, 126.895),
@@ -57,11 +56,15 @@ const PINS: readonly Pin[] = [
   at('sponsor-south', { ...SPONSOR, detail: '문화마당 서쪽' }, 37.5706, 126.8935),
 ]
 
+const STATIONS: Record<string, StationPlace> = {
+  worldCupStadium: { id: 'zone-world-cup-stadium-station', name: '월드컵경기장역 (6호선)', group: '가까운 역', detail: '2번 출구에서 메인 게이트까지 걸어서 약 5분', kind: 'etc', station: '월드컵경기장역', line: '6호선' },
+}
+
 export const BML: FestivalSeries = {
   code: CODE,
   name: '뷰티풀 민트 라이프',
   venue: { name: '문화비축기지', lat: 37.5708, lng: 126.8942 },
-  pins: () => [...PINS],
+  pins: () => [...PINS, ...stationPins(CODE, STATIONS)],
   // 2026 data came from the Mint Paper site (mintpaper.co.kr/festivals/170: the notices of 2026-02-12 to 06-04). The
   // newest 12 Instagram posts were read on 2026-10-29: 2026 highlight clips and a Chuseok greeting (09/23), nothing to add.
   sources: [{ method: '인스타', value: '@beautifulmintlife_', lastScrapedPostDate: '2026-09-25' }],

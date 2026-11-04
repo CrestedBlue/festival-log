@@ -8,7 +8,8 @@ import type { FestivalSeries } from './types'
 /**
  * Seoul Jazz Festival (서울재즈페스티벌): held at Olympic Park every spring, on four stages across the park — MAY FOREST
  * (88잔디마당), SPARKLING DOME (KSPO DOME), PINK AVENUE (티켓링크 라이브 아레나) and SPRING GARDEN (88호수수변무대) in 2026.
- * The map is the park's area map drawn for the Grand Mint Festival (festivalMaps.ts), with this festival's stages named.
+ * The map (scripts/map/layers/sjf/) draws those four places in the stages' colours on the park, on the Grand Mint
+ * Festival map's OpenStreetMap extract, and names the stages with their icons.
  * Its pins come from the official 2026 festival map (map-src/sjf/official-map-2026.png, the notice of 2026-05-20): the
  * drawing is not to scale, so each place is set by the stage or building it is drawn beside, on the satellite and
  * OpenStreetMap views (2026-11-04). Booths and gates are approximate; toilets reuse the Grand Mint map's where they match.
@@ -16,16 +17,16 @@ import type { FestivalSeries } from './types'
 type Place = Omit<Pin, 'id' | 'lat' | 'lng'>
 const at = (key: string, place: Place, lat: number, lng: number): Pin => ({ id: `${CODE}-${key}`, ...place, lat, lng })
 
-const GATE: Place = { name: '', group: '게이트', kind: 'etc', rank: 0 }
-const DOME_GATE: Place = { name: '', group: 'SPARKLING DOME 게이트', kind: 'etc', rank: 0 }
-const AVENUE_GATE: Place = { name: '', group: 'PINK AVENUE 게이트', kind: 'etc', rank: 0 }
+const GATE: Place = { name: '', group: '게이트', kind: 'etc', mapIcon: 'gate', rank: 0 }
+const DOME_GATE: Place = { name: '', group: 'SPARKLING DOME 게이트', kind: 'etc', mapIcon: 'gate', rank: 0 }
+const AVENUE_GATE: Place = { name: '', group: 'PINK AVENUE 게이트', kind: 'etc', mapIcon: 'gate', rank: 0 }
 const TOILET: Place = { name: '화장실', group: '화장실', kind: 'toilet', mapIcon: 'toilet' }
-const FIRST_AID: Place = { name: '의무실', group: '의무실', kind: 'firstaid', mapIcon: 'firstaid' }
+const FIRST_AID: Place = { name: '의무실', group: '의무실', kind: 'firstaid', mapIcon: 'medical' }
 const FOOD: Place = { name: '푸드존', group: '푸드존', kind: 'food', mapIcon: 'fnb' }
 const SPONSOR: Place = { name: '스폰서 부스', group: '스폰서 부스', kind: 'sponsor', mapIcon: 'sponsor' }
 
 const PINS: readonly Pin[] = [
-  at('ticket', { name: '티켓 부스', kind: 'wristband', rank: 0, mapIcon: 'wristband', detail: '티켓 수령(A) · 바로 옆에 성인인증(B)' }, 37.518, 127.127),
+  at('ticket', { name: '티켓 부스', kind: 'wristband', rank: 0, mapIcon: 'ticket', detail: '티켓 수령(A) · 바로 옆에 성인인증(B)' }, 37.518, 127.127),
   at('gate-1', { ...GATE, name: 'GATE 1 (MAY FOREST)', detail: 'MAY FOREST(88잔디마당) 남동쪽' }, 37.5186, 127.126),
   at('gate-2', { ...GATE, name: 'GATE 2', detail: 'MAY FOREST 동쪽 · SPARKLING DOME 가는 길' }, 37.52, 127.1262),
   at('gate-3', { ...GATE, name: 'GATE 3', detail: 'MAY FOREST 남쪽' }, 37.5183, 127.1245),
@@ -45,9 +46,9 @@ const PINS: readonly Pin[] = [
   at('firstaid-forest', { ...FIRST_AID, detail: 'MAY FOREST, GATE 1 옆' }, 37.5188, 127.1256),
   at('firstaid-dome', { ...FIRST_AID, detail: 'SPARKLING DOME 안' }, 37.5195, 127.1266),
   at('firstaid-avenue', { ...FIRST_AID, detail: 'PINK AVENUE 안' }, 37.5178, 127.1265),
-  at('md', { name: 'MD 부스', kind: 'shop', mapIcon: 'mintShop', detail: '오피셜 MD · 아티스트 MD · SJF X 폼폼푸린' }, 37.5187, 127.1264),
+  at('md', { name: 'MD 부스', kind: 'shop', mapIcon: 'officialMd', detail: '오피셜 MD · 아티스트 MD · SJF X 폼폼푸린' }, 37.5187, 127.1264),
   at('info', { name: '인포메이션', kind: 'info', mapIcon: 'info', detail: '안내 · 현장 판매 · SJF VILLAGE' }, 37.5183, 127.1279),
-  at('lockers', { name: '물품보관소', kind: 'luggage', mapIcon: 'luggage', detail: 'PINK AVENUE 동쪽 (대략)' }, 37.517, 127.1276),
+  at('lockers', { name: '물품보관소', kind: 'luggage', mapIcon: 'lockers', detail: 'PINK AVENUE 동쪽 (대략)' }, 37.517, 127.1276),
   at('food-forest', { ...FOOD, detail: 'MAY FOREST 서쪽 (1–8번 부스)' }, 37.5191, 127.1241),
   at('food-north', { ...FOOD, detail: 'SPRING GARDEN과 SPARKLING DOME 사이 (24–37번 부스)' }, 37.5203, 127.1266),
   at('sponsor-forest', { ...SPONSOR, detail: 'MAY FOREST 남쪽' }, 37.5185, 127.1253),

@@ -13,27 +13,26 @@ import type { FestivalSeries } from './types'
  * The main-stage site map is drawn about north up (the stages at the north end of field B, the main gate at the south-west
  * corner of field A, the F&B and cool-zone tent being the air dome 희망홀 west of the fields); its booths and buses are
  * set by the field edge and the road they are drawn beside, on the satellite and OpenStreetMap views (2026-11-04).
- * No illustrated map yet (the official ones are kept in map-src/jumf/), so the app shows OpenStreetMap tiles.
+ * The map (scripts/map/layers/jumf/) draws the main-stage site map's zones on the real fields and names the stages
+ * (with their icons), so the stages are not listed as pins; the pins carry the app's pin designs (mapIcon).
  */
 type Place = Omit<Pin, 'id' | 'lat' | 'lng'>
 const at = (key: string, place: Place, lat: number, lng: number): Pin => ({ id: `${CODE}-${key}`, ...place, lat, lng })
 
 const PINS: readonly Pin[] = [
-  at('zone-main-stage', { name: '마루·너울 스테이지 · 인조잔디구장 A·B', kind: 'stage', detail: '무대는 B구장 북쪽 끝 · 스탠딩존, 그 남쪽으로 피크닉존·캠핑존' }, 35.8123, 127.0873),
-  at('zone-soom-stage', { name: '숨 스테이지 · 실내체육관 (쿨존)', kind: 'stage' }, 35.812305, 127.091777),
-  at('gate-main', { name: '메인 게이트', kind: 'etc', rank: RANK.entrance, detail: '인조잔디구장 남서쪽 모서리' }, 35.8106, 127.087),
+  at('gate-main', { name: '메인 게이트', kind: 'etc', mapIcon: 'gate', rank: RANK.entrance, detail: '인조잔디구장 남서쪽 모서리' }, 35.8106, 127.087),
   at('ticket', { name: '티켓부스 · MD SHOP', kind: 'wristband', rank: RANK.entrance, detail: '구장 동쪽 길 건너 · 셔틀버스 주차장 옆' }, 35.8116, 127.0885),
-  at('zone-shuttle', { name: '셔틀버스 승하차 · 교수연구동 주차장 (대략)', kind: 'etc' }, 35.81206, 127.090161),
+  at('zone-shuttle', { name: '셔틀버스 승하차 · 교수연구동 주차장 (대략)', kind: 'etc', mapIcon: 'shuttle' }, 35.81206, 127.090161),
   at('fnb', { name: 'F&B · 쿨존 · 희망홀', kind: 'food', detail: '구장 서쪽 에어돔' }, 35.8116, 127.0865),
   at('coffee', { name: '커피 (COFFEE)', kind: 'food', detail: '피크닉존 동쪽' }, 35.8117, 127.0879),
   at('toilet', { name: '화장실', kind: 'toilet', detail: '구장 서쪽' }, 35.8111, 127.0866),
   at('luggage', { name: '물품보관소', kind: 'luggage', detail: '메인 게이트 옆' }, 35.8105, 127.0872),
   at('info', { name: '종합안내소', kind: 'info', detail: '구장 남쪽' }, 35.8105, 127.0876),
   at('medical', { name: '온열환자 & 응급버스', kind: 'firstaid', detail: '구장 동쪽 길' }, 35.8112, 127.0883),
-  at('cooling', { name: '쿨링 수소버스', kind: 'etc', rank: RANK.coolZone, detail: '구장 동쪽 길' }, 35.811, 127.0883),
-  at('barrier-free', { name: '배리어프리존', kind: 'etc', rank: RANK.barrierFree, detail: '스탠딩존 뒤 F.O.H 옆' }, 35.8119, 127.0874),
-  at('charging', { name: '충전존', kind: 'etc', detail: '캠핑존 동쪽' }, 35.8107, 127.0879),
-  at('flea', { name: '플리마켓', kind: 'etc', detail: '구장 동쪽 길' }, 35.8108, 127.0883),
+  at('cooling', { name: '쿨링 수소버스', kind: 'etc', mapIcon: 'coolZone', rank: RANK.coolZone, detail: '구장 동쪽 길' }, 35.811, 127.0883),
+  at('barrier-free', { name: '배리어프리존', kind: 'etc', mapIcon: 'barrierFreeZone', rank: RANK.barrierFree, detail: '스탠딩존 뒤 F.O.H 옆' }, 35.8119, 127.0874),
+  at('charging', { name: '충전존', kind: 'etc', mapIcon: 'charging', detail: '캠핑존 동쪽' }, 35.8107, 127.0879),
+  at('flea', { name: '플리마켓', kind: 'etc', mapIcon: 'vendorBooth', detail: '구장 동쪽 길' }, 35.8108, 127.0883),
   at('photo', { name: '포토블링', kind: 'photo', detail: '구장 동쪽 길' }, 35.8106, 127.0883),
   at('smoking-west', { name: '흡연구역', group: '흡연구역', kind: 'smoking', detail: '구장 서쪽' }, 35.8113, 127.0864),
   at('smoking-east', { name: '흡연구역', group: '흡연구역', kind: 'smoking', detail: '구장 남동쪽' }, 35.8105, 127.0883),

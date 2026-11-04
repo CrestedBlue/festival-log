@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { CDF_SERIES, GRAND_MINT_SERIES, HERO_ROCK_SERIES, JUMF_SERIES, PENTAPORT_SERIES, SJF_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
+import { BML_SERIES, CDF_SERIES, GRAND_MINT_SERIES, HERO_ROCK_SERIES, JUMF_SERIES, PENTAPORT_SERIES, SJF_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
 import { isInsideBounds } from '../../lib/geo'
 import { parseMapMeta, seriesMapFor, withImages } from './festivalMaps'
 
@@ -104,7 +104,7 @@ describe('withImages', () => {
 
 describe('seriesMapFor', () => {
   test('returns nothing for festivals without a map', () => {
-    expect(seriesMapFor(JUMF_SERIES)).toBeNull()
+    expect(seriesMapFor('nofestival')).toBeNull()
   })
 
   // festivals with no venue map yet: the big area map alone, with the venue and the stations as the map's own icons
@@ -158,18 +158,33 @@ describe('seriesMapFor', () => {
     expect(map?.labels.filter((l) => l.kind === 'bus' && l.icon === 'bus').length).toBeGreaterThan(0)
   })
 
-  test('gives the Seoul Jazz Festival the Olympic Park area map drawn for the Grand Mint Festival, naming its own stages', () => {
-    const map = seriesMapFor(SJF_SERIES)
-    expect(map?.layers).toEqual(seriesMapFor(GRAND_MINT_SERIES)?.layers.slice(0, 1))
-    // none of the Grand Mint Festival's own: its venue layers, official marks, stages and zones
-    expect(map?.marks).toEqual([])
-    expect(map?.labels.some((l) => l.kind === 'zone')).toBe(false)
-    expect(map?.labels.filter((l) => l.kind === 'station').map((l) => l.text)).toEqual(['몽촌토성역', '한성백제역', '올림픽공원역', '송파나루역'])
+  // festivals drawn from their zones (scripts/map/layers/lib/venue-map.mjs): the big area map, the venue map over it
+  const expectZoneMap = (series: string) => {
+    const map = seriesMapFor(series)
+    expect(map?.layers).toHaveLength(2)
+    for (const layer of map?.layers ?? []) expect(layer.url, series).toBeTruthy()
+    for (const mark of map?.marks ?? []) expect(map?.icons[mark.kind], `icon for ${mark.kind}`).toBeTruthy()
+    for (const label of map?.labels ?? []) expect(map && isInsideBounds(label, map.bounds), label.text).toBe(true)
+    return map
+  }
+
+  test('gives the Seoul Jazz Festival its own Olympic Park map: its zones over the park, its stages named with their keys', () => {
+    const map = expectZoneMap(SJF_SERIES)
+    expect(map?.labels.filter((l) => l.kind === 'station').map((l) => l.text)).toEqual(['몽촌토성역', '한성백제역', '올림픽공원역'])
     const stages = map?.labels.filter((l) => l.kind === 'stage') ?? []
-    expect(stages.map((l) => l.text)).toEqual(['MAY FOREST', 'SPARKLING DOME', 'PINK AVENUE', 'SPRING GARDEN'])
+    expect(stages.map((l) => [l.text, l.stage])).toEqual([['MAY FOREST', 'forest'], ['SPARKLING DOME', 'dome'], ['PINK AVENUE', 'avenue'], ['SPRING GARDEN', 'garden']])
     for (const stage of stages) expect(map && isInsideBounds(stage, map.initialView), stage.text).toBe(true)
     expect(map?.attribution).toContain('서울재즈페스티벌')
     expect(map?.attribution).not.toContain('그랜드 민트')
+  })
+
+  test('gives the festivals drawn from their zones a map of their own, every stage named with its key', () => {
+    for (const code of [JUMF_SERIES, BML_SERIES]) {
+      const map = expectZoneMap(code)
+      const stages = map?.labels.filter((l) => l.kind === 'stage') ?? []
+      expect(stages.length, code).toBeGreaterThan(0)
+      for (const stage of stages) expect(stage.stage, stage.text).toMatch(/^[a-z]+$/)
+    }
   })
 
   test('returns the layered Pentaport map: the big ground under the venue layers, with its places inside it', () => {

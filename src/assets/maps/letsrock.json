@@ -1,0 +1,117 @@
+{
+  "attribution": "지도: 렛츠락 페스티벌 2026 사이트맵의 행사장(젊음의광장)을 표시함 · 지형: © OpenStreetMap 기여자",
+  "background": "#f3e9ce",
+  "maxZoom": 19.5,
+  "fillOnOpen": false,
+  "zoomOutFills": true,
+  "bounds": [
+    [
+      37.559812,
+      126.870034
+    ],
+    [
+      37.572837,
+      126.884766
+    ]
+  ],
+  "initialView": [
+    [
+      37.564932,
+      126.875813
+    ],
+    [
+      37.567268,
+      126.878987
+    ]
+  ],
+  "layers": [
+    {
+      "file": "big-layer1.svg",
+      "bounds": [
+        [
+          37.559812,
+          126.870034
+        ],
+        [
+          37.572837,
+          126.884766
+        ]
+      ]
+    },
+    {
+      "file": "layer1.svg",
+      "bounds": [
+        [
+          37.564932,
+          126.875813
+        ],
+        [
+          37.567268,
+          126.878987
+        ]
+      ]
+    }
+  ],
+  "icons": {
+    "bus": "icons/bus.svg"
+  },
+  "labels": [
+    {
+      "text": "익스트림장",
+      "kind": "building",
+      "minZoom": 15.5,
+      "lat": 37.565346,
+      "lng": 126.87947
+    },
+    {
+      "text": "난지한강공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.567991,
+      "lng": 126.878239
+    },
+    {
+      "text": "난지한강공원",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.56864,
+      "lng": 126.875416
+    },
+    {
+      "text": "중앙잔디광장",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.566438,
+      "lng": 126.879252
+    },
+    {
+      "text": "노을공원입구(난지미술창작스튜디오)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.569471,
+      "lng": 126.880628
+    },
+    {
+      "text": "노을공원입구(난지미술창작스튜디오)",
+      "kind": "bus",
+      "icon": "bus",
+      "minZoom": 16.5,
+      "lat": 37.569525,
+      "lng": 126.880543
+    },
+    {
+      "text": "메인 무대 · 젊음의광장",
+      "kind": "stage",
+      "stage": "main",
+      "colour": "#0b7cbf",
+      "minZoom": 15.3,
+      "lat": 37.56598,
+      "lng": 126.87733
+    }
+  ],
+  "marks": []
+}

@@ -1,0 +1,22 @@
+{
+  "size": [
+    840,
+    780
+  ],
+  "pxPerMeter": 3,
+  "svgUnits": "1 unit = 1 m, origin at the north-west corner of bounds, y grows southward",
+  "bounds": [
+    [
+      37.564932,
+      126.875813
+    ],
+    [
+      37.567268,
+      126.878987
+    ]
+  ],
+  "colours": {
+    "ground": "#2f9e44",
+    "lawn": "#7ccd5a"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "size": [
+    780,
+    780
+  ],
+  "pxPerMeter": 3,
+  "svgUnits": "1 unit = 1 m, origin at the north-west corner of bounds, y grows southward",
+  "bounds": [
+    [
+      35.810277,
+      127.085718
+    ],
+    [
+      35.812613,
+      127.088599
+    ]
+  ],
+  "colours": {
+    "ground": "#1e8f3c",
+    "standing": "#8cc63e",
+    "picnic": "#8cc63e",
+    "camping": "#8cc63e",
+    "partner": "#8cc63e",
+    "stage": "#173c8c",
+    "dome": "#a5a3ee"
+  }
+}

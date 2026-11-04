@@ -53,15 +53,13 @@ describe('createJumf2026', () => {
     expect(festival.pins.every((p) => p.id.startsWith(`${JUMF_SERIES}-`))).toBe(true)
   })
 
-  test('pins both stage areas and the gate, ticket booth and facilities of the site maps, with no illustrated map yet', () => {
-    expect(festival.pins.filter((p) => p.kind === 'stage').map((p) => p.name)).toEqual([
-      '마루·너울 스테이지 · 인조잔디구장 A·B',
-      '숨 스테이지 · 실내체육관 (쿨존)',
-    ])
+  test('pins the gate, ticket booth and facilities of the site maps; its map names the stages', () => {
+    expect(festival.pins.filter((p) => p.kind === 'stage')).toEqual([])
+    const stages = festivalMapFor(JUMF_2026_ID)?.labels.filter((l) => l.kind === 'stage').map((l) => [l.text, l.stage])
+    expect(stages).toEqual([['마루 MARU', 'maru'], ['너울 NEOUL', 'neoul'], ['숨 SOOM', 'soom']])
     expect(festival.pins.filter((p) => p.rank === 0).map((p) => p.name)).toEqual(['메인 게이트', '티켓부스 · MD SHOP'])
     expect(festival.pins.find((p) => p.kind === 'food' && p.name.startsWith('F&B'))?.name).toContain('희망홀')
     for (const pin of festival.pins) expect(distanceMeters(pin, festival.venue), pin.name).toBeLessThan(600)
-    expect(festivalMapFor(JUMF_2026_ID)).toBeNull()
   })
 
   test('comes with the official FAQ checklist and notices', () => {
