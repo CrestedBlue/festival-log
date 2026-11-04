@@ -1,4 +1,4 @@
-import { CDF_SERIES, GRAND_MINT_SERIES, HERO_ROCK_SERIES, PENTAPORT_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
+import { CDF_SERIES, GRAND_MINT_SERIES, HERO_ROCK_SERIES, PENTAPORT_SERIES, SJF_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
 import { isInsideBounds, type LatLng, type LatLngBounds } from '../../lib/geo'
 import gmfMeta from '../../assets/maps/gmf.json'
 import heroRockMeta from '../../assets/maps/herorock.json'
@@ -200,11 +200,38 @@ const KINTEX_MAP = withImages(
   parseMapMeta(wonderlivetMeta),
   folder('../../assets/maps/wonderlivet/', import.meta.glob<string>('../../assets/maps/wonderlivet/**/*.svg', { eager: true, query: '?url', import: 'default' })),
 )
+const GMF_META = parseMapMeta(gmfMeta)
+const GMF_IMAGES = folder('../../assets/maps/gmf/', import.meta.glob<string>('../../assets/maps/gmf/**/*.svg', { eager: true, query: '?url', import: 'default' }))
+// Olympic Park's area map, drawn for the Grand Mint Festival: its big ground alone, with the stations, buildings and bus
+// stops, for another festival in the park to write its own stages on (none of GMF's venue layers, marks, stages, zones).
+const OLYMPIC_PARK_AREA = withImages(
+  {
+    ...GMF_META,
+    layerFiles: GMF_META.layerFiles.filter(({ file }) => file === 'big-layer1.svg'),
+    marks: [],
+    labels: GMF_META.labels.filter(({ kind }) => kind === 'station' || kind === 'building' || kind === 'bus'),
+  },
+  GMF_IMAGES,
+)
+// The Seoul Jazz Festival's stages, where its 2026 festival map puts them (colors as in series/sjf.ts).
+const SJF_STAGES: readonly MapLabel[] = [
+  { text: 'MAY FOREST', kind: 'stage', colour: '#e2557a', minZoom: 15.3, lat: 37.5197, lng: 127.1244 },
+  { text: 'SPARKLING DOME', kind: 'stage', colour: '#4f5a7a', minZoom: 15.3, lat: 37.5193, lng: 127.1272 },
+  { text: 'PINK AVENUE', kind: 'stage', colour: '#6e6e64', minZoom: 15.3, lat: 37.5176, lng: 127.12635 },
+  { text: 'SPRING GARDEN', kind: 'stage', colour: '#4f9a62', minZoom: 15.3, lat: 37.521426, lng: 127.125532 },
+]
 const MAPS: Record<string, FestivalMap> = {
-  [GRAND_MINT_SERIES]: withImages(
-    parseMapMeta(gmfMeta),
-    folder('../../assets/maps/gmf/', import.meta.glob<string>('../../assets/maps/gmf/**/*.svg', { eager: true, query: '?url', import: 'default' })),
-  ),
+  [GRAND_MINT_SERIES]: withImages(GMF_META, GMF_IMAGES),
+  [SJF_SERIES]: {
+    ...OLYMPIC_PARK_AREA,
+    labels: [...OLYMPIC_PARK_AREA.labels, ...SJF_STAGES],
+    // from 88잔디마당 to the arena and the smoking area south of it, the dome and the east gate
+    initialView: [
+      [37.5162, 127.123],
+      [37.5218, 127.1293],
+    ],
+    attribution: '지도: 서울재즈페스티벌 2026 페스티벌 맵의 무대·시설 위치를 실제 지도에 옮겨 표시함 · 지형: © OpenStreetMap 기여자',
+  },
   [PENTAPORT_SERIES]: withImages(
     parseMapMeta(pentaportMeta),
     folder('../../assets/maps/pentaport/', import.meta.glob<string>('../../assets/maps/pentaport/**/*.svg', { eager: true, query: '?url', import: 'default' })),

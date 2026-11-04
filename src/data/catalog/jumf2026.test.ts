@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest'
+import { distanceMeters } from '../../lib/geo'
 import { FestivalSchema } from '../schema'
 import { JUMF_2026_ID, JUMF_2026_KEY, JUMF_SERIES } from './ids'
 import { JUMF_2026_NOTICES, createJumf2026 } from './jumf2026'
@@ -52,11 +53,14 @@ describe('createJumf2026', () => {
     expect(festival.pins.every((p) => p.id.startsWith(`${JUMF_SERIES}-`))).toBe(true)
   })
 
-  test('pins both stage areas on campus and has no illustrated map yet', () => {
+  test('pins both stage areas and the gate, ticket booth and facilities of the site maps, with no illustrated map yet', () => {
     expect(festival.pins.filter((p) => p.kind === 'stage').map((p) => p.name)).toEqual([
       '마루·너울 스테이지 · 인조잔디구장 A·B',
       '숨 스테이지 · 실내체육관 (쿨존)',
     ])
+    expect(festival.pins.filter((p) => p.rank === 0).map((p) => p.name)).toEqual(['메인 게이트', '티켓부스 · MD SHOP'])
+    expect(festival.pins.find((p) => p.kind === 'food' && p.name.startsWith('F&B'))?.name).toContain('희망홀')
+    for (const pin of festival.pins) expect(distanceMeters(pin, festival.venue), pin.name).toBeLessThan(600)
     expect(festivalMapFor(JUMF_2026_ID)).toBeNull()
   })
 

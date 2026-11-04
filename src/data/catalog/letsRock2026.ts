@@ -1,4 +1,6 @@
+import siteMap from '../../assets/guides/guide-letsrock2026-sitemap-01.webp'
 import type { Festival } from '../schema'
+import type { GuideSet } from './guide'
 import { LETS_ROCK_2026_ID, LETS_ROCK_2026_KEY as KEY } from './ids'
 import { LETS_ROCK } from './series/letsRock'
 import { stageLook } from './series/theme'
@@ -24,6 +26,27 @@ export const LETS_ROCK_2026_NOTICES: readonly string[] = [
   '물품보관소는 09:00부터 공연이 끝날 때까지 열고, 한 번에 3,000원(다시 맡기면 2,000원)이에요.',
   '무료 셔틀버스가 DMC역 근처 새누리 어린이 공원 앞과 하늘공원로(하늘공원 입구) 사이를 10분 안팎 간격으로 다녀요. 공연장 가는 첫차 08:30, 공연장에서 나오는 막차 22:00, 내려서 걸어서 5분이에요.',
   '난지한강공원 주차장은 매우 좁아요. 대중교통(서울광역버스 9707 난지한강공원 정류소, 순환버스 8777 중앙잔디광장 정류소)이나 셔틀버스를 타세요.',
+]
+
+/**
+ * The official site map, from the same detail image. Shown as published: the drawing gives no direction and the lawn of
+ * 젊음의광장 is round, so where the stage and the booths stand on the real lawn is not known (the map tab has one pin).
+ */
+export const LETS_ROCK_2026_GUIDES: readonly GuideSet[] = [
+  {
+    title: '사이트맵',
+    source: '출처: 렛츠락 페스티벌 NOL 티켓 상품 페이지 (2026)',
+    images: [
+      {
+        src: siteMap,
+        alt:
+          '사이트맵: 큰 잔디밭 위쪽에 무대와 스탠딩 존, 그 아래로 피크닉 존. 아래 가운데 메인 게이트, 그 왼쪽에 티켓 부스·물품 보관소·포토부스·홍보부스 존, ' +
+          '오른쪽에 팔찌 교환. 잔디밭 왼쪽 위에 화장실과 흡연구역, 왼쪽에 F&B, 오른쪽에 의료지원소·종합안내소·MD 부스·포토존',
+        width: 840,
+        height: 922,
+      },
+    ],
+  },
 ]
 
 /** Official ticket seller: NOL ticket, which sold it alone ("단독판매"). */

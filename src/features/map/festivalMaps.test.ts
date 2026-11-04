@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { CDF_SERIES, GRAND_MINT_SERIES, HERO_ROCK_SERIES, JUMF_SERIES, PENTAPORT_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
+import { CDF_SERIES, GRAND_MINT_SERIES, HERO_ROCK_SERIES, JUMF_SERIES, PENTAPORT_SERIES, SJF_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
 import { isInsideBounds } from '../../lib/geo'
 import { parseMapMeta, seriesMapFor, withImages } from './festivalMaps'
 
@@ -156,6 +156,20 @@ describe('seriesMapFor', () => {
     expect(stations?.[2]?.badges?.map((b) => b.text)).toEqual(['5', '9'])
     expect(map?.labels.filter((l) => l.kind === 'stage').map((l) => l.text)).toEqual(['MINT BREEZE STAGE', 'LOVING FOREST GARDEN', 'CLUB MIDNIGHT SUNSET'])
     expect(map?.labels.filter((l) => l.kind === 'bus' && l.icon === 'bus').length).toBeGreaterThan(0)
+  })
+
+  test('gives the Seoul Jazz Festival the Olympic Park area map drawn for the Grand Mint Festival, naming its own stages', () => {
+    const map = seriesMapFor(SJF_SERIES)
+    expect(map?.layers).toEqual(seriesMapFor(GRAND_MINT_SERIES)?.layers.slice(0, 1))
+    // none of the Grand Mint Festival's own: its venue layers, official marks, stages and zones
+    expect(map?.marks).toEqual([])
+    expect(map?.labels.some((l) => l.kind === 'zone')).toBe(false)
+    expect(map?.labels.filter((l) => l.kind === 'station').map((l) => l.text)).toEqual(['몽촌토성역', '한성백제역', '올림픽공원역', '송파나루역'])
+    const stages = map?.labels.filter((l) => l.kind === 'stage') ?? []
+    expect(stages.map((l) => l.text)).toEqual(['MAY FOREST', 'SPARKLING DOME', 'PINK AVENUE', 'SPRING GARDEN'])
+    for (const stage of stages) expect(map && isInsideBounds(stage, map.initialView), stage.text).toBe(true)
+    expect(map?.attribution).toContain('서울재즈페스티벌')
+    expect(map?.attribution).not.toContain('그랜드 민트')
   })
 
   test('returns the layered Pentaport map: the big ground under the venue layers, with its places inside it', () => {

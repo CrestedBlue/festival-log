@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest'
+import { distanceMeters } from '../../lib/geo'
 import { FestivalSchema } from '../schema'
 import { BML_2026_GUIDES, BML_2026_NOTICES, BML_2026_TICKETS, createBml2026 } from './bml2026'
 import { BML_2026_ID, BML_2026_KEY, BML_SERIES } from './ids'
@@ -55,6 +56,16 @@ describe('createBml2026', () => {
     expect(festival.performances.every((p) => p.id.startsWith(`${BML_2026_KEY}-`))).toBe(true)
     expect(festival.pins.length).toBeGreaterThan(0)
     expect(festival.pins.every((p) => p.id.startsWith(`${BML_SERIES}-`))).toBe(true)
+  })
+
+  test('pins the official festival map: the three stages, the gates, the ticket booth and the facilities', () => {
+    const named = (kind: string) => festival.pins.filter((p) => p.kind === kind).map((p) => p.name)
+    expect(named('stage')).toEqual(['Mint Breeze Stage · 문화마당', 'Loving Forest Garden · T2 야외 무대', 'Flood in the Cave · T2 실내 공연장'])
+    expect(festival.pins.filter((p) => p.group === '게이트').map((p) => p.name)).toEqual(['메인 게이트', '서브 게이트 (대략)'])
+    expect(festival.pins.filter((p) => p.kind === 'wristband')).toMatchObject([{ name: '티켓 & 손목밴드 · 난지천공원 주차장 (대략)', rank: 0 }])
+    expect(named('toilet')).toHaveLength(5)
+    // inside the park, or in the car park beside it
+    for (const pin of festival.pins) expect(distanceMeters(pin, festival.venue), pin.name).toBeLessThan(500)
   })
 
   test('has notices, the two official notice pages and the three ticket sellers', () => {

@@ -1,7 +1,8 @@
 import { describe, expect, test } from 'vitest'
+import { isInsideBounds } from '../../lib/geo'
 import { FestivalSchema } from '../schema'
 import { SJF_2026_ID, SJF_2026_KEY, SJF_SERIES } from './ids'
-import { catalogEntry } from './index'
+import { catalogEntry, festivalMapFor } from './index'
 import { SJF_2026_NOTICES, SJF_2026_TICKETS, createSjf2026 } from './sjf2026'
 
 describe('createSjf2026', () => {
@@ -64,6 +65,23 @@ describe('createSjf2026', () => {
   test('uses its own yearly code for timetable ids and the festival code for map pins', () => {
     expect(festival.performances.every((p) => p.id.startsWith(`${SJF_2026_KEY}-`))).toBe(true)
     expect(festival.pins.every((p) => p.id.startsWith(`${SJF_SERIES}-`))).toBe(true)
+  })
+
+  test('pins the festival map: gates, ticket booth, booths and facilities, drawn with the icons of the area map', () => {
+    const map = festivalMapFor(SJF_2026_ID)
+    const group = (name: string) => festival.pins.filter((p) => p.group === name).map((p) => p.name)
+    expect(festival.pins.filter((p) => p.kind === 'wristband')).toMatchObject([{ name: '티켓 부스', rank: 0, mapIcon: 'wristband' }])
+    expect(group('게이트')).toEqual(['GATE 1 (MAY FOREST)', 'GATE 2', 'GATE 3', 'GATE 1 (SPRING GARDEN)', 'EAST GATE 1 (동문)'])
+    expect(group('SPARKLING DOME 게이트')).toEqual(['2-1 GATE', '2-2 GATE', '2-3 GATE'])
+    expect(group('PINK AVENUE 게이트')).toEqual(['2-2 GATE', '2-3 GATE', '2-4 GATE'])
+    expect(group('의무실')).toHaveLength(3)
+    expect(group('화장실')).toHaveLength(5)
+    // the stations around the park, every numbered exit as on the Grand Mint map
+    expect(festival.pins.filter((p) => p.mapIcon?.startsWith('exit-'))).toHaveLength(13)
+    for (const pin of festival.pins) {
+      if (pin.mapIcon) expect(map?.icons[pin.mapIcon], pin.name).toBeTruthy()
+      expect(map && isInsideBounds(pin, map.bounds), pin.name).toBe(true)
+    }
   })
 
   test('has notices and Melon Ticket as its seller', () => {

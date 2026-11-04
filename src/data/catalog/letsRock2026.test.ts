@@ -41,6 +41,13 @@ describe('createLetsRock2026', () => {
     expect(festival.pins.every((p) => p.id.startsWith(`${LETS_ROCK_SERIES}-`))).toBe(true)
   })
 
+  test('shows the official site map as a guide, its layout not placed on the map (the drawing gives no direction)', () => {
+    const guides = catalogEntry(LETS_ROCK_2026_ID)?.guides ?? []
+    expect(guides.map((g) => [g.title, g.images.length])).toEqual([['사이트맵', 1]])
+    expect(guides[0]?.images[0]?.alt).toContain('메인 게이트')
+    expect(festival.pins.map((p) => p.name)).toEqual(['난지한강공원 젊음의광장 (대략)'])
+  })
+
   test('has notices and NOL ticket as its only seller', () => {
     expect(LETS_ROCK_2026_NOTICES.length).toBeGreaterThan(0)
     expect(LETS_ROCK_2026_TICKETS.map((s) => s.name)).toEqual(['NOL 티켓'])
