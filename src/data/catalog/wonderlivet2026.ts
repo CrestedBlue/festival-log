@@ -16,7 +16,7 @@ import { SELLERS, type TicketSeller } from './tickets'
  */
 export { WONDERLIVET_2026_ID }
 
-/** Admin notices, summarised from the timetable post and the official site's FAQ and directions (wonderli.vet). */
+/** Admin notices, summarised from the timetable post, the official site's FAQ and directions (wonderli.vet), and the goods pre-order post (Instagram 11/5). */
 export const WONDERLIVET_2026_NOTICES: readonly string[] = [
   '티켓부스는 10:00에 열고(그날 마지막 공연이 끝날 때까지), 메인 게이트는 11:00에 열려요. 첫 공연은 12:00예요.',
   '티켓부스에서 모바일 티켓(앱 화면, 캡처는 안 돼요)과 예매자 본인의 실물 신분증을 보여 주고 손목밴드를 차요. 대리 수령은 안 되고, 동행인과 함께 가야 해요.',
@@ -26,6 +26,7 @@ export const WONDERLIVET_2026_NOTICES: readonly string[] = [
   '흡연은 킨텍스 전시장 밖 지정 흡연구역에서만 돼요. 물품보관소는 공연장 안에 생길 예정이에요.',
   '오는 길: 킨텍스역(GTX-A) 4·5번 출구, 대화역(3호선) 2번 출구에서 버스나 걸어서, 버스는 킨텍스·킨텍스 제2전시장 정류장. 차는 내비에 "킨텍스 제2전시장"(관람 주차 할인 없음).',
   '현장 판매는 예매가 끝난 뒤 남은 표만, 관람 당일 10:30부터 해요(진행 여부는 공식 SNS에서 공지). 예매·취소 마감은 관람 전날 11:00예요.',
+  '굿즈 사전 예약은 11/5(목) 18:00 – 11/11(수) 23:59, YES24에서 해요. 살 때 고른 날짜에만 현장 굿즈 픽업 부스에서 받을 수 있고(아티스트 출연일과 상관없이), 손목밴드를 찬 사람만 받아요. 수령 QR은 받는 날 전날 20:00에 YES24 마이페이지에 떠요.',
 ]
 
 /** Official ticket sellers, in the order the official site's TICKET section links them (wonderli.vet). */

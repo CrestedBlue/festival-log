@@ -19,7 +19,7 @@ export const LETS_ROCK: FestivalSeries = {
   pins: () => [],
   // 2026 data came from the NOL ticket page (its detail image). Only the profile's newest 12 posts were looked at
   // (2026-10-28: after the festival, 10/04 to 10/08 — clips and thank-you posts).
-  sources: [{ method: '인스타', value: '@letsrockfe', lastScrapedPostDate: '2026-11-03' }],
+  sources: [{ method: '인스타', value: '@letsrockfe', lastScrapedPostDate: '2026-11-04' }],
   // From the 2026 poster (2026-10-28): its logo on a circle of the poster's green (scripts/art/build-letsrock.mjs),
   // the timetable's blue for the main color. One stage, in the timetable's blue with the poster's star burst.
   theme: {
