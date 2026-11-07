@@ -1,4 +1,5 @@
 import { seriesMapFor, type FestivalMap } from '../../features/map/festivalMaps'
+import type { ClosableTab } from '../../lib/route'
 import type { Festival } from '../schema'
 import type { GuideSet } from './guide'
 import type { LineupImage } from './lineup'
@@ -67,6 +68,12 @@ export interface CatalogEntry {
   guides: readonly GuideSet[]
   /** Official ticket sellers of this edition, shown as chips by the info tab's ticket title (admin). */
   tickets: readonly TicketSeller[]
+  /**
+   * Tabs not open yet (absent: all open). A new edition comes in with `['timetable', 'map']` until this year's are
+   * out; the collection takes each out when it brings it in (COLLECT.md) — the line-up or the timetable opens the
+   * timetable, this year's official map (the same layout as the app's, or redrawn) opens the map.
+   */
+  closedTabs?: readonly ClosableTab[]
   /**
    * When this edition last got new content (timetable, line-up, notices, guides, map, pins), YYYY-MM-DD. Moving it
    * on puts a red dot on the festival for users who have it on their list (data/updates.ts) — bump it with every

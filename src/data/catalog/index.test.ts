@@ -54,6 +54,16 @@ describe('catalog', () => {
     }
   })
 
+  test('an edition closes only its timetable or map tab, and a closed timetable has nothing to show yet', () => {
+    for (const entry of CATALOG) {
+      const closed = entry.closedTabs ?? []
+      expect(closed.every((tab) => tab === 'timetable' || tab === 'map'), entry.key).toBe(true)
+      expect(new Set(closed).size, entry.key).toBe(closed.length)
+      // a timetable or a line-up came in: the collection opens the tab (COLLECT.md)
+      if (closed.includes('timetable')) expect(entry.create().performances.length + entry.lineup.length, entry.key).toBe(0)
+    }
+  })
+
   test('every edition says when it last got new content, a real date', () => {
     for (const entry of CATALOG) expect(entry.updatedAt, entry.key).toMatch(/^2\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/)
   })

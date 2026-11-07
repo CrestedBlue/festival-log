@@ -233,3 +233,11 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* An edition whose timetable or map is not out yet says so above everything else. */
+.info__closed {
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--color-line);
+  border-radius: var(--radius-card);
+  background: var(--color-paper-deep);
+}

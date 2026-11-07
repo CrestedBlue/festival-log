@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest'
+import { CATALOG } from './catalog'
 import { GRAND_MINT_2026_ID, HERO_ROCK_2026_ID, PENTAPORT_2026_ID } from './catalog/ids'
 import { SERIES } from './catalog/series'
 import { activeFestival, festivalMark, resolveFestival } from './resolve'
@@ -27,6 +28,7 @@ describe('resolveFestival', () => {
       tickets: [],
       theme: null,
       edition: null,
+      closedTabs: [],
     })
   })
 
@@ -56,6 +58,11 @@ describe('resolveFestival', () => {
     expect(gmf?.theme?.art).toBeTruthy()
     expect(resolveFestival(makeUserData(), PENTAPORT_2026_ID)?.theme?.accent).toBe('#432a73')
     expect(resolveFestival(makeUserData(), HERO_ROCK_2026_ID)?.theme?.accent).toBe('#7d5a1c')
+  })
+
+  test('carries the tabs the edition has not opened yet (none for most)', () => {
+    for (const entry of CATALOG) expect(resolveFestival(makeUserData(), entry.id)?.closedTabs, entry.key).toEqual(entry.closedTabs ?? [])
+    expect(resolveFestival(makeUserData(), GRAND_MINT_2026_ID)?.closedTabs).toEqual([])
   })
 
   test('returns null for unknown ids', () => {

@@ -38,6 +38,12 @@ describe('home tab', () => {
     expect(homeTab({ performances: [] })).toBe('map')
     expect(homeTab(null)).toBe('timetable')
   })
+
+  test("skips the tabs an edition has not opened yet, down to the info tab", () => {
+    expect(homeTab(makeFestival(), 0, ['timetable'])).toBe('map')
+    expect(homeTab({ performances: [] }, 0, ['map'])).toBe('timetable')
+    expect(homeTab({ performances: [] }, 0, ['timetable', 'map'])).toBe('info')
+  })
 })
 
 describe('buildHash', () => {
@@ -70,5 +76,12 @@ describe('shownTab', () => {
     expect(FESTIVAL_TABS).toEqual(['timetable', 'map', 'info'])
     for (const tab of FESTIVAL_TABS) expect(shownTab(tab, false)).toBe('manage')
     expect(shownTab('manage', false)).toBe('manage')
+  })
+
+  test("a tab the edition has not opened yet shows the home tab instead", () => {
+    expect(shownTab('timetable', true, ['timetable', 'map'], 'info')).toBe('info')
+    expect(shownTab('map', true, ['map'], 'timetable')).toBe('timetable')
+    expect(shownTab('info', true, ['timetable', 'map'], 'info')).toBe('info')
+    expect(shownTab('manage', true, ['timetable', 'map'], 'info')).toBe('manage')
   })
 })

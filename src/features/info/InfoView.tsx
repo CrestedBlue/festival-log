@@ -6,6 +6,7 @@ import type { CollectionSource } from '../../data/catalog/series/types'
 import type { TicketSeller } from '../../data/catalog/tickets'
 import { updateData } from '../../data/store'
 import { setTicketLink } from '../../data/userData'
+import type { ClosableTab } from '../../lib/route'
 import { linkLabel, parseTicketLink } from '../../lib/ticketLink'
 import { GuideCarousel } from './GuideCarousel'
 import './info.css'
@@ -22,6 +23,15 @@ interface Props {
   sources: readonly CollectionSource[]
   /** Official ticket sellers of this edition from the catalog (admin). */
   tickets: readonly TicketSeller[]
+  /** Tabs this edition has not opened yet (its timetable or map is not out). */
+  closedTabs?: readonly ClosableTab[]
+}
+
+// what the closed tabs are called, by the closed tabs in tab order
+const CLOSED_NOTE: Readonly<Record<string, string | undefined>> = {
+  timetable: '타임테이블은',
+  map: '지도는',
+  'timetable,map': '타임테이블과 지도는',
 }
 
 const CHANNEL_NAMES: Record<CollectionSource['method'], string> = { 인스타: '인스타그램', 공홈: '공식 홈페이지' }
@@ -101,9 +111,15 @@ function TicketLink({ festivalId, ticketLink }: Pick<Props, 'festivalId' | 'tick
   )
 }
 
-export function InfoView({ festivalId, ticketLink, notices, guides, sources, tickets }: Props) {
+export function InfoView({ festivalId, ticketLink, notices, guides, sources, tickets, closedTabs = [] }: Props) {
+  const closedNote = CLOSED_NOTE[(['timetable', 'map'] as const).filter((tab) => closedTabs.includes(tab)).join(',')]
   return (
     <div className="info">
+      {closedNote && (
+        <p className="hint info__closed" role="note">
+          {closedNote} 올해 공식 발표가 나오면 열려요.
+        </p>
+      )}
       <section className="panel" aria-labelledby="info-ticket">
         <div className="ticket-head">
           <h2 id="info-ticket" className="panel__title">

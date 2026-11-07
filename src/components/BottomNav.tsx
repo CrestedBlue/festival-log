@@ -12,13 +12,15 @@ const ITEMS: ReadonlyArray<{ tab: Tab; label: string; icon: ReactNode }> = [
 interface Props {
   active: Tab
   onSelect: (tab: Tab) => void
-  /** Tabs that cannot open yet: the festival tabs while my list is empty. */
+  /** Tabs that cannot open yet: the festival tabs while my list is empty, or the ones an edition has not opened. */
   locked?: readonly Tab[]
+  /** Why they are locked, for screen readers. */
+  lockedNote?: string
   /** Tabs with something new (a red dot): the manage tab when a festival on my list got new content. */
   news?: Partial<Record<Tab, boolean>>
 }
 
-export function BottomNav({ active, onSelect, locked = [], news = {} }: Props) {
+export function BottomNav({ active, onSelect, locked = [], lockedNote = '페스티벌을 추가하면 열려요', news = {} }: Props) {
   return (
     <nav className="bottom-nav" aria-label="주요 화면">
       {ITEMS.map((item) => (
@@ -36,7 +38,7 @@ export function BottomNav({ active, onSelect, locked = [], news = {} }: Props) {
           </span>
           {item.label}
           {news[item.tab] && <span className="visually-hidden"> (새 소식)</span>}
-          {locked.includes(item.tab) && <span className="visually-hidden"> (페스티벌을 추가하면 열려요)</span>}
+          {locked.includes(item.tab) && <span className="visually-hidden"> ({lockedNote})</span>}
         </button>
       ))}
     </nav>

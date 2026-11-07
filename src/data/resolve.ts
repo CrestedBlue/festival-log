@@ -4,6 +4,7 @@ import type { LineupImage } from './catalog/lineup'
 import { SERIES } from './catalog/series'
 import type { CollectionSource, FestivalTheme, StageLook } from './catalog/series/types'
 import type { TicketSeller } from './catalog/tickets'
+import type { ClosableTab } from '../lib/route'
 import type { Festival, UserData } from './schema'
 
 export interface ResolvedFestival {
@@ -23,6 +24,8 @@ export interface ResolvedFestival {
   theme: FestivalTheme | null
   /** Festival code and year, shown above the title as "GMF 2026" (catalog only). */
   edition: { series: string; year: string } | null
+  /** Tabs this edition has not opened yet: its timetable or map is not out (catalog only). */
+  closedTabs: readonly ClosableTab[]
 }
 
 const built = new Map<string, Festival>()
@@ -64,11 +67,12 @@ export function resolveFestival(data: UserData, festivalId: string): ResolvedFes
       theme: series?.theme ?? null,
       // The yearly code is the festival code plus the year ("gmf2026").
       edition: { series: entry.series, year: entry.key.slice(entry.series.length) },
+      closedTabs: entry.closedTabs ?? [],
     }
   }
   const archived = data.archivedFestivals.find((f) => f.id === festivalId)
   return archived
-    ? { source: 'archived', festival: archived, notices: [], lineup: [], guides: [], sources: [], tickets: [], theme: null, edition: null }
+    ? { source: 'archived', festival: archived, notices: [], lineup: [], guides: [], sources: [], tickets: [], theme: null, edition: null, closedTabs: [] }
     : null
 }
 

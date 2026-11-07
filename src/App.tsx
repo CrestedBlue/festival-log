@@ -13,25 +13,31 @@ import { TimetableView } from './features/timetable/TimetableView'
 import { useHashRoute } from './hooks/useHashRoute'
 import { useNow } from './hooks/useNow'
 import { loadChunk } from './lib/chunkReload'
-import { FESTIVAL_TABS, homeTab, shownTab } from './lib/route'
+import { FESTIVAL_TABS, homeTab, shownTab, type ClosableTab } from './lib/route'
 import { festivalMoment } from './lib/time'
 
 // Leaflet is the heaviest dependency, so it only loads when the map tab opens (after an update the old file can be
 // gone: see lib/chunkReload).
 const MapView = lazy(() => loadChunk(() => import('./features/map/MapView')))
+const NONE_CLOSED: readonly ClosableTab[] = []
 
 export default function App() {
   const { data, notice } = useAppState()
   const resolved = selectActiveFestival(data)
   const festival = resolved?.festival ?? null
   const lineup = resolved?.lineup ?? []
-  const route = useHashRoute(homeTab(festival, lineup.length))
+  // An edition whose timetable or map is not out yet keeps that tab closed (catalog `closedTabs`).
+  const closedTabs = resolved?.closedTabs ?? NONE_CLOSED
+  const home = homeTab(festival, lineup.length, closedTabs)
+  const route = useHashRoute(home)
   // With no festival on my list the festival tabs are locked and the catalog shows instead.
-  const tab = shownTab(route.tab, festival !== null)
+  const tab = shownTab(route.tab, festival !== null, closedTabs, home)
   const { setParams } = route
   useEffect(() => {
-    // the address follows, without a history entry (a link to a locked tab, the first launch)
-    if (tab !== route.tab) setParams('manage', { view: 'browse' })
+    // the address follows, without a history entry (a link to a locked or closed tab, the first launch)
+    if (tab === route.tab) return
+    if (tab === 'manage') setParams('manage', { view: 'browse' })
+    else setParams(tab, {})
   }, [tab, route.tab, setParams])
   const now = useNow()
   const today = festivalMoment(now).day
@@ -58,6 +64,7 @@ export default function App() {
           guides={resolved?.guides ?? []}
           sources={resolved?.sources ?? []}
           tickets={resolved?.tickets ?? []}
+          closedTabs={closedTabs}
         />
       )
     }
@@ -116,7 +123,8 @@ export default function App() {
       <BottomNav
         active={tab}
         onSelect={route.go}
-        locked={festival ? [] : FESTIVAL_TABS}
+        locked={festival ? closedTabs : FESTIVAL_TABS}
+        lockedNote={festival ? '공식 발표가 나오면 열려요' : '페스티벌을 추가하면 열려요'}
         news={{ manage: newContentAnywhere(data) }}
       />
     </div>
