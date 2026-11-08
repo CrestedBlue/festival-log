@@ -13,7 +13,9 @@ import { JUMF_2026_GUIDES, JUMF_2026_NOTICES, JUMF_2026_TICKETS, createJumf2026 
 import { LETS_ROCK_2026_GUIDES, LETS_ROCK_2026_NOTICES, LETS_ROCK_2026_TICKETS, createLetsRock2026 } from './letsRock2026'
 import { PENTAPORT_2025_NOTICES, createPentaport2025 } from './pentaport2025'
 import { PENTAPORT_2026_GUIDES, PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
+import { PENTAPORT_2027_NOTICES, createPentaport2027 } from './pentaport2027'
 import { SJF_2026_NOTICES, SJF_2026_TICKETS, createSjf2026 } from './sjf2026'
+import { THE_GLOW_2026_NOTICES, THE_GLOW_2026_TICKETS, createTheGlow2026 } from './theGlow2026'
 import { WONDERLIVET_2026_GUIDES, WONDERLIVET_2026_NOTICES, WONDERLIVET_2026_TICKETS, createWonderlivet2026 } from './wonderlivet2026'
 import {
   BML_2026_ID,
@@ -41,10 +43,15 @@ import {
   PENTAPORT_2026_KEY,
   PENTAPORT_2025_ID,
   PENTAPORT_2025_KEY,
+  PENTAPORT_2027_ID,
+  PENTAPORT_2027_KEY,
   PENTAPORT_SERIES,
   SJF_2026_ID,
   SJF_2026_KEY,
   SJF_SERIES,
+  THE_GLOW_2026_ID,
+  THE_GLOW_2026_KEY,
+  THE_GLOW_SERIES,
   WONDERLIVET_2026_ID,
   WONDERLIVET_2026_KEY,
   WONDERLIVET_SERIES,
@@ -119,6 +126,20 @@ export const CATALOG: readonly CatalogEntry[] = [
     // The official site's ticket page was emptied after the festival: no seller confirmed yet.
     tickets: [],
     updatedAt: '2026-11-04',
+  },
+  {
+    id: PENTAPORT_2027_ID,
+    legacyIds: [],
+    series: PENTAPORT_SERIES,
+    key: PENTAPORT_2027_KEY,
+    create: createPentaport2027,
+    notices: PENTAPORT_2027_NOTICES,
+    lineup: [],
+    guides: [],
+    tickets: [],
+    // only the dates are out (COLLECT.md: a new edition opens these when the line-up / this year's map come in)
+    closedTabs: ['timetable', 'map'],
+    updatedAt: '2026-11-08',
   },
   {
     id: PENTAPORT_2025_ID,
@@ -215,6 +236,18 @@ export const CATALOG: readonly CatalogEntry[] = [
     guides: [],
     tickets: BUSAN_ROCK_2026_TICKETS,
     updatedAt: '2026-11-04',
+  },
+  {
+    id: THE_GLOW_2026_ID,
+    legacyIds: [],
+    series: THE_GLOW_SERIES,
+    key: THE_GLOW_2026_KEY,
+    create: createTheGlow2026,
+    notices: THE_GLOW_2026_NOTICES,
+    lineup: [],
+    guides: [],
+    tickets: THE_GLOW_2026_TICKETS,
+    updatedAt: '2026-11-08',
   },
 ]
 

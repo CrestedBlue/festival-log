@@ -14,13 +14,14 @@ describe('resolveSelection', () => {
   })
 
   test('follows the festival, year and view in the address', () => {
-    expect(resolve('?festival=pentaport')).toEqual({ section: 'festivals', series: 'pentaport', year: '2026', view: 'timetable' })
+    // its next edition (2027) has only its dates: no timetable or line-up, so it opens on the map
+    expect(resolve('?festival=pentaport')).toEqual({ section: 'festivals', series: 'pentaport', year: '2027', view: 'map' })
     expect(resolve('?festival=pentaport&year=2026&view=map')).toEqual({ section: 'festivals', series: 'pentaport', year: '2026', view: 'map' })
   })
 
   test('falls back for unknown festivals, years and views', () => {
     expect(resolve('?festival=nope&year=1999&view=nope')).toEqual({ section: 'festivals', series: 'wonderlivet', year: '2026', view: 'timetable' })
-    expect(resolve('?festival=pentaport&year=1999')).toMatchObject({ series: 'pentaport', year: '2026' })
+    expect(resolve('?festival=pentaport&year=1999')).toMatchObject({ series: 'pentaport', year: '2027' })
   })
 
   test('opens the CS section and keeps the chosen festival for coming back', () => {

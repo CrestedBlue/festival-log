@@ -16,6 +16,8 @@ export const PENTAPORT_2026_ID = '8eeb7b87-f5c7-455c-b6de-a772fd37b671'
 export const PENTAPORT_2026_KEY = `${PENTAPORT_SERIES}2026`
 export const PENTAPORT_2025_ID = 'dc0ba5a5-dea8-4ea6-a475-f4906f17970a'
 export const PENTAPORT_2025_KEY = `${PENTAPORT_SERIES}2025`
+export const PENTAPORT_2027_ID = 'b66c80c6-baf4-4ed3-8ed4-117236b028b7'
+export const PENTAPORT_2027_KEY = `${PENTAPORT_SERIES}2027`
 
 export const JUMF_SERIES = 'jumf'
 export const JUMF_2026_ID = 'b97c0d8e-e01b-4fac-82af-3f8f9e433837'
@@ -47,3 +49,7 @@ export const LETS_ROCK_2026_KEY = `${LETS_ROCK_SERIES}2026`
 export const BUSAN_ROCK_SERIES = 'busanrock'
 export const BUSAN_ROCK_2026_ID = '50e4daba-d7ac-490e-8daf-73585c932e1e'
 export const BUSAN_ROCK_2026_KEY = `${BUSAN_ROCK_SERIES}2026`
+
+export const THE_GLOW_SERIES = 'theglow'
+export const THE_GLOW_2026_ID = '47d2fe6d-83af-41df-bfaf-0aee302c0f85'
+export const THE_GLOW_2026_KEY = `${THE_GLOW_SERIES}2026`

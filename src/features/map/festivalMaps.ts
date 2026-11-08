@@ -1,4 +1,4 @@
-import { BML_SERIES, BUSAN_ROCK_SERIES, CDF_SERIES, GRAND_MINT_SERIES, HERO_ROCK_SERIES, JUMF_SERIES, LETS_ROCK_SERIES, PENTAPORT_SERIES, SJF_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
+import { BML_SERIES, BUSAN_ROCK_SERIES, CDF_SERIES, GRAND_MINT_SERIES, HERO_ROCK_SERIES, JUMF_SERIES, LETS_ROCK_SERIES, PENTAPORT_SERIES, SJF_SERIES, THE_GLOW_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
 import { isInsideBounds, type LatLng, type LatLngBounds } from '../../lib/geo'
 import bmlMeta from '../../assets/maps/bml.json'
 import busanRockMeta from '../../assets/maps/busanrock.json'
@@ -235,6 +235,9 @@ const MAPS: Record<string, FestivalMap> = {
   [WONDERLIVET_SERIES]: KINTEX_MAP,
   // Same halls of KINTEX's second exhibition centre as Wonderlivet: its area map (drawn for Wonderlivet), naming CDF.
   [CDF_SERIES]: { ...KINTEX_MAP, attribution: KINTEX_MAP.attribution.replace('원더리벳 2026', '카운트다운 판타지') },
+  // THE GLOW uses halls 7, 8, 9 and 10A of the same building (2026): the same area map, naming THE GLOW. Its official
+  // map (map-src/theglow/official-map-2026.jpg) draws the halls inside, not yet redrawn (TODO, 지난 회차 지도).
+  [THE_GLOW_SERIES]: { ...KINTEX_MAP, attribution: KINTEX_MAP.attribution.replace('원더리벳 2026', '더 글로우') },
 }
 
 /** The map of a festival code; use festivalMapFor (data/catalog) to go from a festival id. */
