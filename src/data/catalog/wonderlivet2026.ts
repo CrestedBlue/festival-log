@@ -16,23 +16,27 @@ import { SELLERS, type TicketSeller } from './tickets'
  */
 export { WONDERLIVET_2026_ID }
 
-/** Admin notices, summarised from the timetable post, the official site's FAQ and directions (wonderli.vet), and the goods pre-order post (Instagram 11/5). */
+/** Admin notices, summarised from the timetable post, the official site's FAQ and directions (wonderli.vet), the goods pre-order post (Instagram 11/5) and the festival map post (Instagram 11/9). */
 export const WONDERLIVET_2026_NOTICES: readonly string[] = [
   '티켓부스는 10:00에 열고(그날 마지막 공연이 끝날 때까지), 메인 게이트는 11:00에 열려요. 첫 공연은 12:00예요.',
   '티켓부스에서 모바일 티켓(앱 화면, 캡처는 안 돼요)과 예매자 본인의 실물 신분증을 보여 주고 손목밴드를 차요. 대리 수령은 안 되고, 동행인과 함께 가야 해요.',
   '밴드를 차면 무대 사이를 오가고 다시 들어올 수 있어요. 2·3일권 밴드는 마지막 날까지 계속 차고 있어야 하고, 잃어버리거나 망가지면 다시 주지 않아요.',
   '전석 스탠딩이에요. 외부 음식은 안 되고 500ml 이하 페트병 생수만 가져갈 수 있어요(안에 푸드존이 있어요).',
   '공연 촬영·녹음은 안 돼요. 몇몇 아티스트는 공연 내내 모든 촬영(기념사진 포함)이 금지돼요.',
-  '흡연은 킨텍스 전시장 밖 지정 흡연구역에서만 돼요. 물품보관소는 공연장 안에 생길 예정이에요.',
+  '흡연은 킨텍스 전시장 밖 지정 흡연구역에서만 돼요.',
   '오는 길: 킨텍스역(GTX-A) 4·5번 출구, 대화역(3호선) 2번 출구에서 버스나 걸어서, 버스는 킨텍스·킨텍스 제2전시장 정류장. 차는 내비에 "킨텍스 제2전시장"(관람 주차 할인 없음).',
   '현장 판매는 예매가 끝난 뒤 남은 표만, 관람 당일 10:30부터 해요(진행 여부는 공식 SNS에서 공지). 예매·취소 마감은 관람 전날 11:00예요.',
   '굿즈 사전 예약은 11/5(목) 18:00 – 11/11(수) 23:59, YES24에서 해요. 살 때 고른 날짜에만 현장 굿즈 픽업 부스에서 받을 수 있고(아티스트 출연일과 상관없이), 손목밴드를 찬 사람만 받아요. 수령 QR은 받는 날 전날 20:00에 YES24 마이페이지에 떠요.',
+  'WONDER STAGE는 7·8홀, LIVET STAGE는 10홀, 굿즈 부스는 9홀 안에 있어요. 무대 사이는 건물 1·2층 어느 쪽으로도 오갈 수 있지만, 2층 게이트로 들고 나는 건 1층 첫 입장 줄이 다 들어간 뒤부터예요.',
+  '물품보관소는 2층 9홀 앞 로비에서 09:00 – 23:00쯤까지 열어요. 손목밴드 부스는 10:00부터 공연이 끝날 때까지(페스티벌 맵에는 22:00까지), 굿즈 부스(현장 구매·예약 픽업)는 11:30 – 21:00예요.',
+  '푸드존은 7·8홀과 9홀 안에 있고, 화장실은 공연장 안과 바깥 로비에 다 있어요.',
+  '손목밴드는 금·토 2일권은 11/21(토)까지, 토·일이나 금·일 2일권과 3일권은 11/22(일)까지 계속 차고 있어야 해요. 물에 젖어도 찢어지지 않아요.',
 ]
 
 /** Official ticket sellers, in the order the official site's TICKET section links them (wonderli.vet). */
 export const WONDERLIVET_2026_TICKETS: readonly TicketSeller[] = [SELLERS.melon(213793), SELLERS.yes24(59840), SELLERS.ticketlink(65048)]
 
-/** No official guide pages yet: the FAQ is text (in the notices); the festival map is still to come. */
+/** No official guide pages yet: the FAQ is text (in the notices); the festival map (Instagram 11/9) is for the map tab, not a guide. */
 export const WONDERLIVET_2026_GUIDES: readonly GuideSet[] = []
 
 // Shown as the timetable names them. Colors and icons belong to the festival's design (series/wonderlivet.ts).
