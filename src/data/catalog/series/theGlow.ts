@@ -29,7 +29,7 @@ export const THE_GLOW: FestivalSeries = {
     { method: '인스타', value: '@theglowseoul', lastScrapedPostDate: '2026-05-21' },
     // The official site's notices (2026 announcement, tickets, line-up, both days' set lists), its timetable, map
     // and FAQ were read in full on 2026-11-08; the newest notice is the day-2 set list (2026-03-22).
-    { method: '공홈', value: 'https://theglowseoul.com/notice', lastScrapedPostDate: '2026-03-22' },
+    { method: '공홈', value: 'https://theglowseoul.com/notice', lastScrapedPostDate: '2026-03-25' },
   ],
   // From the official site and the 2026 posters (2026-11-08): the logo in white on a black circle with the cyan and
   // red fringes the posters draw (scripts/art/build-theglow.mjs); the logo's red deepened for the main color (cream

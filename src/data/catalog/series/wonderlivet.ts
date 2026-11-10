@@ -24,7 +24,7 @@ export const WONDERLIVET: FestivalSeries = {
   sources: [
     // The timetable (2026-09-29) and full line-up (08-27) posts were read; the newer ones (to 10/30, read 2026-10-31) are artist videos. The
     // official site (wonderli.vet: FAQ, directions) is one page with no dated posts, read in full on 2026-10-27.
-    { method: '인스타', value: '@wonderlivet', lastScrapedPostDate: '2026-11-09' },
+    { method: '인스타', value: '@wonderlivet', lastScrapedPostDate: '2026-11-10' },
   ],
   // From its Instagram and the 2026 timetable (2026-10-27): the pixel robot on a black circle as on the profile, the
   // timetable's orange darkened for the main color (cream text on it). The timetable draws WONDER STAGE in solid
