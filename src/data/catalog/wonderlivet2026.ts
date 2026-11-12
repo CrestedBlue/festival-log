@@ -16,7 +16,7 @@ import { SELLERS, type TicketSeller } from './tickets'
  */
 export { WONDERLIVET_2026_ID }
 
-/** Admin notices, summarised from the timetable post, the official site's FAQ and directions (wonderli.vet), the goods pre-order post (Instagram 11/5) and the festival map post (Instagram 11/9). */
+/** Admin notices, summarised from the timetable post, the official site's FAQ and directions (wonderli.vet), the goods pre-order post (Instagram 11/5) and the festival map post (Instagram 11/9) and the on-site goods posts (Instagram 11/12). */
 export const WONDERLIVET_2026_NOTICES: readonly string[] = [
   '티켓부스는 10:00에 열고(그날 마지막 공연이 끝날 때까지), 메인 게이트는 11:00에 열려요. 첫 공연은 12:00예요.',
   '티켓부스에서 모바일 티켓(앱 화면, 캡처는 안 돼요)과 예매자 본인의 실물 신분증을 보여 주고 손목밴드를 차요. 대리 수령은 안 되고, 동행인과 함께 가야 해요.',
@@ -27,6 +27,7 @@ export const WONDERLIVET_2026_NOTICES: readonly string[] = [
   '오는 길: 킨텍스역(GTX-A) 4·5번 출구, 대화역(3호선) 2번 출구에서 버스나 걸어서, 버스는 킨텍스·킨텍스 제2전시장 정류장. 차는 내비에 "킨텍스 제2전시장"(관람 주차 할인 없음).',
   '현장 판매는 예매가 끝난 뒤 남은 표만, 관람 당일 10:30부터 해요(진행 여부는 공식 SNS에서 공지). 예매·취소 마감은 관람 전날 11:00예요.',
   '굿즈 사전 예약은 11/5(목) 18:00 – 11/11(수) 23:59, YES24에서 해요. 살 때 고른 날짜에만 현장 굿즈 픽업 부스에서 받을 수 있고(아티스트 출연일과 상관없이), 손목밴드를 찬 사람만 받아요. 수령 QR은 받는 날 전날 20:00에 YES24 마이페이지에 떠요.',
+  '현장 굿즈는 현장에 놓인 QR코드(네이버 예약)로 사요. 굿즈 부스는 킨텍스 제2전시장 9홀 안에서 11:30 – 21:00에 열고, 손목밴드를 찬 사람만 살 수 있어요. 사전 예약에서 품절된 상품은 현장에서 못 사요. 아티스트 굿즈는 출연일과 상관없이 3일 내내 팔고, 모두 한정 수량이라 일찍 떨어질 수 있어요. 외국인 관객은 네이버 가입과 본인인증을 마쳐야 현장에서 살 수 있어요(공식 글에 영어·일본어 안내).',
   'WONDER STAGE는 7·8홀, LIVET STAGE는 10홀, 굿즈 부스는 9홀 안에 있어요. 무대 사이는 건물 1·2층 어느 쪽으로도 오갈 수 있지만, 2층 게이트로 들고 나는 건 1층 첫 입장 줄이 다 들어간 뒤부터예요.',
   '물품보관소는 2층 9홀 앞 로비에서 09:00 – 23:00쯤까지 열어요. 손목밴드 부스는 10:00부터 공연이 끝날 때까지(페스티벌 맵에는 22:00까지), 굿즈 부스(현장 구매·예약 픽업)는 11:30 – 21:00예요.',
   '푸드존은 7·8홀과 9홀 안에 있고, 화장실은 공연장 안과 바깥 로비에 다 있어요.',
