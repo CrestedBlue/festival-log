@@ -105,7 +105,7 @@ export const PENTAPORT: FestivalSeries = {
   sources: [
     // The timetable post (2026-07-09) was read here; the newest 12 posts (to a 09/01 collab) were read on 2026-10-29:
     // only post-festival rewinds, MD and lost-and-found.
-    { method: '인스타', value: '@pentaportrf', lastScrapedPostDate: '2026-09-01' },
+    { method: '인스타', value: '@pentaportrf', lastScrapedPostDate: '2026-11-13' },
     // Mirrors the Instagram posts; every 2026 notice up to 2026-08-07 (MD post-event sale) was checked (2026-10-29), and the 2025 ones
     // from 7/14 to 7/31 for the 2025 edition (2026-10-27).
     { method: '공홈', value: 'https://www.pentaport.co.kr/Notice', lastScrapedPostDate: '2026-08-07' },

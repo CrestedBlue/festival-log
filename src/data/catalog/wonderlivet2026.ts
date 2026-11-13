@@ -16,7 +16,7 @@ import { SELLERS, type TicketSeller } from './tickets'
  */
 export { WONDERLIVET_2026_ID }
 
-/** Admin notices, summarised from the timetable post, the official site's FAQ and directions (wonderli.vet), the goods pre-order post (Instagram 11/5) and the festival map post (Instagram 11/9) and the on-site goods posts (Instagram 11/12). */
+/** Admin notices, summarised from the timetable post, the official site's FAQ and directions (wonderli.vet), the goods pre-order post (Instagram 11/5) and the festival map post (Instagram 11/9) and the on-site goods posts (Instagram 11/12) and the food zone post (Instagram 11/13). */
 export const WONDERLIVET_2026_NOTICES: readonly string[] = [
   '티켓부스는 10:00에 열고(그날 마지막 공연이 끝날 때까지), 메인 게이트는 11:00에 열려요. 첫 공연은 12:00예요.',
   '티켓부스에서 모바일 티켓(앱 화면, 캡처는 안 돼요)과 예매자 본인의 실물 신분증을 보여 주고 손목밴드를 차요. 대리 수령은 안 되고, 동행인과 함께 가야 해요.',
@@ -31,6 +31,8 @@ export const WONDERLIVET_2026_NOTICES: readonly string[] = [
   'WONDER STAGE는 7·8홀, LIVET STAGE는 10홀, 굿즈 부스는 9홀 안에 있어요. 무대 사이는 건물 1·2층 어느 쪽으로도 오갈 수 있지만, 2층 게이트로 들고 나는 건 1층 첫 입장 줄이 다 들어간 뒤부터예요.',
   '물품보관소는 2층 9홀 앞 로비에서 09:00 – 23:00쯤까지 열어요. 티켓부스(페스티벌 맵의 손목밴드 부스)는 10:00부터 공연이 끝날 때까지(페스티벌 맵에는 22:00까지), 굿즈 부스(현장 구매·예약 픽업)는 11:30 – 21:00예요.',
   '푸드존은 7·8홀과 9홀 안에 있고, 화장실은 공연장 안과 바깥 로비에 다 있어요.',
+  '푸드존 7·8홀: 쉬림프 하우스, 요코스카해군카레X텟판호르몬, 몬스터 스테이크, 가향 김치말이국수, 가향분식, 오사카타코, 킷사 클럽, 버닝하트 닭강정. 9홀: 잭잭, 봉 전, 에비야, 밥이랑 꼬치랑, 미네키야끼소바, 블루빈, 조이쉡(참치마요는 판매 제외), 윤쉐프 닭강정, 뿌자 2. 푸드·주류 부스는 두 곳 다 있어요.',
+  '술은 성인인증 손목밴드를 차야 살 수 있어요. 손목밴드 부스(밖)에서 미리 받아 두세요.',
   '손목밴드는 금·토 2일권은 11/21(토)까지, 토·일이나 금·일 2일권과 3일권은 11/22(일)까지 계속 차고 있어야 해요. 물에 젖어도 찢어지지 않아요.',
 ]
 
