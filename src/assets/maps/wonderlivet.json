@@ -1,5 +1,5 @@
 {
-  "attribution": "지도: 원더리벳 2026 공연장(킨텍스 제2전시장)을 표시함 · 지형: © OpenStreetMap 기여자",
+  "attribution": "지도: 원더리벳 2026 페스티벌 맵을 킨텍스 제2전시장 평면도에 맞춰 다시 그림 · 지형: © OpenStreetMap 기여자",
   "background": "#f3e9ce",
   "maxZoom": 19.5,
   "fillOnOpen": false,
@@ -16,12 +16,12 @@
   ],
   "initialView": [
     [
-      37.663843,
-      126.735835
+      37.662582,
+      126.73892
     ],
     [
-      37.665979,
-      126.749007
+      37.666894,
+      126.745728
     ]
   ],
   "layers": [
@@ -37,10 +37,22 @@
           126.756622
         ]
       ]
+    },
+    {
+      "file": "layer1.svg",
+      "bounds": [
+        [
+          37.662582,
+          126.73892
+        ],
+        [
+          37.666894,
+          126.745728
+        ]
+      ]
     }
   ],
   "icons": {
-    "venue": "icons/venue.svg",
     "bus": "icons/bus.svg",
     "station-kintex": "icons/station-kintex.svg",
     "station-daehwa": "icons/station-daehwa.svg",
@@ -864,102 +876,153 @@
       "minZoom": 16.5,
       "lat": 37.676135,
       "lng": 126.747378
+    },
+    {
+      "text": "1층 로비",
+      "kind": "zone",
+      "colour": "#3d1d0c",
+      "minZoom": 16.5,
+      "lat": 37.665166,
+      "lng": 126.741574
+    },
+    {
+      "text": "7홀",
+      "kind": "place",
+      "minZoom": 16.5,
+      "colour": "#f16623",
+      "lat": 37.664487,
+      "lng": 126.743727
+    },
+    {
+      "text": "8홀",
+      "kind": "place",
+      "minZoom": 16.5,
+      "colour": "#f16623",
+      "lat": 37.663485,
+      "lng": 126.743012
+    },
+    {
+      "text": "10홀",
+      "kind": "place",
+      "minZoom": 16.5,
+      "colour": "#f16623",
+      "lat": 37.665953,
+      "lng": 126.740684
+    },
+    {
+      "text": "9홀",
+      "kind": "place",
+      "minZoom": 16.5,
+      "colour": "#f16623",
+      "lat": 37.66491,
+      "lng": 126.739969
+    },
+    {
+      "text": "WONDER STAGE",
+      "kind": "stage",
+      "stage": "wonder",
+      "colour": "#ff6800",
+      "minZoom": 15.3,
+      "lat": 37.66486,
+      "lng": 126.743604
+    },
+    {
+      "text": "LIVET STAGE",
+      "kind": "stage",
+      "stage": "livet",
+      "colour": "#9c3d00",
+      "minZoom": 15.3,
+      "lat": 37.666161,
+      "lng": 126.741176
     }
   ],
   "marks": [
     {
       "id": 1,
-      "kind": "venue",
-      "zone": "",
-      "lat": 37.664911,
-      "lng": 126.742421
-    },
-    {
-      "id": 2,
       "kind": "station-kintex",
       "zone": "",
       "lat": 37.665179,
       "lng": 126.748207
     },
     {
-      "id": 3,
+      "id": 2,
       "kind": "station-daehwa",
       "zone": "",
       "lat": 37.676161,
       "lng": 126.747428
     },
     {
-      "id": 4,
+      "id": 3,
       "kind": "exit-1",
       "zone": "kintex",
       "lat": 37.665601,
       "lng": 126.747951
     },
     {
-      "id": 5,
+      "id": 4,
       "kind": "exit-2",
       "zone": "kintex",
       "lat": 37.665228,
       "lng": 126.748938
     },
     {
-      "id": 6,
+      "id": 5,
       "kind": "exit-3",
       "zone": "kintex",
       "lat": 37.664713,
       "lng": 126.748438
     },
     {
-      "id": 7,
+      "id": 6,
       "kind": "exit-4",
       "zone": "kintex",
       "lat": 37.664745,
       "lng": 126.747493
     },
     {
-      "id": 8,
+      "id": 7,
       "kind": "exit-5",
       "zone": "kintex",
       "lat": 37.665142,
       "lng": 126.747475
     },
     {
-      "id": 9,
+      "id": 8,
       "kind": "exit-1",
       "zone": "daehwa",
       "lat": 37.675906,
       "lng": 126.747635
     },
     {
-      "id": 10,
+      "id": 9,
       "kind": "exit-2",
       "zone": "daehwa",
       "lat": 37.675748,
       "lng": 126.747192
     },
     {
-      "id": 11,
+      "id": 10,
       "kind": "exit-3",
       "zone": "daehwa",
       "lat": 37.676209,
       "lng": 126.74699
     },
     {
-      "id": 12,
+      "id": 11,
       "kind": "exit-4",
       "zone": "daehwa",
       "lat": 37.676473,
       "lng": 126.747215
     },
     {
-      "id": 13,
+      "id": 12,
       "kind": "exit-5",
       "zone": "daehwa",
       "lat": 37.676497,
       "lng": 126.747697
     },
     {
-      "id": 14,
+      "id": 13,
       "kind": "exit-6",
       "zone": "daehwa",
       "lat": 37.67619,

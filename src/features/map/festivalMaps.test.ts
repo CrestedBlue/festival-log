@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { BML_SERIES, CDF_SERIES, GRAND_MINT_SERIES, HERO_ROCK_SERIES, JUMF_SERIES, PENTAPORT_SERIES, SJF_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
+import { BML_SERIES, CDF_SERIES, GRAND_MINT_SERIES, HERO_ROCK_SERIES, JUMF_SERIES, PENTAPORT_SERIES, SJF_SERIES, THE_GLOW_SERIES, WONDERLIVET_SERIES } from '../../data/catalog/ids'
 import { isInsideBounds } from '../../lib/geo'
 import { parseMapMeta, seriesMapFor, withImages } from './festivalMaps'
 
@@ -110,8 +110,8 @@ describe('seriesMapFor', () => {
   // festivals with no venue map yet: the big area map alone, with the venue and the stations as the map's own icons
   test.each([
     [HERO_ROCK_SERIES, ['인천대입구역', '센트럴파크역', '지식정보단지역']],
-    [WONDERLIVET_SERIES, ['킨텍스역', '대화역']],
     [CDF_SERIES, ['킨텍스역', '대화역']],
+    [THE_GLOW_SERIES, ['킨텍스역', '대화역']],
   ])('returns the big area map of %s with its venue and stations', (series, stations) => {
     const map = seriesMapFor(series)
     expect(map?.layers).toHaveLength(1)
@@ -128,11 +128,22 @@ describe('seriesMapFor', () => {
     expect(venue && map && isInsideBounds(venue, map.initialView)).toBe(true)
   })
 
-  test('gives the two KINTEX festivals one area map, each naming its own festival', () => {
-    expect(seriesMapFor(CDF_SERIES)?.layers).toEqual(seriesMapFor(WONDERLIVET_SERIES)?.layers)
-    expect(seriesMapFor(WONDERLIVET_SERIES)?.attribution).toContain('원더리벳')
+  test('gives the KINTEX festivals with no map of their own one area map, each naming its own festival', () => {
+    expect(seriesMapFor(CDF_SERIES)?.layers).toEqual(seriesMapFor(THE_GLOW_SERIES)?.layers)
     expect(seriesMapFor(CDF_SERIES)?.attribution).toContain('카운트다운 판타지')
-    expect(seriesMapFor(CDF_SERIES)?.attribution).not.toContain('원더리벳')
+    expect(seriesMapFor(THE_GLOW_SERIES)?.attribution).toContain('더 글로우')
+    for (const code of [CDF_SERIES, THE_GLOW_SERIES]) expect(seriesMapFor(code)?.attribution).not.toContain('원더리벳')
+  })
+
+  test('gives WONDERLIVET its halls from its festival map: the venue map over the KINTEX area, its two stages named', () => {
+    const map = expectZoneMap(WONDERLIVET_SERIES)
+    expect(map?.layers).not.toEqual(seriesMapFor(CDF_SERIES)?.layers)
+    expect(map?.labels.filter((l) => l.kind === 'station').map((l) => l.text)).toEqual(['킨텍스역', '대화역'])
+    const stages = map?.labels.filter((l) => l.kind === 'stage') ?? []
+    expect(stages.map((l) => [l.text, l.stage])).toEqual([['WONDER STAGE', 'wonder'], ['LIVET STAGE', 'livet']])
+    for (const stage of stages) expect(map && isInsideBounds(stage, map.initialView), stage.text).toBe(true)
+    expect(map?.labels.filter((l) => l.kind === 'place').map((l) => l.text)).toEqual(['7홀', '8홀', '10홀', '9홀'])
+    expect(map?.attribution).toContain('원더리벳 2026 페스티벌 맵')
   })
 
   // big map's layer 1, small map's layers 1 and 2 (layer 3's pins are drawn by the app as icons, inside the venue);

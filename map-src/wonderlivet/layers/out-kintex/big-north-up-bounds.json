@@ -1,0 +1,29 @@
+{
+  "size": [
+    5000,
+    6400
+  ],
+  "pxPerMeter": 2,
+  "svgUnits": "1 unit = 1 m, origin at the north-west corner of bounds, y grows southward",
+  "bounds": [
+    [
+      37.651263,
+      126.728252
+    ],
+    [
+      37.680009,
+      126.756622
+    ]
+  ],
+  "colours": {
+    "land": "#f3e9ce",
+    "open": "#efe2c2",
+    "park": "#7bc157",
+    "pitch": "#048244",
+    "paved": "#dcdcdf",
+    "water": "#3faef3",
+    "building": "#e6e6e9",
+    "venue": "#c8c8ca",
+    "road": "#c3c5ca"
+  }
+}

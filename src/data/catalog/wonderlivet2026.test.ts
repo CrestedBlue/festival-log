@@ -4,6 +4,7 @@ import { WONDERLIVET_2026_ID, WONDERLIVET_2026_KEY, WONDERLIVET_SERIES } from '.
 import { WONDERLIVET_2026_NOTICES, createWonderlivet2026 } from './wonderlivet2026'
 import { catalogEntry, festivalMapFor } from './index'
 import { SERIES } from './series'
+import { isInsideBounds } from '../../lib/geo'
 
 const DAYS = ['2026-11-20', '2026-11-21', '2026-11-22']
 
@@ -53,15 +54,31 @@ describe('createWonderlivet2026', () => {
     expect(festival.pins.every((p) => p.id.startsWith(`${WONDERLIVET_SERIES}-`))).toBe(true)
   })
 
-  test('pins the halls and the stations the official directions name, drawn as the big map\'s icons', () => {
-    expect(festival.pins.filter((p) => !p.group).map((p) => p.name)).toEqual(['킨텍스 제2전시장 7–10홀 · 공연장', '킨텍스역 (GTX-A)', '대화역 (3호선)'])
+  test('pins the booths, gates and facilities of its festival map inside the halls, and the stations', () => {
+    const named = (name: string) => festival.pins.filter((p) => p.name === name)
+    expect(named('WONDER STAGE 게이트')).toHaveLength(1)
+    expect(named('LIVET STAGE 게이트')).toHaveLength(1)
+    expect(named('음식·음료 부스')).toHaveLength(2)
+    expect(named('주류 부스')).toHaveLength(2)
+    expect(named('콘텐츠 부스')).toHaveLength(2)
+    expect(named('휠체어존').map((p) => p.detail)).toEqual(['2층 로비 · 7홀 쪽', '2층 로비 · 가운데'])
+    expect(named('물품보관소')[0]?.detail).toContain('2층 9홀 앞 로비')
+    expect(named('화장실')).toHaveLength(7)
+    expect(festival.pins.filter((p) => p.kind === 'wristband').map((p) => p.name)).toEqual(['티켓부스 (대략)'])
+    // stages are named on the map, not pinned
+    expect(festival.pins.some((p) => p.kind === 'stage')).toBe(false)
+    expect(festival.pins.filter((p) => !p.group && p.name.endsWith(')') && p.name.includes('역')).map((p) => p.name)).toEqual(['킨텍스역 (GTX-A)', '대화역 (3호선)'])
     const exits = (group: string) => festival.pins.filter((p) => p.group === group).map((p) => p.name)
     expect(exits('킨텍스역 출구')).toHaveLength(5) // the numbered ones (one entrance has no number in OSM)
     expect(exits('대화역 출구')).toHaveLength(6)
     expect(exits('킨텍스역 출구')).toContain('킨텍스역 5번 출구')
     const map = festivalMapFor(WONDERLIVET_2026_ID)
-    expect(map?.layers).toHaveLength(1)
-    expect(festival.pins.every((p) => p.mapIcon && map?.icons[p.mapIcon])).toBe(true)
+    expect(map?.layers).toHaveLength(2)
+    // every pin on the map, the halls' ones on the venue map
+    for (const pin of festival.pins) expect(map && isInsideBounds(pin, map.bounds), pin.name).toBe(true)
+    for (const pin of festival.pins.filter((p) => !p.group?.endsWith(' 출구') && !p.name.includes('역'))) {
+      expect(map && isInsideBounds(pin, map.layers[1]!.bounds), pin.name).toBe(true)
+    }
   })
 
   test('comes with notices from the official FAQ, and the design of its own', () => {

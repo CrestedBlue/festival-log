@@ -4,6 +4,7 @@ import bmlMeta from '../../assets/maps/bml.json'
 import busanRockMeta from '../../assets/maps/busanrock.json'
 import gmfMeta from '../../assets/maps/gmf.json'
 import heroRockMeta from '../../assets/maps/herorock.json'
+import kintexMeta from '../../assets/maps/kintex.json'
 import jumfMeta from '../../assets/maps/jumf.json'
 import letsRockMeta from '../../assets/maps/letsrock.json'
 import pentaportMeta from '../../assets/maps/pentaport.json'
@@ -209,10 +210,10 @@ const folder = (prefix: string, files: Record<string, string>) =>
 // Every bundled map file, by folder ("jumf/layer1.svg") — import.meta.glob takes literal patterns only.
 const MAP_FILES = import.meta.glob<string>('../../assets/maps/*/**/*.svg', { eager: true, query: '?url', import: 'default' })
 const filesOf = (code: string) => folder(`../../assets/maps/${code}/`, Object.fromEntries(Object.entries(MAP_FILES).filter(([path]) => path.startsWith(`../../assets/maps/${code}/`))))
-const KINTEX_MAP = withImages(
-  parseMapMeta(wonderlivetMeta),
-  folder('../../assets/maps/wonderlivet/', import.meta.glob<string>('../../assets/maps/wonderlivet/**/*.svg', { eager: true, query: '?url', import: 'default' })),
-)
+// KINTEX's second exhibition centre for the festivals there whose own map is still to come: the big area map alone
+// (scripts/map/layers/wonderlivet/app.mjs), each festival naming itself in the credit.
+const KINTEX_MAP = withImages(parseMapMeta(kintexMeta), filesOf('kintex'))
+const kintexFor = (festival: string): FestivalMap => ({ ...KINTEX_MAP, attribution: KINTEX_MAP.attribution.replace('지도: 공연장', `지도: ${festival} 공연장`) })
 const GMF_META = parseMapMeta(gmfMeta)
 const GMF_IMAGES = folder('../../assets/maps/gmf/', import.meta.glob<string>('../../assets/maps/gmf/**/*.svg', { eager: true, query: '?url', import: 'default' }))
 const MAPS: Record<string, FestivalMap> = {
@@ -232,12 +233,13 @@ const MAPS: Record<string, FestivalMap> = {
   [BUSAN_ROCK_SERIES]: withImages(parseMapMeta(busanRockMeta), filesOf('busanrock')),
   // Olympic Park, on the OSM extract of the Grand Mint Festival map
   [SJF_SERIES]: withImages(parseMapMeta(sjfMeta), filesOf('sjf')),
-  [WONDERLIVET_SERIES]: KINTEX_MAP,
-  // Same halls of KINTEX's second exhibition centre as Wonderlivet: its area map (drawn for Wonderlivet), naming CDF.
-  [CDF_SERIES]: { ...KINTEX_MAP, attribution: KINTEX_MAP.attribution.replace('원더리벳 2026', '카운트다운 판타지') },
-  // THE GLOW uses halls 7, 8, 9 and 10A of the same building (2026): the same area map, naming THE GLOW. Its official
+  // KINTEX's halls 7–10 with WONDERLIVET's stages and booths, from its 2026 festival map (scripts/map/layers/wonderlivet/map.mjs)
+  [WONDERLIVET_SERIES]: withImages(parseMapMeta(wonderlivetMeta), filesOf('wonderlivet')),
+  // Halls 7 and 8 of the same building: the KINTEX area map, naming CDF.
+  [CDF_SERIES]: kintexFor('카운트다운 판타지'),
+  // THE GLOW uses halls 7, 8, 9 and 10A of the same building (2026): the KINTEX area map, naming THE GLOW. Its official
   // map (map-src/theglow/official-map-2026.jpg) draws the halls inside, not yet redrawn (TODO, 지난 회차 지도).
-  [THE_GLOW_SERIES]: { ...KINTEX_MAP, attribution: KINTEX_MAP.attribution.replace('원더리벳 2026', '더 글로우') },
+  [THE_GLOW_SERIES]: kintexFor('더 글로우'),
 }
 
 /** The map of a festival code; use festivalMapFor (data/catalog) to go from a festival id. */
