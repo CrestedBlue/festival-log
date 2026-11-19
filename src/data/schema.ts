@@ -62,6 +62,8 @@ export const PinSchema = z.object({
   caption: z.string().trim().max(40).optional(),
   /** Where the map draws it, when not at the place itself (a badge set beside its booth). */
   spot: z.object({ lat: latitude, lng: longitude }).optional(),
+  /** The floor of the building it is on, on a map with more than one floor (maps/floors.ts); none = the ground floor. */
+  floor: z.number().int().min(1).max(9).optional(),
 })
 
 export const VenueSchema = z.object({ name: z.string().trim().max(MAX_NAME_LENGTH), lat: latitude, lng: longitude })

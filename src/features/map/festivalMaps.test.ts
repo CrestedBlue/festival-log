@@ -37,6 +37,19 @@ describe('parseMapMeta', () => {
     expect(() => parseMapMeta({ ...valid, marks: [{ id: 2, zone: 'x', lat: 37.55, lng: 127.15 }] })).toThrow()
   })
 
+  test('reads the floor a layer or a name belongs to, and rejects one that is not a floor', () => {
+    const label = { text: 'WONDER STAGE', kind: 'stage', minZoom: 15, lat: 37.55, lng: 127.15 }
+    const meta = parseMapMeta({
+      ...valid,
+      layers: [{ file: 'a.svg', bounds: valid.bounds }, { file: 'b.svg', bounds: valid.bounds, floor: 2 }],
+      labels: [{ ...label, floor: 1 }, label],
+    })
+    expect(meta.layerFiles.map((l) => l.floor)).toEqual([undefined, 2])
+    expect(meta.labels.map((l) => l.floor)).toEqual([1, undefined])
+    expect(() => parseMapMeta({ ...valid, layers: [{ file: 'a.svg', bounds: valid.bounds, floor: 0 }] })).toThrow()
+    expect(() => parseMapMeta({ ...valid, labels: [{ ...label, floor: 'B1' }] })).toThrow()
+  })
+
   test('reads the colour around the image, ignoring anything that is not a hex colour', () => {
     expect(parseMapMeta({ ...valid, background: '#ffffff' }).background).toBe('#ffffff')
     expect(parseMapMeta({ ...valid, background: 'url(x)' }).background).toBeNull()
@@ -136,7 +149,8 @@ describe('seriesMapFor', () => {
   })
 
   test('gives WONDERLIVET its halls from its festival map: the venue map over the KINTEX area, its two stages named', () => {
-    const map = expectZoneMap(WONDERLIVET_SERIES)
+    // the big map, the ground floor and the 2F lobby (a layer of its own, for floor 2)
+    const map = expectZoneMap(WONDERLIVET_SERIES, 3)
     expect(map?.layers).not.toEqual(seriesMapFor(CDF_SERIES)?.layers)
     expect(map?.labels.filter((l) => l.kind === 'station').map((l) => l.text)).toEqual(['킨텍스역', '대화역'])
     const stages = map?.labels.filter((l) => l.kind === 'stage') ?? []
@@ -170,9 +184,9 @@ describe('seriesMapFor', () => {
   })
 
   // festivals drawn from their zones (scripts/map/layers/lib/venue-map.mjs): the big area map, the venue map over it
-  const expectZoneMap = (series: string) => {
+  const expectZoneMap = (series: string, layers = 2) => {
     const map = seriesMapFor(series)
-    expect(map?.layers).toHaveLength(2)
+    expect(map?.layers).toHaveLength(layers)
     for (const layer of map?.layers ?? []) expect(layer.url, series).toBeTruthy()
     for (const mark of map?.marks ?? []) expect(map?.icons[mark.kind], `icon for ${mark.kind}`).toBeTruthy()
     for (const label of map?.labels ?? []) expect(map && isInsideBounds(label, map.bounds), label.text).toBe(true)

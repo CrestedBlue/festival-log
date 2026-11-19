@@ -73,12 +73,28 @@ describe('createWonderlivet2026', () => {
     expect(exits('대화역 출구')).toHaveLength(6)
     expect(exits('킨텍스역 출구')).toContain('킨텍스역 5번 출구')
     const map = festivalMapFor(WONDERLIVET_2026_ID)
-    expect(map?.layers).toHaveLength(2)
+    expect(map?.layers).toHaveLength(3) // the big map, the ground floor, the 2F lobby
     // every pin on the map, the halls' ones on the venue map
     for (const pin of festival.pins) expect(map && isInsideBounds(pin, map.bounds), pin.name).toBe(true)
     for (const pin of festival.pins.filter((p) => !p.group?.endsWith(' 출구') && !p.name.includes('역'))) {
       expect(map && isInsideBounds(pin, map.layers[1]!.bounds), pin.name).toBe(true)
     }
+  })
+
+  test('puts the lockers and the wheelchair zones on the 2F lobby, everything else on the ground floor', () => {
+    const upstairs = festival.pins.filter((p) => p.floor === 2).map((p) => p.name)
+    expect(upstairs.sort()).toEqual(['물품보관소', '휠체어존', '휠체어존'])
+    expect(festival.pins.filter((p) => (p.floor ?? 1) === 1).length).toBeGreaterThan(15)
+    expect(festival.pins.every((p) => p.floor === undefined || p.floor === 2)).toBe(true)
+  })
+
+  test('has a map of two floors, the 2F lobby drawn as its own layer over the same ground', () => {
+    const map = festivalMapFor(WONDERLIVET_2026_ID)
+    const floors = map?.layers.filter((l) => l.floor !== undefined) ?? []
+    expect(floors.map((l) => l.floor)).toEqual([1, 2])
+    expect(new Set(floors.map((l) => JSON.stringify(l.bounds))).size).toBe(1)
+    // the stages and the halls' names are on the ground floor only
+    expect(map?.labels.filter((l) => l.kind === 'stage' || l.kind === 'place').every((l) => l.floor === 1)).toBe(true)
   })
 
   test('comes with notices from the official FAQ, and the design of its own', () => {

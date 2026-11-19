@@ -29,14 +29,23 @@ export const OFFICIAL = {
 }
 
 /**
- * The wristband booth and the information, in local metres. The festival map draws them on the lobby floor at the
- * lobby's 킨텍스역 end, past the ends of the halls; there the real lobby ends at the glass front on the north-east
- * plaza (entrances A–C), so they go just inside it — the wristband booth on the halls 7·8 side, the information on the
- * 9·10 side, as drawn. Laid on by the lobby fit they would stand out in the plaza's garden.
+ * The wristband booth and the information, in local metres. The festival map draws them on the 1F floor at the
+ * 킨텍스역 end, past the ends of the halls, and the food-zone post (2026-11-12) says the booth is "외부": outside the
+ * halls, as the map post's "외부 로비" — neither says whether it is inside the glass front or before it. They stay by
+ * the entrances A–C on the north-east plaza, just inside the front — the wristband booth on the halls 7·8 side, the
+ * information on the 9·10 side, as drawn. Laid on by the lobby fit they would stand out in the plaza's garden.
  */
 export const AT_ENTRANCE = {
   wristband: [42, 2],
   info: [26, 5],
+}
+
+/**
+ * The photo booth: "킨텍스 제2전시장 9홀 내부" (official post, 2026-11-15), no spot given and not on the festival map:
+ * somewhere free in hall 9, as [row, metres along, metres across] like the restrooms.
+ */
+export const IN_HALL = {
+  photoBooth: ['h9', 112, 50],
 }
 
 /**

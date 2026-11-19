@@ -79,7 +79,7 @@ export const LOBBY = [
 const BLOCK78 = { nneOut: [249, 938], sswOut: [648, 726], sswIn: [876, 849], nneIn: [477, 1061] }
 const BLOCK910 = { nneIn: [664, 1193], sswIn: [1064, 969], sswOut: [1281, 1079], nneOut: [881, 1303] }
 const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]
-const BLOCK2F = { nne78: [738.6, 603.4], ssw78: [1043.4, 429], ssw910: [1345.5, 605.5], nne910: [1040.3, 779.9] }
+export const BLOCK2F = { nne78: [738.6, 603.4], ssw78: [1043.4, 429], ssw910: [1345.5, 605.5], nne910: [1040.3, 779.9] }
 
 const solve3 = (rows, values) => {
   const ata = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], atb = [0, 0, 0]

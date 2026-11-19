@@ -9,9 +9,10 @@ import { frame, bigFrame } from './frame.mjs'
 import { OUT, CACHE, ROOT } from './paths.mjs'
 import { STATIONS } from './stations.mjs'
 import { HALLS, LOBBY, ROWS, FIT_ERRORS, officialToM } from './halls.mjs'
-import { STAGE_BOXES, STAGE_LIFT_PX, OFFICIAL, AT_ENTRANCE, RESTROOMS } from './places.mjs'
+import { STAGE_BOXES, STAGE_LIFT_PX, OFFICIAL, AT_ENTRANCE, IN_HALL, RESTROOMS } from './places.mjs'
 import { LANDMARKS } from './landmarks.mjs'
 import { buildVenueMap } from '../lib/venue-map.mjs'
+import { plateCentre, plateContains, writeFloor2 } from './floor2.mjs'
 
 // Colours of the official festival map (sampled): black ground, brown floors, black halls with orange lines and grid,
 // orange stages. The building's other parts (hall 6, the service strips) a little lighter than the ground.
@@ -47,12 +48,32 @@ await buildVenueMap({ root: ROOT, code: 'wonderlivet', out: OUT, cache: CACHE, f
   attribution: '지도: 원더리벳 2026 페스티벌 맵을 킨텍스 제2전시장 평면도에 맞춰 다시 그림 · 지형: © OpenStreetMap 기여자',
 })
 
+// The map has two floors (the user, 2026-11-19): layer 1 and the stages' and halls' names are the ground floor's, the 2F
+// lobby is a layer of its own over the same bounds (floor2.mjs). Done on the files the build above wrote.
+const assets = path.join(ROOT, 'src/assets/maps')
+const metaFile = path.join(assets, 'wonderlivet.json')
+const meta = JSON.parse(fs.readFileSync(metaFile, 'utf8'))
+const venueLayer = meta.layers.find((l) => l.file === 'layer1.svg')
+writeFloor2({ dir: path.join(assets, 'wonderlivet'), fill: LOBBY_FLOOR, edge: ORANGE, building: BUILDING })
+meta.layers = meta.layers.flatMap((l) => (l === venueLayer ? [{ ...l, floor: 1 }, { file: 'layer2f.svg', bounds: l.bounds, floor: 2 }] : [l]))
+const [lat2, lng2] = plateCentre()
+meta.labels = [
+  ...meta.labels.map((l) => (['stage', 'place', 'zone'].includes(l.kind) ? { ...l, floor: 1 } : l)),
+  { text: '2층 로비', kind: 'zone', colour: ORANGE, minZoom: 16.5, lat: +lat2.toFixed(6), lng: +lng2.toFixed(6), floor: 2 },
+]
+fs.writeFileSync(metaFile, `${JSON.stringify(meta, null, 2)}\n`)
+
 // The places the catalog pins, [lat, lng] (series/wonderlivet.ts), and a check file for the preview.
 const round = ([lat, lng]) => [+lat.toFixed(6), +lng.toFixed(6)]
 const places = {
   ...Object.fromEntries(Object.entries(OFFICIAL).map(([key, [px, zone]]) => [key, round(frame.toLL(officialToM(px, zone)))])),
   ...Object.fromEntries(Object.entries(AT_ENTRANCE).map(([key, m]) => [key, round(frame.toLL(m))])),
+  ...Object.fromEntries(Object.entries(IN_HALL).map(([key, [rowKey, t, s]]) => [key, round(frame.toLL(ROWS[rowKey](t, s)))])),
   ...Object.fromEntries(Object.entries(RESTROOMS).map(([key, [rowKey, t, s]]) => [`restroom-${key}`, round(frame.toLL(ROWS[rowKey](t, s)))])),
 }
 fs.writeFileSync(path.join(CACHE, 'places.json'), `${JSON.stringify(places, null, 2)}\n`)
 for (const [key, [lat, lng]] of Object.entries(places)) console.log(key.padEnd(24), lat, lng)
+// the 2F pins must be on the plate
+for (const key of ['lockers', 'wheelchairHall7', 'wheelchairMiddle']) {
+  if (places[key] && !plateContains(frame.toM(places[key]))) throw new Error(`${key} is off the 2F lobby plate`)
+}

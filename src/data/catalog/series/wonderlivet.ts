@@ -22,7 +22,7 @@ const at = (key: string, place: Place, lat: number, lng: number): Pin => ({ id: 
 const FNB: Place = { name: '음식·음료 부스', group: '음식·음료 부스', kind: 'food' }
 const BAR: Place = { name: '주류 부스', group: '주류 부스', kind: 'food', mapIcon: 'bar' }
 const CONTENTS: Place = { name: '콘텐츠 부스', group: '콘텐츠 부스', kind: 'etc', mapIcon: 'promotionBooth' }
-const WHEELCHAIR: Place = { name: '휠체어존', group: '휠체어존', kind: 'etc', mapIcon: 'barrierFreeZone', rank: RANK.barrierFree }
+const WHEELCHAIR: Place = { name: '휠체어존', group: '휠체어존', kind: 'etc', mapIcon: 'barrierFreeZone', rank: RANK.barrierFree, floor: 2 }
 const RESTROOM: Place = { name: '화장실', group: '화장실', kind: 'toilet' }
 
 const PINS: readonly Pin[] = [
@@ -40,7 +40,7 @@ const PINS: readonly Pin[] = [
   at('contents-livet', { ...CONTENTS, detail: '9홀' }, 37.664875, 126.740211),
   at('bar-livet', { ...BAR, detail: '9홀' }, 37.664368, 126.739944),
   at('fnb-livet', { ...FNB, detail: '9홀' }, 37.664554, 126.73973),
-  at('lockers', { name: '물품보관소', kind: 'luggage', detail: '2층 9홀 앞 로비 · 09:00–23:00쯤' }, 37.664359, 126.740861),
+  at('lockers', { name: '물품보관소', kind: 'luggage', floor: 2, detail: '2층 9홀 앞 로비 · 09:00–23:00쯤' }, 37.664359, 126.740861),
   at('wheelchair-hall7', { ...WHEELCHAIR, detail: '2층 로비 · 7홀 쪽' }, 37.664848, 126.742494),
   at('wheelchair-middle', { ...WHEELCHAIR, detail: '2층 로비 · 가운데' }, 37.6653, 126.741552),
   at('restroom-hall7-north', { ...RESTROOM, detail: '1층 · 7홀 옆 (WONDER STAGE 쪽)' }, 37.665164, 126.743128),

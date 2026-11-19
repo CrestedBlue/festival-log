@@ -16,6 +16,8 @@ import { pinIconUrl } from './pinIcons'
 import { useLeafletMap } from './useLeafletMap'
 import { useMapPick, useMapZoom, useMyLocationLayer, usePinHighlight } from './useMapLayers'
 import { useMapContent } from './useMapContent'
+import { useFloorLayers } from './useFloorLayers'
+import { GROUND_FLOOR, floorLabel, mapFloors, mapOnFloor, pinsOnFloor } from './floors'
 import { groupKeyOf, groupPins, type PinGroup } from './pinGroups'
 import { NO_SELECTION, selectPin, showRow, type MapSelection } from './selection'
 import { routeUrl } from './routeLink'
@@ -49,6 +51,14 @@ interface Props {
 export default function MapView({ festival, userPinIds }: Props) {
   const festivalMap = festivalMapFor(festival.id)
   const { containerRef, map } = useLeafletMap({ center: festival.venue, image: festivalMap, fitPoints: festival.pins })
+  // A building's floors: the map shows one floor at a time (a button switches), its layers and pins (floors.ts). A map
+  // of one floor has none of it.
+  const floors = useMemo(() => mapFloors(festivalMap), [festivalMap])
+  const [floorPicked, setFloorPicked] = useState(GROUND_FLOOR)
+  const floor = floors.length === 0 ? null : floors.includes(floorPicked) ? floorPicked : floors[0]!
+  const floorMap = useMemo(() => (festivalMap && floor !== null ? mapOnFloor(festivalMap, floor) : festivalMap), [festivalMap, floor])
+  const shownPins = useMemo(() => pinsOnFloor(festival.pins, floor), [festival.pins, floor])
+  useFloorLayers(map, festivalMap, floor)
   const [tracking, setTracking] = useState(false)
   const [retryKey, setRetryKey] = useState(0)
   const geo = useGeolocation(tracking, retryKey)
@@ -74,8 +84,8 @@ export default function MapView({ festival, userPinIds }: Props) {
 
   const zoom = useMapZoom(map)
   const activeIds = useMemo(
-    () => new Set(activeGroup ? festival.pins.filter((pin) => groupKeyOf(pin) === activeGroup).map((pin) => pin.id) : []),
-    [activeGroup, festival.pins],
+    () => new Set(activeGroup ? shownPins.filter((pin) => groupKeyOf(pin) === activeGroup).map((pin) => pin.id) : []),
+    [activeGroup, shownPins],
   )
   const selectOnMap = useCallback(
     (id: string) => {
@@ -87,7 +97,7 @@ export default function MapView({ festival, userPinIds }: Props) {
     [festival.pins],
   )
   const stages = festivalStageLooks(festival.id)
-  const pinSize = useMapContent(map, festivalMap, festival.pins, zoom, selectedId, selectOnMap, { interactive: !picking, activeIds, userPinIds, stages })
+  const pinSize = useMapContent(map, floorMap, shownPins, zoom, selectedId, selectOnMap, { interactive: !picking, activeIds, userPinIds, stages })
   usePinHighlight(map, highlight, pinSize)
   useMyLocationLayer(map, geo)
   useMapPick(map, picking, onPick)
@@ -130,9 +140,19 @@ export default function MapView({ festival, userPinIds }: Props) {
     setCollapsed(true) // fold the list so the map shows them
   }
 
+  // The next floor up (the top one goes back to the lowest); what was picked out on the old floor is let go.
+  const nextFloor = floor === null ? null : (floors[(floors.indexOf(floor) + 1) % floors.length] ?? floor)
+  const switchFloor = () => {
+    if (nextFloor === null) return
+    setFloorPicked(nextFloor)
+    setSelection(NO_SELECTION)
+    setDraft(null)
+    setPicking(false)
+  }
+
   const savePin = (name: string, kind: PinKind) => {
     if (!draft) return
-    const parsed = PinSchema.safeParse({ id: makeId(), name, kind, lat: draft.lat, lng: draft.lng })
+    const parsed = PinSchema.safeParse({ id: makeId(), name, kind, lat: draft.lat, lng: draft.lng, ...(floor === null ? {} : { floor }) })
     if (!parsed.success) {
       showNotice('error', '핀을 저장하지 못했어요. 이름을 확인해 주세요.')
       return
@@ -150,7 +170,7 @@ export default function MapView({ festival, userPinIds }: Props) {
 
   const selected = festival.pins.find((pin) => pin.id === selectedId) ?? null
 
-  const rows = groupPins(festival.pins, me)
+  const rows = groupPins(shownPins, me)
 
   const isActive = (group: PinGroup) =>
     selectedId !== null ? group.pins.some((pin) => pin.id === selectedId) : activeGroup === group.key
@@ -200,6 +220,11 @@ export default function MapView({ festival, userPinIds }: Props) {
           >
             <PlusIcon />
           </button>
+          {floor !== null && nextFloor !== null && (
+            <button type="button" className="map-fab map-fab--floor" onClick={switchFloor} aria-label={`지금 ${floor}층 · 눌러서 ${nextFloor}층 보기`}>
+              {floorLabel(floor)}
+            </button>
+          )}
         </div>
         {hint}
         {festivalMap && <MapCredits text={festivalMap.attribution} />}

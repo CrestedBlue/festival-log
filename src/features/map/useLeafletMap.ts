@@ -12,7 +12,7 @@ const IMAGE_ZOOM_SNAP = 0.25
 // A raster map image (1.6 px per metre) is only blown up past this zoom and turns blurry; vector maps say their own.
 const IMAGE_MAX_ZOOM = 18.5
 
-const toLatLngBounds = (bounds: FestivalMap['bounds']) => L.latLngBounds(bounds.map(([lat, lng]) => [lat, lng] as L.LatLngTuple))
+export const toLatLngBounds = (bounds: FestivalMap['bounds']) => L.latLngBounds(bounds.map(([lat, lng]) => [lat, lng] as L.LatLngTuple))
 
 interface Options {
   center: LatLng
@@ -25,8 +25,9 @@ interface Options {
 function setUpLayers(map: L.Map, { center, image, fitPoints }: Options): void {
   if (image) {
     const bounds = toLatLngBounds(image.bounds)
-    // each layer is its own image (map layers are never merged), bottom first
-    for (const layer of image.layers) L.imageOverlay(layer.url, toLatLngBounds(layer.bounds)).addTo(map)
+    // each layer is its own image (map layers are never merged), bottom first; a floor's own layers come with the floor
+    // switch (useFloorLayers), over these
+    for (const layer of image.layers) if (layer.floor === undefined) L.imageOverlay(layer.url, toLatLngBounds(layer.bounds)).addTo(map)
     map.setMaxBounds(bounds)
     map.fitBounds(image.initialView.map(([lat, lng]) => [lat, lng] as L.LatLngTuple))
     // Open with the image filling the screen (no empty bands), unless its ground runs on in the background colour;

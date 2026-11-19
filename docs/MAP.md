@@ -151,6 +151,7 @@
 - **무대**: 무대 상자의 윗면 네 모서리(공식 px)를 8 px 내려 바닥에 놓고 변환. 공식 그림대로라 실제 무대보다 크다(무대 뒤 공간까지로 본다).
 - **핀**(`places.mjs` → `map.mjs` 가 위경도를 찍고 `series/wonderlivet.ts` 에 옮겨 적는다): 게이트·부스·2층 물품보관소·휠체어존은 공식 핀이 가리키는 곳. 티켓부스·인포메이션은 공식 맵이 로비 끝(킨텍스역 쪽)에 그렸는데 변환하면 광장 정원 한가운데라, 실제 로비가 끝나는 유리벽 바로 안에 둔다("(대략)"). 화장실은 공식 맵에 없어 킨텍스 평면도의 로비 쪽 화장실 7곳. 공식 맵 벽을 따라 찍힌 작은 그림(문 표시로 보임)은 범례에 없어 뺐다.
 - **같은 건물의 다른 페스티벌**(카운트다운 판타지, 더 글로우)은 홀 쓰임이 달라 원더리벳 지도를 쓰지 않는다: 같은 폴더의 `big-layer1.mjs`·`app.mjs` 가 예전 큰 지도만(코드 `kintex`, `map-src/wonderlivet/layers/out-kintex/`, `src/assets/maps/kintex/`) 만들고, 앱은 출처에 페스티벌 이름을 넣어 쓴다. 원더리벳 지도는 `map.mjs` → `out/`, `src/assets/maps/wonderlivet/`.
+- **층 전환**(사용자 결정 2026-11-19): 층이 둘이라 지도 오른쪽 `1F`/`2F` 버튼으로 한 층씩 본다. 2층 로비는 레이어 하나(`floor2.mjs` → `layer2f.svg`, 레이어 1 과 같은 크기·범위라 정확히 겹침)로, 공식 맵의 2층 블록 네 모서리를 1층 로비와 같은 실제 모서리에 맞춘 판(건물 검정 위에 로비 갈색, 주황 테두리)이다. `map.mjs` 가 만든 `wonderlivet.json` 에 레이어 1 은 `floor: 1`, 2층 레이어는 `floor: 2`, 1층 이름표(무대·홀 이름·1층 로비)는 `floor: 1`, `2층 로비` 이름표는 `floor: 2` 를 단다. `floor` 가 없는 레이어·이름은 모든 층에 보이고(큰 지도·역), 핀의 `floor`(`series/wonderlivet.ts`, 없으면 1층)로 층별 핀 목록을 거른다. 2층 핀은 판 안에 들어와야 `map.mjs` 가 통과시킨다. 층이 둘 이상인 지도(레이어에 `floor` 가 둘 이상)에만 버튼이 생긴다 — 다른 지도 코드는 그대로.
 - 확인 그림: `preview.mjs` → 캐시 `preview-venue.jpg`(작은 지도 + 핀 이름), `preview-big.jpg`, `preview-big-kintex.jpg`.
 
 ## 5-2. 앱에 넣기 (`app.mjs`, `lib/app.mjs`, `lib/app-icons.mjs`)
@@ -224,4 +225,5 @@ node scripts/map/layers/wonderlivet/build.mjs --preview
 - 위성 사진의 높은 건물 지붕은 기울어져 보인다(대공연장 약 10 m). 바닥 위치는 OSM 건물을 기준으로 한다.
 - 공식 안내도가 좁게 그린 구간은 실제 길까지 늘려 잇는다(산책로 `reach`).
 - 배치도형에서 구역 밖 것(흡연구역 등)을 `between` 변환으로 옮기면 행사장 밖으로 튄다 → 가장 가까운 구역의 변환을 쓴다.
+- 지도 폴더에 새 SVG 를 더하고도 `vitest` 가 "…is not bundled" 로 스무 개 넘는 파일을 깨뜨리면 코드 문제가 아니라 캐시다: `import.meta.glob` 결과가 `node_modules/.vitest-cache` 에 굳는다 → 그 폴더를 지우고 다시 돌린다(`festivalMaps.ts` 를 고치면 우연히 풀린다).
 - 공식 그림이 실제보다 크게 그린 구역(GMF 아트존)은 같은 크기의 부품·핀이 붐빈다 → 부품 `k`, 핀 크기, `tidy` 배치로 맞춘다.

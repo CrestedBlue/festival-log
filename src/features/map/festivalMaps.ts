@@ -31,6 +31,8 @@ export interface MapMark {
 export interface MapLayer {
   url: string
   bounds: LatLngBounds
+  /** Drawn on this floor only (a building's floor plan); none = on every floor. */
+  floor?: number
 }
 
 export const MAP_LABEL_KINDS = ['station', 'building', 'stage', 'place', 'zone', 'bus'] as const
@@ -51,6 +53,8 @@ export interface MapLabel {
   /** A stage's key in its festival's theme (the part of a stage id after the yearly code): the map draws that stage's
    *  icon in its colour before the name, as the timetable does. */
   stage?: string
+  /** Written on this floor's map only; none = on every floor. */
+  floor?: number
 }
 
 export interface FestivalMap {
@@ -78,11 +82,13 @@ export interface FestivalMap {
 interface LayerFile {
   file: string
   bounds: LatLngBounds
+  floor?: number
 }
 type MapMeta = Omit<FestivalMap, 'layers' | 'icons'> & { layerFiles: readonly LayerFile[]; iconFiles: Readonly<Record<string, string>> }
 
 const isPair = (value: unknown): value is [number, number] =>
   Array.isArray(value) && value.length === 2 && value.every((n) => typeof n === 'number' && Number.isFinite(n))
+const isFloor = (value: unknown): value is number => typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= 9
 const isColour = (value: unknown): value is string => typeof value === 'string' && /^#[0-9a-f]{6}$/i.test(value)
 
 function toBounds(value: unknown, label: string): LatLngBounds {
@@ -112,8 +118,9 @@ function toLabel(value: unknown, bounds: LatLngBounds, icons: Readonly<Record<st
     isInsideBounds({ lat: l.lat, lng: l.lng }, bounds) &&
     (l.icon === undefined || l.icon in icons) &&
     (l.stage === undefined || (typeof l.stage === 'string' && /^[a-z0-9]+$/i.test(l.stage))) &&
+    (l.floor === undefined || isFloor(l.floor)) &&
     (l.badges === undefined || (Array.isArray(l.badges) && l.badges.every((b) => typeof b.text === 'string' && b.text.length > 0 && isColour(b.colour))))
-  if (!ok) throw new Error(`map metadata: label ${String(l.text)} needs text, a kind, minZoom, a known icon, badges, a stage key and a lat/lng inside the map`)
+  if (!ok) throw new Error(`map metadata: label ${String(l.text)} needs text, a kind, minZoom, a known icon, badges, a stage key, a floor and a lat/lng inside the map`)
   return {
     text: l.text!,
     kind: l.kind!,
@@ -124,6 +131,7 @@ function toLabel(value: unknown, bounds: LatLngBounds, icons: Readonly<Record<st
     ...(l.badges ? { badges: l.badges.map(({ text, colour }) => ({ text, colour })) } : {}),
     ...(isColour(l.colour) ? { colour: l.colour } : {}),
     ...(l.stage ? { stage: l.stage } : {}),
+    ...(l.floor === undefined ? {} : { floor: l.floor }),
   }
 }
 
@@ -144,12 +152,13 @@ export function parseMapMeta(raw: {
   const bounds = toBounds(raw.bounds, 'bounds')
   const initialView = toBounds(raw.initialView, 'initialView')
   const layerFiles = (Array.isArray(raw.layers) ? raw.layers : []).map((value: unknown, i): LayerFile => {
-    const layer = value as { file?: unknown; bounds?: unknown }
+    const layer = value as { file?: unknown; bounds?: unknown; floor?: unknown }
     if (typeof layer.file !== 'string' || !layer.file) throw new Error(`map metadata: layer ${i} needs a file`)
     const layerBounds = toBounds(layer.bounds, `layer ${layer.file} bounds`)
     const inside = layerBounds.every(([lat, lng]) => isInsideBounds({ lat, lng }, bounds))
     if (!inside) throw new Error(`map metadata: layer ${layer.file} must lie inside the map bounds`)
-    return { file: layer.file, bounds: layerBounds }
+    if (layer.floor !== undefined && !isFloor(layer.floor)) throw new Error(`map metadata: layer ${layer.file} floor must be a whole number from 1 to 9`)
+    return { file: layer.file, bounds: layerBounds, ...(layer.floor === undefined ? {} : { floor: layer.floor }) }
   })
   const iconFiles = Object.fromEntries(
     Object.entries((raw.icons ?? {}) as Record<string, unknown>).map(([key, file]) => {
@@ -195,7 +204,7 @@ export function withImages({ layerFiles, iconFiles, ...meta }: MapMeta, images: 
     if (!url) throw new Error(`map metadata: ${file} is not bundled`)
     return url
   }
-  const layers = layerFiles.map(({ file, bounds }) => ({ url: bundled(file), bounds }))
+  const layers = layerFiles.map(({ file, bounds, floor }) => ({ url: bundled(file), bounds, ...(floor === undefined ? {} : { floor }) }))
   const icons = Object.fromEntries(Object.entries(iconFiles).map(([key, file]) => [key, bundled(file)]))
   return { ...meta, layers, icons }
 }

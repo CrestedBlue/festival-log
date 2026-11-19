@@ -57,6 +57,12 @@
   height: 24px;
 }
 
+.map-fab--floor {
+  font-size: var(--text-base, 1rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
 .map-fab:active {
   transform: scale(0.92);
 }
