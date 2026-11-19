@@ -30,12 +30,14 @@ const PINS: readonly Pin[] = [
   at('gate-livet', { name: 'LIVET STAGE 게이트', kind: 'etc', mapIcon: 'gate', rank: RANK.entrance, detail: '10홀 · 1층 로비 쪽 (9홀 가까이)' }, 37.665358, 126.74149),
   // drawn on the lobby floor at its 킨텍스역 end, past the halls: put just inside the glass front there (places.mjs)
   // the festival map's "WRISTBAND BOOTH": 티켓부스, as the notices call it (the user, 2026-10-27)
-  at('wristband', { name: '티켓부스 (대략)', kind: 'wristband', rank: RANK.entrance, detail: '손목밴드를 차는 곳 · 1층 로비 킨텍스역 쪽 입구 안 · 10:00부터 공연이 끝날 때까지' }, 37.664756, 126.742347),
+  at('wristband', { name: '티켓부스 (대략)', kind: 'wristband', rank: RANK.entrance, detail: '손목밴드를 차는 곳 · 공연장 밖, 1층 로비 킨텍스역 쪽 입구 안 · 10:00부터 공연이 끝날 때까지' }, 37.664756, 126.742347),
   at('info', { name: '인포메이션 (대략)', kind: 'info', detail: '1층 로비 킨텍스역 쪽 입구 안 · 티켓부스 옆' }, 37.664783, 126.742165),
   at('fnb-wonder', { ...FNB, detail: '8홀 · WONDER STAGE 뒤쪽' }, 37.663529, 126.742979),
   at('bar-wonder', { ...BAR, detail: '8홀 · WONDER STAGE 뒤쪽' }, 37.663115, 126.742705),
   at('photo-wonder', { name: '포토존', kind: 'photo', detail: '8홀 · 페스티벌 맵의 카메라 표시' }, 37.663482, 126.742566),
   at('contents-wonder', { ...CONTENTS, detail: '8홀 · WONDER STAGE 뒤쪽' }, 37.66379, 126.742381),
+  // official post (2026-11-16): "9홀 내부", no spot given and not on the festival map: somewhere free in hall 9 (places.mjs)
+  at('photo-booth', { name: '포토부스 (대략)', kind: 'photo', detail: '9홀 안 · 11:00부터 · 하프컷(2장) 5,000원, 디자인 2종 중 택 1 · 카드 결제만 돼요' }, 37.665057, 126.74044),
   at('goods', { name: '굿즈 부스', kind: 'shop', detail: '9홀 · 현장 구매와 예약 픽업 · 11:30–21:00' }, 37.664545, 126.740504),
   at('contents-livet', { ...CONTENTS, detail: '9홀' }, 37.664875, 126.740211),
   at('bar-livet', { ...BAR, detail: '9홀' }, 37.664368, 126.739944),

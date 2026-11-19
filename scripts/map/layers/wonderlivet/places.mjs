@@ -41,7 +41,7 @@ export const AT_ENTRANCE = {
 }
 
 /**
- * The photo booth: "킨텍스 제2전시장 9홀 내부" (official post, 2026-11-15), no spot given and not on the festival map:
+ * The photo booth: "킨텍스 제2전시장 9홀 내부" (official post, 2026-11-16), no spot given and not on the festival map:
  * somewhere free in hall 9, as [row, metres along, metres across] like the restrooms.
  */
 export const IN_HALL = {

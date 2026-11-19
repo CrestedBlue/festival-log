@@ -64,6 +64,10 @@ describe('createWonderlivet2026', () => {
     expect(named('휠체어존').map((p) => p.detail)).toEqual(['2층 로비 · 7홀 쪽', '2층 로비 · 가운데'])
     expect(named('물품보관소')[0]?.detail).toContain('2층 9홀 앞 로비')
     expect(named('화장실')).toHaveLength(7)
+    // the ticket booth is outside the halls (the official posts), the photo booth inside hall 9
+    expect(named('티켓부스 (대략)')[0]?.detail).toContain('공연장 밖')
+    expect(named('포토부스 (대략)')[0]).toMatchObject({ kind: 'photo', detail: expect.stringContaining('9홀 안') })
+    expect(named('포토부스 (대략)')[0]?.detail).toContain('5,000원')
     expect(festival.pins.filter((p) => p.kind === 'wristband').map((p) => p.name)).toEqual(['티켓부스 (대략)'])
     // stages are named on the map, not pinned
     expect(festival.pins.some((p) => p.kind === 'stage')).toBe(false)
@@ -99,6 +103,8 @@ describe('createWonderlivet2026', () => {
 
   test('comes with notices from the official FAQ, and the design of its own', () => {
     expect(WONDERLIVET_2026_NOTICES.length).toBeGreaterThan(0)
+    expect(WONDERLIVET_2026_NOTICES.join(' ')).toContain('포토부스는 9홀 안')
+    expect(WONDERLIVET_2026_NOTICES.join(' ')).toContain('공연장 밖 티켓부스')
     expect(catalogEntry(WONDERLIVET_2026_ID)?.guides).toEqual([])
     expect(Object.keys(SERIES[WONDERLIVET_SERIES]?.theme.stages ?? {})).toEqual(['wonder', 'livet'])
     expect(SERIES[WONDERLIVET_SERIES]?.sources.map((s) => s.value)).toEqual(['@wonderlivet'])
