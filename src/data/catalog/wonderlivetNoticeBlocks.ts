@@ -1,13 +1,15 @@
+import directions from '../../assets/notice/wonderlivet-directions.webp'
 import food from '../../assets/notice/wonderlivet-food.webp'
 import goods from '../../assets/notice/wonderlivet-goods.webp'
 import lockers from '../../assets/notice/wonderlivet-lockers.webp'
 import photo from '../../assets/notice/wonderlivet-photo.webp'
+import rules from '../../assets/notice/wonderlivet-rules.webp'
 import ticket from '../../assets/notice/wonderlivet-ticket.webp'
 import type { NoticeBlock } from './noticeBlock'
 
 /**
- * The five topics worth a picture on the info tab (the user's sketch, 2026-11-26): the ticket booth, goods, the
- * lockers, the food zone and the photo booth. The wristband facts are in the ticket block (the user, 2026-11-26: "wristband = ticket" was how to sort
+ * The topics worth a picture on the info tab (the user's sketch, 2026-11-26): the ticket booth, goods, the lockers,
+ * the food zone, the photo booth, what is not allowed and how to get there. The wristband facts are in the ticket block (the user, 2026-11-26: "wristband = ticket" was how to sort
  * them, not a line to print). The facts are the notices' (timetable post, FAQ, 11/9–11/24 posts); each picture
  * is its own color so they do not look alike. The first line of a block starts with the topic's name in bold (the user, 2026-11-26). No stall lists. Pictures come from Codex (image generation), in one style.
  */
@@ -19,14 +21,10 @@ export const WONDERLIVET_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
     tone: '#d9482e',
     lines: [
       '**티켓부스** **10:00**부터 공연 끝까지',
-      '공식 맵 표기는 **22:00**까지',
       '메인 게이트 **11:00** · 첫 공연 **12:00**',
-      '모바일 티켓(**캡처 불가**) + **본인 실물 신분증**',
-      '**대리 수령 불가** · 동행인과 함께',
-      '손목밴드 착용 시 무대 이동·**재입장 가능**',
-      '금·토 2일권 **11/21(토)**까지 착용',
-      '토·일, 금·일 2일권과 3일권 **11/22(일)**까지 착용',
-      '**재발급 불가**(분실·훼손) · 방수',
+      '모바일 티켓 + **본인 실물 신분증**, 동행인과 함께',
+      '**캡처 불가** · **대리 수령 불가** · **재발급 불가**',
+      '손목밴드 착용 시 무대 이동·**재입장 가능** · 방수',
       '현장 판매: 남은 표만, 당일 **10:30**부터(SNS 공지)',
       '예매·취소 마감 관람 전날 **11:00**',
     ],
@@ -73,5 +71,24 @@ export const WONDERLIVET_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
     art: photo,
     tone: '#8b73a0',
     lines: ['**포토부스** 9홀 안 · **11:00**부터', '하프컷(2장) **5,000원**', '디자인 2종 중 택 1 · 카드 결제만', '공연장 밖 티켓부스와 **다른 곳**'],
+  },
+  {
+    id: 'rules',
+    title: '금지',
+    art: rules,
+    tone: '#6b6c70',
+    lines: ['**금지** 공연 **촬영·녹음**', '일부 아티스트는 **기념사진 포함 모든 촬영 금지**', '흡연은 전시장 밖 **지정 흡연구역**에서만'],
+  },
+  {
+    id: 'directions',
+    title: '오는 길',
+    art: directions,
+    tone: '#4f6f9a',
+    lines: [
+      '**오는 길** 킨텍스역(GTX-A) **4·5번 출구**',
+      '대화역(3호선) **2번 출구**, 버스나 걸어서',
+      '버스: 킨텍스·킨텍스 제2전시장 정류장',
+      '차: 내비에 "킨텍스 제2전시장" · **주차 할인 없음**',
+    ],
   },
 ]

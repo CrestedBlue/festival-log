@@ -20,10 +20,8 @@ export { WONDERLIVET_2026_ID, WONDERLIVET_2026_NOTICE_BLOCKS }
 /** Admin notices, summarised from the timetable post, the official site's FAQ and directions (wonderli.vet), the goods pre-order post (Instagram 11/5) and the festival map post (Instagram 11/9) and the on-site goods posts (Instagram 11/12) and the food zone post (Instagram 11/13), the online goods sale post (Instagram 11/24) and the lost-and-found post (Instagram 11/25). */
 export const WONDERLIVET_2026_NOTICES: readonly string[] = [
   // What belongs to a topic with a picture (ticket booth and wristband — the wristband is the ticket —, goods, lockers,
-  // food zone, photo booth) is in wonderlivetNoticeBlocks.ts and not repeated here (the user, 2026-11-26).
-  '전석 스탠딩이에요. 공연 촬영·녹음은 안 돼요. 몇몇 아티스트는 공연 내내 모든 촬영(기념사진 포함)이 금지돼요.',
-  '흡연은 킨텍스 전시장 밖 지정 흡연구역에서만 돼요.',
-  '오는 길: 킨텍스역(GTX-A) 4·5번 출구, 대화역(3호선) 2번 출구에서 버스나 걸어서, 버스는 킨텍스·킨텍스 제2전시장 정류장. 차는 내비에 "킨텍스 제2전시장"(관람 주차 할인 없음).',
+  // food zone, photo booth, what is not allowed, directions) is in wonderlivetNoticeBlocks.ts and not repeated here (the user, 2026-11-26).
+  '전석 스탠딩이에요.',
   'WONDER STAGE는 7·8홀, LIVET STAGE는 10홀에 있어요. 무대 사이는 건물 1·2층 어느 쪽으로도 오갈 수 있지만, 2층 게이트로 들고 나는 건 1층 첫 입장 줄이 다 들어간 뒤부터예요.',
   '화장실은 공연장 안과 바깥 로비에 다 있어요.',
   '분실물은 festival@wanderloch.com 으로 11/30(월) 23:59까지 확인 메일을 보내면 돼요(제목 [원더리벳 2026 분실물 확인], 본문에 분실물 번호·방문일자·본인 물품 확인 자료·성함·연락처·받을 주소). 주인을 찾은 분실물은 12월 둘째 주에 착불로 보내고, 기간 안에 연락이 없으면 폐기돼요.',

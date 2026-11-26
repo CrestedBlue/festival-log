@@ -111,8 +111,8 @@ describe('createWonderlivet2026', () => {
   describe('notice blocks (the zigzag part of the info tab)', () => {
     const blocks = WONDERLIVET_2026_NOTICE_BLOCKS
 
-    test('has the four topics in order, each with a picture and a main color', () => {
-      expect(blocks.map((b) => b.id)).toEqual(['ticket', 'goods', 'lockers', 'food', 'photo'])
+    test('has its topics in order, each with a picture and a main color', () => {
+      expect(blocks.map((b) => b.id)).toEqual(['ticket', 'goods', 'lockers', 'food', 'photo', 'rules', 'directions'])
       for (const block of blocks) {
         expect(block.art).toBeTruthy()
         expect(block.tone).toMatch(/^#[0-9a-f]{6}$/)
@@ -145,16 +145,25 @@ describe('createWonderlivet2026', () => {
     test('keeps the wristband facts in the ticket block, short and bold, and never says "wristband = ticket" (that was the user telling us how to sort, not text)', () => {
       const raw = blocks.find((b) => b.id === 'ticket')?.lines.join(' ') ?? ''
       const ticket = raw.replaceAll('**', '')
-      for (const fact of ['11/21', '11/22', '10:30', '신분증', '재발급 불가']) expect(ticket).toContain(fact)
+      for (const fact of ['10:30', '신분증', '재발급 불가', '대리 수령 불가']) expect(ticket).toContain(fact)
+      // grouped on one line; no official-map note, no wear-until dates (the user, 2026-11-26)
+      expect(blocks.find((b) => b.id === 'ticket')?.lines.some((l) => l.includes('대리 수령 불가') && l.includes('재발급 불가'))).toBe(true)
+      for (const gone of ['맵', '까지 착용']) expect(ticket).not.toContain(gone)
       expect(raw).toContain('**재발급 불가**')
       expect(ticket).not.toContain('곧 티켓')
     })
 
     test('keeps what belongs to a block in the block, not again in the plain notices', () => {
       const plain = WONDERLIVET_2026_NOTICES.join(' ')
-      const repeated = ['손목밴드', '티켓부스', '굿즈', '포토부스', '물품보관', '푸드존', '쉬림프', '잭잭', '성인인증', '500ml', '10:30', '09:00']
+      const repeated = ['손목밴드', '티켓부스', '굿즈', '포토부스', '물품보관', '푸드존', '쉬림프', '잭잭', '성인인증', '500ml', '10:30', '09:00', '촬영', '흡연', '킨텍스역', '대화역', '내비']
       for (const word of repeated) expect(plain).not.toContain(word)
       expect(WONDERLIVET_2026_NOTICES.length).toBeGreaterThan(0)
+    })
+
+    test('has the directions and the rules as blocks of their own', () => {
+      const text = (id: string) => (blocks.find((b) => b.id === id)?.lines.join(' ') ?? '').replaceAll('**', '')
+      for (const fact of ['킨텍스역', '4·5번 출구', '대화역', '2번 출구', '킨텍스 제2전시장', '주차 할인 없음']) expect(text('directions')).toContain(fact)
+      for (const fact of ['촬영', '녹음', '기념사진', '지정 흡연구역']) expect(text('rules')).toContain(fact)
     })
 
     test('says the photo booth is not the ticket booth outside the halls', () => {
