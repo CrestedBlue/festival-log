@@ -244,7 +244,7 @@ const MAPS: Record<string, FestivalMap> = {
   [SJF_SERIES]: withImages(parseMapMeta(sjfMeta), filesOf('sjf')),
   // KINTEX's halls 7–10 with WONDERLIVET's stages and booths, from its 2026 festival map (scripts/map/layers/wonderlivet/map.mjs)
   [WONDERLIVET_SERIES]: withImages(parseMapMeta(wonderlivetMeta), filesOf('wonderlivet')),
-  // Halls 7 and 8 of the same building: the KINTEX area map, naming CDF.
+  // Halls 6–9 of the same building: the KINTEX area map, naming CDF.
   [CDF_SERIES]: kintexFor('카운트다운 판타지'),
   // THE GLOW uses halls 7, 8, 9 and 10A of the same building (2026): the KINTEX area map, naming THE GLOW. Its official
   // map (map-src/theglow/official-map-2026.jpg) draws the halls inside, not yet redrawn (TODO, 지난 회차 지도).

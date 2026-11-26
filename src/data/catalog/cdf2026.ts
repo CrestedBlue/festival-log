@@ -9,9 +9,9 @@ import { noticeBlock } from './noticeArt'
 import type { NoticeBlock } from './noticeBlock'
 
 /**
- * 카운트다운 판타지 2026-2027 (COUNTDOWN FANTASY 2026-2027, 2026-12-31 13:30 – 2027-01-01 05:00, KINTEX halls 7–8).
+ * 카운트다운 판타지 2026-2027 (COUNTDOWN FANTASY 2026-2027, 2026-12-31 13:30 – 2027-01-01 05:00, KINTEX halls 6–9).
  * Source: the official Instagram (@countdownfantasy): the first line-up post (2026-10-06), the second (2026-11-03), the ticket posts
- * (10-12, 10-13) and the show-times post (10-21); the notices on the NOL ticket page (nol.yanolja.com/ticket/products/26014568).
+ * (10-12, 10-13), the show-times post (10-21) and the priority-entry ticket post (11-26); the notices on the NOL ticket page (nol.yanolja.com/ticket/products/26014568).
  * One day on the official posts ("12월 31일 단 하루") though it runs past midnight, so it starts and ends on 12-31.
  * The line-up is out but the timetable is not, so there are no stages or performances yet (three stages are announced).
  * The venue and its map pins belong to the festival, not the year: see series/cdf.ts.
@@ -40,6 +40,8 @@ export const CDF_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
     '우선입장권은 **NOL에서만** · 1인 **1매**',
     'NOL 공연 티켓 구매자만 구매 가능',
     '우선입장권 살 거면 공연 티켓은 NOL에서 **1매만**',
+    '우선입장권 오픈 **12/2(수) 18:00** · **22,000원**',
+    '우선입장권 2종 **VIVID PLANET 27**(8홀) · **STATION STARDUST**(9홀)',
   ]),
 ]
 

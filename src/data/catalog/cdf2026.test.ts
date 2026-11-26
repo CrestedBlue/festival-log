@@ -14,8 +14,8 @@ describe('createCdf2026', () => {
     expect([festival.startDate, festival.endDate]).toEqual(['2026-12-31', '2026-12-31'])
   })
 
-  test('is in halls 7 and 8 of KINTEX\'s second exhibition centre and has no timetable yet', () => {
-    expect(festival.venue.name).toBe('킨텍스 제2전시장 7·8홀')
+  test('is in halls 6–9 of KINTEX\'s second exhibition centre and has no timetable yet', () => {
+    expect(festival.venue.name).toBe('킨텍스 제2전시장 6·7·8·9홀')
     expect(festival.venue.lat).toBeCloseTo(37.6647, 3)
     expect(festival.venue.lng).toBeCloseTo(126.7419, 3)
     expect(festival.stages).toEqual([])
@@ -24,7 +24,7 @@ describe('createCdf2026', () => {
 
   test('pins the venue and the stations near it on the KINTEX area map, as the map\'s icons', () => {
     expect(festival.pins.filter((p) => !p.group?.endsWith(' 출구')).map((p) => [p.name, p.group ?? null])).toEqual([
-      ['킨텍스 제2전시장 7·8홀', null],
+      ['킨텍스 제2전시장 6·7·8·9홀', null],
       ['킨텍스역 (GTX-A)', '가까운 역'],
       ['대화역 (3호선)', '가까운 역'],
     ])

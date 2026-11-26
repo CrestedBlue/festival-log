@@ -192,7 +192,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     noticeBlocks: CDF_2026_NOTICE_BLOCKS,
     lineup: CDF_2026_LINEUP,
     tickets: CDF_2026_TICKETS,
-    updatedAt: '2026-11-04',
+    updatedAt: '2026-11-27',
   },
   {
     id: BML_2026_ID,
