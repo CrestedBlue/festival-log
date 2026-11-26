@@ -3,6 +3,8 @@ import { SJF_2026_ID, SJF_2026_KEY as KEY } from './ids'
 import { SJF } from './series/sjf'
 import { stageLook } from './series/theme'
 import { SELLERS, type TicketSeller } from './tickets'
+import { noticeBlock } from './noticeArt'
+import type { NoticeBlock } from './noticeBlock'
 
 /**
  * 서울재즈페스티벌 2026 (The 18th Seoul Jazz Festival 2026, 2026-05-22 – 05-24, Olympic Park, Seoul).
@@ -18,11 +20,24 @@ export { SJF_2026_ID }
 
 /** Admin notices, summarised from the official site's timetable and festival-map notices (2026). */
 export const SJF_2026_NOTICES: readonly string[] = [
-  '무대는 4곳이에요: MAY FOREST(88잔디마당), SPARKLING DOME(KSPO DOME), PINK AVENUE(티켓링크 라이브 아레나), SPRING GARDEN(88호수수변무대).',
-  'MAY FOREST는 첫날 11:00, 둘째·셋째 날 10:40에 문을 열고, 다른 무대는 11:30에 열어요.',
-  'SJF VILLAGE(KSPO DOME 2-1 게이트 앞)에서는 클래스와 아티스트 Meet & Greet가 열려요.',
-  '예매는 멜론티켓에서만 해요. 3일권 정가 티켓과 5/23·5/24 1일권은 매진돼 취소표만 살 수 있어요. 자세한 관람 안내는 멜론티켓 상세 페이지에 있어요.',
   '일정은 현장과 아티스트 사정에 따라 바뀔 수 있어요.',
+]
+
+/** The notices as topic blocks on the info tab (the user, 2026-11-26: every festival in this format). The pictures are the shared set. */
+export const SJF_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
+  noticeBlock('entry', '입장', ['**입장** MAY FOREST 첫날 **11:00** · 둘째·셋째 날 **10:40**', '다른 무대는 **11:30**']),
+  noticeBlock('stage', '무대', [
+    '**무대** MAY FOREST(88잔디마당)',
+    'SPARKLING DOME(KSPO DOME)',
+    'PINK AVENUE(티켓링크 라이브 아레나)',
+    'SPRING GARDEN(88호수수변무대)',
+    'SJF VILLAGE(KSPO DOME 2-1 게이트 앞): 클래스·Meet & Greet',
+  ]),
+  noticeBlock('booking', '예매', [
+    '**예매** **멜론티켓**에서만',
+    '3일권 정가·5/23·5/24 1일권 **매진** · 취소표만',
+    '자세한 관람 안내는 멜론티켓 상세 페이지',
+  ]),
 ]
 
 /** Official ticket seller: Melon Ticket, linked from the official site's TICKETS menu. */

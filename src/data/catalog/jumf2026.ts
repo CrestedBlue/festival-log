@@ -3,6 +3,8 @@ import { JUMF_2026_ID, JUMF_2026_KEY as KEY } from './ids'
 import { JUMF } from './series/jumf'
 import { stageLook } from './series/theme'
 import { SELLERS, type TicketSeller } from './tickets'
+import { noticeBlock } from './noticeArt'
+import type { NoticeBlock } from './noticeBlock'
 
 /**
  * 2026 전주얼티밋뮤직페스티벌 (JUMF, 2026-08-14 – 08-16, Jeonju University artificial-turf fields, Jeonju).
@@ -16,12 +18,31 @@ export { JUMF_2026_ID }
 
 /** Admin notices, summarised from the official notice board (2026: timetable, site map, FAQ posts). */
 export const JUMF_2026_NOTICES: readonly string[] = [
-  '게이트는 사흘 모두 13:00에 열려요. 티켓부스는 12:00–22:00예요.',
-  '마루·너울 스테이지는 인조잔디구장에 나란히 선 야외 무대이고, 숨 스테이지는 실내체육관(쿨존)이에요.',
-  '다리 없는 좌식·등받이 의자, 원터치 텐트(그늘막존 안), 30L 이하 보냉가방·아이스박스, 분무형 스프레이는 가져갈 수 있어요. 다리 있는 캠핑 의자, 팩으로 고정하는 텐트, 30L 넘는 아이스박스, 가스충전식 스프레이는 안 돼요.',
-  '물품보관소는 13:00부터 공연이 끝나고 30분까지, 3,000원(카드만)이에요. 신분증과 보관증이 필요하고 그날 찾아야 해요(다음 날 찾으면 20,000원).',
-  '전주대 안 주차는 무료지만(통제구역 제외) 많이 막혀요. 대중교통을 권해요.',
-  '셔틀버스(전주역 ↔ 전주대)는 11:50 전주역 첫차부터 24:00 전주대 막차까지 선착순이에요. 전주대 정류장은 교수연구동 주차장(티켓부스 근처)이고, 돌아가는 차는 전북도청·한옥마을을 거쳐요.',
+]
+
+/** The notices as topic blocks on the info tab (the user, 2026-11-26: every festival in this format). The pictures are the shared set. */
+export const JUMF_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
+  noticeBlock('entry', '입장', ['**입장** 게이트 사흘 모두 **13:00**', '티켓부스 **12:00–22:00**']),
+  noticeBlock('stage', '무대', ['**무대** 마루·너울: 인조잔디구장에 나란히 선 야외 무대', '숨: 실내체육관(**쿨존**)']),
+  noticeBlock('picnic', '반입 가능', [
+    '**반입 가능** 다리 없는 좌식·등받이 의자',
+    '원터치 텐트(**그늘막존 안**)',
+    '보냉가방·아이스박스 **30L** 이하',
+    '분무형 스프레이',
+  ]),
+  noticeBlock('rules', '금지', ['**금지** 다리 있는 캠핑 의자', '팩으로 고정하는 텐트', '**30L** 넘는 아이스박스', '가스충전식 스프레이']),
+  noticeBlock('lockers', '물품보관소', [
+    '**물품보관소** **13:00**부터 공연 끝나고 **30분**까지',
+    '**3,000원**, 카드만 · 신분증·보관증 필요',
+    '그날 찾기(다음 날이면 **20,000원**)',
+  ]),
+  noticeBlock('directions', '오는 길', [
+    '**오는 길** 셔틀버스 전주역 ↔ 전주대, 선착순',
+    '전주역 첫차 **11:50** · 전주대 막차 **24:00**',
+    '전주대 정류장: 교수연구동 주차장(티켓부스 근처)',
+    '돌아가는 차는 전북도청·한옥마을 경유',
+    '교내 주차 **무료**(통제구역 제외), 많이 막혀요 · **대중교통** 권장',
+  ]),
 ]
 
 /** Official ticket seller: the YES24 page the official homepage links in its TICKET section. */

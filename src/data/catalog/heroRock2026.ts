@@ -5,6 +5,8 @@ import { HERO_ROCK_2026_ID } from './ids'
 import type { LineupImage } from './lineup'
 import { HERO_ROCK } from './series/heroRock'
 import { SELLERS, type TicketSeller } from './tickets'
+import { noticeBlock } from './noticeArt'
+import type { NoticeBlock } from './noticeBlock'
 
 /**
  * 2026 히어로 락 페스티벌 - 인천 (2026-12-18/20, Songdo Convensia, Incheon).
@@ -18,12 +20,23 @@ export { HERO_ROCK_2026_ID }
 
 /** Admin notices, summarised from the Melon Ticket page and the Instagram ticket posts (2026). */
 export const HERO_ROCK_2026_NOTICES: readonly string[] = [
-  '모바일 티켓으로만 들어갈 수 있어요. 멜론티켓 앱 › 마이티켓 › 예매내역 › 모바일티켓에서 확인해요.',
-  '사흘 모두 오전 10시 30분에 시작해요(관람 시간 690분).',
-  '장애인·국가유공자·미성년자 30% 할인으로 샀다면 증빙자료를 챙기세요. 없으면 현장에서 차액을 내요.',
-  '관람일 당일이나 취소 마감 시간이 지나면 취소·환불이 안 돼요.',
-  '일반 티켓은 10월 28일(수) 오후 2시 멜론티켓에서 열려요. 3일권 129,000원, 2일권(금토·토일·금일) 119,000원, ' +
-    '1일권 77,000원이고 1인 4매까지예요. 매진되면 취소표로만 살 수 있어요.',
+]
+
+/** The notices as topic blocks on the info tab (the user, 2026-11-26: every festival in this format). The pictures are the shared set. */
+export const HERO_ROCK_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
+  noticeBlock('entry', '입장', [
+    '**입장** 사흘 모두 **10:30** 시작(관람 690분)',
+    '**모바일 티켓만**: 멜론티켓 앱 › 마이티켓 › 예매내역',
+    '할인(장애인·국가유공자·미성년자 30%)은 **증빙** 챙기기',
+    '증빙 없으면 현장에서 **차액**',
+  ]),
+  noticeBlock('booking', '예매', [
+    '**예매** 멜론티켓 · 일반 **10/28(수) 14:00** 오픈',
+    '3일권 **129,000원** · 2일권 **119,000원** · 1일권 **77,000원**',
+    '2일권은 금토·토일·금일',
+    '1인 **4매**까지 · 매진 뒤엔 **취소표만**',
+    '관람 당일·취소 마감 뒤 **취소·환불 불가**',
+  ]),
 ]
 
 /** Official ticket seller: Melon Ticket, as the Instagram ticket posts say. */

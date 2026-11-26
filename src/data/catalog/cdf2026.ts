@@ -5,6 +5,8 @@ import { CDF_2026_ID } from './ids'
 import type { LineupImage } from './lineup'
 import { CDF } from './series/cdf'
 import { SELLERS, type TicketSeller } from './tickets'
+import { noticeBlock } from './noticeArt'
+import type { NoticeBlock } from './noticeBlock'
 
 /**
  * 카운트다운 판타지 2026-2027 (COUNTDOWN FANTASY 2026-2027, 2026-12-31 13:30 – 2027-01-01 05:00, KINTEX halls 7–8).
@@ -19,13 +21,26 @@ export { CDF_2026_ID }
 /** Admin notices, summarised from the official Instagram posts and the NOL ticket page (2026). */
 export const CDF_2026_NOTICES: readonly string[] = [
   '12월 31일(목) 하루, 13:30부터 다음 날 1월 1일 새벽 5:00까지 이어져요. 무대는 3개예요.',
-  '티켓부스 여는 시간과 공연 시간은 나중에 나오는 타임테이블에서 안내돼요. 최종 라인업은 12월 1일(화)에 발표돼요.',
-  '1일권 121,000원이고 1인 2매까지예요. 예매는 12월 30일(수) 오후 5시에 마감돼요.',
-  '모바일 티켓은 관람 전날 예매처 앱에서 발급돼요. 캡처본·사본은 안 되고, 예매자 본인 신분증 원본을 꼭 챙기세요.',
-  '밤샘 대기를 막으려고 우선입장권을 NOL에서만 따로 팔 예정이에요. NOL에서 공연 티켓을 산 사람만 1인 1매 살 수 있고, ' +
-    '우선입장은 따로 마련된 티켓부스로 들어가서 일행과 같이 들어갈 수 없어요. 우선입장권을 살 거라면 공연 티켓은 NOL에서 1매만 사세요.',
-  '손목밴드 돌려쓰기를 포함한 양도·재판매는 불법이에요. 적발되면 바로 퇴장돼요.',
-  '큰 가방이나 짐이 많으면 입장이 제한돼요. 꼭 필요한 것만 작은 가방에 챙기세요.',
+  '최종 라인업은 12월 1일(화)에 발표돼요.',
+]
+
+/** The notices as topic blocks on the info tab (the user, 2026-11-26: every festival in this format). The pictures are the shared set. */
+export const CDF_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
+  noticeBlock('entry', '입장', [
+    '**입장** 티켓부스·공연 시간은 타임테이블과 함께 안내',
+    '모바일 티켓 관람 전날 예매처 앱에서',
+    '**캡처·사본 불가** · **본인 신분증 원본**',
+    '우선입장은 **별도 티켓부스** · 일행과 같이 못 들어가요',
+    '손목밴드 양도·재판매 **불법**, 적발 시 **즉시 퇴장**',
+    '큰 가방·짐이 많으면 **입장 제한** · 작은 가방만',
+  ]),
+  noticeBlock('booking', '예매', [
+    '**예매** 1일권 **121,000원** · 1인 **2매**까지',
+    '예매 마감 **12/30(수) 17:00**',
+    '우선입장권은 **NOL에서만** · 1인 **1매**',
+    'NOL에서 공연 티켓을 산 사람만 살 수 있어요',
+    '우선입장권 살 거면 공연 티켓은 NOL에서 **1매만**',
+  ]),
 ]
 
 /** Official ticket sellers, in the order the official posts and Mint Paper's link page (linktr.ee/mintpaper) list them. */

@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest'
 import { distanceMeters } from '../../lib/geo'
 import { FestivalSchema } from '../schema'
 import { JUMF_2026_ID, JUMF_2026_KEY, JUMF_SERIES } from './ids'
-import { JUMF_2026_NOTICES, createJumf2026 } from './jumf2026'
+import { JUMF_2026_NOTICE_BLOCKS, JUMF_2026_NOTICES, createJumf2026 } from './jumf2026'
 import { festivalMapFor } from './index'
 
 const DAYS = ['2026-08-14', '2026-08-15', '2026-08-16']
@@ -63,6 +63,6 @@ describe('createJumf2026', () => {
   })
 
   test('comes with notices', () => {
-    expect(JUMF_2026_NOTICES.length).toBeGreaterThan(0)
+    expect(JUMF_2026_NOTICE_BLOCKS.length + JUMF_2026_NOTICES.length).toBeGreaterThan(0)
   })
 })

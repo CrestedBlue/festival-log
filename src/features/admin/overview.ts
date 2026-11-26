@@ -32,11 +32,11 @@ export interface FestivalOverview {
   festival: Festival | null
 }
 
-function missingParts(festival: Festival, notices: readonly string[]): string[] {
+function missingParts(festival: Festival, entry: CatalogEntry): string[] {
   return [
     festival.datesTbd ? '날짜' : null,
     festival.performances.length === 0 ? '타임테이블' : null,
-    notices.length === 0 ? '주의사항' : null,
+    entry.notices.length === 0 && (entry.noticeBlocks ?? []).length === 0 ? '주의사항' : null,
   ].filter((part): part is string => part !== null)
 }
 
@@ -91,7 +91,7 @@ function overviewOf(entry: CatalogEntry): FestivalOverview {
     pinCount: festival.pins.length,
     notices: entry.notices,
     lineup: entry.lineup,
-    missing: missingParts(festival, entry.notices),
+    missing: missingParts(festival, entry),
     problems: parsed.success ? [] : parsed.error.issues.map((issue) => issue.message),
     festival,
   }

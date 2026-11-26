@@ -3,6 +3,8 @@ import { GRAND_MINT_2026_ID, GRAND_MINT_2026_KEY as KEY } from './ids'
 import { GRAND_MINT } from './series/grandMint'
 import { stageLook } from './series/theme'
 import { SELLERS, type TicketSeller } from './tickets'
+import { noticeBlock } from './noticeArt'
+import type { NoticeBlock } from './noticeBlock'
 
 /**
  * Grand Mint Festival 2026 (2026-10-17/18, Olympic Park, Seoul).
@@ -19,15 +21,24 @@ export { GRAND_MINT_2026_ID }
  * instagram.com/p/Detcyb-h33E).
  */
 export const GRAND_MINT_2026_NOTICES: readonly string[] = [
-  '모바일 티켓은 관람 전날 NOL 앱에서 발급돼요. 캡처본·사본은 안 되고, 예매자 본인 신분증 원본을 꼭 챙기세요.',
-  '티켓 부스는 우선입장 10:50, 일반 11:00에 열려요(이틀 모두).',
-  '손목밴드 돌려쓰기를 포함한 양도·재판매는 불법이에요. 적발되면 바로 퇴장돼요.',
-  '캠핑형이 아닌 도심형 페스티벌이라, 꼭 필요한 물건만 담은 작은 가방만 들고 들어갈 수 있어요.',
-  '우선입장권은 1인 1매이고 별도 부스에서 입장해요. 일행과 같이 들어갈 수 없어요.',
-  '10월 18일(일) 공연이 취소됐어요. 그날 유효한 티켓(우선입장권 포함)은 관람 여부와 관계없이 전액 환불돼요. ' +
-    '결제 수단별 환불 절차는 공식 인스타의 10/18 환불 안내 카드뉴스를 보세요.',
-  '현장 분실물 목록은 민트페이퍼 홈페이지(GMF2026 분실물 공지)에 있어요. 내 물건이 있으면 날짜와 목록 번호, ' +
-    '내 물건임을 보여 주는 사진을 공식 인스타 10/20 글에 적힌 메일로 보내요.',
+  '10월 18일(일) 공연이 취소됐어요. 그날 유효한 티켓(우선입장권 포함)은 관람 여부와 관계없이 전액 환불돼요. 결제 수단별 환불 절차는 공식 인스타의 10/18 환불 안내 카드뉴스를 보세요.',
+]
+
+/** The notices as topic blocks on the info tab (the user, 2026-11-26: every festival in this format). The pictures are the shared set. */
+export const GRAND_MINT_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
+  noticeBlock('entry', '입장', [
+    '**입장** 티켓부스 우선입장 **10:50** · 일반 **11:00**(이틀 모두)',
+    '모바일 티켓 관람 전날 **NOL 앱**에서',
+    '**캡처·사본 불가** · **본인 신분증 원본**',
+    '우선입장권 **1인 1매** · 별도 부스 · 일행과 같이 못 들어가요',
+    '손목밴드 양도·재판매 **불법**, 적발 시 **즉시 퇴장**',
+    '도심형 페스티벌이라 **작은 가방만**',
+  ]),
+  noticeBlock('lostfound', '분실물', [
+    '**분실물** 목록은 민트페이퍼 홈페이지(GMF2026 분실물 공지)',
+    '날짜·목록 번호·내 물건 사진을 **메일**로',
+    '메일 주소는 공식 인스타 **10/20** 글에',
+  ]),
 ]
 
 /**

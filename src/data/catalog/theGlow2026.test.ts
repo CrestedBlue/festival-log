@@ -3,7 +3,7 @@ import { FestivalSchema } from '../schema'
 import { ARTIST_NAMES } from './artists'
 import { THE_GLOW_2026_ID, THE_GLOW_2026_KEY, THE_GLOW_SERIES } from './ids'
 import { catalogEntry, festivalMapFor } from './index'
-import { THE_GLOW_2026_NOTICES, THE_GLOW_2026_TICKETS, createTheGlow2026 } from './theGlow2026'
+import { THE_GLOW_2026_NOTICE_BLOCKS, THE_GLOW_2026_TICKETS, createTheGlow2026 } from './theGlow2026'
 
 describe('createTheGlow2026', () => {
   const festival = createTheGlow2026()
@@ -66,8 +66,9 @@ describe('createTheGlow2026', () => {
   })
 
   test('has notices from the official site and is sold by Melon Ticket', () => {
-    expect(THE_GLOW_2026_NOTICES.join(' ')).toContain('11:00')
-    expect(THE_GLOW_2026_NOTICES.join(' ')).toContain('STAGE X는 1층으로만')
+    const text = THE_GLOW_2026_NOTICE_BLOCKS.flatMap((b) => b.lines).join(' ').replaceAll('**', '')
+    expect(text).toContain('게이트 11:00')
+    expect(text).toContain('STAGE X는 1층으로만')
     expect(THE_GLOW_2026_TICKETS.map((s) => s.url)).toEqual(['https://ticket.melon.com/performance/index.htm?prodId=212651'])
   })
 

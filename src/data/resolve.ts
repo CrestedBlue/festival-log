@@ -6,6 +6,7 @@ import type { CollectionSource, FestivalTheme, StageLook } from './catalog/serie
 import type { TicketSeller } from './catalog/tickets'
 import type { ClosableTab } from '../lib/route'
 import type { Festival, UserData } from './schema'
+import { orderNoticeBlocks } from './catalog/noticeArt'
 
 export interface ResolvedFestival {
   source: 'catalog' | 'archived'
@@ -60,7 +61,7 @@ export function resolveFestival(data: UserData, festivalId: string): ResolvedFes
       source: 'catalog',
       festival: own.length ? { ...fromCatalog, pins: [...fromCatalog.pins, ...own] } : fromCatalog,
       notices: entry.notices,
-      noticeBlocks: entry.noticeBlocks ?? [],
+      noticeBlocks: orderNoticeBlocks(entry.noticeBlocks ?? []),
       lineup: entry.lineup,
       sources: series?.sources ?? [],
       tickets: entry.tickets,

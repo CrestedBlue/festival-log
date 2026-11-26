@@ -15,14 +15,7 @@ export { PENTAPORT_2025_ID }
 
 /** Admin notices, from the official site's 2025 posts (7/14 – 7/30). */
 export const PENTAPORT_2025_NOTICES: readonly string[] = [
-  '입장 게이트는 사흘 모두 오전 10시에 열려요. 행사는 10:00–22:00, 티켓부스는 10:00–21:00 운영해요.',
-  '송도 워터프런트 공사로 티켓부스 자리가 바뀌어 입장할 때 기다릴 수 있어요.',
   '출연 변경: 8월 2일(토) BEABADOOBEE가 건강 문제로 취소되어 그 시간에 글렌체크가, 8월 3일(일) DEAFHEAVEN이 취소되어 그 시간에 이승윤이 무대에 올라요.',
-  '8월 1일(금) 21:00–21:10 KB국민카드 STARSHOP 스테이지에서 개막식이 열려요.',
-  '인천 지하철 1호선 박촌행 열차가 사흘 동안 새벽 1시(25:00)까지 연장 운행해요. 송도달빛축제공원역 4번 출구에서 걸어서 10분(약 550m)이에요.',
-  '폭염 대비: 생수는 개수 제한 없이 가져올 수 있어요. 의료 쿨존·그늘막·워터캐논·살수차와 의료부스를 이용하세요.',
-  'KB국민카드 할인은 F&B·맥주·MD·생수를 살 때 적용돼요. 민생회복 소비쿠폰은 행사장 안에서 쓸 수 없어요.',
-  'F&B는 "퀸즈스마일" 앱으로 미리 주문할 수 있어요.',
 ]
 
 // Shortened so they fit the two-line stage header: "KB KOOKMIN CARD STARSHOP STAGE" as "KB국민카드", as in 2026

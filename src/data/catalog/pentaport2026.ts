@@ -14,10 +14,7 @@ import { PENTAPORT_2026_NOTICE_BLOCKS } from './pentaportNoticeBlocks'
 export { PENTAPORT_2026_ID, PENTAPORT_2026_NOTICE_BLOCKS }
 
 /** Admin notices, from the timetable post (2026). Entry, picnic zone, food, what is not allowed, the medical booth and the barrier-free pass are picture blocks (pentaportNoticeBlocks.ts), not repeated here. */
-export const PENTAPORT_2026_NOTICES: readonly string[] = [
-  '드리머부스는 매일 10:30–19:30 열리는 상시 프로그램이에요(MONSTER ENERGY STAGE 시간표에 함께 안내).',
-  '7월 31일(금) 13:00–16:00 메인 쿨존에서 "펜타포트 × 스포티파이 음모론"이 열려요.',
-]
+export const PENTAPORT_2026_NOTICES: readonly string[] = []
 
 // Shortened so they fit the two-line stage header: "KB KOOKMIN CARD STAGE" as the poster's own "KB국민카드", the others without "STAGE".
 // Stage colors and icons belong to the festival's design (series/pentaport.ts), keyed the same way.

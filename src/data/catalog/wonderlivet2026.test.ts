@@ -102,7 +102,7 @@ describe('createWonderlivet2026', () => {
   })
 
   test('comes with notices from the official FAQ, and the design of its own', () => {
-    expect(WONDERLIVET_2026_NOTICES.length).toBeGreaterThan(0)
+    expect(WONDERLIVET_2026_NOTICE_BLOCKS.length).toBeGreaterThan(0)
     expect(Object.keys(SERIES[WONDERLIVET_SERIES]?.theme.stages ?? {})).toEqual(['wonder', 'livet'])
     expect(SERIES[WONDERLIVET_SERIES]?.sources.map((s) => s.value)).toEqual(['@wonderlivet'])
   })
@@ -111,7 +111,7 @@ describe('createWonderlivet2026', () => {
     const blocks = WONDERLIVET_2026_NOTICE_BLOCKS
 
     test('has its topics in order, each with a picture and a main color', () => {
-      expect(blocks.map((b) => b.id)).toEqual(['entry', 'goods', 'lockers', 'food', 'photo', 'rules', 'directions'])
+      expect(blocks.map((b) => b.id)).toEqual(['entry', 'stage', 'goods', 'lockers', 'food', 'photo', 'rules', 'directions', 'lostfound'])
       for (const block of blocks) {
         expect(block.art).toBeTruthy()
         expect(block.tone).toMatch(/^#[0-9a-f]{6}$/)
@@ -156,7 +156,6 @@ describe('createWonderlivet2026', () => {
       const plain = WONDERLIVET_2026_NOTICES.join(' ')
       const repeated = ['손목밴드', '티켓부스', '굿즈', '포토부스', '물품보관', '푸드존', '쉬림프', '잭잭', '성인인증', '500ml', '10:30', '09:00', '촬영', '흡연', '킨텍스역', '대화역', '내비']
       for (const word of repeated) expect(plain).not.toContain(word)
-      expect(WONDERLIVET_2026_NOTICES.length).toBeGreaterThan(0)
     })
 
     test('has the directions and the rules as blocks of their own', () => {

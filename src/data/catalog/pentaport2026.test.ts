@@ -88,12 +88,12 @@ describe('createPentaport2026', () => {
     expect(new Set(festival.pins.filter((p) => p.kind === 'toilet').map((p) => p.group))).toEqual(new Set(['화장실', '장애인 화장실']))
   })
 
-  test('has notices from the timetable post', () => {
-    expect(PENTAPORT_2026_NOTICES.length).toBeGreaterThan(0)
+  test('keeps no plain notices: everything is in the blocks', () => {
+    expect(PENTAPORT_2026_NOTICES).toEqual([])
   })
 
   test('shows the official checklist as topic blocks, each opening with its name in bold', () => {
-    expect(PENTAPORT_2026_NOTICE_BLOCKS.map((b) => b.id)).toEqual(['entry', 'picnic', 'food', 'rules', 'medical', 'access'])
+    expect(PENTAPORT_2026_NOTICE_BLOCKS.map((b) => b.id)).toEqual(['entry', 'stage', 'picnic', 'food', 'rules', 'medical', 'access'])
     for (const block of PENTAPORT_2026_NOTICE_BLOCKS) {
       expect(block.lines.length, block.id).toBeLessThanOrEqual(12)
       expect(block.lines[0]?.startsWith(`**${block.title}**`), block.id).toBe(true)

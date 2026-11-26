@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { distanceMeters } from '../../lib/geo'
 import { FestivalSchema } from '../schema'
-import { BML_2026_NOTICES, BML_2026_TICKETS, createBml2026 } from './bml2026'
+import { BML_2026_NOTICE_BLOCKS, BML_2026_NOTICES, BML_2026_TICKETS, createBml2026 } from './bml2026'
 import { BML_2026_ID, BML_2026_KEY, BML_SERIES } from './ids'
 import { catalogEntry, festivalMapFor } from './index'
 
@@ -73,7 +73,7 @@ describe('createBml2026', () => {
   })
 
   test('has notices and the three ticket sellers', () => {
-    expect(BML_2026_NOTICES.length).toBeGreaterThan(0)
+    expect(BML_2026_NOTICE_BLOCKS.length + BML_2026_NOTICES.length).toBeGreaterThan(0)
     expect(BML_2026_TICKETS.map((s) => s.name)).toEqual(['NOL 티켓', 'YES24', '네이버 예약'])
     expect(catalogEntry(BML_2026_ID)).toMatchObject({ series: BML_SERIES, key: BML_2026_KEY })
   })

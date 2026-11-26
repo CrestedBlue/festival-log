@@ -3,6 +3,8 @@ import { LETS_ROCK_2026_ID, LETS_ROCK_2026_KEY as KEY } from './ids'
 import { LETS_ROCK } from './series/letsRock'
 import { stageLook } from './series/theme'
 import { SELLERS, type TicketSeller } from './tickets'
+import { noticeBlock } from './noticeArt'
+import type { NoticeBlock } from './noticeBlock'
 
 /**
  * 2026 렛츠락 페스티벌 (Let's Rock Festival 2026, its 20th, 2026-10-03/04, Nanji Hangang Park, Seoul).
@@ -16,14 +18,34 @@ export { LETS_ROCK_2026_ID }
 
 /** Admin notices, summarised from the NOL ticket page (its notice and the detail image's guides). */
 export const LETS_ROCK_2026_NOTICES: readonly string[] = [
-  '티켓부스는 09:00–20:00, 입장 게이트는 10:00에 열려요(선착순). 첫 공연은 11:20이에요.',
-  '티켓을 미리 배송받았다면 입장 팔찌 교환 부스에서 바로 팔찌로 바꿔요. 현장 수령이면 티켓 부스에서 신분증과 예매내역서를 보여 주고 티켓을 받은 뒤 팔찌로 바꿔요. ' +
-    '대리 수령은 직계가족만 돼요(예매자 신분증과 가족관계증명서 실물).',
-  '입장 팔찌를 차야 게이트 줄을 설 수 있고, 팔찌가 없으면 어떤 이유로도 (재)입장이 안 돼요. 양일권 팔찌는 이틀 내내 차고 있어야 하고, 망가져도 다시 주지 않아요.',
-  '스탠딩 존에는 돗자리·의자·우산을 가져갈 수 없어요. 피크닉 존에서는 돗자리, 양산, 단우산, 다리 없는 등받이 의자를 쓸 수 있어요.',
-  '물품보관소는 09:00부터 공연이 끝날 때까지 열고, 한 번에 3,000원(다시 맡기면 2,000원)이에요.',
-  '무료 셔틀버스가 DMC역 근처 새누리 어린이 공원 앞과 하늘공원로(하늘공원 입구) 사이를 10분 안팎 간격으로 다녀요. 공연장 가는 첫차 08:30, 공연장에서 나오는 막차 22:00, 내려서 걸어서 5분이에요.',
-  '난지한강공원 주차장은 매우 좁아요. 대중교통(서울광역버스 9707 난지한강공원 정류소, 순환버스 8777 중앙잔디광장 정류소)이나 셔틀버스를 타세요.',
+]
+
+/** The notices as topic blocks on the info tab (the user, 2026-11-26: every festival in this format). The pictures are the shared set. */
+export const LETS_ROCK_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
+  noticeBlock('entry', '입장', [
+    '**입장** 티켓부스 **09:00–20:00**',
+    '게이트 **10:00**(선착순) · 첫 공연 **11:20**',
+    '배송받은 티켓은 **팔찌 교환 부스**에서 바로',
+    '현장 수령은 티켓부스에서 **신분증·예매내역서**',
+    '대리 수령은 **직계가족만**(예매자 신분증·가족관계증명서 실물)',
+    '팔찌를 차야 **게이트 줄**을 설 수 있어요',
+    '팔찌 없으면 **(재)입장 불가**',
+    '양일권 팔찌는 이틀 내내 · **재발급 불가**',
+  ]),
+  noticeBlock('picnic', '피크닉존', [
+    '**피크닉존** 돗자리 · 양산 · 단우산',
+    '다리 없는 등받이 의자',
+    '스탠딩 존엔 **돗자리·의자·우산 불가**',
+  ]),
+  noticeBlock('lockers', '물품보관소', ['**물품보관소** **09:00**부터 공연 끝까지', '1회 **3,000원** · 다시 맡기면 **2,000원**']),
+  noticeBlock('directions', '오는 길', [
+    '**오는 길** **무료 셔틀**: DMC역 근처 새누리 어린이 공원 앞',
+    '↔ 하늘공원로(하늘공원 입구), 10분 안팎 간격',
+    '공연장 가는 첫차 **08:30** · 나오는 막차 **22:00**',
+    '내려서 걸어서 **5분**',
+    '난지한강공원 주차장은 **매우 좁아요**',
+    '버스 9707(난지한강공원) · 8777(중앙잔디광장)',
+  ]),
 ]
 
 /** Official ticket seller: NOL ticket, which sold it alone ("단독판매"). */

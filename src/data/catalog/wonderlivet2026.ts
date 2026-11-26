@@ -17,14 +17,7 @@ import { WONDERLIVET_2026_NOTICE_BLOCKS } from './wonderlivetNoticeBlocks'
 export { WONDERLIVET_2026_ID, WONDERLIVET_2026_NOTICE_BLOCKS }
 
 /** Admin notices, summarised from the timetable post, the official site's FAQ and directions (wonderli.vet), the goods pre-order post (Instagram 11/5) and the festival map post (Instagram 11/9) and the on-site goods posts (Instagram 11/12) and the food zone post (Instagram 11/13), the online goods sale post (Instagram 11/24) and the lost-and-found post (Instagram 11/25). */
-export const WONDERLIVET_2026_NOTICES: readonly string[] = [
-  // What belongs to a topic with a picture (ticket booth and wristband — the wristband is the ticket —, goods, lockers,
-  // food zone, photo booth, what is not allowed, directions) is in wonderlivetNoticeBlocks.ts and not repeated here (the user, 2026-11-26).
-  '전석 스탠딩이에요.',
-  'WONDER STAGE는 7·8홀, LIVET STAGE는 10홀에 있어요. 무대 사이는 건물 1·2층 어느 쪽으로도 오갈 수 있지만, 2층 게이트로 들고 나는 건 1층 첫 입장 줄이 다 들어간 뒤부터예요.',
-  '화장실은 공연장 안과 바깥 로비에 다 있어요.',
-  '분실물은 festival@wanderloch.com 으로 11/30(월) 23:59까지 확인 메일을 보내면 돼요(제목 [원더리벳 2026 분실물 확인], 본문에 분실물 번호·방문일자·본인 물품 확인 자료·성함·연락처·받을 주소). 주인을 찾은 분실물은 12월 둘째 주에 착불로 보내고, 기간 안에 연락이 없으면 폐기돼요.',
-]
+export const WONDERLIVET_2026_NOTICES: readonly string[] = []
 
 /** Official ticket sellers, in the order the official site's TICKET section links them (wonderli.vet). */
 export const WONDERLIVET_2026_TICKETS: readonly TicketSeller[] = [SELLERS.melon(213793), SELLERS.yes24(59840), SELLERS.ticketlink(65048)]

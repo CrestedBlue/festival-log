@@ -4,18 +4,19 @@ import type { Festival } from '../schema'
 import type { LineupImage } from './lineup'
 import type { NoticeBlock } from './noticeBlock'
 import type { TicketSeller } from './tickets'
-import { BML_2026_NOTICES, BML_2026_TICKETS, createBml2026 } from './bml2026'
-import { BUSAN_ROCK_2026_NOTICES, BUSAN_ROCK_2026_TICKETS, createBusanRock2026 } from './busanRock2026'
-import { CDF_2026_LINEUP, CDF_2026_NOTICES, CDF_2026_TICKETS, createCdf2026 } from './cdf2026'
-import { GRAND_MINT_2026_NOTICES, GRAND_MINT_2026_TICKETS, createGrandMint2026 } from './grandMint2026'
-import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICES, HERO_ROCK_2026_TICKETS, createHeroRock2026 } from './heroRock2026'
-import { JUMF_2026_NOTICES, JUMF_2026_TICKETS, createJumf2026 } from './jumf2026'
-import { LETS_ROCK_2026_NOTICES, LETS_ROCK_2026_TICKETS, createLetsRock2026 } from './letsRock2026'
+import { BML_2026_NOTICE_BLOCKS, BML_2026_NOTICES, BML_2026_TICKETS, createBml2026 } from './bml2026'
+import { BUSAN_ROCK_2026_NOTICE_BLOCKS, BUSAN_ROCK_2026_NOTICES, BUSAN_ROCK_2026_TICKETS, createBusanRock2026 } from './busanRock2026'
+import { CDF_2026_LINEUP, CDF_2026_NOTICE_BLOCKS, CDF_2026_NOTICES, CDF_2026_TICKETS, createCdf2026 } from './cdf2026'
+import { GRAND_MINT_2026_NOTICE_BLOCKS, GRAND_MINT_2026_NOTICES, GRAND_MINT_2026_TICKETS, createGrandMint2026 } from './grandMint2026'
+import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICE_BLOCKS, HERO_ROCK_2026_NOTICES, HERO_ROCK_2026_TICKETS, createHeroRock2026 } from './heroRock2026'
+import { JUMF_2026_NOTICE_BLOCKS, JUMF_2026_NOTICES, JUMF_2026_TICKETS, createJumf2026 } from './jumf2026'
+import { LETS_ROCK_2026_NOTICE_BLOCKS, LETS_ROCK_2026_NOTICES, LETS_ROCK_2026_TICKETS, createLetsRock2026 } from './letsRock2026'
 import { PENTAPORT_2025_NOTICES, createPentaport2025 } from './pentaport2025'
+import { PENTAPORT_2025_NOTICE_BLOCKS } from './pentaportNoticeBlocks'
 import { PENTAPORT_2026_NOTICE_BLOCKS, PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
 import { PENTAPORT_2027_NOTICES, createPentaport2027 } from './pentaport2027'
-import { SJF_2026_NOTICES, SJF_2026_TICKETS, createSjf2026 } from './sjf2026'
-import { THE_GLOW_2026_NOTICES, THE_GLOW_2026_TICKETS, createTheGlow2026 } from './theGlow2026'
+import { SJF_2026_NOTICE_BLOCKS, SJF_2026_NOTICES, SJF_2026_TICKETS, createSjf2026 } from './sjf2026'
+import { THE_GLOW_2026_NOTICE_BLOCKS, THE_GLOW_2026_NOTICES, THE_GLOW_2026_TICKETS, createTheGlow2026 } from './theGlow2026'
 import {
   WONDERLIVET_2026_NOTICE_BLOCKS,
   WONDERLIVET_2026_NOTICES,
@@ -102,6 +103,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     key: GRAND_MINT_2026_KEY,
     create: createGrandMint2026,
     notices: GRAND_MINT_2026_NOTICES,
+    noticeBlocks: GRAND_MINT_2026_NOTICE_BLOCKS,
     lineup: [],
     tickets: GRAND_MINT_2026_TICKETS,
     updatedAt: '2026-11-04',
@@ -113,6 +115,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     key: HERO_ROCK_2026_KEY,
     create: createHeroRock2026,
     notices: HERO_ROCK_2026_NOTICES,
+    noticeBlocks: HERO_ROCK_2026_NOTICE_BLOCKS,
     lineup: HERO_ROCK_2026_LINEUP,
     tickets: HERO_ROCK_2026_TICKETS,
     updatedAt: '2026-10-27',
@@ -150,6 +153,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     key: PENTAPORT_2025_KEY,
     create: createPentaport2025,
     notices: PENTAPORT_2025_NOTICES,
+    noticeBlocks: PENTAPORT_2025_NOTICE_BLOCKS,
     lineup: [],
     tickets: [],
     updatedAt: '2026-11-04',
@@ -161,6 +165,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     key: JUMF_2026_KEY,
     create: createJumf2026,
     notices: JUMF_2026_NOTICES,
+    noticeBlocks: JUMF_2026_NOTICE_BLOCKS,
     lineup: [],
     tickets: JUMF_2026_TICKETS,
     updatedAt: '2026-11-04',
@@ -184,6 +189,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     key: CDF_2026_KEY,
     create: createCdf2026,
     notices: CDF_2026_NOTICES,
+    noticeBlocks: CDF_2026_NOTICE_BLOCKS,
     lineup: CDF_2026_LINEUP,
     tickets: CDF_2026_TICKETS,
     updatedAt: '2026-11-04',
@@ -195,6 +201,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     key: BML_2026_KEY,
     create: createBml2026,
     notices: BML_2026_NOTICES,
+    noticeBlocks: BML_2026_NOTICE_BLOCKS,
     lineup: [],
     tickets: BML_2026_TICKETS,
     updatedAt: '2026-11-04',
@@ -206,6 +213,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     key: SJF_2026_KEY,
     create: createSjf2026,
     notices: SJF_2026_NOTICES,
+    noticeBlocks: SJF_2026_NOTICE_BLOCKS,
     lineup: [],
     tickets: SJF_2026_TICKETS,
     updatedAt: '2026-11-04',
@@ -217,6 +225,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     key: LETS_ROCK_2026_KEY,
     create: createLetsRock2026,
     notices: LETS_ROCK_2026_NOTICES,
+    noticeBlocks: LETS_ROCK_2026_NOTICE_BLOCKS,
     lineup: [],
     tickets: LETS_ROCK_2026_TICKETS,
     updatedAt: '2026-11-04',
@@ -228,6 +237,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     key: BUSAN_ROCK_2026_KEY,
     create: createBusanRock2026,
     notices: BUSAN_ROCK_2026_NOTICES,
+    noticeBlocks: BUSAN_ROCK_2026_NOTICE_BLOCKS,
     lineup: [],
     tickets: BUSAN_ROCK_2026_TICKETS,
     updatedAt: '2026-11-04',
@@ -239,6 +249,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     key: THE_GLOW_2026_KEY,
     create: createTheGlow2026,
     notices: THE_GLOW_2026_NOTICES,
+    noticeBlocks: THE_GLOW_2026_NOTICE_BLOCKS,
     lineup: [],
     tickets: THE_GLOW_2026_TICKETS,
     updatedAt: '2026-11-08',

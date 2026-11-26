@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { FestivalSchema } from '../schema'
 import { HERO_ROCK_2026_ID, HERO_ROCK_SERIES } from './ids'
-import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICES, createHeroRock2026 } from './heroRock2026'
+import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICE_BLOCKS, HERO_ROCK_2026_NOTICES, createHeroRock2026 } from './heroRock2026'
 import { festivalMapFor } from './index'
 
 describe('createHeroRock2026', () => {
@@ -45,7 +45,7 @@ describe('createHeroRock2026', () => {
   })
 
   test('has notices from the ticket page', () => {
-    expect(HERO_ROCK_2026_NOTICES.length).toBeGreaterThan(0)
+    expect(HERO_ROCK_2026_NOTICE_BLOCKS.length + HERO_ROCK_2026_NOTICES.length).toBeGreaterThan(0)
   })
 
   test('has the line-up posters in announcement order, described for screen readers', () => {

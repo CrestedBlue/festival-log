@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest'
 import { FestivalSchema } from '../schema'
 import { LETS_ROCK_2026_ID, LETS_ROCK_2026_KEY, LETS_ROCK_SERIES } from './ids'
 import { catalogEntry, festivalMapFor } from './index'
-import { LETS_ROCK_2026_NOTICES, LETS_ROCK_2026_TICKETS, createLetsRock2026 } from './letsRock2026'
+import { LETS_ROCK_2026_NOTICE_BLOCKS, LETS_ROCK_2026_NOTICES, LETS_ROCK_2026_TICKETS, createLetsRock2026 } from './letsRock2026'
 
 describe('createLetsRock2026', () => {
   const festival = createLetsRock2026()
@@ -48,7 +48,7 @@ describe('createLetsRock2026', () => {
   })
 
   test('has notices and NOL ticket as its only seller', () => {
-    expect(LETS_ROCK_2026_NOTICES.length).toBeGreaterThan(0)
+    expect(LETS_ROCK_2026_NOTICE_BLOCKS.length + LETS_ROCK_2026_NOTICES.length).toBeGreaterThan(0)
     expect(LETS_ROCK_2026_TICKETS.map((s) => s.name)).toEqual(['NOL 티켓'])
     expect(catalogEntry(LETS_ROCK_2026_ID)).toMatchObject({ series: LETS_ROCK_SERIES, key: LETS_ROCK_2026_KEY })
   })

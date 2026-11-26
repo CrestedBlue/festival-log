@@ -86,7 +86,7 @@ describe('catalog', () => {
 
   test('lists the 2026 Hero Rock Festival with its notices', () => {
     expect(catalogEntry(HERO_ROCK_2026_ID)?.create().name).toBe('2026 히어로 락 페스티벌 - 인천')
-    expect(catalogEntry(HERO_ROCK_2026_ID)?.notices.length).toBeGreaterThan(0)
+    expect(catalogEntry(HERO_ROCK_2026_ID)?.noticeBlocks?.length).toBeGreaterThan(0)
   })
 
   test('finds entries by id and by the id older versions used', () => {
