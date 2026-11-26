@@ -142,9 +142,12 @@ describe('createWonderlivet2026', () => {
       for (const fact of ['9홀 안', '11:00', '5,000원', '카드']) expect(photo).toContain(fact)
     })
 
-    test('says the wristband is the ticket and what it is good for, in the ticket block', () => {
-      const ticket = (blocks.find((b) => b.id === 'ticket')?.lines.join(' ') ?? '').replaceAll('**', '')
-      for (const fact of ['손목밴드가 곧 티켓', '11/21', '11/22', '10:30', '신분증']) expect(ticket).toContain(fact)
+    test('keeps the wristband facts in the ticket block, short and bold, and never says "wristband = ticket" (that was the user telling us how to sort, not text)', () => {
+      const raw = blocks.find((b) => b.id === 'ticket')?.lines.join(' ') ?? ''
+      const ticket = raw.replaceAll('**', '')
+      for (const fact of ['11/21', '11/22', '10:30', '신분증', '재발급 불가']) expect(ticket).toContain(fact)
+      expect(raw).toContain('**재발급 불가**')
+      expect(ticket).not.toContain('곧 티켓')
     })
 
     test('keeps what belongs to a block in the block, not again in the plain notices', () => {
