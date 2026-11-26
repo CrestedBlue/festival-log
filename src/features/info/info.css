@@ -193,7 +193,7 @@
   line-height: 1.5;
   /* break Korean at spaces, not inside a word */
   word-break: keep-all;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 .notice-block__lines li {

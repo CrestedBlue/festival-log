@@ -19,21 +19,13 @@ export { WONDERLIVET_2026_ID, WONDERLIVET_2026_NOTICE_BLOCKS }
 
 /** Admin notices, summarised from the timetable post, the official site's FAQ and directions (wonderli.vet), the goods pre-order post (Instagram 11/5) and the festival map post (Instagram 11/9) and the on-site goods posts (Instagram 11/12) and the food zone post (Instagram 11/13), the online goods sale post (Instagram 11/24) and the lost-and-found post (Instagram 11/25). */
 export const WONDERLIVET_2026_NOTICES: readonly string[] = [
-  // Topics with a picture (the ticket booth and wristband, goods, lockers, food zone, photo booth) are in
-  // wonderlivetNoticeBlocks.ts; what is here is what the blocks do not say. The wristband is the ticket.
-  '손목밴드가 곧 티켓이에요. 차면 무대 사이를 오가고 다시 들어올 수 있어요. 금·토 2일권은 11/21(토)까지, 토·일이나 금·일 2일권과 3일권은 11/22(일)까지 계속 차고 있어야 하고, 잃어버리거나 망가지면 다시 주지 않아요. 물에 젖어도 찢어지지 않아요.',
-  '티켓부스는 공식 페스티벌 맵에는 22:00까지로 적혀 있지만, 공지는 그날 마지막 공연이 끝날 때까지예요.',
-  '현장 판매는 예매가 끝난 뒤 남은 표만, 관람 당일 10:30부터 해요(진행 여부는 공식 SNS에서 공지). 예매·취소 마감은 관람 전날 11:00예요.',
+  // What belongs to a topic with a picture (ticket booth and wristband — the wristband is the ticket —, goods, lockers,
+  // food zone, photo booth) is in wonderlivetNoticeBlocks.ts and not repeated here (the user, 2026-11-26).
   '전석 스탠딩이에요. 공연 촬영·녹음은 안 돼요. 몇몇 아티스트는 공연 내내 모든 촬영(기념사진 포함)이 금지돼요.',
   '흡연은 킨텍스 전시장 밖 지정 흡연구역에서만 돼요.',
   '오는 길: 킨텍스역(GTX-A) 4·5번 출구, 대화역(3호선) 2번 출구에서 버스나 걸어서, 버스는 킨텍스·킨텍스 제2전시장 정류장. 차는 내비에 "킨텍스 제2전시장"(관람 주차 할인 없음).',
   'WONDER STAGE는 7·8홀, LIVET STAGE는 10홀에 있어요. 무대 사이는 건물 1·2층 어느 쪽으로도 오갈 수 있지만, 2층 게이트로 들고 나는 건 1층 첫 입장 줄이 다 들어간 뒤부터예요.',
-  '굿즈 사전 예약(11/5–11/11, YES24)은 끝났어요. 살 때 고른 날짜에만 현장 픽업 부스에서 받고, 수령 QR은 받는 날 전날 20:00에 YES24 마이페이지에 떠요. 사전 예약에서 품절된 상품은 현장에서 못 사요.',
-  '아티스트 굿즈는 출연일과 상관없이 3일 내내 팔아요. 외국인 관객은 네이버 가입과 본인인증을 마쳐야 현장에서 살 수 있어요(공식 글에 영어·일본어 안내).',
-  '공식 굿즈 온라인 판매는 공연 뒤 남은 재고만 팔아서 일부 상품은 빠질 수 있어요(@wonderlivet 프로필 링크).',
-  '포토부스(9홀 안)는 손목밴드를 차는 공연장 밖 티켓부스와는 다른 곳이에요.',
   '화장실은 공연장 안과 바깥 로비에 다 있어요.',
-  '푸드존 7·8홀: 쉬림프 하우스, 요코스카해군카레X텟판호르몬, 몬스터 스테이크, 가향 김치말이국수, 가향분식, 오사카타코, 킷사 클럽, 버닝하트 닭강정. 9홀: 잭잭, 봉 전, 에비야, 밥이랑 꼬치랑, 미네키야끼소바, 블루빈, 조이쉡(참치마요는 판매 제외), 윤쉐프 닭강정, 뿌자 2. 푸드·주류 부스는 두 곳 다 있어요.',
   '분실물은 festival@wanderloch.com 으로 11/30(월) 23:59까지 확인 메일을 보내면 돼요(제목 [원더리벳 2026 분실물 확인], 본문에 분실물 번호·방문일자·본인 물품 확인 자료·성함·연락처·받을 주소). 주인을 찾은 분실물은 12월 둘째 주에 착불로 보내고, 기간 안에 연락이 없으면 폐기돼요.',
 ]
 
