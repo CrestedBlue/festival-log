@@ -218,6 +218,13 @@
   white-space: nowrap;
 }
 
+/* the block's name: a highlighter stroke in the block's color across the lower part of the word */
+.notice-block__lines .notice-block__name {
+  padding: 0 2px;
+  background: linear-gradient(transparent 50%, color-mix(in srgb, var(--tone) 45%, transparent) 50%);
+  box-decoration-break: clone;
+}
+
 /* Official guide pages: one page wide, swipe (or drag) sideways, snapping page by page. */
 .guide__head {
   display: flex;

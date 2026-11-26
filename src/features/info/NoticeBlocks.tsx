@@ -13,9 +13,18 @@ export function NoticeBlocks({ blocks }: { blocks: readonly NoticeBlock[] }) {
           <div className="notice-block__bubble">
             <h3 className="visually-hidden">{block.title}</h3>
             <ul className="notice-block__lines">
-              {block.lines.map((line) => (
+              {block.lines.map((line, row) => (
                 <li key={line}>
-                  {splitEmphasis(line).map((part, i) => (part.strong ? <strong key={i}>{part.text}</strong> : part.text))}
+                  {splitEmphasis(line).map((part, i) =>
+                    part.strong ? (
+                      // the block's name opens its first line: marked in the block's own color
+                      <strong key={i} className={row === 0 && i === 0 ? 'notice-block__name' : undefined}>
+                        {part.text}
+                      </strong>
+                    ) : (
+                      part.text
+                    ),
+                  )}
                 </li>
               ))}
             </ul>
