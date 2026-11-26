@@ -33,13 +33,15 @@ describe('notice blocks', () => {
   test('every festival with notices has them as blocks, in the format', () => {
     for (const entry of CATALOG) {
       const blocks = resolveFestival(makeUserData(), entry.id)?.noticeBlocks ?? []
-      if (entry.notices.length > 0 && blocks.length === 0) {
-        // only the editions with nothing announced yet keep plain lines alone
-        expect(entry.key, 'plain notices with no blocks').toMatch(/2027$/)
+      if (blocks.length === 0) {
+        // an edition with nothing yet has neither; only the next ones (2027) keep plain lines alone
+        if (entry.notices.length > 0) expect(entry.key, 'plain notices with no blocks').toMatch(/2027$/)
         continue
       }
       expect(blocks[0]?.id, entry.key).toBe('entry')
       const ids = blocks.map((b) => b.id)
+      // the topic is the block's key on screen, so one topic a festival
+      expect(new Set(ids).size, `${entry.key} repeats a topic`).toBe(ids.length)
       const tail = ids.filter((id) => ['rules', 'medical', 'access'].includes(id))
       expect(ids.slice(ids.length - tail.length), entry.key).toEqual(tail)
       for (const block of blocks) {
