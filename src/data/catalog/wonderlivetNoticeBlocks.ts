@@ -9,7 +9,7 @@ import type { NoticeBlock } from './noticeBlock'
  * The five topics worth a picture on the info tab (the user's sketch, 2026-11-26): the ticket booth, goods, the
  * lockers, the food zone and the photo booth. The wristband is the ticket (the user, 2026-11-26), so the ticket block
  * says what the wristband is for. The facts are the notices' (timetable post, FAQ, 11/9–11/24 posts); each picture
- * is its own color so they do not look alike. The first line of a block starts with the topic's name (the user, 2026-11-26). Pictures come from Codex (image generation), in one style.
+ * is its own color so they do not look alike. The first line of a block starts with the topic's name in bold (the user, 2026-11-26). No stall lists. Pictures come from Codex (image generation), in one style.
  */
 export const WONDERLIVET_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
   {
@@ -18,7 +18,7 @@ export const WONDERLIVET_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
     art: ticket,
     tone: '#d9482e',
     lines: [
-      '티켓부스 **10:00**부터 공연 끝까지',
+      '**티켓부스** **10:00**부터 공연 끝까지',
       '공식 페스티벌 맵에는 22:00까지로 적혀 있어요',
       '메인 게이트 **11:00** · 첫 공연 **12:00**',
       '모바일 티켓(캡처 불가) + 본인 실물 신분증',
@@ -38,7 +38,7 @@ export const WONDERLIVET_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
     art: goods,
     tone: '#d4607a',
     lines: [
-      '굿즈 현장 구매 9홀 안 **11:30–21:00**',
+      '**굿즈** 현장 구매 9홀 안 **11:30–21:00**',
       '현장 QR(네이버 예약)로 사요',
       '손목밴드를 찬 사람만',
       '한정 수량, 일찍 품절될 수 있어요',
@@ -55,7 +55,7 @@ export const WONDERLIVET_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
     title: '물품보관소',
     art: lockers,
     tone: '#3f8f84',
-    lines: ['물품보관소 2층 9홀 앞 로비', '**09:00–23:00**쯤'],
+    lines: ['**물품보관소** 2층 9홀 앞 로비', '**09:00–23:00**쯤'],
   },
   {
     id: 'food',
@@ -63,11 +63,9 @@ export const WONDERLIVET_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
     art: food,
     tone: '#e08a1e',
     lines: [
-      '푸드존 7·8홀, 9홀 안 · 푸드·주류 부스 둘 다',
+      '**푸드존** 7·8홀, 9홀 안 · 푸드·주류 부스 둘 다',
       '외부 음식 불가, **500ml** 이하 생수만',
       '술은 티켓부스에서 받는 **성인인증** 밴드로',
-      '7·8홀: 쉬림프 하우스, 요코스카해군카레X텟판호르몬, 몬스터 스테이크, 가향 김치말이국수, 가향분식, 오사카타코, 킷사 클럽, 버닝하트 닭강정',
-      '9홀: 잭잭, 봉 전, 에비야, 밥이랑 꼬치랑, 미네키야끼소바, 블루빈, 조이쉡(참치마요 제외), 윤쉐프 닭강정, 뿌자 2',
     ],
   },
   {
@@ -75,6 +73,6 @@ export const WONDERLIVET_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
     title: '포토부스',
     art: photo,
     tone: '#8b73a0',
-    lines: ['포토부스 9홀 안 · **11:00**부터', '하프컷(2장) **5,000원**', '디자인 2종 중 택 1 · 카드 결제만', '손목밴드를 차는 공연장 밖 티켓부스와는 다른 곳'],
+    lines: ['**포토부스** 9홀 안 · **11:00**부터', '하프컷(2장) **5,000원**', '디자인 2종 중 택 1 · 카드 결제만', '손목밴드를 차는 공연장 밖 티켓부스와는 다른 곳'],
   },
 ]

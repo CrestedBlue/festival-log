@@ -120,16 +120,21 @@ describe('createWonderlivet2026', () => {
       }
     })
 
-    test('keeps every line to one fact (a block holds its whole topic, so up to a dozen lines; the stall lists of the food zone are the longest lines)', () => {
+    test('keeps every line to one fact (a block holds its whole topic, so up to a dozen lines)', () => {
       for (const block of blocks) {
         expect(block.lines.length).toBeGreaterThanOrEqual(1)
         expect(block.lines.length).toBeLessThanOrEqual(12)
-        for (const line of block.lines) expect(line.replaceAll('**', '').length).toBeLessThanOrEqual(150)
+        for (const line of block.lines) expect(line.replaceAll('**', '').length).toBeLessThanOrEqual(60)
       }
     })
 
-    test('starts each block with its topic name on the first line (e.g. "푸드존 7·8홀, 9홀 안")', () => {
-      for (const block of blocks) expect(block.lines[0]?.replaceAll('**', '').startsWith(block.title)).toBe(true)
+    test('starts each block with its topic name in bold on the first line (e.g. "**푸드존** 7·8홀, 9홀 안")', () => {
+      for (const block of blocks) expect(block.lines[0]?.startsWith(`**${block.title}** `)).toBe(true)
+    })
+
+    test('does not list the food zone\'s stalls (the user, 2026-11-26)', () => {
+      const food = blocks.find((b) => b.id === 'food')?.lines.join(' ') ?? ''
+      for (const stall of ['쉬림프', '잭잭', '닭강정']) expect(food).not.toContain(stall)
     })
 
     test('carries the photo booth facts from the official post (hall 9, 11:00, 5,000 won, card only)', () => {
