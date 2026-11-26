@@ -20,7 +20,7 @@ export const WONDERLIVET_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
   noticeBlock('stage', '무대', [
     '**무대** WONDER STAGE 7·8홀 · LIVET STAGE 10홀',
     '**전석 스탠딩**',
-    '무대 사이는 건물 1·2층 어느 쪽으로도 오가요',
+    '무대 사이 이동은 건물 1·2층 모두 가능',
     '2층 게이트는 1층 첫 입장 줄이 **다 들어간 뒤**부터',
     '화장실은 공연장 안·바깥 로비 둘 다',
   ]),

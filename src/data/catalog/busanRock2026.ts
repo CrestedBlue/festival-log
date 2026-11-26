@@ -39,7 +39,7 @@ export const BUSAN_ROCK_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
   noticeBlock('lostfound', '분실물', [
     '**분실물** 10/12–10/18 네이버 폼 접수 · 10/23까지 **착불** 발송',
     '안 찾아간 물건·카드류(신분증·카드 등)는 **사상경찰서**로',
-    '**경찰민원24**에서 찾아보세요',
+    '조회는 **경찰민원24**',
   ]),
 ]
 

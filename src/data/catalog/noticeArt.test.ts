@@ -47,7 +47,11 @@ describe('notice blocks', () => {
       for (const block of blocks) {
         expect(block.lines[0]?.startsWith(`**${block.title}**`), `${entry.key} ${block.id}`).toBe(true)
         expect(block.lines.length, `${entry.key} ${block.id}`).toBeLessThanOrEqual(12)
-        for (const line of block.lines) expect(line.replaceAll('**', '').length, line).toBeLessThanOrEqual(60)
+        for (const line of block.lines) {
+          expect(line.replaceAll('**', '').length, line).toBeLessThanOrEqual(60)
+          // short noun endings ("일행 동반입장 불가"), not "~요" sentences (the user, 2026-11-26)
+          expect(line, 'ends like a sentence').not.toMatch(/((?<!필|중|주)요|니다)[)\s*]*$/)
+        }
       }
     }
   })
