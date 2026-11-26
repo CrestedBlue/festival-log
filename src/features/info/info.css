@@ -109,6 +109,113 @@
   line-height: 1.55;
 }
 
+/* Notices by topic: a picture beside a speech-bubble box, zigzagging. The bubble's tail points at its picture. */
+.notice-blocks {
+  display: grid;
+  gap: var(--space-5);
+  margin: var(--space-3) 0 var(--space-4);
+  padding: 0;
+  list-style: none;
+}
+
+.notice-block {
+  --tail: 14px;
+  display: grid;
+  grid-template-columns: minmax(0, 34%) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-4);
+}
+
+.notice-block:nth-child(even) {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 34%);
+}
+
+.notice-block:nth-child(even) .notice-block__art {
+  order: 2;
+}
+
+.notice-block__art {
+  width: 100%;
+  height: auto;
+  max-height: 132px;
+  object-fit: contain;
+  /* the pictures have no shadow of their own: a soft one keeps them off the page */
+  filter: drop-shadow(0 3px 3px rgb(74 52 38 / 0.18));
+}
+
+.notice-block:nth-child(odd) .notice-block__art {
+  object-position: left top;
+}
+
+.notice-block:nth-child(even) .notice-block__art {
+  object-position: right top;
+}
+
+.notice-block__bubble {
+  position: relative;
+  padding: var(--space-3) var(--space-4);
+  border: 1.5px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: var(--color-paper);
+}
+
+/* the tail: a corner of the box turned toward the picture, drawn as a rotated square with the box's border */
+.notice-block__bubble::before {
+  content: '';
+  position: absolute;
+  top: var(--space-4);
+  width: var(--tail);
+  height: var(--tail);
+  background: var(--color-paper);
+  border: 1.5px solid var(--color-line);
+  transform: rotate(45deg);
+}
+
+.notice-block:nth-child(odd) .notice-block__bubble::before {
+  left: calc(var(--tail) / -2 - 1px);
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
+.notice-block:nth-child(even) .notice-block__bubble::before {
+  right: calc(var(--tail) / -2 - 1px);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.notice-block__lines {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  /* break Korean at spaces, not inside a word */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.notice-block__lines li {
+  position: relative;
+  padding-left: var(--space-4);
+}
+
+.notice-block__lines li::before {
+  content: '';
+  position: absolute;
+  top: 0.55em;
+  left: 2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--tone);
+}
+
+.notice-block__lines strong {
+  font-weight: 800;
+}
+
 /* Official guide pages: one page wide, swipe (or drag) sideways, snapping page by page. */
 .guide__head {
   display: flex;

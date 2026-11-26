@@ -3,6 +3,7 @@ import type { ClosableTab } from '../../lib/route'
 import type { Festival } from '../schema'
 import type { GuideSet } from './guide'
 import type { LineupImage } from './lineup'
+import type { NoticeBlock } from './noticeBlock'
 import type { TicketSeller } from './tickets'
 import { BML_2026_GUIDES, BML_2026_NOTICES, BML_2026_TICKETS, createBml2026 } from './bml2026'
 import { BUSAN_ROCK_2026_NOTICES, BUSAN_ROCK_2026_TICKETS, createBusanRock2026 } from './busanRock2026'
@@ -16,7 +17,13 @@ import { PENTAPORT_2026_GUIDES, PENTAPORT_2026_NOTICES, createPentaport2026 } fr
 import { PENTAPORT_2027_NOTICES, createPentaport2027 } from './pentaport2027'
 import { SJF_2026_NOTICES, SJF_2026_TICKETS, createSjf2026 } from './sjf2026'
 import { THE_GLOW_2026_NOTICES, THE_GLOW_2026_TICKETS, createTheGlow2026 } from './theGlow2026'
-import { WONDERLIVET_2026_GUIDES, WONDERLIVET_2026_NOTICES, WONDERLIVET_2026_TICKETS, createWonderlivet2026 } from './wonderlivet2026'
+import {
+  WONDERLIVET_2026_GUIDES,
+  WONDERLIVET_2026_NOTICE_BLOCKS,
+  WONDERLIVET_2026_NOTICES,
+  WONDERLIVET_2026_TICKETS,
+  createWonderlivet2026,
+} from './wonderlivet2026'
 import {
   BML_2026_ID,
   BML_2026_KEY,
@@ -69,6 +76,8 @@ export interface CatalogEntry {
   create: () => Festival
   /** Things to know before going (admin). */
   notices: readonly string[]
+  /** Topics drawn as a picture beside a speech-bubble box, above the plain notices on the info tab (admin). */
+  noticeBlocks?: readonly NoticeBlock[]
   /** Line-up posters, shown on the timetable tab until the timetable is out (admin). */
   lineup: readonly LineupImage[]
   /** Official guide pages (checklist, venue map, …) swiped through on the info tab (admin). */
@@ -172,6 +181,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     key: WONDERLIVET_2026_KEY,
     create: createWonderlivet2026,
     notices: WONDERLIVET_2026_NOTICES,
+    noticeBlocks: WONDERLIVET_2026_NOTICE_BLOCKS,
     lineup: [],
     guides: WONDERLIVET_2026_GUIDES,
     tickets: WONDERLIVET_2026_TICKETS,

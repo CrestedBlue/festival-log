@@ -22,6 +22,7 @@ describe('resolveFestival', () => {
       source: 'archived',
       festival: archived,
       notices: [],
+      noticeBlocks: [],
       lineup: [],
       guides: [],
       sources: [],

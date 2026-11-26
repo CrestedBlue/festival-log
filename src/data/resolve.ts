@@ -1,6 +1,7 @@
 import { catalogEntry } from './catalog'
 import type { GuideSet } from './catalog/guide'
 import type { LineupImage } from './catalog/lineup'
+import type { NoticeBlock } from './catalog/noticeBlock'
 import { SERIES } from './catalog/series'
 import type { CollectionSource, FestivalTheme, StageLook } from './catalog/series/types'
 import type { TicketSeller } from './catalog/tickets'
@@ -12,6 +13,8 @@ export interface ResolvedFestival {
   /** Catalog festivals come with the user's own pins appended. */
   festival: Festival
   notices: readonly string[]
+  /** Topics drawn as a picture beside a speech-bubble box, above the plain notices (catalog only). */
+  noticeBlocks: readonly NoticeBlock[]
   /** Line-up posters while there is no timetable (catalog only). */
   lineup: readonly LineupImage[]
   /** Official guide pages for the info tab (catalog only). */
@@ -60,6 +63,7 @@ export function resolveFestival(data: UserData, festivalId: string): ResolvedFes
       source: 'catalog',
       festival: own.length ? { ...fromCatalog, pins: [...fromCatalog.pins, ...own] } : fromCatalog,
       notices: entry.notices,
+      noticeBlocks: entry.noticeBlocks ?? [],
       lineup: entry.lineup,
       guides: entry.guides,
       sources: series?.sources ?? [],
@@ -72,7 +76,7 @@ export function resolveFestival(data: UserData, festivalId: string): ResolvedFes
   }
   const archived = data.archivedFestivals.find((f) => f.id === festivalId)
   return archived
-    ? { source: 'archived', festival: archived, notices: [], lineup: [], guides: [], sources: [], tickets: [], theme: null, edition: null, closedTabs: [] }
+    ? { source: 'archived', festival: archived, notices: [], noticeBlocks: [], lineup: [], guides: [], sources: [], tickets: [], theme: null, edition: null, closedTabs: [] }
     : null
 }
 

@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { FestivalSchema } from '../schema'
 import { WONDERLIVET_2026_ID, WONDERLIVET_2026_KEY, WONDERLIVET_SERIES } from './ids'
-import { WONDERLIVET_2026_NOTICES, createWonderlivet2026 } from './wonderlivet2026'
+import { WONDERLIVET_2026_NOTICES, WONDERLIVET_2026_NOTICE_BLOCKS, createWonderlivet2026 } from './wonderlivet2026'
 import { catalogEntry, festivalMapFor } from './index'
 import { SERIES } from './series'
 import { isInsideBounds } from '../../lib/geo'
@@ -103,10 +103,39 @@ describe('createWonderlivet2026', () => {
 
   test('comes with notices from the official FAQ, and the design of its own', () => {
     expect(WONDERLIVET_2026_NOTICES.length).toBeGreaterThan(0)
-    expect(WONDERLIVET_2026_NOTICES.join(' ')).toContain('포토부스는 9홀 안')
     expect(WONDERLIVET_2026_NOTICES.join(' ')).toContain('공연장 밖 티켓부스')
     expect(catalogEntry(WONDERLIVET_2026_ID)?.guides).toEqual([])
     expect(Object.keys(SERIES[WONDERLIVET_SERIES]?.theme.stages ?? {})).toEqual(['wonder', 'livet'])
     expect(SERIES[WONDERLIVET_SERIES]?.sources.map((s) => s.value)).toEqual(['@wonderlivet'])
+  })
+
+  describe('notice blocks (the zigzag part of the info tab)', () => {
+    const blocks = WONDERLIVET_2026_NOTICE_BLOCKS
+
+    test('has the four topics in order, each with a picture and a main color', () => {
+      expect(blocks.map((b) => b.id)).toEqual(['ticket', 'lockers', 'food', 'photo'])
+      for (const block of blocks) {
+        expect(block.art).toBeTruthy()
+        expect(block.tone).toMatch(/^#[0-9a-f]{6}$/)
+        expect(block.title.length).toBeGreaterThan(0)
+      }
+    })
+
+    test('keeps every line short (one fact a line, at most four lines a block)', () => {
+      for (const block of blocks) {
+        expect(block.lines.length).toBeGreaterThanOrEqual(1)
+        expect(block.lines.length).toBeLessThanOrEqual(4)
+        for (const line of block.lines) expect(line.replaceAll('**', '').length).toBeLessThanOrEqual(40)
+      }
+    })
+
+    test('carries the photo booth facts from the official post (hall 9, 11:00, 5,000 won, card only)', () => {
+      const photo = blocks.find((b) => b.id === 'photo')?.lines.join(' ') ?? ''
+      for (const fact of ['9홀 안', '11:00', '5,000원', '카드']) expect(photo).toContain(fact)
+    })
+
+    test('is attached to the festival in the catalog', () => {
+      expect(catalogEntry(WONDERLIVET_2026_ID)?.noticeBlocks).toBe(blocks)
+    })
   })
 })
