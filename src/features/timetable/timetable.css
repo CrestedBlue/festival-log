@@ -482,10 +482,16 @@
   color: var(--stage-color);
 }
 
+/* Too short for a ticket (the notches would eat it): a plain pill instead. */
 .tt-set--compact {
   display: flex;
   align-items: center;
   padding-block: 2px;
+  padding-inline: 10px;
+  border-radius: 999px;
+  background: var(--fill);
+  -webkit-mask: none;
+  mask: none;
 }
 
 .tt-set--compact .tt-set__time,
