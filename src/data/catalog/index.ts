@@ -1,24 +1,22 @@
 import { seriesMapFor, type FestivalMap } from '../../features/map/festivalMaps'
 import type { ClosableTab } from '../../lib/route'
 import type { Festival } from '../schema'
-import type { GuideSet } from './guide'
 import type { LineupImage } from './lineup'
 import type { NoticeBlock } from './noticeBlock'
 import type { TicketSeller } from './tickets'
-import { BML_2026_GUIDES, BML_2026_NOTICES, BML_2026_TICKETS, createBml2026 } from './bml2026'
+import { BML_2026_NOTICES, BML_2026_TICKETS, createBml2026 } from './bml2026'
 import { BUSAN_ROCK_2026_NOTICES, BUSAN_ROCK_2026_TICKETS, createBusanRock2026 } from './busanRock2026'
 import { CDF_2026_LINEUP, CDF_2026_NOTICES, CDF_2026_TICKETS, createCdf2026 } from './cdf2026'
 import { GRAND_MINT_2026_NOTICES, GRAND_MINT_2026_TICKETS, createGrandMint2026 } from './grandMint2026'
 import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICES, HERO_ROCK_2026_TICKETS, createHeroRock2026 } from './heroRock2026'
-import { JUMF_2026_GUIDES, JUMF_2026_NOTICES, JUMF_2026_TICKETS, createJumf2026 } from './jumf2026'
-import { LETS_ROCK_2026_GUIDES, LETS_ROCK_2026_NOTICES, LETS_ROCK_2026_TICKETS, createLetsRock2026 } from './letsRock2026'
+import { JUMF_2026_NOTICES, JUMF_2026_TICKETS, createJumf2026 } from './jumf2026'
+import { LETS_ROCK_2026_NOTICES, LETS_ROCK_2026_TICKETS, createLetsRock2026 } from './letsRock2026'
 import { PENTAPORT_2025_NOTICES, createPentaport2025 } from './pentaport2025'
-import { PENTAPORT_2026_GUIDES, PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
+import { PENTAPORT_2026_NOTICE_BLOCKS, PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
 import { PENTAPORT_2027_NOTICES, createPentaport2027 } from './pentaport2027'
 import { SJF_2026_NOTICES, SJF_2026_TICKETS, createSjf2026 } from './sjf2026'
 import { THE_GLOW_2026_NOTICES, THE_GLOW_2026_TICKETS, createTheGlow2026 } from './theGlow2026'
 import {
-  WONDERLIVET_2026_GUIDES,
   WONDERLIVET_2026_NOTICE_BLOCKS,
   WONDERLIVET_2026_NOTICES,
   WONDERLIVET_2026_TICKETS,
@@ -80,8 +78,6 @@ export interface CatalogEntry {
   noticeBlocks?: readonly NoticeBlock[]
   /** Line-up posters, shown on the timetable tab until the timetable is out (admin). */
   lineup: readonly LineupImage[]
-  /** Official guide pages (checklist, venue map, …) swiped through on the info tab (admin). */
-  guides: readonly GuideSet[]
   /** Official ticket sellers of this edition, shown as chips by the info tab's ticket title (admin). */
   tickets: readonly TicketSeller[]
   /**
@@ -91,7 +87,7 @@ export interface CatalogEntry {
    */
   closedTabs?: readonly ClosableTab[]
   /**
-   * When this edition last got new content (timetable, line-up, notices, guides, map, pins), YYYY-MM-DD. Moving it
+   * When this edition last got new content (timetable, line-up, notices, map, pins), YYYY-MM-DD. Moving it
    * on puts a red dot on the festival for users who have it on their list (data/updates.ts) — bump it with every
    * such change (COLLECT.md).
    */
@@ -107,7 +103,6 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createGrandMint2026,
     notices: GRAND_MINT_2026_NOTICES,
     lineup: [],
-    guides: [],
     tickets: GRAND_MINT_2026_TICKETS,
     updatedAt: '2026-11-04',
   },
@@ -119,7 +114,6 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createHeroRock2026,
     notices: HERO_ROCK_2026_NOTICES,
     lineup: HERO_ROCK_2026_LINEUP,
-    guides: [],
     tickets: HERO_ROCK_2026_TICKETS,
     updatedAt: '2026-10-27',
   },
@@ -130,11 +124,11 @@ export const CATALOG: readonly CatalogEntry[] = [
     key: PENTAPORT_2026_KEY,
     create: createPentaport2026,
     notices: PENTAPORT_2026_NOTICES,
+    noticeBlocks: PENTAPORT_2026_NOTICE_BLOCKS,
     lineup: [],
-    guides: PENTAPORT_2026_GUIDES,
     // The official site's ticket page was emptied after the festival: no seller confirmed yet.
     tickets: [],
-    updatedAt: '2026-11-04',
+    updatedAt: '2026-11-26',
   },
   {
     id: PENTAPORT_2027_ID,
@@ -144,7 +138,6 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createPentaport2027,
     notices: PENTAPORT_2027_NOTICES,
     lineup: [],
-    guides: [],
     tickets: [],
     // only the dates are out (COLLECT.md: a new edition opens these when the line-up / this year's map come in)
     closedTabs: ['timetable', 'map'],
@@ -158,7 +151,6 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createPentaport2025,
     notices: PENTAPORT_2025_NOTICES,
     lineup: [],
-    guides: [],
     tickets: [],
     updatedAt: '2026-11-04',
   },
@@ -170,7 +162,6 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createJumf2026,
     notices: JUMF_2026_NOTICES,
     lineup: [],
-    guides: JUMF_2026_GUIDES,
     tickets: JUMF_2026_TICKETS,
     updatedAt: '2026-11-04',
   },
@@ -183,7 +174,6 @@ export const CATALOG: readonly CatalogEntry[] = [
     notices: WONDERLIVET_2026_NOTICES,
     noticeBlocks: WONDERLIVET_2026_NOTICE_BLOCKS,
     lineup: [],
-    guides: WONDERLIVET_2026_GUIDES,
     tickets: WONDERLIVET_2026_TICKETS,
     updatedAt: '2026-11-26',
   },
@@ -195,7 +185,6 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createCdf2026,
     notices: CDF_2026_NOTICES,
     lineup: CDF_2026_LINEUP,
-    guides: [],
     tickets: CDF_2026_TICKETS,
     updatedAt: '2026-11-04',
   },
@@ -207,7 +196,6 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createBml2026,
     notices: BML_2026_NOTICES,
     lineup: [],
-    guides: BML_2026_GUIDES,
     tickets: BML_2026_TICKETS,
     updatedAt: '2026-11-04',
   },
@@ -219,7 +207,6 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createSjf2026,
     notices: SJF_2026_NOTICES,
     lineup: [],
-    guides: [],
     tickets: SJF_2026_TICKETS,
     updatedAt: '2026-11-04',
   },
@@ -231,7 +218,6 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createLetsRock2026,
     notices: LETS_ROCK_2026_NOTICES,
     lineup: [],
-    guides: LETS_ROCK_2026_GUIDES,
     tickets: LETS_ROCK_2026_TICKETS,
     updatedAt: '2026-11-04',
   },
@@ -243,7 +229,6 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createBusanRock2026,
     notices: BUSAN_ROCK_2026_NOTICES,
     lineup: [],
-    guides: [],
     tickets: BUSAN_ROCK_2026_TICKETS,
     updatedAt: '2026-11-04',
   },
@@ -255,7 +240,6 @@ export const CATALOG: readonly CatalogEntry[] = [
     create: createTheGlow2026,
     notices: THE_GLOW_2026_NOTICES,
     lineup: [],
-    guides: [],
     tickets: THE_GLOW_2026_TICKETS,
     updatedAt: '2026-11-08',
   },

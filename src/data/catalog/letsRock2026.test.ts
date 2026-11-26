@@ -41,10 +41,7 @@ describe('createLetsRock2026', () => {
     expect(festival.pins.every((p) => p.id.startsWith(`${LETS_ROCK_SERIES}-`))).toBe(true)
   })
 
-  test('shows the official site map as a guide, its layout not placed on the map (the drawing gives no direction)', () => {
-    const guides = catalogEntry(LETS_ROCK_2026_ID)?.guides ?? []
-    expect(guides.map((g) => [g.title, g.images.length])).toEqual([['사이트맵', 1]])
-    expect(guides[0]?.images[0]?.alt).toContain('메인 게이트')
+  test('does not place the site map layout on the map (the drawing gives no direction)', () => {
     // the map draws 젊음의광장 and names the stage on it; no booth is placed
     expect(festival.pins).toEqual([])
     expect(festivalMapFor(LETS_ROCK_2026_ID)?.labels.filter((l) => l.kind === 'stage').map((l) => l.stage)).toEqual(['main'])

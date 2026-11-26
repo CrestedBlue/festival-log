@@ -1,7 +1,4 @@
-import notice01 from '../../assets/guides/guide-bml2026-notice-01.webp'
-import notice02 from '../../assets/guides/guide-bml2026-notice-02.webp'
 import type { Festival } from '../schema'
-import type { GuideImage, GuideSet } from './guide'
 import { BML_2026_ID, BML_2026_KEY as KEY } from './ids'
 import { BML } from './series/bml'
 import { stageLook } from './series/theme'
@@ -35,29 +32,6 @@ export const BML_2026_NOTICES: readonly string[] = [
 
 /** Official ticket sellers, as the ticket notice names and links them (NOL ticket, YES24, Naver booking). */
 export const BML_2026_TICKETS: readonly TicketSeller[] = [SELLERS.nol(26002268), SELLERS.yes24(57200), SELLERS.naver(1597631, 7439479)]
-
-const OFFICIAL = '출처: 민트페이퍼 공식 홈페이지 BML2026 공지 (2026)'
-const page = (src: string, alt: string): GuideImage => ({ src, alt, width: 1080, height: 1350 })
-
-/** The two notice pages of the timetable post (2026-04-30), as published. */
-export const BML_2026_GUIDES: readonly GuideSet[] = [
-  {
-    title: '안내 사항',
-    source: OFFICIAL,
-    images: [
-      page(
-        notice01,
-        '우선입장권 티켓 부스 10:00, 티켓 부스 10:10, 인포메이션 부스(현장 판매) 10:40 오픈. 손목밴드는 분실·훼손 시 재발급 불가, 손목밴드를 차야 입장 줄을 설 수 있음. ' +
-          '양도·재판매 금지. 우선입장권 관객은 서브 게이트로 먼저 입장. 작은 가방만 반입, 큰 짐은 물품보관소. Mint Breeze Stage 레저 존은 1인용 매트 권장. 자리 맡기 금지',
-      ),
-      page(
-        notice02,
-        '무대별 마지막 공연 종료 15분 후 남은 물품은 폐기. 재사용 용기 음식물과 500mL 이하 PET 물·음료만 반입(스탠딩 존·실내 공연장은 생수만). 프리 워터존 운영, 텀블러 지참. ' +
-          '무대별 입장 제한 가능. 의료 부스 운영. 다회용기 반납. 민트문화체육센터는 T2 인근, 수강신청 11:30부터 선착순 1인 1강좌. 분실물은 인포메이션 부스',
-      ),
-    ],
-  },
-]
 
 // Stage colors and icons belong to the festival's design (series/bml.ts), keyed the same way.
 const STAGES = {

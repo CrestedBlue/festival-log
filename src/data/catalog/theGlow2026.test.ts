@@ -72,7 +72,7 @@ describe('createTheGlow2026', () => {
   })
 
   test('is in the catalog under its own festival code, all tabs open', () => {
-    expect(catalogEntry(THE_GLOW_2026_ID)).toMatchObject({ series: THE_GLOW_SERIES, key: THE_GLOW_2026_KEY, lineup: [], guides: [] })
+    expect(catalogEntry(THE_GLOW_2026_ID)).toMatchObject({ series: THE_GLOW_SERIES, key: THE_GLOW_2026_KEY, lineup: [] })
     expect(catalogEntry(THE_GLOW_2026_ID)?.closedTabs).toBeUndefined()
     expect(THE_GLOW_2026_KEY).toBe('theglow2026')
   })

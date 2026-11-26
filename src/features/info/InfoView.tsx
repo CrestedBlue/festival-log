@@ -1,6 +1,5 @@
 import { useState, type FormEvent } from 'react'
 import { EditIcon } from '../../components/icons'
-import type { GuideSet } from '../../data/catalog/guide'
 import type { NoticeBlock } from '../../data/catalog/noticeBlock'
 import { sourceHref, sourceLabel } from '../../data/catalog/series/sources'
 import type { CollectionSource } from '../../data/catalog/series/types'
@@ -9,7 +8,6 @@ import { updateData } from '../../data/store'
 import { setTicketLink } from '../../data/userData'
 import type { ClosableTab } from '../../lib/route'
 import { linkLabel, parseTicketLink } from '../../lib/ticketLink'
-import { GuideCarousel } from './GuideCarousel'
 import { NoticeBlocks } from './NoticeBlocks'
 import './info.css'
 
@@ -21,8 +19,6 @@ interface Props {
   notices: readonly string[]
   /** Topics drawn as a picture beside a speech-bubble box, above the plain notices (admin). */
   noticeBlocks?: readonly NoticeBlock[]
-  /** Official guide pages (checklist, venue map, …) from the catalog (admin). */
-  guides: readonly GuideSet[]
   /** Official channels (Instagram, website) from the catalog (admin). */
   sources: readonly CollectionSource[]
   /** Official ticket sellers of this edition from the catalog (admin). */
@@ -115,7 +111,7 @@ function TicketLink({ festivalId, ticketLink }: Pick<Props, 'festivalId' | 'tick
   )
 }
 
-export function InfoView({ festivalId, ticketLink, notices, noticeBlocks = [], guides, sources, tickets, closedTabs = [] }: Props) {
+export function InfoView({ festivalId, ticketLink, notices, noticeBlocks = [], sources, tickets, closedTabs = [] }: Props) {
   const closedNote = CLOSED_NOTE[(['timetable', 'map'] as const).filter((tab) => closedTabs.includes(tab)).join(',')]
   return (
     <div className="info">
@@ -175,9 +171,6 @@ export function InfoView({ festivalId, ticketLink, notices, noticeBlocks = [], g
           noticeBlocks.length === 0 && <p className="hint">아직 등록된 안내가 없어요.</p>
         )}
       </section>
-      {guides.map((guide, i) => (
-        <GuideCarousel key={`${festivalId}-${guide.title}`} guide={guide} headingId={`info-guide-${i}`} />
-      ))}
     </div>
   )
 }

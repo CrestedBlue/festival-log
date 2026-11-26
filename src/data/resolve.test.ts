@@ -24,7 +24,6 @@ describe('resolveFestival', () => {
       notices: [],
       noticeBlocks: [],
       lineup: [],
-      guides: [],
       sources: [],
       tickets: [],
       theme: null,
@@ -37,10 +36,6 @@ describe('resolveFestival', () => {
     expect(resolveFestival(makeUserData(), PENTAPORT_2026_ID)?.sources.map((s) => s.value)).toEqual(['@pentaportrf', 'https://www.pentaport.co.kr/Notice'])
   })
 
-  test('carries the guide images of a catalog festival', () => {
-    expect(resolveFestival(makeUserData(), PENTAPORT_2026_ID)?.guides.map((g) => g.title)).toEqual(['필수 체크리스트', '행사장 안내도'])
-    expect(resolveFestival(makeUserData(), GRAND_MINT_2026_ID)?.guides).toEqual([])
-  })
 
   test('carries the official ticket sellers of the edition', () => {
     expect(resolveFestival(makeUserData(), HERO_ROCK_2026_ID)?.tickets.map((s) => s.url)).toEqual(['https://ticket.melon.com/performance/index.htm?prodId=214033'])

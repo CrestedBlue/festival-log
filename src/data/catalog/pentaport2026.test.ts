@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { FestivalSchema } from '../schema'
 import { PENTAPORT_2026_ID, PENTAPORT_2026_KEY, PENTAPORT_SERIES } from './ids'
-import { PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
+import { PENTAPORT_2026_NOTICE_BLOCKS, PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
 import { catalogEntry, festivalMapFor } from './index'
 import { isInsideBounds } from '../../lib/geo'
 
@@ -88,16 +88,28 @@ describe('createPentaport2026', () => {
     expect(new Set(festival.pins.filter((p) => p.kind === 'toilet').map((p) => p.group))).toEqual(new Set(['화장실', '장애인 화장실']))
   })
 
-  test('comes with the official checklist and venue map to swipe through', () => {
-    const guides = catalogEntry(PENTAPORT_2026_ID)?.guides ?? []
-    expect(guides.map((g) => [g.title, g.images.length])).toEqual([
-      ['필수 체크리스트', 10],
-      ['행사장 안내도', 1],
-    ])
-    expect(guides.flatMap((g) => g.images).every((image) => image.alt.length > 10 && image.width === 1080 && image.height === 1350)).toBe(true)
-  })
-
   test('has notices from the timetable post', () => {
     expect(PENTAPORT_2026_NOTICES.length).toBeGreaterThan(0)
+  })
+
+  test('shows the official checklist as topic blocks, each opening with its name in bold', () => {
+    expect(PENTAPORT_2026_NOTICE_BLOCKS.map((b) => b.id)).toEqual(['entry', 'picnic', 'food', 'rules', 'medical', 'access'])
+    for (const block of PENTAPORT_2026_NOTICE_BLOCKS) {
+      expect(block.lines.length, block.id).toBeLessThanOrEqual(12)
+      expect(block.lines[0]?.startsWith(`**${block.title}**`), block.id).toBe(true)
+      for (const line of block.lines) expect(line.replaceAll('**', '').length, line).toBeLessThanOrEqual(60)
+    }
+    expect(catalogEntry(PENTAPORT_2026_ID)?.noticeBlocks).toBe(PENTAPORT_2026_NOTICE_BLOCKS)
+  })
+
+  test('keeps the checklist facts in the blocks and not in the plain notices', () => {
+    const text = (id: string) => PENTAPORT_2026_NOTICE_BLOCKS.find((b) => b.id === id)?.lines.join(' ').replaceAll('**', '') ?? ''
+    expect(text('entry')).toContain('10:30')
+    expect(text('food')).toContain('500ml')
+    expect(text('food')).toContain('캔 불가')
+    expect(text('picnic')).toContain('장우산 불가')
+    expect(text('medical')).toContain('캡처·사본 불가')
+    expect(text('access')).toContain('1인')
+    for (const word of ['10시 30분', '반입', '생수', '의료', '돗자리']) expect(PENTAPORT_2026_NOTICES.join(' ')).not.toContain(word)
   })
 })

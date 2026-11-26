@@ -1,5 +1,4 @@
 import type { Festival } from '../schema'
-import type { GuideSet } from './guide'
 import { WONDERLIVET_2026_ID, WONDERLIVET_2026_KEY as KEY } from './ids'
 import { WONDERLIVET } from './series/wonderlivet'
 import { stageLook } from './series/theme'
@@ -29,9 +28,6 @@ export const WONDERLIVET_2026_NOTICES: readonly string[] = [
 
 /** Official ticket sellers, in the order the official site's TICKET section links them (wonderli.vet). */
 export const WONDERLIVET_2026_TICKETS: readonly TicketSeller[] = [SELLERS.melon(213793), SELLERS.yes24(59840), SELLERS.ticketlink(65048)]
-
-/** No official guide pages yet: the FAQ is text (in the notices); the festival map (Instagram 11/9) is for the map tab, not a guide. */
-export const WONDERLIVET_2026_GUIDES: readonly GuideSet[] = []
 
 // Shown as the timetable names them. Colors and icons belong to the festival's design (series/wonderlivet.ts).
 const STAGES = {

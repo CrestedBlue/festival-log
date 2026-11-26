@@ -1,26 +1,26 @@
-import directions from '../../assets/notice/wonderlivet-directions.webp'
-import food from '../../assets/notice/wonderlivet-food.webp'
-import goods from '../../assets/notice/wonderlivet-goods.webp'
-import lockers from '../../assets/notice/wonderlivet-lockers.webp'
-import photo from '../../assets/notice/wonderlivet-photo.webp'
-import rules from '../../assets/notice/wonderlivet-rules.webp'
-import ticket from '../../assets/notice/wonderlivet-ticket.webp'
+import directions from '../../assets/notice/directions.webp'
+import food from '../../assets/notice/food.webp'
+import goods from '../../assets/notice/goods.webp'
+import lockers from '../../assets/notice/lockers.webp'
+import photo from '../../assets/notice/photo.webp'
+import rules from '../../assets/notice/rules.webp'
+import ticket from '../../assets/notice/ticket.webp'
 import type { NoticeBlock } from './noticeBlock'
 
 /**
  * The topics worth a picture on the info tab (the user's sketch, 2026-11-26): the ticket booth, goods, the lockers,
- * the food zone, the photo booth, what is not allowed and how to get there. The wristband facts are in the ticket block (the user, 2026-11-26: "wristband = ticket" was how to sort
+ * the food zone, the photo booth, what is not allowed and how to get there. The ticket booth and the wristband facts are in the entry block (the user, 2026-11-26: one block named 입장, as Pentaport's) (the user, 2026-11-26: "wristband = ticket" was how to sort
  * them, not a line to print). The facts are the notices' (timetable post, FAQ, 11/9–11/24 posts); each picture
  * is its own color so they do not look alike. The first line of a block starts with the topic's name in bold (the user, 2026-11-26). No stall lists. Pictures come from Codex (image generation), in one style.
  */
 export const WONDERLIVET_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
   {
-    id: 'ticket',
-    title: '티켓부스',
+    id: 'entry',
+    title: '입장',
     art: ticket,
     tone: '#d9482e',
     lines: [
-      '**티켓부스** **10:00**부터 공연 끝까지',
+      '**입장** 티켓부스 **10:00**부터 공연 끝까지',
       '메인 게이트 **11:00** · 첫 공연 **12:00**',
       '모바일 티켓 + **본인 실물 신분증**, 동행인과 함께',
       '**캡처 불가** · **대리 수령 불가** · **재발급 불가**',
@@ -76,7 +76,7 @@ export const WONDERLIVET_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
     id: 'rules',
     title: '금지',
     art: rules,
-    tone: '#6b6c70',
+    tone: '#5f6470',
     lines: ['**금지** 공연 **촬영·녹음**', '일부 아티스트는 **기념사진 포함 모든 촬영 금지**', '흡연은 전시장 밖 **지정 흡연구역**에서만'],
   },
   {

@@ -62,7 +62,6 @@ export default function App() {
           ticketLink={data.ticketLinks[festival.id] ?? null}
           notices={resolved?.notices ?? []}
           noticeBlocks={resolved?.noticeBlocks ?? []}
-          guides={resolved?.guides ?? []}
           sources={resolved?.sources ?? []}
           tickets={resolved?.tickets ?? []}
           closedTabs={closedTabs}

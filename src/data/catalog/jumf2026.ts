@@ -1,11 +1,4 @@
-import checklist01 from '../../assets/guides/guide-jumf2026-checklist-01.webp'
-import checklist02 from '../../assets/guides/guide-jumf2026-checklist-02.webp'
-import checklist03 from '../../assets/guides/guide-jumf2026-checklist-03.webp'
-import checklist04 from '../../assets/guides/guide-jumf2026-checklist-04.webp'
-import checklist05 from '../../assets/guides/guide-jumf2026-checklist-05.webp'
-import checklist06 from '../../assets/guides/guide-jumf2026-checklist-06.webp'
 import type { Festival } from '../schema'
-import type { GuideImage, GuideSet } from './guide'
 import { JUMF_2026_ID, JUMF_2026_KEY as KEY } from './ids'
 import { JUMF } from './series/jumf'
 import { stageLook } from './series/theme'
@@ -33,25 +26,6 @@ export const JUMF_2026_NOTICES: readonly string[] = [
 
 /** Official ticket seller: the YES24 page the official homepage links in its TICKET section. */
 export const JUMF_2026_TICKETS: readonly TicketSeller[] = [SELLERS.yes24(58283)]
-
-const OFFICIAL = '출처: 전주얼티밋뮤직페스티벌 공식 홈페이지 (2026)'
-const page = (src: string, alt: string): GuideImage => ({ src, alt, width: 1080, height: 1350 })
-
-/** Official guide pages, as published ("[JUMF 2026] FAQ_체크리스트" of 2026-08-11). */
-export const JUMF_2026_GUIDES: readonly GuideSet[] = [
-  {
-    title: 'FAQ 체크리스트',
-    source: OFFICIAL,
-    images: [
-      page(checklist01, 'FAQ 체크리스트 안내 (Checklist Information)'),
-      page(checklist02, '입장 안내: 티켓부스는 12:00–22:00(메인 게이트 13:00). 현장 판매 1일권 120,000원, 2일권(금/토, 토/일) 174,000원, 3일권 228,000원. 입장할 때 YES24 모바일 티켓과 본인 확인 신분증이 필요하고 예매자 본인만 들어갈 수 있어요'),
-      page(checklist03, '입장 안내: 보안검색에서 걸린 물품은 따로 보관하지 않아요(물품보관소에 맡기거나 폐기). 티켓 양도·명의 변경은 안 되고, 대리 예매면 YES24 모바일 티켓·예매자 신분증 사본·실관람객 신분증을 챙겨요. 주민등록증, 여권, 운전면허증, 외국인등록증, 모바일 신분증(캡처본은 안 돼요)'),
-      page(checklist04, '입장 안내: 1일권은 그날만, 2·3일권 팔찌는 처음 한 번 받아 계속 차요(분실·훼손 시 재발급 안 돼요). 전 연령 관람 가능, 2020년 이후 출생자는 무료(증빙서류, 보호자 동반). 성인 인증 팔찌는 티켓부스에서 신분증을 보여 주고 받아요. 없으면 술을 살 수 없어요'),
-      page(checklist05, '안전·응급·편의: 응급상황은 현장 스태프(점퍼)에게, 온열질환 응급버스·쿨링 수소버스는 사이트맵 참고. 분실물은 종합안내소. 반려동물은 안 돼요(장애인 보조견 제외). 휴대폰 충전은 유료. 군산·익산 셔틀버스는 올해 없어요'),
-      page(checklist06, 'MD·무대·방송: 공식 MD 판매·픽업데스크는 12:00–20:00(다 팔리면 일찍 마감). 마루·너울 스테이지는 듀얼 무대이고 돌출무대는 없어요. 올해는 온라인 생중계가 없어요'),
-    ],
-  },
-]
 
 // Shown with both names, as the official notices call them ("마루(MARU) STAGE").
 // Stage colors and icons belong to the festival's design (series/jumf.ts), keyed the same way.

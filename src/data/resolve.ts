@@ -1,5 +1,4 @@
 import { catalogEntry } from './catalog'
-import type { GuideSet } from './catalog/guide'
 import type { LineupImage } from './catalog/lineup'
 import type { NoticeBlock } from './catalog/noticeBlock'
 import { SERIES } from './catalog/series'
@@ -17,8 +16,6 @@ export interface ResolvedFestival {
   noticeBlocks: readonly NoticeBlock[]
   /** Line-up posters while there is no timetable (catalog only). */
   lineup: readonly LineupImage[]
-  /** Official guide pages for the info tab (catalog only). */
-  guides: readonly GuideSet[]
   /** The festival's official channels (Instagram, website), shown on the info tab (catalog only). */
   sources: readonly CollectionSource[]
   /** This edition's official ticket sellers, chips by the info tab's ticket title (catalog only). */
@@ -65,7 +62,6 @@ export function resolveFestival(data: UserData, festivalId: string): ResolvedFes
       notices: entry.notices,
       noticeBlocks: entry.noticeBlocks ?? [],
       lineup: entry.lineup,
-      guides: entry.guides,
       sources: series?.sources ?? [],
       tickets: entry.tickets,
       theme: series?.theme ?? null,
@@ -76,7 +72,7 @@ export function resolveFestival(data: UserData, festivalId: string): ResolvedFes
   }
   const archived = data.archivedFestivals.find((f) => f.id === festivalId)
   return archived
-    ? { source: 'archived', festival: archived, notices: [], noticeBlocks: [], lineup: [], guides: [], sources: [], tickets: [], theme: null, edition: null, closedTabs: [] }
+    ? { source: 'archived', festival: archived, notices: [], noticeBlocks: [], lineup: [], sources: [], tickets: [], theme: null, edition: null, closedTabs: [] }
     : null
 }
 

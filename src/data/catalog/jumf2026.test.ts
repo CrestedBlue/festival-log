@@ -3,7 +3,7 @@ import { distanceMeters } from '../../lib/geo'
 import { FestivalSchema } from '../schema'
 import { JUMF_2026_ID, JUMF_2026_KEY, JUMF_SERIES } from './ids'
 import { JUMF_2026_NOTICES, createJumf2026 } from './jumf2026'
-import { catalogEntry, festivalMapFor } from './index'
+import { festivalMapFor } from './index'
 
 const DAYS = ['2026-08-14', '2026-08-15', '2026-08-16']
 
@@ -62,10 +62,7 @@ describe('createJumf2026', () => {
     for (const pin of festival.pins) expect(distanceMeters(pin, festival.venue), pin.name).toBeLessThan(600)
   })
 
-  test('comes with the official FAQ checklist and notices', () => {
-    const guides = catalogEntry(JUMF_2026_ID)?.guides ?? []
-    expect(guides.map((g) => [g.title, g.images.length])).toEqual([['FAQ 체크리스트', 6]])
-    expect(guides.flatMap((g) => g.images).every((image) => image.alt.length > 10)).toBe(true)
+  test('comes with notices', () => {
     expect(JUMF_2026_NOTICES.length).toBeGreaterThan(0)
   })
 })
