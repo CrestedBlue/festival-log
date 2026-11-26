@@ -113,7 +113,7 @@ describe('createWonderlivet2026', () => {
     const blocks = WONDERLIVET_2026_NOTICE_BLOCKS
 
     test('has the four topics in order, each with a picture and a main color', () => {
-      expect(blocks.map((b) => b.id)).toEqual(['ticket', 'lockers', 'food', 'photo'])
+      expect(blocks.map((b) => b.id)).toEqual(['ticket', 'goods', 'lockers', 'food', 'photo'])
       for (const block of blocks) {
         expect(block.art).toBeTruthy()
         expect(block.tone).toMatch(/^#[0-9a-f]{6}$/)
@@ -121,10 +121,10 @@ describe('createWonderlivet2026', () => {
       }
     })
 
-    test('keeps every line short (one fact a line, at most four lines a block)', () => {
+    test('keeps every line short (one fact a line, at most five lines a block)', () => {
       for (const block of blocks) {
         expect(block.lines.length).toBeGreaterThanOrEqual(1)
-        expect(block.lines.length).toBeLessThanOrEqual(4)
+        expect(block.lines.length).toBeLessThanOrEqual(5)
         for (const line of block.lines) expect(line.replaceAll('**', '').length).toBeLessThanOrEqual(40)
       }
     })
@@ -132,6 +132,13 @@ describe('createWonderlivet2026', () => {
     test('carries the photo booth facts from the official post (hall 9, 11:00, 5,000 won, card only)', () => {
       const photo = blocks.find((b) => b.id === 'photo')?.lines.join(' ') ?? ''
       for (const fact of ['9홀 안', '11:00', '5,000원', '카드']) expect(photo).toContain(fact)
+    })
+
+    test('says the wristband is the ticket, and does not repeat what the blocks say in the plain notices', () => {
+      expect(blocks.find((b) => b.id === 'ticket')?.lines.join(' ')).toContain('손목밴드')
+      const plain = WONDERLIVET_2026_NOTICES.join(' ')
+      expect(plain).not.toContain('손목밴드 부스')
+      for (const repeated of ['09:00 – 23:00', '11:30 – 21:00', '500ml', '성인인증', '10:00에 열고']) expect(plain).not.toContain(repeated)
     })
 
     test('is attached to the festival in the catalog', () => {

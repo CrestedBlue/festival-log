@@ -214,6 +214,8 @@
 
 .notice-block__lines strong {
   font-weight: 800;
+  /* a time or a price stays on one line */
+  white-space: nowrap;
 }
 
 /* Official guide pages: one page wide, swipe (or drag) sideways, snapping page by page. */
