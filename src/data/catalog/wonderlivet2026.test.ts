@@ -129,6 +129,10 @@ describe('createWonderlivet2026', () => {
       }
     })
 
+    test('starts each block with its topic name on the first line (e.g. "푸드존 7·8홀, 9홀 안")', () => {
+      for (const block of blocks) expect(block.lines[0]?.replaceAll('**', '').startsWith(block.title)).toBe(true)
+    })
+
     test('carries the photo booth facts from the official post (hall 9, 11:00, 5,000 won, card only)', () => {
       const photo = blocks.find((b) => b.id === 'photo')?.lines.join(' ') ?? ''
       for (const fact of ['9홀 안', '11:00', '5,000원', '카드']) expect(photo).toContain(fact)
