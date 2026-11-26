@@ -1,8 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { registerSW } from 'virtual:pwa-register'
 import App from './App'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { isAdminPath } from './lib/route'
+import { watchForUpdates } from './lib/swUpdate'
 import './styles/tokens.css'
 import './styles/global.css'
 import './styles/shell.css'
@@ -30,6 +32,20 @@ function reopenAsAdminPage(): boolean {
   return true
 }
 
+/**
+ * A new deploy is fetched in the background while the stored version opens; when it takes over, reload onto it at once
+ * (autoUpdate) instead of waiting for a second refresh, and keep looking for one while the app is open (swUpdate.ts).
+ */
+function startServiceWorker() {
+  registerSW({
+    immediate: true,
+    onRegisteredSW: (_url, registration) => {
+      if (registration) watchForUpdates(registration)
+    },
+    onRegisterError: (error: unknown) => console.error('[festival-log] could not register the service worker', error),
+  })
+}
+
 function renderApp(root: HTMLElement) {
   createRoot(root).render(
     <StrictMode>
@@ -43,4 +59,7 @@ function renderApp(root: HTMLElement) {
 const root = document.getElementById('root')
 if (!root) throw new Error('#root element is missing from index.html')
 
-if (!(isAdminPath(window.location.pathname, import.meta.env.BASE_URL) && reopenAsAdminPage())) renderApp(root)
+if (!(isAdminPath(window.location.pathname, import.meta.env.BASE_URL) && reopenAsAdminPage())) {
+  startServiceWorker()
+  renderApp(root)
+}
