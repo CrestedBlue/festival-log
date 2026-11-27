@@ -84,19 +84,21 @@
   pointer-events: none;
 }
 
-/* The add button sits right under the title (row 2), beside the picture; the day tickets then come in row 3. */
+/* The add button runs the full width right under the title (row 2), under the picture too; the day tickets then come
+   in row 3, and the picture stays in the title row. */
 .app-header__action {
-  grid-column: 1;
+  grid-column: 1 / -1;
   grid-row: 2;
   min-width: 0;
 }
 
 .app-header--with-action .app-header__art {
-  grid-row: 1 / span 2;
+  grid-row: 1;
 }
 
-.app-header--with-action.app-header--with-controls .app-header__art {
-  grid-row: 1 / span 3;
+/* the old strip's room under it, where no day tickets follow */
+.app-header--with-action:not(.app-header--with-controls) .app-header__action {
+  margin-bottom: var(--space-2);
 }
 
 .app-header--with-action .app-header__controls {
@@ -373,23 +375,29 @@
 }
 
 /* A festival opened from the catalog but not on my list: one quiet line saying it is only to look at. */
+/* The same box as the old "둘러보는 중" strip (the user, 2026-11-27: "이만큼 크기를 지켜달라"): full width, 6px × 12px
+   padding, a 1.5px edge, small text. */
 .add-festival-bar {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 6px 14px 6px 10px;
-  border: none;
+  width: 100%;
+  padding: 6px var(--space-3);
+  /* option B of the Codex mockups (the user, 2026-11-27): a soft tint of the main colour with its outline */
+  border: 1.5px solid var(--accent-fill);
   border-radius: 999px;
-  background: var(--accent-fill);
-  color: var(--accent-on);
+  background: color-mix(in oklab, var(--accent-fill) 14%, var(--color-paper));
+  color: var(--accent-text);
   font: inherit;
   font-size: var(--text-sm);
   font-weight: 800;
 }
 
 .add-festival-bar svg {
-  width: 16px;
-  height: 16px;
+  width: 1em;
+  height: 1em;
+  stroke-width: 2.5;
 }
 
 .add-festival-bar:active {
