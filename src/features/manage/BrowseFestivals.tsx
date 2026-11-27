@@ -4,7 +4,7 @@ import { activeFestival, resolveFestival } from '../../data/resolve'
 import type { Festival, UserData } from '../../data/schema'
 import { showNotice, updateData } from '../../data/store'
 import { hasNewContent, markSeen } from '../../data/updates'
-import { addMyFestival, setActiveFestival } from '../../data/userData'
+import { addMyFestival, setActiveFestival, viewFestival } from '../../data/userData'
 import { artistHit, groupByMonth, matchesQuery } from './browse'
 import { FestivalRow } from './FestivalRow'
 import { ALL_YEARS, inShownYear } from './years'
@@ -33,11 +33,12 @@ export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: P
   const mine = new Set(data.myFestivalIds)
   const archived = new Set(data.archivedFestivals.map((f) => f.id))
 
-  const pick = (festival: Festival) => {
-    const isMine = mine.has(festival.id)
-    updateData((d) => markSeen(isMine ? setActiveFestival(d, festival.id) : addMyFestival(d, festival.id), festival.id))
-    // switching needs no word (the header changes); adding says so
-    if (!isMine) showNotice('info', `'${festival.name}'를 추가했어요.`)
+  // a row opens the festival; one not on my list only to look at (the user, 2026-11-27: only + adds it)
+  const pick = (festival: Festival) =>
+    updateData((d) => (mine.has(festival.id) ? markSeen(setActiveFestival(d, festival.id), festival.id) : viewFestival(d, festival.id)))
+  const add = (festival: Festival) => {
+    updateData((d) => markSeen(addMyFestival(d, festival.id), festival.id))
+    showNotice('info', `'${festival.name}'를 추가했어요.`)
   }
 
   return (
@@ -58,7 +59,7 @@ export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: P
               <h3 className="month__label">{group.label}</h3>
               <ul className="fest-list">
                 {group.festivals.map((festival) => (
-                  <li key={festival.id}>
+                  <li key={festival.id} className="fest-list__browse">
                     <FestivalRow
                       festival={festival}
                       today={today}
@@ -70,7 +71,7 @@ export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: P
                             <CheckIcon />
                           </span>
                         ) : (
-                          <span className="fest-row__state" aria-label="추가하기">
+                          <span className="fest-row__state" aria-hidden="true">
                             <PlusIcon />
                           </span>
                         )
@@ -79,6 +80,10 @@ export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: P
                       note={artistHit(festival, query, lineupOf(festival.id)) ?? undefined}
                       onPick={() => pick(festival)}
                     />
+                    {/* the + looks as before, inside the row; only a tap on it adds (the row itself just opens it) */}
+                    {!mine.has(festival.id) && (
+                      <button type="button" className="fest-add-hit" aria-label={`'${festival.name}' 내 페스티벌에 추가`} onClick={() => add(festival)} />
+                    )}
                   </li>
                 ))}
               </ul>

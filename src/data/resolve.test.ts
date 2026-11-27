@@ -71,6 +71,11 @@ describe('activeFestival', () => {
     expect(activeFestival(makeUserData({ myFestivalIds: [GRAND_MINT_2026_ID], activeFestivalId: 'gone' }))?.festival.id).toBe(GRAND_MINT_2026_ID)
     expect(activeFestival(makeUserData({ myFestivalIds: [], activeFestivalId: null }))).toBeNull()
   })
+
+  test('shows a catalog festival opened from the catalog though it is not on my list, but not an unknown one', () => {
+    expect(activeFestival(makeUserData({ myFestivalIds: [], activeFestivalId: HERO_ROCK_2026_ID }))?.festival.id).toBe(HERO_ROCK_2026_ID)
+    expect(activeFestival(makeUserData({ myFestivalIds: [], activeFestivalId: 'gone' }))).toBeNull()
+  })
 })
 
 describe('festivalMark', () => {

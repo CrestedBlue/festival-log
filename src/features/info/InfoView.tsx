@@ -25,6 +25,8 @@ interface Props {
   tickets: readonly TicketSeller[]
   /** Tabs this edition has not opened yet (its timetable or map is not out). */
   closedTabs?: readonly ClosableTab[]
+  /** Not on my list: no ticket link to keep. */
+  readOnly?: boolean
 }
 
 // what the closed tabs are called, by the closed tabs in tab order
@@ -111,7 +113,7 @@ function TicketLink({ festivalId, ticketLink }: Pick<Props, 'festivalId' | 'tick
   )
 }
 
-export function InfoView({ festivalId, ticketLink, notices, noticeBlocks = [], sources, tickets, closedTabs = [] }: Props) {
+export function InfoView({ festivalId, ticketLink, notices, noticeBlocks = [], sources, tickets, closedTabs = [], readOnly = false }: Props) {
   const closedNote = CLOSED_NOTE[(['timetable', 'map'] as const).filter((tab) => closedTabs.includes(tab)).join(',')]
   return (
     <div className="info">
@@ -137,7 +139,7 @@ export function InfoView({ festivalId, ticketLink, notices, noticeBlocks = [], s
             </ul>
           )}
         </div>
-        <TicketLink key={festivalId} festivalId={festivalId} ticketLink={ticketLink} />
+        {!readOnly && <TicketLink key={festivalId} festivalId={festivalId} ticketLink={ticketLink} />}
       </section>
       {sources.length > 0 && (
         <section className="panel" aria-labelledby="info-channels">

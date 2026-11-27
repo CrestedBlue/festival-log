@@ -270,6 +270,22 @@
   color: var(--color-warn);
 }
 
+/* the browse list: the row opens a festival; a tap on its + (drawn inside the row) adds it to my list */
+.fest-list__browse {
+  position: relative;
+}
+
+.fest-add-hit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 56px;
+  border: none;
+  border-radius: 0 12px 12px 0;
+  background: transparent;
+}
+
 /* while my list is empty, over the catalog: why the other tabs are locked */
 .manage__hint {
   margin: 0;

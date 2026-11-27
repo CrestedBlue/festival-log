@@ -17,14 +17,18 @@ interface Props {
   now: Date
   /** Day and "my plan" switch, picked in the header (TimetableControls). */
   selection: TimetableSelection
+  /** Not on my list: no favorites to set. */
+  readOnly?: boolean
 }
 
-export function TimetableView({ festival, lineup, favorites, now, selection }: Props) {
+export function TimetableView({ festival, lineup, favorites, now, selection, readOnly = false }: Props) {
   const moment = festivalMoment(now)
   const favoriteSet = new Set(favorites)
   const dayPerformances = festival.performances.filter((p) => p.day === selection.day)
   const liveMoment = selection.day === moment.day ? moment : null
-  const onToggle = (id: string) => updateData((d) => toggleFavorite(d, id))
+  const toggle = (id: string) => updateData((d) => toggleFavorite(d, id))
+  // not on my list: the stars are not there to tap
+  const onToggle = readOnly ? undefined : toggle
 
   // Before the timetable is out there are no days or favorites to pick (the dates may not be set either).
   if (festival.performances.length === 0) {
@@ -39,12 +43,12 @@ export function TimetableView({ festival, lineup, favorites, now, selection }: P
     <section className="timetable" aria-label="타임테이블">
       {festival.stages.length === 0 || dayPerformances.length === 0 ? (
         <p className="timetable__empty">이 날짜에 등록된 공연이 없어요.</p>
-      ) : selection.showMine ? (
+      ) : selection.showMine && !readOnly ? (
         <MyPlanList
           stages={festival.stages}
           performances={dayPerformances.filter((p) => favoriteSet.has(p.id))}
           moment={liveMoment}
-          onToggle={onToggle}
+          onToggle={toggle}
         />
       ) : (
         <TimetableGrid

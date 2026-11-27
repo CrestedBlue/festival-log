@@ -4,6 +4,7 @@ import { BottomNav } from './components/BottomNav'
 import { NoticeBanner } from './components/NoticeBanner'
 import { NowStrip } from './components/NowStrip'
 import { dismissNotice, selectActiveFestival, useAppState } from './data/store'
+import { isMine } from './data/userData'
 import { newContentAnywhere } from './data/updates'
 import { InfoView } from './features/info/InfoView'
 import { ManageView } from './features/manage/ManageView'
@@ -20,6 +21,7 @@ import { festivalMoment } from './lib/time'
 // gone: see lib/chunkReload).
 const MapView = lazy(() => loadChunk(() => import('./features/map/MapView')))
 const NONE_CLOSED: readonly ClosableTab[] = []
+const NO_FAVORITES: readonly string[] = []
 
 export default function App() {
   const { data, notice } = useAppState()
@@ -43,6 +45,9 @@ export default function App() {
   const today = festivalMoment(now).day
   const selection = festival ? timetableSelection(festival, route.params, today) : null
   const accent = resolved?.theme?.accent ?? null
+  // a festival opened from the catalog but not on my list: view-only (no favorites, pins or ticket link)
+  const readOnly = festival !== null && !isMine(data, festival.id)
+  const favorites = readOnly ? NO_FAVORITES : data.favorites
 
   const renderView = () => {
     if (tab === 'manage' || !festival) {
@@ -65,6 +70,7 @@ export default function App() {
           sources={resolved?.sources ?? []}
           tickets={resolved?.tickets ?? []}
           closedTabs={closedTabs}
+          readOnly={readOnly}
         />
       )
     }
@@ -75,6 +81,7 @@ export default function App() {
             key={festival.id}
             festival={festival}
             userPinIds={new Set((data.userPins[festival.id] ?? []).map((pin) => pin.id))}
+            readOnly={readOnly}
           />
         </Suspense>
       )
@@ -84,9 +91,10 @@ export default function App() {
         key={festival.id}
         festival={festival}
         lineup={lineup}
-        favorites={data.favorites}
+        favorites={favorites}
         now={now}
         selection={selection ?? timetableSelection(festival, route.params, today)}
+        readOnly={readOnly}
       />
     )
   }
@@ -104,8 +112,9 @@ export default function App() {
         {showControls && festival && selection && (
           <TimetableControls
             festival={festival}
-            favorites={data.favorites}
+            favorites={favorites}
             selection={selection}
+            readOnly={readOnly}
             today={today}
             setParams={(params) => route.setParams('timetable', params)}
             edition={resolved?.edition ?? null}
@@ -115,7 +124,13 @@ export default function App() {
         )}
       </AppHeader>
       {/* The timetable shows what is on in its own sets; the strip covers the other tabs. */}
-      {festival && tab !== 'timetable' && <NowStrip festival={festival} favorites={data.favorites} now={now} />}
+      {festival && tab !== 'timetable' && <NowStrip festival={festival} favorites={favorites} now={now} />}
+      {/* outside main, so a full-height view (the map) gets the room left under it */}
+      {readOnly && tab !== 'manage' && (
+        <p className="view-only" role="note">
+          둘러보는 중 · <strong>보기만 가능</strong>
+        </p>
+      )}
       <main className="app-main">
         {notice && <NoticeBanner key={notice.id} notice={notice} onDismiss={dismissNotice} />}
         {renderView()}

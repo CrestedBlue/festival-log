@@ -352,3 +352,19 @@
   margin: 0;
   color: var(--color-ink-soft);
 }
+
+/* A festival opened from the catalog but not on my list: one quiet line saying it is only to look at. */
+.view-only {
+  flex: none;
+  margin: 0 var(--space-4) var(--space-2);
+  padding: 6px var(--space-3);
+  border: 1.5px dashed var(--color-line);
+  border-radius: var(--radius-chip, 999px);
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+  text-align: center;
+}
+
+.view-only strong {
+  color: var(--color-ink);
+}

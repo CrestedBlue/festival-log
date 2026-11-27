@@ -16,15 +16,17 @@ interface Props {
   edition: ResolvedFestival['edition']
   accent: string | null
   art: string | null
+  /** Not on my list: no "my plan" switch (nothing can be favorited). */
+  readOnly?: boolean
 }
 
 /** Day tickets, the share button and the "my plan" switch. They sit in the app header, under the festival title. */
-export function TimetableControls({ festival, favorites, selection, today, setParams, edition, accent, art }: Props) {
+export function TimetableControls({ festival, favorites, selection, today, setParams, edition, accent, art, readOnly = false }: Props) {
   const favoriteSet = new Set(favorites)
   const dayPerformances = festival.performances.filter((p) => p.day === selection.day)
   const favoriteCount = dayPerformances.filter((p) => favoriteSet.has(p.id)).length
   const select = (next: { day?: string; mine?: boolean }) => setParams(selectionParams(selection, next))
-  const { showMine } = selection
+  const showMine = selection.showMine && !readOnly
 
   return (
     <div className="timetable-controls">
@@ -45,18 +47,20 @@ export function TimetableControls({ festival, favorites, selection, today, setPa
       {dayPerformances.length > 0 && (
         <ShareButton festival={festival} day={selection.day} favorites={favorites} edition={edition} accent={accent} art={art} />
       )}
-      <button
-        type="button"
-        className="mine-toggle"
-        aria-pressed={showMine}
-        aria-label={showMine ? '전체 타임테이블 보기' : `내 일정만 보기 (찜 ${favoriteCount}개)`}
-        title={showMine ? '전체 보기' : '내 일정만 보기'}
-        onClick={() => select({ mine: !showMine })}
-      >
-        {/* In "my plan" the switch shows the way back; the count would only repeat the list. */}
-        {showMine ? <BackIcon /> : <StarIcon filled={false} />}
-        {!showMine && favoriteCount > 0 && <span className="mine-toggle__count">{favoriteCount}</span>}
-      </button>
+      {!readOnly && (
+        <button
+          type="button"
+          className="mine-toggle"
+          aria-pressed={showMine}
+          aria-label={showMine ? '전체 타임테이블 보기' : `내 일정만 보기 (찜 ${favoriteCount}개)`}
+          title={showMine ? '전체 보기' : '내 일정만 보기'}
+          onClick={() => select({ mine: !showMine })}
+        >
+          {/* In "my plan" the switch shows the way back; the count would only repeat the list. */}
+          {showMine ? <BackIcon /> : <StarIcon filled={false} />}
+          {!showMine && favoriteCount > 0 && <span className="mine-toggle__count">{favoriteCount}</span>}
+        </button>
+      )}
     </div>
   )
 }

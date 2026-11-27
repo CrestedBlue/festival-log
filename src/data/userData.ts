@@ -25,6 +25,14 @@ export function removeMyFestival(data: UserData, festivalId: string): UserData {
 export const setActiveFestival = (data: UserData, festivalId: string): UserData =>
   data.myFestivalIds.includes(festivalId) ? { ...data, activeFestivalId: festivalId } : data
 
+/**
+ * Opens a festival from the catalog without adding it (the user, 2026-11-27: only the browse list's + adds one). Not on
+ * my list, it is view-only: no favorites, pins or ticket link (`isMine`).
+ */
+export const viewFestival = (data: UserData, festivalId: string): UserData => ({ ...data, activeFestivalId: festivalId })
+
+export const isMine = (data: UserData, festivalId: string): boolean => data.myFestivalIds.includes(festivalId)
+
 export const toggleFavorite = (data: UserData, performanceId: string): UserData => ({
   ...data,
   favorites: data.favorites.includes(performanceId)

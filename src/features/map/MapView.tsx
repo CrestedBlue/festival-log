@@ -46,9 +46,11 @@ interface Props {
   festival: Festival
   /** Pins the user added; only these can be deleted (the rest come from the festival catalog). */
   userPinIds: ReadonlySet<string>
+  /** Not on my list: pins can't be added. */
+  readOnly?: boolean
 }
 
-export default function MapView({ festival, userPinIds }: Props) {
+export default function MapView({ festival, userPinIds, readOnly = false }: Props) {
   const festivalMap = festivalMapFor(festival.id)
   const { containerRef, map } = useLeafletMap({ center: festival.venue, image: festivalMap, fitPoints: festival.pins })
   // A building's floors: the map shows one floor at a time (a button switches), its layers and pins (floors.ts). A map
@@ -208,18 +210,20 @@ export default function MapView({ festival, userPinIds }: Props) {
           <button type="button" className={`map-fab${tracking ? ' is-on' : ''}`} onClick={locate} aria-label="내 위치 보기">
             <LocateIcon />
           </button>
-          <button
-            type="button"
-            className={`map-fab${picking ? ' is-on' : ''}`}
-            onClick={() => {
-              setDraft(null)
-              setPicking((v) => !v)
-            }}
-            aria-pressed={picking}
-            aria-label="핀 추가"
-          >
-            <PlusIcon />
-          </button>
+          {!readOnly && (
+            <button
+              type="button"
+              className={`map-fab${picking ? ' is-on' : ''}`}
+              onClick={() => {
+                setDraft(null)
+                setPicking((v) => !v)
+              }}
+              aria-pressed={picking}
+              aria-label="핀 추가"
+            >
+              <PlusIcon />
+            </button>
+          )}
           {floor !== null && nextFloor !== null && (
             <button type="button" className="map-fab map-fab--floor" onClick={switchFloor} aria-label={`지금 ${floor}층 · 눌러서 ${nextFloor}층 보기`}>
               {floorLabel(floor)}
@@ -269,7 +273,7 @@ export default function MapView({ festival, userPinIds }: Props) {
             {!collapsed && (
               <div id="pin-list">
                 {rows.length === 0 ? (
-                  <p className="map-panel__empty">+ 버튼을 눌러 스테이지, 화장실, 만날 장소를 표시해 두세요.</p>
+                  <p className="map-panel__empty">{readOnly ? '등록된 핀이 없어요.' : '+ 버튼을 눌러 스테이지, 화장실, 만날 장소를 표시해 두세요.'}</p>
                 ) : (
                   <ul className="pin-list">
                     {rows.map((group) => {

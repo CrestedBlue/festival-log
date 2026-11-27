@@ -77,10 +77,12 @@ export function resolveFestival(data: UserData, festivalId: string): ResolvedFes
     : null
 }
 
+/** The festival being looked at: the active one, on my list or only opened from the catalog (viewFestival); else my first. */
 export function activeFestival(data: UserData): ResolvedFestival | null {
   const ids = data.activeFestivalId ? [data.activeFestivalId, ...data.myFestivalIds] : data.myFestivalIds
   for (const id of ids) {
-    if (!data.myFestivalIds.includes(id)) continue
+    // one opened from the catalog shows too; a festival that left my list falls through (its data is gone)
+    if (!data.myFestivalIds.includes(id) && !catalogEntry(id)) continue
     const resolved = resolveFestival(data, id)
     if (resolved) return resolved
   }

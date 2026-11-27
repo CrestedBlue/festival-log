@@ -6,6 +6,8 @@ import {
   removeMyFestival,
   removeUserPin,
   setActiveFestival,
+  viewFestival,
+  isMine,
   setTicketLink,
   toggleFavorite,
 } from './userData'
@@ -65,5 +67,13 @@ describe('per-device records', () => {
     const set = setTicketLink(makeUserData(), 'a', 'https://tickets.example.com/1')
     expect(set.ticketLinks).toEqual({ a: 'https://tickets.example.com/1' })
     expect(setTicketLink(set, 'a', null).ticketLinks).toEqual({})
+  })
+
+  test('viewFestival opens a festival without adding it, so it stays off my list', () => {
+    const data = viewFestival(makeUserData({ myFestivalIds: ['a'], activeFestivalId: 'a' }), 'b')
+    expect(data.activeFestivalId).toBe('b')
+    expect(data.myFestivalIds).toEqual(['a'])
+    expect(isMine(data, 'b')).toBe(false)
+    expect(isMine(data, 'a')).toBe(true)
   })
 })
