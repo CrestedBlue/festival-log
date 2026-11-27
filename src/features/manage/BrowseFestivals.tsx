@@ -2,9 +2,10 @@ import { CheckIcon, PlusIcon, SearchIcon } from '../../components/icons'
 import { CATALOG, catalogEntry } from '../../data/catalog'
 import { activeFestival, resolveFestival } from '../../data/resolve'
 import type { Festival, UserData } from '../../data/schema'
-import { showNotice, updateData } from '../../data/store'
+import { updateData } from '../../data/store'
 import { hasNewContent, markSeen } from '../../data/updates'
-import { addMyFestival, setActiveFestival, viewFestival } from '../../data/userData'
+import { setActiveFestival, viewFestival } from '../../data/userData'
+import { addFestival } from './addFestival'
 import { artistHit, groupByMonth, matchesQuery } from './browse'
 import { FestivalRow } from './FestivalRow'
 import { ALL_YEARS, inShownYear } from './years'
@@ -36,10 +37,6 @@ export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: P
   // a row opens the festival; one not on my list only to look at (the user, 2026-11-27: only + adds it)
   const pick = (festival: Festival) =>
     updateData((d) => (mine.has(festival.id) ? markSeen(setActiveFestival(d, festival.id), festival.id) : viewFestival(d, festival.id)))
-  const add = (festival: Festival) => {
-    updateData((d) => markSeen(addMyFestival(d, festival.id), festival.id))
-    showNotice('info', `'${festival.name}'를 추가했어요.`)
-  }
 
   return (
     <>
@@ -82,7 +79,7 @@ export function BrowseFestivals({ data, today, year, query, onYear, onQuery }: P
                     />
                     {/* the + looks as before, inside the row; only a tap on it adds (the row itself just opens it) */}
                     {!mine.has(festival.id) && (
-                      <button type="button" className="fest-add-hit" aria-label={`'${festival.name}' 내 페스티벌에 추가`} onClick={() => add(festival)} />
+                      <button type="button" className="fest-add-hit" aria-label={`'${festival.name}' 내 페스티벌에 추가`} onClick={() => addFestival(festival)} />
                     )}
                   </li>
                 ))}

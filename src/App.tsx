@@ -1,4 +1,5 @@
 import { Suspense, lazy, useEffect, type CSSProperties } from 'react'
+import { AddFestivalBar } from './components/AddFestivalBar'
 import { AppHeader } from './components/AppHeader'
 import { BottomNav } from './components/BottomNav'
 import { NoticeBanner } from './components/NoticeBanner'
@@ -138,16 +139,12 @@ export default function App() {
       </AppHeader>
       {/* The timetable shows what is on in its own sets; the strip covers the other tabs. */}
       {festival && tab !== 'timetable' && <NowStrip festival={festival} favorites={favorites} now={now} />}
-      {/* outside main, so a full-height view (the map) gets the room left under it */}
-      {readOnly && tab !== 'manage' && (
-        <p className="view-only" role="note">
-          둘러보는 중
-        </p>
-      )}
       <main className="app-main">
         {notice && <NoticeBanner key={notice.id} notice={notice} onDismiss={dismissNotice} />}
         {renderView()}
       </main>
+      {/* outside main and right above the tabs, so it stands in the same place on every tab */}
+      {readOnly && festival && tab !== 'manage' && <AddFestivalBar festival={festival} />}
       <BottomNav
         active={tab}
         onSelect={route.go}
