@@ -43,7 +43,6 @@ export function ManageView({ data, params, setParams, today, online }: Props) {
       ) : !online ? (
         <p className="manage__offline" role="status">
           <strong>오프라인입니다</strong>
-          <span>둘러보기는 인터넷에 연결되면 열려요.</span>
         </p>
       ) : (
         <BrowseFestivals
