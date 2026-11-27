@@ -1,5 +1,5 @@
 /**
- * One topic of the info tab's notices, drawn as a picture above a speech-bubble box (the blocks zigzag: the picture
+ * One topic of the info tab's notices, drawn as a picture beside a speech-bubble box (the blocks zigzag: the picture
  * is on the left in the first block, on the right in the next, and so on). One fact a line; `**…**` makes the key
  * numbers bold.
  */

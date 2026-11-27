@@ -109,8 +109,7 @@
   line-height: 1.55;
 }
 
-/* Notices by topic: a picture above a speech-bubble box, zigzagging left and right. The bubble's tail points up at
-   its picture, and the bubble takes the whole width so the lines don't wrap early. */
+/* Notices by topic: a picture beside a speech-bubble box, zigzagging. The bubble's tail points at its picture. */
 .notice-blocks {
   display: grid;
   gap: var(--space-5);
@@ -121,64 +120,85 @@
 
 .notice-block {
   --tail: 14px;
-  --tail-inset: 32px;
   display: grid;
+  grid-template-columns: minmax(0, 18%) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-2);
+}
+
+.notice-block:nth-child(even) {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 18%);
+}
+
+.notice-block:nth-child(even) .notice-block__art {
+  order: 2;
 }
 
 .notice-block__art {
-  width: auto;
-  max-width: 40%;
-  height: 72px;
-  margin-bottom: calc(var(--tail) / 2 + 2px);
-  padding-inline: var(--space-2);
+  width: 100%;
+  height: auto;
+  max-height: 80px;
   object-fit: contain;
   /* the pictures have no shadow of their own: a soft one keeps them off the page */
   filter: drop-shadow(0 3px 3px rgb(74 52 38 / 0.18));
 }
 
+.notice-block:nth-child(odd) .notice-block__art {
+  object-position: left top;
+}
+
 .notice-block:nth-child(even) .notice-block__art {
-  justify-self: end;
+  object-position: right top;
 }
 
 .notice-block__bubble {
   position: relative;
-  padding: var(--space-3);
+  padding: var(--space-3) var(--space-2);
   border: 1.5px solid var(--color-line);
   border-radius: var(--radius-card);
   background: var(--color-paper);
 }
 
-/* the tail: a corner of the box turned up toward the picture, drawn as a rotated square with the box's border */
+/* the tail: a corner of the box turned toward the picture, drawn as a rotated square with the box's border */
 .notice-block__bubble::before {
   content: '';
   position: absolute;
-  top: calc(var(--tail) / -2 - 1px);
-  left: var(--tail-inset);
+  top: var(--space-4);
   width: var(--tail);
   height: var(--tail);
   background: var(--color-paper);
   border: 1.5px solid var(--color-line);
-  border-right-color: transparent;
-  border-bottom-color: transparent;
   transform: rotate(45deg);
 }
 
+.notice-block:nth-child(odd) .notice-block__bubble::before {
+  left: calc(var(--tail) / -2 - 1px);
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
 .notice-block:nth-child(even) .notice-block__bubble::before {
-  right: var(--tail-inset);
-  left: auto;
+  right: calc(var(--tail) / -2 - 1px);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
 }
 
 .notice-block__lines {
   display: grid;
-  gap: var(--space-1);
+  /* more room between lines than inside a wrapped one, so each line reads as one item */
+  gap: 6px;
   margin: 0;
   padding: 0;
   list-style: none;
   font-size: var(--text-base);
-  line-height: 1.5;
+  line-height: 1.4;
+  /* Pretendard sets Korean a little loose: pulled in, more fits on a line */
+  letter-spacing: -0.02em;
   /* break Korean at spaces, not inside a word */
   word-break: keep-all;
   overflow-wrap: anywhere;
+  /* no lone word left on a line of its own ("입장") */
+  text-wrap: pretty;
 }
 
 .notice-block__lines li {
@@ -189,7 +209,7 @@
 .notice-block__lines li::before {
   content: '';
   position: absolute;
-  top: 0.55em;
+  top: 0.5em;
   left: 2px;
   width: 7px;
   height: 7px;

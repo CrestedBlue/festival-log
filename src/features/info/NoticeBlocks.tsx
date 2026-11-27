@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react'
 import type { NoticeBlock } from '../../data/catalog/noticeBlock'
 import { splitEmphasis } from '../../lib/emphasis'
 
-/** The info tab's notices by topic: a picture above a speech-bubble box, the pictures zigzagging left and right. */
+/** The info tab's notices by topic: a picture beside a speech-bubble box, the pictures zigzagging left and right. */
 export function NoticeBlocks({ blocks }: { blocks: readonly NoticeBlock[] }) {
   if (blocks.length === 0) return null
   return (
