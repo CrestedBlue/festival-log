@@ -84,6 +84,25 @@
   pointer-events: none;
 }
 
+/* The add button sits right under the title (row 2), beside the picture; the day tickets then come in row 3. */
+.app-header__action {
+  grid-column: 1;
+  grid-row: 2;
+  min-width: 0;
+}
+
+.app-header--with-action .app-header__art {
+  grid-row: 1 / span 2;
+}
+
+.app-header--with-action.app-header--with-controls .app-header__art {
+  grid-row: 1 / span 3;
+}
+
+.app-header--with-action .app-header__controls {
+  grid-row: 3;
+}
+
 /* With the day tickets, the picture spans both rows and the "my plan" star sits in its empty corner. It keeps the
    other tabs' width: a wider one left the title a few pixels short, so it broke onto two lines on the timetable only. */
 .app-header--with-controls .app-header__art {
@@ -355,13 +374,10 @@
 
 /* A festival opened from the catalog but not on my list: one quiet line saying it is only to look at. */
 .add-festival-bar {
-  flex: none;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  margin: var(--space-2) var(--space-4);
-  padding: 10px var(--space-4);
+  gap: 6px;
+  padding: 6px 14px 6px 10px;
   border: none;
   border-radius: 999px;
   background: var(--accent-fill);
@@ -372,8 +388,8 @@
 }
 
 .add-festival-bar svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 .add-festival-bar:active {

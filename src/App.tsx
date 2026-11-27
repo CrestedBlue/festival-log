@@ -122,7 +122,12 @@ export default function App() {
       data-themed={accent ? '' : undefined}
       style={accent ? ({ '--festival-accent': accent } as CSSProperties) : undefined}
     >
-      <AppHeader festival={festival} edition={resolved?.edition ?? null} art={resolved?.theme?.art ?? null}>
+      <AppHeader
+        festival={festival}
+        edition={resolved?.edition ?? null}
+        art={resolved?.theme?.art ?? null}
+        action={readOnly && festival && tab !== 'manage' ? <AddFestivalBar festival={festival} /> : undefined}
+      >
         {showControls && festival && selection && (
           <TimetableControls
             festival={festival}
@@ -143,8 +148,6 @@ export default function App() {
         {notice && <NoticeBanner key={notice.id} notice={notice} onDismiss={dismissNotice} />}
         {renderView()}
       </main>
-      {/* outside main and right above the tabs, so it stands in the same place on every tab */}
-      {readOnly && festival && tab !== 'manage' && <AddFestivalBar festival={festival} />}
       <BottomNav
         active={tab}
         onSelect={route.go}
