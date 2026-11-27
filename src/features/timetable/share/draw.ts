@@ -31,6 +31,10 @@ const SERIF_FONT = "Georgia, 'Times New Roman', AppleMyungjo, 'Noto Serif KR', s
 /** Sets you did not star fade back so your own route stands out; with nothing starred nothing fades. */
 const FADED_ALPHA = 0.4
 const NOTCH = 12
+/** Under this a set is drawn as a pill, not a ticket: the app's 44px at twice its scale (TimetableGrid.tsx). */
+const COMPACT_BELOW_PX = 88
+/** A pill's name: one line, smaller than a ticket's, so it fits a 10-minute set. */
+const PILL_LABEL = { sizes: [22, 20, 18], reserve: 0 } as const
 const STAR_SIZE = 24
 const STAR_PATH = 'm12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8Z'
 const ART_BOX = { w: 230, h: 160 } as const
@@ -219,7 +223,10 @@ function drawGrid(ctx: CanvasRenderingContext2D, layout: ShareLayout) {
 
 function drawSet(ctx: CanvasRenderingContext2D, set: SetBox, faded: boolean) {
   const edge = set.isFavorite ? 4 : 2
-  const path = ticketPath(set.x + edge / 2, set.y + edge / 2, set.w - edge, set.h - edge, NOTCH)
+  const compact = set.h < COMPACT_BELOW_PX
+  const [x, y, w, h] = [set.x + edge / 2, set.y + edge / 2, set.w - edge, set.h - edge]
+  const path = compact ? new Path2D() : ticketPath(x, y, w, h, NOTCH)
+  if (compact) path.roundRect(x, y, w, h, h / 2)
   ctx.save()
   // Paper under a faded set, so the grid lines don't show through it.
   ctx.fillStyle = PAPER
@@ -232,26 +239,30 @@ function drawSet(ctx: CanvasRenderingContext2D, set: SetBox, faded: boolean) {
   ctx.stroke(path)
   ctx.clip(path)
 
-  const padTop = 11
-  const padLeft = 16
-  const padRight = 12
+  const padTop = compact ? Math.max(2, (set.h - STAR_SIZE) / 2) : 11
+  const padLeft = compact ? 20 : 16
+  const padRight = compact ? 16 : 12
   drawStar(ctx, set.x + set.w - padRight - STAR_SIZE, set.y + padTop, set.isFavorite ? set.color : mixOklab(set.color, INK, 0.55), set.isFavorite)
 
   const box = {
     firstLineWidth: set.w - padLeft - padRight - STAR_SIZE - 6,
     lineWidth: set.w - padLeft - padRight,
-    height: set.h - padTop - 9,
+    height: compact ? set.h : set.h - padTop - 9,
   }
-  const fit = fitLabel(set.artist, box, measureWith(ctx, 800, BODY_FONT))
+  const fit = compact
+    ? fitLabel(set.artist, box, measureWith(ctx, 800, BODY_FONT), PILL_LABEL)
+    : fitLabel(set.artist, box, measureWith(ctx, 800, BODY_FONT))
   const lineH = lineHeightOf(fit.size)
+  // A pill holds its name on one line, centered top to bottom.
+  const textTop = compact ? set.y + (set.h - fit.lines.length * lineH) / 2 + 2 : set.y + padTop
   ctx.font = `800 ${fit.size}px ${BODY_FONT}`
   ctx.fillStyle = INK
   ctx.textBaseline = 'top'
-  fit.lines.forEach((line, i) => ctx.fillText(line, set.x + padLeft, set.y + padTop + i * lineH))
+  fit.lines.forEach((line, i) => ctx.fillText(line, set.x + padLeft, textTop + i * lineH))
   if (fit.showTime) {
     ctx.font = `400 21px ${BODY_FONT}`
     ctx.fillStyle = set.isFavorite ? mixOklab(INK_SOFT, INK, 0.45) : INK_SOFT
-    ctx.fillText(set.time, set.x + padLeft, set.y + padTop + fit.lines.length * lineH + 2)
+    ctx.fillText(set.time, set.x + padLeft, textTop + fit.lines.length * lineH + 2)
   }
   ctx.restore()
 }

@@ -109,7 +109,8 @@
   line-height: 1.55;
 }
 
-/* Notices by topic: a picture beside a speech-bubble box, zigzagging. The bubble's tail points at its picture. */
+/* Notices by topic: a picture above a speech-bubble box, zigzagging left and right. The bubble's tail points up at
+   its picture, and the bubble takes the whole width so the lines don't wrap early. */
 .notice-blocks {
   display: grid;
   gap: var(--space-5);
@@ -120,35 +121,23 @@
 
 .notice-block {
   --tail: 14px;
+  --tail-inset: 32px;
   display: grid;
-  grid-template-columns: minmax(0, 24%) minmax(0, 1fr);
-  align-items: start;
-  gap: var(--space-3);
-}
-
-.notice-block:nth-child(even) {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 24%);
-}
-
-.notice-block:nth-child(even) .notice-block__art {
-  order: 2;
 }
 
 .notice-block__art {
-  width: 100%;
-  height: auto;
-  max-height: 96px;
+  width: auto;
+  max-width: 40%;
+  height: 72px;
+  margin-bottom: calc(var(--tail) / 2 + 2px);
+  padding-inline: var(--space-2);
   object-fit: contain;
   /* the pictures have no shadow of their own: a soft one keeps them off the page */
   filter: drop-shadow(0 3px 3px rgb(74 52 38 / 0.18));
 }
 
-.notice-block:nth-child(odd) .notice-block__art {
-  object-position: left top;
-}
-
 .notice-block:nth-child(even) .notice-block__art {
-  object-position: right top;
+  justify-self: end;
 }
 
 .notice-block__bubble {
@@ -159,28 +148,24 @@
   background: var(--color-paper);
 }
 
-/* the tail: a corner of the box turned toward the picture, drawn as a rotated square with the box's border */
+/* the tail: a corner of the box turned up toward the picture, drawn as a rotated square with the box's border */
 .notice-block__bubble::before {
   content: '';
   position: absolute;
-  top: var(--space-4);
+  top: calc(var(--tail) / -2 - 1px);
+  left: var(--tail-inset);
   width: var(--tail);
   height: var(--tail);
   background: var(--color-paper);
   border: 1.5px solid var(--color-line);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
   transform: rotate(45deg);
 }
 
-.notice-block:nth-child(odd) .notice-block__bubble::before {
-  left: calc(var(--tail) / -2 - 1px);
-  border-right-color: transparent;
-  border-top-color: transparent;
-}
-
 .notice-block:nth-child(even) .notice-block__bubble::before {
-  right: calc(var(--tail) / -2 - 1px);
-  border-left-color: transparent;
-  border-bottom-color: transparent;
+  right: var(--tail-inset);
+  left: auto;
 }
 
 .notice-block__lines {
@@ -189,7 +174,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   line-height: 1.5;
   /* break Korean at spaces, not inside a word */
   word-break: keep-all;
