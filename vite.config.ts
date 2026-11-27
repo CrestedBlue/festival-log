@@ -57,7 +57,17 @@ export default defineConfig({
   base,
   build: {
     // The app, plus the admin catalog page served at <base>manage/.
-    rollupOptions: { input: { main: page('./index.html'), manage: page('./manage/index.html') } },
+    rollupOptions: {
+      input: { main: page('./index.html'), manage: page('./manage/index.html') },
+      // A festival's own files (map layers and icons, line-up posters) go to assets/fest/: they are not precached, the
+      // app saves only those of my festivals for offline use (lib/festivalFiles.ts).
+      output: {
+        assetFileNames: ({ originalFileNames }) =>
+          originalFileNames.some((name) => /(^|\/)src\/assets\/(maps|lineups)\//.test(name))
+            ? 'assets/fest/[name]-[hash][extname]'
+            : 'assets/[name]-[hash][extname]',
+      },
+    },
   },
   plugins: [
     react(),
@@ -79,9 +89,17 @@ export default defineConfig({
       workbox: {
         // webp = bundled festival maps, so the map works with no signal at the venue.
         globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2}'],
+        // every festival's maps and posters: only my festivals' are kept, by the app (lib/festivalFiles.ts)
+        globIgnores: ['assets/fest/**'],
         // The admin page (manage/, with or without a query) must never get the app shell.
         navigateFallbackDenylist: [/\/manage(?:\/|$)/],
         runtimeCaching: [
+          {
+            // My festivals' maps and posters, saved by the app (the cache name is FESTIVAL_CACHE in lib/festivalFiles.ts)
+            urlPattern: /\/assets\/fest\//,
+            handler: 'CacheFirst',
+            options: { cacheName: 'festival-files', cacheableResponse: { statuses: [200] } },
+          },
           {
             // Festival grounds often have no signal: keep every map tile you've already looked at.
             urlPattern: OSM_TILE_PATTERN,

@@ -33,6 +33,10 @@ export const viewFestival = (data: UserData, festivalId: string): UserData => ({
 
 export const isMine = (data: UserData, festivalId: string): boolean => data.myFestivalIds.includes(festivalId)
 
+/** Offline, only my festivals are saved: one opened just to look at gives way to my first (none: the catalog). */
+export const showSavedFestival = (data: UserData): UserData =>
+  data.activeFestivalId === null || isMine(data, data.activeFestivalId) ? data : { ...data, activeFestivalId: data.myFestivalIds[0] ?? null }
+
 export const toggleFavorite = (data: UserData, performanceId: string): UserData => ({
   ...data,
   favorites: data.favorites.includes(performanceId)

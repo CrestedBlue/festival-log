@@ -8,6 +8,7 @@ import {
   setActiveFestival,
   viewFestival,
   isMine,
+  showSavedFestival,
   setTicketLink,
   toggleFavorite,
 } from './userData'
@@ -75,5 +76,13 @@ describe('per-device records', () => {
     expect(data.myFestivalIds).toEqual(['a'])
     expect(isMine(data, 'b')).toBe(false)
     expect(isMine(data, 'a')).toBe(true)
+  })
+
+  test('showSavedFestival swaps a festival opened just to look at for my first one, offline', () => {
+    const viewing = makeUserData({ myFestivalIds: ['a', 'c'], activeFestivalId: 'b' })
+    expect(showSavedFestival(viewing).activeFestivalId).toBe('a')
+    expect(showSavedFestival(makeUserData({ myFestivalIds: [], activeFestivalId: 'b' })).activeFestivalId).toBeNull()
+    const mine = makeUserData({ myFestivalIds: ['a', 'c'], activeFestivalId: 'c' })
+    expect(showSavedFestival(mine)).toBe(mine)
   })
 })

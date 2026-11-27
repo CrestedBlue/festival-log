@@ -11,10 +11,12 @@ interface Props {
   params: URLSearchParams
   setParams: (params: Record<string, string | undefined>) => void
   today: string
+  /** Offline the catalog is closed: only my festivals are saved on the phone. */
+  online: boolean
 }
 
 /** The tabs and, under them, the search and year chips stay put; only the festival list below scrolls. */
-export function ManageView({ data, params, setParams, today }: Props) {
+export function ManageView({ data, params, setParams, today, online }: Props) {
   const requested = params.get('view')
   // Someone with nothing added yet starts on the catalog.
   const section: Section = requested === 'browse' || requested === 'mine' ? requested : data.myFestivalIds.length > 0 ? 'mine' : 'browse'
@@ -38,6 +40,11 @@ export function ManageView({ data, params, setParams, today }: Props) {
 
       {section === 'mine' ? (
         <MyFestivals data={data} today={today} year={params.get('year')} onYear={(year) => update({ year })} onBrowse={() => update({ view: 'browse' })} />
+      ) : !online ? (
+        <p className="manage__offline" role="status">
+          <strong>오프라인입니다</strong>
+          <span>둘러보기는 인터넷에 연결되면 열려요.</span>
+        </p>
       ) : (
         <BrowseFestivals
           data={data}

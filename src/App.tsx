@@ -3,8 +3,8 @@ import { AppHeader } from './components/AppHeader'
 import { BottomNav } from './components/BottomNav'
 import { NoticeBanner } from './components/NoticeBanner'
 import { NowStrip } from './components/NowStrip'
-import { dismissNotice, selectActiveFestival, useAppState } from './data/store'
-import { isMine } from './data/userData'
+import { dismissNotice, selectActiveFestival, updateData, useAppState } from './data/store'
+import { isMine, showSavedFestival } from './data/userData'
 import { newContentAnywhere } from './data/updates'
 import { InfoView } from './features/info/InfoView'
 import { ManageView } from './features/manage/ManageView'
@@ -13,7 +13,9 @@ import { TimetableControls } from './features/timetable/TimetableControls'
 import { TimetableView } from './features/timetable/TimetableView'
 import { useHashRoute } from './hooks/useHashRoute'
 import { useNow } from './hooks/useNow'
+import { useOnline } from './hooks/useOnline'
 import { loadChunk } from './lib/chunkReload'
+import { syncFestivalFiles } from './lib/festivalFiles'
 import { FESTIVAL_TABS, homeTab, shownTab, type ClosableTab } from './lib/route'
 import { festivalMoment } from './lib/time'
 
@@ -48,6 +50,16 @@ export default function App() {
   // a festival opened from the catalog but not on my list: view-only (no favorites, pins or ticket link)
   const readOnly = festival !== null && !isMine(data, festival.id)
   const favorites = readOnly ? NO_FAVORITES : data.favorites
+  const online = useOnline()
+  // only my festivals' maps and posters are kept for offline use; online again, the missing ones come in
+  const myIds = data.myFestivalIds.join(' ')
+  useEffect(() => {
+    if (online) void syncFestivalFiles(myIds ? myIds.split(' ') : [])
+  }, [myIds, online])
+  // offline, a festival only looked at is not saved: show one of mine instead
+  useEffect(() => {
+    if (!online && readOnly) updateData(showSavedFestival)
+  }, [online, readOnly])
 
   const renderView = () => {
     if (tab === 'manage' || !festival) {
@@ -57,6 +69,7 @@ export default function App() {
           params={route.params}
           setParams={(params) => route.setParams('manage', params)}
           today={today}
+          online={online}
         />
       )
     }

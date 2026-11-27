@@ -302,6 +302,23 @@
   color: var(--color-ink-soft);
 }
 
+.manage__offline {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-4) 0 0;
+  padding: var(--space-5) var(--space-4);
+  border: 1px dashed var(--color-line);
+  border-radius: 12px;
+  text-align: center;
+  color: var(--color-ink-soft);
+  font-size: var(--text-sm);
+}
+
+.manage__offline strong {
+  color: var(--color-ink);
+  font-size: var(--text-base);
+}
+
 .manage__empty p {
   margin: 0;
 }
