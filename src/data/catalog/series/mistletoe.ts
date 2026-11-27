@@ -21,10 +21,9 @@ export const MISTLETOE: FestivalSeries = {
   name: 'mistletoe',
   venue: VENUE,
   pins,
-  // The ticket page (201p.me/39/?idx=399, read 2026-11-27) is the only source so far; the club's Instagram is
-  // listed on its OpenStreetMap entry.
+  // The ticket page (201p.me/39/?idx=399, read 2026-11-27) is the only source. No Instagram: the @201punks that
+  // OpenStreetMap lists does not exist (checked 2026-11-27), so none is shown.
   sources: [
-    { method: '인스타', value: '@201punks', lastScrapedPostDate: null },
     { method: '공홈', value: 'https://201p.me/39/?idx=399', lastScrapedPostDate: '2026-11-27' },
   ],
   // From the 2026 poster (scripts/art/build-mistletoe.mjs): its red lettering on a cream circle, the red deepened for

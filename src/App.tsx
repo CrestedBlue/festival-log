@@ -141,7 +141,7 @@ export default function App() {
       {/* outside main, so a full-height view (the map) gets the room left under it */}
       {readOnly && tab !== 'manage' && (
         <p className="view-only" role="note">
-          둘러보는 중 · <strong>보기만 가능</strong>
+          둘러보는 중
         </p>
       )}
       <main className="app-main">

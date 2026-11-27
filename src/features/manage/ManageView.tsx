@@ -1,3 +1,4 @@
+import offlineArt from '../../assets/notice/offline.webp'
 import type { UserData } from '../../data/schema'
 import { BrowseFestivals } from './BrowseFestivals'
 import { MyFestivals } from './MyFestivals'
@@ -42,6 +43,7 @@ export function ManageView({ data, params, setParams, today, online }: Props) {
         <MyFestivals data={data} today={today} year={params.get('year')} onYear={(year) => update({ year })} onBrowse={() => update({ view: 'browse' })} />
       ) : !online ? (
         <p className="manage__offline" role="status">
+          <img src={offlineArt} alt="" width={72} height={72} />
           <strong>오프라인입니다</strong>
         </p>
       ) : (
