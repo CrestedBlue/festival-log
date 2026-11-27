@@ -11,6 +11,7 @@ import { GRAND_MINT_2026_NOTICE_BLOCKS, GRAND_MINT_2026_NOTICES, GRAND_MINT_2026
 import { HERO_ROCK_2026_LINEUP, HERO_ROCK_2026_NOTICE_BLOCKS, HERO_ROCK_2026_NOTICES, HERO_ROCK_2026_TICKETS, createHeroRock2026 } from './heroRock2026'
 import { JUMF_2026_NOTICE_BLOCKS, JUMF_2026_NOTICES, JUMF_2026_TICKETS, createJumf2026 } from './jumf2026'
 import { LETS_ROCK_2026_NOTICE_BLOCKS, LETS_ROCK_2026_NOTICES, LETS_ROCK_2026_TICKETS, createLetsRock2026 } from './letsRock2026'
+import { MISTLETOE_2026_NOTICE_BLOCKS, MISTLETOE_2026_NOTICES, MISTLETOE_2026_TICKETS, createMistletoe2026 } from './mistletoe2026'
 import { PENTAPORT_2025_NOTICES, createPentaport2025 } from './pentaport2025'
 import { PENTAPORT_2025_NOTICE_BLOCKS } from './pentaportNoticeBlocks'
 import { PENTAPORT_2026_NOTICE_BLOCKS, PENTAPORT_2026_NOTICES, createPentaport2026 } from './pentaport2026'
@@ -45,6 +46,9 @@ import {
   LETS_ROCK_2026_ID,
   LETS_ROCK_2026_KEY,
   LETS_ROCK_SERIES,
+  MISTLETOE_2026_ID,
+  MISTLETOE_2026_KEY,
+  MISTLETOE_SERIES,
   PENTAPORT_2026_ID,
   PENTAPORT_2026_KEY,
   PENTAPORT_2025_ID,
@@ -181,6 +185,18 @@ export const CATALOG: readonly CatalogEntry[] = [
     lineup: [],
     tickets: WONDERLIVET_2026_TICKETS,
     updatedAt: '2026-11-26',
+  },
+  {
+    id: MISTLETOE_2026_ID,
+    legacyIds: [],
+    series: MISTLETOE_SERIES,
+    key: MISTLETOE_2026_KEY,
+    create: createMistletoe2026,
+    notices: MISTLETOE_2026_NOTICES,
+    noticeBlocks: MISTLETOE_2026_NOTICE_BLOCKS,
+    lineup: [],
+    tickets: MISTLETOE_2026_TICKETS,
+    updatedAt: '2026-11-27',
   },
   {
     id: CDF_2026_ID,

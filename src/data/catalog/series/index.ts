@@ -5,6 +5,7 @@ import { GRAND_MINT } from './grandMint'
 import { HERO_ROCK } from './heroRock'
 import { JUMF } from './jumf'
 import { LETS_ROCK } from './letsRock'
+import { MISTLETOE } from './mistletoe'
 import { PENTAPORT } from './pentaport'
 import { SJF } from './sjf'
 import { THE_GLOW } from './theGlow'
@@ -26,4 +27,5 @@ export const SERIES: Readonly<Record<string, FestivalSeries>> = {
   [LETS_ROCK.code]: LETS_ROCK,
   [BUSAN_ROCK.code]: BUSAN_ROCK,
   [THE_GLOW.code]: THE_GLOW,
+  [MISTLETOE.code]: MISTLETOE,
 }

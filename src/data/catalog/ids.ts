@@ -53,3 +53,8 @@ export const BUSAN_ROCK_2026_KEY = `${BUSAN_ROCK_SERIES}2026`
 export const THE_GLOW_SERIES = 'theglow'
 export const THE_GLOW_2026_ID = '47d2fe6d-83af-41df-bfaf-0aee302c0f85'
 export const THE_GLOW_2026_KEY = `${THE_GLOW_SERIES}2026`
+
+/** mistletoe: a Christmas live gig at 201P, a club in Sinchon (not a festival; the user asked for it, 2026-11-27). */
+export const MISTLETOE_SERIES = 'mistletoe'
+export const MISTLETOE_2026_ID = 'de1afb08-e50e-43e7-b6d4-22e2a72e8829'
+export const MISTLETOE_2026_KEY = `${MISTLETOE_SERIES}2026`

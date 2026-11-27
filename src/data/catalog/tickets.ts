@@ -15,5 +15,7 @@ export const SELLERS = {
   ticketlink: (productId: number): TicketSeller => ({ name: '티켓링크', url: `https://www.ticketlink.co.kr/product/${productId}` }),
   nol: (productId: number): TicketSeller => ({ name: 'NOL 티켓', url: `https://nol.yanolja.com/ticket/products/${productId}` }),
   naver: (bizId: number, itemId: number): TicketSeller => ({ name: '네이버 예약', url: `https://booking.naver.com/booking/12/bizes/${bizId}/items/${itemId}` }),
+  // 201P, a club in Sinchon, sells its own gigs
+  p201: (idx: number): TicketSeller => ({ name: '201P', url: `https://201p.me/39/?idx=${idx}` }),
   twoTm: (ticketId: number): TicketSeller => ({ name: '2TM', url: `https://www.2tm.co.kr/ticket/${ticketId}` }),
 }
