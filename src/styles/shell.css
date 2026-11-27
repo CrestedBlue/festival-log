@@ -92,7 +92,17 @@
   min-width: 0;
 }
 
-.app-header--with-action .app-header__art {
+/* With the day tickets, the picture spans both rows and the "my plan" star sits in its empty corner. It keeps the
+   other tabs' width: a wider one left the title a few pixels short, so it broke onto two lines on the timetable only. */
+.app-header--with-controls .app-header__art {
+  grid-row: 1 / span 2;
+}
+
+/* With the add button the title row and the button look the same on every tab (the user, 2026-11-27: the timetable's
+   sat higher, the picture reaching down over it): the picture stays in the title row there too. Placed after the rule
+   above so it wins. */
+.app-header--with-action .app-header__art,
+.app-header--with-action.app-header--with-controls .app-header__art {
   grid-row: 1;
 }
 
@@ -103,12 +113,6 @@
 
 .app-header--with-action .app-header__controls {
   grid-row: 3;
-}
-
-/* With the day tickets, the picture spans both rows and the "my plan" star sits in its empty corner. It keeps the
-   other tabs' width: a wider one left the title a few pixels short, so it broke onto two lines on the timetable only. */
-.app-header--with-controls .app-header__art {
-  grid-row: 1 / span 2;
 }
 
 .app-header__controls {
