@@ -4,7 +4,7 @@
   height: 100%;
 }
 
-/* Day tickets and the "my plan" switch, in the app header under the title */
+/* Day tickets and the "my plan" switch, in their own block under the app header (App .app-controls) */
 .timetable-controls {
   display: flex;
   align-items: center;

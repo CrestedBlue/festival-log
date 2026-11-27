@@ -127,8 +127,10 @@ export default function App() {
         edition={resolved?.edition ?? null}
         art={resolved?.theme?.art ?? null}
         action={readOnly && festival && tab !== 'manage' ? <AddFestivalBar festival={festival} /> : undefined}
-      >
-        {showControls && festival && selection && (
+      />
+      {/* the timetable's day tickets: a block of their own under the header, so neither moves the other */}
+      {showControls && festival && selection && (
+        <div className="app-controls">
           <TimetableControls
             festival={festival}
             favorites={favorites}
@@ -140,8 +142,8 @@ export default function App() {
             accent={accent}
             art={resolved?.theme?.art ?? null}
           />
-        )}
-      </AppHeader>
+        </div>
+      )}
       {/* The timetable shows what is on in its own sets; the strip covers the other tabs. */}
       {festival && tab !== 'timetable' && <NowStrip festival={festival} favorites={favorites} now={now} />}
       <main className="app-main">

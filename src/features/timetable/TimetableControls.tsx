@@ -20,7 +20,7 @@ interface Props {
   readOnly?: boolean
 }
 
-/** Day tickets, the share button and the "my plan" switch. They sit in the app header, under the festival title. */
+/** Day tickets, the share button and the "my plan" switch. They sit in their own block under the app header (App). */
 export function TimetableControls({ festival, favorites, selection, today, setParams, edition, accent, art, readOnly = false }: Props) {
   const favoriteSet = new Set(favorites)
   const dayPerformances = festival.performances.filter((p) => p.day === selection.day)

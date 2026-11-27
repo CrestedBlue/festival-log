@@ -11,15 +11,17 @@ interface Props {
   edition: ResolvedFestival['edition']
   /** The festival's picture to the right of the title. */
   art: string | null
-  /** Right under the title on every tab, above the timetable's day tickets (the add button of a festival opened to look at). */
+  /** Right under the title on every tab (the add button of a festival opened to look at). */
   action?: ReactNode
-  /** Controls under the title (the timetable's day tickets); the picture reaches down beside them. */
-  children?: ReactNode
 }
 
-export function AppHeader({ festival, edition, art, action, children }: Props) {
+/**
+ * The festival's name, picture and add button: the same on every tab. The timetable's day tickets are a block of their
+ * own under it (App), so neither changes the other (the user, 2026-11-27: "구역을 분리").
+ */
+export function AppHeader({ festival, edition, art, action }: Props) {
   return (
-    <header className={['app-header', children && 'app-header--with-controls', action && 'app-header--with-action'].filter(Boolean).join(' ')}>
+    <header className="app-header">
       <div className="app-header__text">
         {edition && (
           <p className="app-header__eyebrow">
@@ -33,7 +35,6 @@ export function AppHeader({ festival, edition, art, action, children }: Props) {
       </div>
       {action && <div className="app-header__action">{action}</div>}
       {art && <img className="app-header__art" src={art} alt="" width="96" height="66" />}
-      {children && <div className="app-header__controls">{children}</div>}
     </header>
   )
 }
