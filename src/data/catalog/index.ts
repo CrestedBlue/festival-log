@@ -122,7 +122,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     noticeBlocks: HERO_ROCK_2026_NOTICE_BLOCKS,
     lineup: HERO_ROCK_2026_LINEUP,
     tickets: HERO_ROCK_2026_TICKETS,
-    updatedAt: '2026-10-27',
+    updatedAt: '2026-11-29',
   },
   {
     id: PENTAPORT_2026_ID,

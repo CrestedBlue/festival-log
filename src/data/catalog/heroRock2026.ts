@@ -18,17 +18,27 @@ import type { NoticeBlock } from './noticeBlock'
  */
 export { HERO_ROCK_2026_ID }
 
-/** Admin notices, summarised from the Melon Ticket page and the Instagram ticket posts (2026). */
+/**
+ * Admin notices, summarised from the Melon Ticket page and the Instagram posts (2026). The entry and show times come
+ * from the entry guide post (2026-11-28: instagram.com/p/DgReepsmGNQ), the line-up change from instagram.com/p/DgRdCOlJ_xD.
+ */
 export const HERO_ROCK_2026_NOTICES: readonly string[] = [
+  '터치드가 멤버 건강 문제로 출연하지 못하게 됐어요. 일요일 1일권 예매자는 11/30(월) 14:00 – 12/2(수) 17:00 사이 멜론티켓 고객센터(1899-0042)로 접수하면 수수료 없이 전액 환불돼요(직접 취소하면 수수료가 붙어요). 최종 라인업·타임테이블은 변경을 반영해 따로 알린대요.',
 ]
 
 /** The notices as topic blocks on the info tab (the user, 2026-11-26: every festival in this format). The pictures are the shared set. */
 export const HERO_ROCK_2026_NOTICE_BLOCKS: readonly NoticeBlock[] = [
   noticeBlock('entry', '입장', [
-    '**입장** 사흘 모두 **10:30** 시작(관람 690분)',
+    '**입장** 메인 게이트 금 **11:00** · 토·일 **10:00**',
+    '티켓부스 금 **10:30** · 토·일 **9:30**',
     '**모바일 티켓만**: 멜론티켓 앱 › 마이티켓 › 예매내역',
     '할인(장애인·국가유공자·미성년자 30%)은 **증빙** 챙기기',
     '증빙 없으면 현장에서 **차액**',
+  ]),
+  noticeBlock('stage', '공연', [
+    '**공연** 금 **11:30–22:20**',
+    '토 **10:30–22:30** · 일 **10:30–22:00**',
+    '게이트·공연 시간은 현장 상황에 따라 **변동 가능**',
   ]),
   noticeBlock('booking', '예매', [
     '**예매** 멜론티켓 · 일반 **10/28(수) 14:00** 오픈',
